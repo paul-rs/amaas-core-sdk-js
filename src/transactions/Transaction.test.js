@@ -1,12 +1,8 @@
-import Transaction from './Transaction.js' 
+import Transaction from './Transaction.js'
 
-describe.skip('Transaction class', () => {
+describe('Transaction class', () => {
   it('should set transactionType to Trade if undefined', () => {
-    const coreData = {}
-    const data = {
-      transactionType: undefined
-    }
-    const testTrans = new Transaction(data, coreData)
+    const testTrans = new Transaction(undefined, undefined)
     expect(testTrans.transactionType).toEqual('Trade')
   })
 })

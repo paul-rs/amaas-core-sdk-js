@@ -1,1 +1,1 @@
-export { default as AMaaSModel } from './'
+export { default as AMaaSModel } from './AMaaSModel'
