@@ -1,6 +1,6 @@
-import { AMaasModel } from './'
+import { AMaaSModel } from './'
 
-class Reference extends AMaasModel {
+class Reference extends AMaaSModel {
   /**
     * Constructs a new Reference object
     * @param {object} referenceData: creation options
@@ -16,3 +16,5 @@ class Reference extends AMaasModel {
     this.version = this.version || 1
   }
 }
+
+export default Reference
