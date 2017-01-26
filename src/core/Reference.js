@@ -11,9 +11,8 @@ class Reference extends AMaasModel {
   */
   constructor(referenceData, coreData) {
     super(coreData)
-    Object.assign(this, {
-      active: true,
-      version: 1
-    }, referenceData)
+    Object.assign(this, referenceData)
+    this.active = this.active === false ? false : true
+    this.version = this.version || 1
   }
 }

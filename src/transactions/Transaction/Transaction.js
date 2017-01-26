@@ -31,12 +31,10 @@ class Transaction extends AMaaSModel {
   */
   constructor(transactionData, coreData) {
     super(coreData)
-    console.log(transactionData);
     Object.assign(this, transactionData)
     this.transactionType = this.transactionType ? this.transactionType : 'Trade'
     this.transactionStatus = this.transactionStatus ? this.transactionStatus : 'New'
     this.version = this.version ? this.version : 1
-    console.log(this);
   }
 
   set quantity(newQuantity) {
@@ -71,16 +69,11 @@ class Transaction extends AMaaSModel {
     return this._netSettlement ? this._netSettlement : this.grossSettlement.minus(this.chargesNetEffect)
   }
 
-  set charges(newCharges) {
-
-  }
-
   chargesNetEffect() {
-    console.log(this.charges);
     let netCharges = new Decimal(0);
     for (let chargeType in this.charges) {
       if (this.charges[chargeType].active && this.charges[chargeType].netAffecting) {
-        netCharges.plus(this.charges[chargeType].chargeValue)
+        netCharges = netCharges.plus(this.charges[chargeType].chargeValue)
       }
     }
     return netCharges

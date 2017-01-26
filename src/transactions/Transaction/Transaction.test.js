@@ -3,7 +3,7 @@ import Charge from '../Charge/Charge.js'
 
 const Decimal = require('decimal.js')
 
-describe.skip('Transaction class', () => {
+describe('Transaction class', () => {
   describe('constructor', () => {
     const data = {
       quantity: 2.54,
@@ -36,9 +36,9 @@ describe.skip('Transaction class', () => {
           COMMISSION : new Charge({ chargeValue: 20, currency: 'SGD', active: true, netAffecting: true })
         }
       }
-      const testTrans2 = new Transaction(data)
-      testTrans2.chargesNetEffect()
-      // expect(testTrans.chargesNetEffect()).toEqual(new Decimal(30))
+      const testTrans = new Transaction(data)
+      testTrans.chargesNetEffect()
+      expect(testTrans.chargesNetEffect()).toEqual(new Decimal(30))
     })
   })
 })

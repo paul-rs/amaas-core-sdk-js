@@ -4,7 +4,7 @@
   "description": "Asset Management as a Service (AMaaS) Software Development Kit (SDK) for JavaScript",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --verbose",
+    "test": "jest --verbose --watch",
     "build": "babel src --presets babel-preset-es2015 --out-dir dist --ignore '**.test.js'"
   },
   "jest": {
