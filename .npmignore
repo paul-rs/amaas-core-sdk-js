@@ -1,2 +1,5 @@
 # Source folder
 src
+
+# Tests
+**.test.js
