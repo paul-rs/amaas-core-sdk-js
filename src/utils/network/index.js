@@ -64,7 +64,7 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
  * !This is an internal function that should not be called by the end user!
  * !Wrapper functions are exposed for the individual asset classes for consumption!
 
- * Base function for retrieval of data from the database (GET request)
+ * Base function for insertion of data to the database (POST request)
  * @param {object} anonymous: anonymous object with arguments:
  * @param {string} AMaaSClass: class being requested/sent (e.g. Transaction) (required)
  * @param {string} AMId: Asset Manager Id (required)
