@@ -71,6 +71,9 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
  * @param {string} data: data to insert into database
 */
 export function insertData({ AMaaSClass, AMId, data }, callback) {
+  if (!AMaaSClass || !AMId || !data) {
+    throw new Error('Class, AMId and data to insert are required')
+  }
   const url = buildURL({
     AMaaSClass,
     AMId
@@ -83,7 +86,7 @@ export function insertData({ AMaaSClass, AMId, data }, callback) {
     json: data
   }
   request.post(params, (error, response, body) => {
-    if (!error && response.stausCode == 200) {
+    if (!error && response.statusCode == 200) {
       callback(null, body)
     } else if (error) {
       callback(error)
