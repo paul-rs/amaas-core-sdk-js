@@ -9,11 +9,18 @@ class Reference extends AMaaSModel {
     * @param {string} referenceData.version: The version of the object (incremented by e.g. amends)
     * @param {object} coreData: AMaasModel constructor options
   */
-  constructor(referenceData, coreData) {
+  constructor({ referenceValue, active }, args, coreData) {
     super(coreData)
-    Object.assign(this, referenceData)
-    this.active = this.active === false ? false : true
-    this.version = this.version || 1
+    this.referenceValue = referenceValue
+    this.active = active === false ? false : true
+  }
+
+  set active(newActive) {
+    this._active = newActive === false ? false : true
+  }
+
+  get active() {
+    return this._active
   }
 }
 

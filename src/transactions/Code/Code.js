@@ -1,11 +1,18 @@
 import { AMaaSModel } from '../../core'
 
 class Code extends AMaaSModel {
-  constructor(data, coreData) {
+  constructor({ codeValue, active }, args, coreData) {
     super(coreData)
-    Object.assign(this, data)
-    this.active = this.active === false ? false : true
-    this.version = this.version || 1
+    this.codeValue = codeValue
+    this.active = active
+  }
+
+  set active(newActive) {
+    this._active = newActive === false ? false : true
+  }
+
+  get active() {
+    return this._active
   }
 }
 
