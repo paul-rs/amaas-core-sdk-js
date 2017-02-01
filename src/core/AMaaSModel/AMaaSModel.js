@@ -1,5 +1,5 @@
 class AMaaSModel {
-  constructor(coreData) {
+  constructor({ createdBy='TEMP', updatedBy='TEMP', createdTime, updatedTime, internalId }, args) {
     /**
      * Constructs new AMaaSModel object
      * @param {object} coreData: creation options
@@ -9,10 +9,10 @@ class AMaaSModel {
      * @param {date} coreData.updatedTime: When it was last updated (from database)
      * @param {string} coreData.internalId: Internal ID of the object (from database)
    */
-    Object.assign(this, {
-      createdBy: 'TEMP',
-      updatedBy: 'TEMP'
-    }, coreData)
+   this.createdBy = createdBy
+   this.updatedBy = updatedBy
+   this.createdTime = createdTime
+   this.updatedTime = updatedTime
   }
 }
 

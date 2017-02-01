@@ -1,1 +1,2 @@
-export { default as AMaaSModel } from './AMaaSModel'
+export { default as AMaaSModel } from './AMaaSModel/AMaaSModel.js'
+export { default as Reference } from './Reference/Reference.js'

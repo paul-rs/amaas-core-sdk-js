@@ -12,15 +12,49 @@ class Charge extends AMaaSModel {
    * @param {number} data.version: Version of the object
    * @param {object} coreData: AMaaSModel creation options
  */
-  constructor(data, coreData) {
-    super(coreData)
-    Object.assign(this, data)
-    this.active = this.active === false ? false : true
-    this.netAffecting = this.netAffecting === false ? false : true
-    this.version = this.version || 1
+  constructor({ chargeValue, currency, active, netAffecting }, args, coreData) {
+    super(coreData, args)
+    this.chargeValue = chargeValue
+    this.currency = currency
+    this.active = active
+    this.netAffecting = netAffecting === false ? false : true
   }
 
-  set chargeValue(newChargeValue) {
+  set active(newActive) {
+    switch (newActive) {
+      case false:
+        this._active = false
+        break
+      case undefined:
+        this._active = true
+        break
+      default:
+        this._active = newActive
+    }
+  }
+
+  get active() {
+    return this._active
+  }
+
+  set netAffecting(newNetAffecting) {
+    switch (newNetAffecting) {
+      case false:
+        this._netAffecting = false
+        break
+      case undefined:
+        this._netAffecting = true
+        break
+      default:
+        this._netAffecting = newNetAffecting
+    }
+  }
+
+  get netAffecting() {
+    return this._netAffecting
+  }
+
+  set chargeValue(newChargeValue=0) {
     this._chargeValue = new Decimal(newChargeValue)
   }
 

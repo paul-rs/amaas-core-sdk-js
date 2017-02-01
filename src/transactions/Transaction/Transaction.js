@@ -1,4 +1,5 @@
-import { AMaaSModel } from '../../core'
+import { AMaaSModel, Reference } from '../../core'
+import uuid from 'uuid'
 const Decimal = require('decimal.js')
 
 /** @class */
@@ -19,7 +20,6 @@ class Transaction extends AMaaSModel {
    * @param {string} transactionData.settlementCurrency: Currency that the Transaction is settled in
    * @param {Asset} transactionData.transactionType: Type of Transaction e.g. Trade, Allocation
    * @param {*} transactionData.transactionStatus: *
-   * @param {*} transactionData.version: *
    * @param {date} transactionData.executionTime: Time that the Transaction was executed
    * @param {string} transactionData.transactionId: ID of the Transaction
    * @param {object} transactionData.charges: Object of all charges (Charge class)
@@ -29,15 +29,32 @@ class Transaction extends AMaaSModel {
    * @param {*} asset: *
    * @param {object} transactionData.coreData: AMaaSModel constructor options
   */
-  constructor(transactionData, coreData) {
+  constructor({ assetManagerId, assetBookId, counterpartyBookId, transactionAction, assetId, quantity, transactionDate, settlementDate, price, transactionCurrency, settlementCurrency, asset, executionTime, transactionType='Trade', transactionId, transactionStatus='New', charges={}, codes={}, references={} }, args, coreData) {
     super(coreData)
-    Object.assign(this, transactionData)
-    this.transactionType = this.transactionType ? this.transactionType : 'Trade'
-    this.transactionStatus = this.transactionStatus ? this.transactionStatus : 'New'
-    this.version = this.version ? this.version : 1
+    this.assetManagerId = assetManagerId
+    this.assetBookId = assetBookId
+    this.counterpartyBookId = counterpartyBookId
+    this.transactionAction = transactionAction
+    this.assetId = assetId
+    this.quantity = quantity
+    this.transactionDate = transactionDate
+    this.settlementDate = settlementDate
+    this.price = price
+    this.transactionCurrency = transactionCurrency
+    this.settlementCurrency = settlementCurrency
+    this.transactionType = transactionType
+    this.transactionStatus = transactionStatus
+    this.executionTime = executionTime || new Date()
+    this.transactionId = transactionId || uuid()
+    this.charges = charges
+    this.codes = codes
+    this.references = references
+    this.references.AMaaS = new Reference(this.transactionId, args, coreData)
+    this.postings = []
+    this.asset = asset
   }
 
-  set quantity(newQuantity) {
+  set quantity(newQuantity=0) {
     this._quantity = new Decimal(newQuantity)
   }
 
@@ -45,7 +62,7 @@ class Transaction extends AMaaSModel {
     return this._quantity
   }
 
-  set price(newPrice) {
+  set price(newPrice=0) {
     this._price = new Decimal(newPrice)
   }
 
@@ -53,7 +70,7 @@ class Transaction extends AMaaSModel {
     return this._price
   }
 
-  set grossSettlement(newGrossSettlement) {
+  set grossSettlement(newGrossSettlement=0) {
     this._grossSettlement = new Decimal(newGrossSettlement)
   }
 
@@ -61,7 +78,7 @@ class Transaction extends AMaaSModel {
     return this._grossSettlement ? this._grossSettlement : this.price.times(this.quantity)
   }
 
-  set netSettlement(newNetSettlement) {
+  set netSettlement(newNetSettlement=0) {
     this._netSettlement = new Decimal(newNetSettlement)
   }
 
