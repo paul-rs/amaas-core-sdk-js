@@ -1,4 +1,4 @@
-import { AMaaSModel, Reference } from '../core'
+import { AMaaSModel, Reference } from '../../core'
 
 /** @class */
 class Asset extends AMaaSModel {

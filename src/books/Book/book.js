@@ -31,3 +31,5 @@ class Book extends AMaaSModel {
     // TODO: Iterate over the positions array and sum by asset_id
   }
 }
+
+export default Book
