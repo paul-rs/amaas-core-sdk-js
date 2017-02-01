@@ -1,7 +1,7 @@
 import { AMaaSModel } from '../../core'
 
 class Address extends AMaaSModel {
-  constructor({ addressPrimary, lineOne, lineTwo, city, region, postalCode, countryId, active }, args, coreData) {
+  constructor({ addressPrimary=false, lineOne, lineTwo, city, region, postalCode, countryId, active }, args, coreData) {
     super(coreData, args)
     this.addressPrimary = addressPrimary
     this.lineOne = lineOne
