@@ -1,4 +1,4 @@
-import { AMaaSModel } from './'
+import { AMaaSModel } from '../'
 
 class Reference extends AMaaSModel {
   /**
@@ -10,13 +10,22 @@ class Reference extends AMaaSModel {
     * @param {object} coreData: AMaasModel constructor options
   */
   constructor({ referenceValue, active }, args, coreData) {
-    super(coreData)
+    super(coreData, args)
     this.referenceValue = referenceValue
-    this.active = active === false ? false : true
+    this.active = active
   }
 
   set active(newActive) {
-    this._active = newActive === false ? false : true
+    switch (newActive) {
+      case false:
+        this._active = false
+        break
+      case undefined:
+        this._active = true
+        break
+      default:
+        this._active = newActive
+    }
   }
 
   get active() {

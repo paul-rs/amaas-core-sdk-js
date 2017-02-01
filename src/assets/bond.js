@@ -46,12 +46,15 @@ class BondBase extends Asset {
   }
 
   set coupon(newCoupon) {
-    if (newCoupon == 0) {
-      this._coupon = new Decimal(0)
-    } else if (!newCoupon) {
-      this._coupon = undefined
-    } else {
-      this._coupon = new Decimal(newCoupon)
+    switch (newCoupon) {
+      case 0:
+        this._coupon = new Decimal(0)
+        break
+      case undefined:
+        this._coupoon = undefined
+        break
+      default:
+        this._coupon = new Decimal(newCoupon)
     }
   }
 
@@ -60,12 +63,15 @@ class BondBase extends Asset {
   }
 
   set par(newPar) {
-    if (newPar == 0) {
-      this._par = new Decimal(0)
-    } else if (!newPar) {
-      this._par = undefined
-    } else {
-      this._par = new Decimal(newPar)
+    switch (newPar) {
+      case 0:
+        this._par = new Decimal(0)
+        break
+      case undefined:
+        this._par = undefined
+        break
+      default:
+        this._par = new Decimal(newPar)
     }
   }
 
@@ -74,12 +80,15 @@ class BondBase extends Asset {
   }
 
   set defaulted(newDefaulted) {
-    if (newDefaulted == false) {
-      this._defaulted = false
-    } else if (!newDefaulted) {
-      this._defaulted = undefined
-    } else {
-      this._defaulted = newDefaulted
+    switch (newDefaulted) {
+      case false:
+        this._defaulted = false
+        break
+      case undefined:
+        this._defaulted = undefined
+        break
+      default:
+        this._defaulted = newDefaulted
     }
   }
 

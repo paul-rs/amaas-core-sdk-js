@@ -1,5 +1,5 @@
 class AMaaSModel {
-  constructor({ createdBy='TEMP', updatedBy='TEMP', createdTime, updatedTime, internalId }) {
+  constructor({ createdBy='TEMP', updatedBy='TEMP', createdTime, updatedTime, internalId }, args) {
     /**
      * Constructs new AMaaSModel object
      * @param {object} coreData: creation options

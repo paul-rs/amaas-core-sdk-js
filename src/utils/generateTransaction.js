@@ -1,7 +1,7 @@
 import { Transaction } from '../transactions'
 import Code from '../transactions/Code/Code.js'
 import Charge from '../transactions/Charge/Charge.js'
-import Reference from '../core/Reference.js'
+import Reference from '../core'
 const Decimal = require('decimal.js')
 
 const CHARGE_TYPES = ['TAX', 'COMMISSION']

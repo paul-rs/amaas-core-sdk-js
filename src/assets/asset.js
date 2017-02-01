@@ -20,7 +20,7 @@ class Asset extends AMaaSModel {
    * @param {object} references.AMaaS: Internal reference
   */
   constructor({ assetManagerId, fungible, assetIssuerId, assetId, assetClass, assetStatus='Active', countryId, venueId, maturityDate, description='', references={} }, args, coreData) {
-    super(coreData)
+    super(coreData, args)
     this.assetManagerId = assetManagerId
     this.assetId = assetId
     this.assetClass = assetClass || 'Asset'

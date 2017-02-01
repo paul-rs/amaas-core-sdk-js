@@ -15,8 +15,8 @@ class Book extends AMaaSModel {
    * @param {Array} positions: Array of objects [{asset_id: quantity}]
    * @param {object} coreData: AMaaSModel constructor options
   */
-  constructor({ assetManagerId, bookId, bookStatus, ownerId, closeTime, timezone, description, positions }, coreData) {
-    super(coreData)
+  constructor({ assetManagerId, bookId, bookStatus, ownerId, closeTime, timezone, description, positions }, args, coreData) {
+    super(args, coreData)
     this.assetManagerId = assetManagerId
     this.bookId = bookId || uuid()
     this.bookStatus = bookStatus

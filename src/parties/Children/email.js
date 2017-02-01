@@ -1,9 +1,10 @@
 import { AMaaSModel } from '../../core'
 
-class Code extends AMaaSModel {
-  constructor({ codeValue, active }, args, coreData) {
-    super(coreData)
-    this.codeValue = codeValue
+class Email extends AMaaSModel {
+  constructor({ emailPrimary, email, active }, args, coreData) {
+    super(coreData, args)
+    this.emailPrimary = emailPrimary
+    this.email = email
     this.active = active
   }
 
@@ -25,4 +26,4 @@ class Code extends AMaaSModel {
   }
 }
 
-export default Code
+export default Email

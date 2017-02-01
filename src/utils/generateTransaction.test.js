@@ -1,7 +1,7 @@
 import { generateTransaction, generateCommon } from './generateTransaction.js'
 import Decimal from 'decimal.js'
 
-describe('generateCommon sub-utility', () => {
+describe.skip('generateCommon sub-utility', () => {
   describe('defaults', () => {
     const common = generateCommon({ price: 0 })
     it('should set assetManagerId', () => {
@@ -70,7 +70,7 @@ describe('generateCommon sub-utility', () => {
   })
 })
 
-describe('generateTransaction utility', () => {
+describe.skip('generateTransaction utility', () => {
   describe('transaction children', () => {
     const params = {
       assetManagerId: 300,

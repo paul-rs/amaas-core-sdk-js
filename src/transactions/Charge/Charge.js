@@ -13,7 +13,7 @@ class Charge extends AMaaSModel {
    * @param {object} coreData: AMaaSModel creation options
  */
   constructor({ chargeValue, currency, active, netAffecting }, args, coreData) {
-    super(coreData)
+    super(coreData, args)
     this.chargeValue = chargeValue
     this.currency = currency
     this.active = active
@@ -21,7 +21,16 @@ class Charge extends AMaaSModel {
   }
 
   set active(newActive) {
-    this._active = (newActive === false) ? false : true
+    switch (newActive) {
+      case false:
+        this._active = false
+        break
+      case undefined:
+        this._active = true
+        break
+      default:
+        this._active = newActive
+    }
   }
 
   get active() {
@@ -29,7 +38,16 @@ class Charge extends AMaaSModel {
   }
 
   set netAffecting(newNetAffecting) {
-    this._netAffecting = newNetAffecting === false ? false : true
+    switch (newNetAffecting) {
+      case false:
+        this._netAffecting = false
+        break
+      case undefined:
+        this._netAffecting = true
+        break
+      default:
+        this._netAffecting = newNetAffecting
+    }
   }
 
   get netAffecting() {
