@@ -3,12 +3,12 @@ import { Address, Email } from '../Children'
 
 class Party extends AMaaSModel {
   //
-  constructor({ assetManagerId, partyId, partyStatus='Active', partyType, description='', addresses=[], emails=[], references={} }, args, coreData) {
-    super(coreData, args)
+  constructor({ assetManagerId, partyId, partyStatus='Active', partyClass='Party', partyType='Party', description='', addresses=[], emails=[], references={} }) {
+    super()
     this.assetManagerId = assetManagerId
     this.partyId = partyId
     this.partyStatus = partyStatus
-    // this.partyClass = partyClass TODO: a more specific child class may already set this
+    this.partyClass = partyClass
     this.partyType = partyType
     this.description = description
     this.addresses = addresses

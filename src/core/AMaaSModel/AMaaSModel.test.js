@@ -10,5 +10,9 @@ describe('AMaaSModel class', () => {
       const model = new AMaaSModel({})
       expect(model.updatedBy).toEqual('TEMP')
     })
+    it('should set version number to 1 if none assigned', () => {
+      const model = new AMaaSModel({})
+      expect(model.version).toEqual(1)
+    })
   })
 })
