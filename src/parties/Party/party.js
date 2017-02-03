@@ -1,6 +1,8 @@
 import { AMaaSModel } from '../../core'
 import { Address, Email } from '../Children'
 
+import { retrieveData } from '../../utils/network'
+
 class Party extends AMaaSModel {
   //
   constructor({ assetManagerId, partyId, partyStatus='Active', partyClass='Party', partyType='Party', description='', addresses=[], emails=[], references={} }) {
@@ -126,6 +128,22 @@ class Party extends AMaaSModel {
     if (validated) {
       this._emails = validated
     }
+  }
+
+  static retrieveParty(AMId, partyId, callback) {
+    const params = {
+      AMaaSClass: 'parties',
+      AMId,
+      resourceId: partyId
+    }
+    // return params
+    retrieveData(params, (error, result) => {
+      if (error) {
+        callback(error)
+      } else {
+        callback(null, result)
+      }
+    })
   }
 }
 

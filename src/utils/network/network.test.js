@@ -4,6 +4,8 @@ import {
   insertData
 } from './'
 
+import ENDPOINTS from '../../config.js'
+
 // import { baseURL } from './constants.js'
 
 import nock from 'nock'
@@ -21,7 +23,8 @@ describe('buildURL function', () => {
       AMId: undefined,
       resourceId: 'testResource'
     }
-    const expectedURL = `${process.env.baseURL}/testClass`
+    // const expectedURL = `${process.env.booksURL}/`
+    const expectedURL = `${ENDPOINTS.books}/books/`
     expect(buildURL(testParams)).toEqual(expectedURL)
   })
   it('should build correctly if all parameters are specified', () => {
@@ -30,7 +33,8 @@ describe('buildURL function', () => {
       AMId: 'testAMId',
       resourceId: 'testResource'
     }
-    const expectedURL = `${process.env.baseURL}/testClass/testAMId/testResource`
+    // const expectedURL = `${process.env.booksURL}/testAMId/testResource`
+    const expectedURL = `${ENDPOINTS.books}/books/testAMId/testResource`
     expect(buildURL(testParams)).toEqual(expectedURL)
   })
 })
@@ -41,7 +45,8 @@ describe('retrieveData', () => {
     AMId: '1234'
   }
   it('should hit the correct endpoint', () => {
-    nock(process.env.baseURL)
+    // const scope = nock(process.env.baseURL)
+    const scope = nock(ENDPOINTS.books)
       .get('/books/1234')
       .reply(200, {
         param1: 'testBody'
@@ -51,7 +56,8 @@ describe('retrieveData', () => {
     })
   })
   it('should receive the correct HTTP status code', () => {
-    nock(process.env.baseURL)
+    // const scope = nock(process.env.baseURL)
+    const scope = nock(ENDPOINTS.books)
       .get('/books/1234')
       .reply(501)
     retrieveData(testParams, (error, result) => {
@@ -75,7 +81,8 @@ describe('insertData', () => {
     expect(tester).toThrowError('Class, AMId and data to insert are required')
   })
   it('should build the correct url and POST to it', () => {
-    nock(process.env.baseURL)
+    // const scope = nock(process.env.baseURL)
+    const scope = nock(ENDPOINTS.books)
       .post('/books/1234')
       .reply(200, {
         param1: 'testResponse'

@@ -1,6 +1,12 @@
 import Party from './party.js'
 import { Address, Email } from '../Children'
 
+import nock from 'nock'
+
+// const network = require('../../utils/network/index.js')
+// let retrieveData = network.retrieveData
+// import { retrieveData } from '../../utils/network'
+
 describe('Party', () => {
   describe('constructor', () => {
     it('should set addresses to empty array if class is instantiated without contacts', () => {
@@ -75,6 +81,29 @@ describe('Party', () => {
       const testParty = new Party({ emails: [testEmail] }, null, {})
       testParty.emails = []
       expect(testParty.emails.length).toEqual(1)
+    })
+  })
+
+  describe.only('retrieveBook', () => {
+    it('should callback with error if HTTP does not return 200', () => {
+      const scope = nock(process.env.partiesURL)
+        .get('/AMId/partyId')
+        // .reply(200, 'Book XZ23D4XWH5')
+        .reply(400)
+      Party.retrieveParty('AMId', 'partyId', (error, result) => {
+        expect(error).toBeDefined()
+        expect(error.statusCode).toEqual(400)
+        expect(result).toBeUndefined()
+      })
+    })
+    it('should callback with result of HTTP request if it returns 200', () => {
+      const scope = nock(process.env.partiesURL)
+        .get('/AMId/partyId')
+        .reply(200, 'Test return party')
+      Party.retrieveParty('AMId', 'partyId', (error, result) => {
+        expect(error).toBeNull()
+        expect(result).toEqual('Test return party')
+      })
     })
   })
 })
