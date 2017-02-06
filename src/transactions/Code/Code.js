@@ -1,8 +1,11 @@
 import { AMaaSModel } from '../../core'
 
 class Code extends AMaaSModel {
-  constructor({ codeValue, active }, args, coreData) {
-    super(coreData)
+  constructor({ codeValue, active, version=1 }) {
+    const superOptions = Object.assign({}, {
+      version
+    })
+    super(superOptions)
     this.codeValue = codeValue
     this.active = active
   }
