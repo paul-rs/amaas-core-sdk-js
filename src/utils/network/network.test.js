@@ -52,7 +52,7 @@ describe('retrieveData', () => {
         param1: 'testBody'
       })
     retrieveData(testParams, (error, result) => {
-      expect(JSON.parse(result)).toEqual({ param1: 'testBody' })
+      expect(result).toEqual({ param1: 'testBody' })
     })
   })
   it('should receive the correct HTTP status code', () => {

@@ -83,27 +83,4 @@ describe('Party', () => {
       expect(testParty.emails.length).toEqual(1)
     })
   })
-
-  describe.only('retrieveBook', () => {
-    it('should callback with error if HTTP does not return 200', () => {
-      const scope = nock(process.env.partiesURL)
-        .get('/AMId/partyId')
-        // .reply(200, 'Book XZ23D4XWH5')
-        .reply(400)
-      Party.retrieveParty('AMId', 'partyId', (error, result) => {
-        expect(error).toBeDefined()
-        expect(error.statusCode).toEqual(400)
-        expect(result).toBeUndefined()
-      })
-    })
-    it('should callback with result of HTTP request if it returns 200', () => {
-      const scope = nock(process.env.partiesURL)
-        .get('/AMId/partyId')
-        .reply(200, 'Test return party')
-      Party.retrieveParty('AMId', 'partyId', (error, result) => {
-        expect(error).toBeNull()
-        expect(result).toEqual('Test return party')
-      })
-    })
-  })
 })

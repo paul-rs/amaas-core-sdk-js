@@ -129,22 +129,6 @@ class Party extends AMaaSModel {
       this._emails = validated
     }
   }
-
-  static retrieveParty(AMId, partyId, callback) {
-    const params = {
-      AMaaSClass: 'parties',
-      AMId,
-      resourceId: partyId
-    }
-    // return params
-    retrieveData(params, (error, result) => {
-      if (error) {
-        callback(error)
-      } else {
-        callback(null, result)
-      }
-    })
-  }
 }
 
 export default Party

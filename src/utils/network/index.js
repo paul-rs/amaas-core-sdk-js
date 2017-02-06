@@ -62,7 +62,7 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
   // const url = resourceId ? `${baseURL}${AMaaSClass}/${AMId}/${resourceId}` : `${baseURL}${AMaaSClass}/${AMId}/`
   request(url, (error, response, body) => {
     if (!error && response.statusCode == 200) {
-      callback(null, body)
+      callback(null, JSON.parse(body))
     } else {
       const statusCode = response ? response.statusCode : ''
       const requestError = {
