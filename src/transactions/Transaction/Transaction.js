@@ -29,8 +29,41 @@ class Transaction extends AMaaSModel {
    * @param {*} asset: *
    * @param {object} transactionData.coreData: AMaaSModel constructor options
   */
-  constructor({ assetManagerId, assetBookId, counterpartyBookId, transactionAction, assetId, quantity, transactionDate, settlementDate, price, transactionCurrency, settlementCurrency, asset, executionTime, transactionType='Trade', transactionId, transactionStatus='New', charges={}, codes={}, references={} }, args, coreData) {
-    super(coreData)
+  constructor({
+    assetManagerId,
+    assetBookId,
+    counterpartyBookId,
+    transactionAction,
+    assetId,
+    quantity,
+    transactionDate,
+    settlementDate,
+    price,
+    transactionCurrency,
+    settlementCurrency,
+    asset,
+    executionTime=new Date(),
+    transactionType='Trade',
+    transactionId=uuid(),
+    transactionStatus='New',
+    charges={},
+    codes={},
+    comments={},
+    links={},
+    parties={},
+    references={},
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version }) {
+    super({
+      createdBy,
+      updatedBy,
+      createdTime,
+      updatedTime,
+      version
+    })
     this.assetManagerId = assetManagerId
     this.assetBookId = assetBookId
     this.counterpartyBookId = counterpartyBookId
@@ -44,12 +77,15 @@ class Transaction extends AMaaSModel {
     this.settlementCurrency = settlementCurrency
     this.transactionType = transactionType
     this.transactionStatus = transactionStatus
-    this.executionTime = executionTime || new Date()
-    this.transactionId = transactionId || uuid()
+    this.executionTime = executionTime
+    this.transactionId = transactionId
     this.charges = charges
     this.codes = codes
+    this.comments = comments
+    this.links = links
+    this.parties = parties
     this.references = references
-    this.references.AMaaS = new Reference(this.transactionId, args, coreData)
+    this.references.AMaaS = new Reference({ referenceValue: this.transactionId })
     this.postings = []
     this.asset = asset
   }

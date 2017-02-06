@@ -1,5 +1,6 @@
 // import { baseURL } from './constants.js'
 // import * as types from '../../core/types.js'
+import ENDPOINTS from '../../config.js'
 
 import request from 'request'
 require('dotenv').config()
@@ -15,14 +16,28 @@ require('dotenv').config()
  * @param {string} resourceId: Id of the resource being requested (e.g. book_id)
 */
 export function buildURL({ AMaaSClass, AMId, resourceId }) {
+  let baseURL;
+  switch (AMaaSClass) {
+    case 'book':
+      // baseURL = process.env.booksURL
+      baseURL = `${ENDPOINTS.books}/books`
+      break
+    case 'parties':
+      // baseURL = process.env.partiesURL
+      baseURL = `${ENDPOINTS.parties}/parties`
+      break
+    default:
+      // baseURL = process.env.booksURL
+      baseURL = `${ENDPOINTS.books}/books`
+  }
   if (!AMaaSClass) {
     throw new Error('Class is required to build URL')
   } else if (!AMId) {
-    return `${process.env.baseURL}/${AMaaSClass}`
+    return `${baseURL}/`
   } else if (!resourceId) {
-    return `${process.env.baseURL}/${AMaaSClass}/${AMId}`
+    return `${baseURL}/${AMId}`
   } else {
-    return `${process.env.baseURL}/${AMaaSClass}/${AMId}/${resourceId}`
+    return `${baseURL}/${AMId}/${resourceId}`
   }
 }
 
@@ -47,12 +62,11 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
   // const url = resourceId ? `${baseURL}${AMaaSClass}/${AMId}/${resourceId}` : `${baseURL}${AMaaSClass}/${AMId}/`
   request(url, (error, response, body) => {
     if (!error && response.statusCode == 200) {
-      callback(null, body)
-    } else if (false) {
-      callback(error)
+      callback(null, JSON.parse(body))
     } else {
+      const statusCode = response ? response.statusCode : ''
       const requestError = {
-        statusCode: response.statusCode,
+        statusCode,
         error
       }
       callback(requestError)

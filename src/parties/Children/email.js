@@ -1,8 +1,14 @@
 import { AMaaSModel } from '../../core'
 
 class Email extends AMaaSModel {
-  constructor({ emailPrimary, email, active }, args, coreData) {
-    super(coreData, args)
+  constructor({ emailPrimary, email, active, createdBy, updatedBy, createdTime, updatedTime, version }) {
+    super({
+      createdBy,
+      updatedBy,
+      createdTime,
+      updatedTime,
+      version
+    })
     this.emailPrimary = emailPrimary
     this.email = email
     this.active = active

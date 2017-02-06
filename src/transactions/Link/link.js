@@ -1,7 +1,7 @@
 import { AMaaSModel } from '../../core'
 
-class Code extends AMaaSModel {
-  constructor({ codeValue, active, createdBy, updatedBy, createdTime, updatedTime, version }) {
+class Link extends AMaaSModel {
+  constructor({ linkedTransactionId, active, createdBy, updatedBy, createdTime, updatedTime, version }) {
     super({
       createdBy,
       updatedBy,
@@ -9,7 +9,7 @@ class Code extends AMaaSModel {
       updatedTime,
       version
     })
-    this.codeValue = codeValue
+    this.linkedTransactionId = linkedTransactionId
     this.active = active
   }
 
@@ -31,4 +31,4 @@ class Code extends AMaaSModel {
   }
 }
 
-export default Code
+export default Link
