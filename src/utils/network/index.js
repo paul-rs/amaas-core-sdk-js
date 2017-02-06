@@ -5,7 +5,7 @@ import ENDPOINTS from '../../config.js'
 import request from 'request'
 require('dotenv').config()
 
-/**
+/***
  * !This is an internal function that should not be called by the end user!
 
  * Builds a URL for HTTP request
@@ -41,7 +41,7 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
   }
 }
 
-/**
+/***
  * !This is an internal function that should not be called by the end user!
  * !Wrapper functions are exposed for the individual asset classes for consumption!
 
@@ -74,7 +74,7 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
   })
 }
 
-/**
+/***
  * !This is an internal function that should not be called by the end user!
  * !Wrapper functions are exposed for the individual asset classes for consumption!
 
