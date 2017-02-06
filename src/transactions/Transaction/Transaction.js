@@ -29,7 +29,7 @@ class Transaction extends AMaaSModel {
    * @param {*} asset: *
    * @param {object} transactionData.coreData: AMaaSModel constructor options
   */
-  constructor({ assetManagerId, assetBookId, counterpartyBookId, transactionAction, assetId, quantity, transactionDate, settlementDate, price, transactionCurrency, settlementCurrency, asset, executionTime, transactionType='Trade', transactionId, transactionStatus='New', charges={}, codes={}, references={} }, args, coreData) {
+  constructor({ assetManagerId, assetBookId, counterpartyBookId, transactionAction, assetId, quantity, transactionDate, settlementDate, price, transactionCurrency, settlementCurrency, asset, executionTime, transactionType='Trade', transactionId, transactionStatus='New', charges={}, codes={}, comments={}, links={}, parties={}, references={} }, args, coreData) {
     super(coreData)
     this.assetManagerId = assetManagerId
     this.assetBookId = assetBookId
@@ -48,6 +48,9 @@ class Transaction extends AMaaSModel {
     this.transactionId = transactionId || uuid()
     this.charges = charges
     this.codes = codes
+    this.comments = comments
+    this.links = links
+    this.parties = parties
     this.references = references
     this.references.AMaaS = new Reference(this.transactionId, args, coreData)
     this.postings = []
