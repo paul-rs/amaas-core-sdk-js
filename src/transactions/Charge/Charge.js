@@ -12,11 +12,14 @@ class Charge extends AMaaSModel {
    * @param {number} data.version: Version of the object
    * @param {object} coreData: AMaaSModel creation options
  */
-  constructor({ chargeValue, currency, active, netAffecting, version=1 }) {
-    const superOptions = Object.assign({}, {
+  constructor({ chargeValue, currency, active, netAffecting, createdBy, updatedBy, createdTime, updatedTime, version }) {
+    super({
+      createdBy,
+      updatedBy,
+      createdTime,
+      updatedTime,
       version
     })
-    super(superOptions)
     this.chargeValue = chargeValue
     this.currency = currency
     this.active = active

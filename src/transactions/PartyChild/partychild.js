@@ -1,15 +1,15 @@
 import { AMaaSModel } from '../../core'
 
-class Comment extends AMaaSModel {
-  constructor({ commentValue, active, createdBy, updatedBy, createdTime, updatedTime, version }) {
+class PartyChild extends AMaaSModel {
+  constructor({ partyId, active, createdBy, createdTime, updatedBy, updatedTime, version }) {
     super({
       createdBy,
-      updatedBy,
       createdTime,
+      updatedBy,
       updatedTime,
       version
     })
-    this.commentValue = commentValue
+    this.partyId = partyId
     this.active = active
   }
 
@@ -31,4 +31,4 @@ class Comment extends AMaaSModel {
   }
 }
 
-export default Comment
+export default PartyChild

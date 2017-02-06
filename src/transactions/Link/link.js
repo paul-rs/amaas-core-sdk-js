@@ -1,11 +1,14 @@
 import { AMaaSModel } from '../../core'
 
 class Link extends AMaaSModel {
-  constructor({ linkedTransactionId, active, version=1 }) {
-    const superOptions = Object.assign({}, {
+  constructor({ linkedTransactionId, active, createdBy, updatedBy, createdTime, updatedTime, version }) {
+    super({
+      createdBy,
+      updatedBy,
+      createdTime,
+      updatedTime,
       version
     })
-    super(superOptions)
     this.linkedTransactionId = linkedTransactionId
     this.active = active
   }

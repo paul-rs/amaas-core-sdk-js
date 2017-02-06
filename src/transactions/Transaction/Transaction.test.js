@@ -13,7 +13,7 @@ describe('Transaction class', () => {
       quantity: 2.54,
       price: 45.77
     }
-    const testTrans = new Transaction(data, null, coreData)
+    const testTrans = new Transaction(data)
 
     it('should set transactionType to Trade if undefined', () => {
       expect(testTrans.transactionType).toEqual('Trade')
@@ -37,7 +37,7 @@ describe('Transaction class', () => {
           COMMISSION : new Charge({ chargeValue: 20, currency: 'SGD', active: true, netAffecting: true }, null, coreData)
         }
       }
-      const testTrans = new Transaction(data, null, coreData)
+      const testTrans = new Transaction(data)
       testTrans.chargesNetEffect()
       expect(testTrans.chargesNetEffect()).toEqual(new Decimal(30))
     })
