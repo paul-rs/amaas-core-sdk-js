@@ -9,44 +9,37 @@ import nock from 'nock'
 
 describe('Party', () => {
   describe('constructor', () => {
-    it('should set addresses to empty array if class is instantiated without contacts', () => {
-      const testParty = new Party({}, null, {})
-      expect(testParty.addresses).toBeInstanceOf(Array)
-      expect(testParty.addresses.length).toEqual(0)
+    it('should set addresses to empty object if class is instantiated without contacts', () => {
+      const testParty = new Party({})
+      expect(testParty.addresses).toEqual({})
     })
 
   })
   describe('validatePrimary', () => {
-    it('should throw if not called with an array', () => {
+    it('should throw if called with an object that has a non-Address as a value', () => {
       const testParty = new Party({}, null, {})
       function tester() {
-        testParty.addresses = 'notAnArray'
-      }
-      expect(tester).toThrowError('Method only accepts an Array')
-    })
-    it('should throw if called with an array that has a non-Address as a member', () => {
-      const testParty = new Party({}, null, {})
-      function tester() {
-        testParty.addresses = ['notAnAddress']
+        testParty.addresses = { address: 'notAnAddress' }
       }
       expect(tester).toThrowError('Found address with wrong class')
     })
     it('should throw if attempting to add multiple primary addresses', () => {
       const primaryOne = new Address({ addressPrimary: true }, null, {})
       const primaryTwo = new Address({ addressPrimary: true }, null, {})
+      const params = { primaryOne, primaryTwo }
       const testParty = new Party({}, null, {})
       function tester() {
-        testParty.addresses = [primaryOne, primaryTwo]
+        testParty.addresses = params
       }
       expect(tester).toThrowError('Exactly 1 primary address is allowed')
     })
     it('should throw if attempting to add primary address to existing primary address', () => {
       const primaryOne = new Address({ addressPrimary: true }, null, {})
       const primaryTwo = new Address({ addressPrimary: true }, null, {})
-      const testParty = new Party({}, null, {})
-      testParty.addresses = [primaryOne]
+      const testParty = new Party({ addresses: { primaryOne } }, null, {})
+      // testParty.addresses = { primaryOne }
       function tester() {
-        testParty.addresses = [primaryTwo]
+        testParty.addresses = { primaryTwo }
       }
       expect(tester).toThrowError('Primary Address is already set for this Party')
     })
@@ -54,9 +47,9 @@ describe('Party', () => {
       const primaryOne = new Address({ addressPrimary: true, lineOne: 'testRoad' }, null, {})
       const primaryTwo = new Address({ addressPrimary: false, lineOne: 'testStreet' }, null, {})
       const testParty = new Party({}, null, {})
-      testParty.addresses = [primaryOne]
-      testParty.addresses = [primaryTwo]
-      expect(testParty.addresses).toEqual([primaryOne, primaryTwo])
+      testParty.addresses = { primaryOne }
+      testParty.addresses = { primaryTwo }
+      expect(testParty.addresses).toEqual({ primaryOne, primaryTwo })
     })
   })
 
@@ -64,7 +57,7 @@ describe('Party', () => {
     it('should throw if called with an array containing a non-Email class instance', () => {
       const testParty = new Party({}, null, {})
       function tester() {
-        testParty.emails = ['notanEmail']
+        testParty.emails = { email: 'notanEmail' }
       }
       expect(tester).toThrowError('Found email with wrong class')
     })
@@ -72,15 +65,15 @@ describe('Party', () => {
       const testParty = new Party({}, null, {})
       const testEmails = new Email({ email: 'not an email' }, null, {})
       function tester() {
-        testParty.emails = [testEmails]
+        testParty.emails = { testEmails }
       }
       expect(tester).toThrowError('Not a valid email')
     })
-    it('should not overwrite existing emails if attempting to set an empty array', () => {
+    it('should not overwrite existing emails if attempting to set an empty object', () => {
       const testEmail = new Email({ emailPrimary: true, email: 'test@test.com' }, null, {})
-      const testParty = new Party({ emails: [testEmail] }, null, {})
-      testParty.emails = []
-      expect(testParty.emails.length).toEqual(1)
+      const testParty = new Party({ emails: { testEmail } }, null, {})
+      testParty.emails = {}
+      expect(Object.keys(testParty.emails).length).toEqual(1)
     })
   })
 })

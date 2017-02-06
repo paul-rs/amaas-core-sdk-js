@@ -1,15 +1,23 @@
 import Company from '../Company/company.js'
 
 class Exchange extends Company {
-  constructor({ assetManagerId, partyId, partyType='Exchange', description='', references={} }) {
-    const superOptions = Object.assign({}, {
+  constructor({ assetManagerId, partyId, partyStatus='Active', partyClass='Company', partyType='Exchange', description='', addresses={}, emails={}, references={}, createdBy, updatedBy, createdTime, updatedTime, version }) {
+    super({
       assetManagerId,
       partyId,
+      partyStatus,
+      partyClass,
       partyType,
       description,
-      references
+      addresses,
+      emails,
+      references,
+      createdBy,
+      updatedBy,
+      createdTime,
+      updatedTime,
+      version
     })
-    super(superOptions)
   }
 }
 

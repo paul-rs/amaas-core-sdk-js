@@ -1,15 +1,23 @@
 import Party from '../Party/party.js'
 
 class Organisation extends Party {
-  constructor({ assetManagerId, partyId, partyClass='Organisation', partyType='Organisation', description='', references={} }) {
-    const superOptions = Object.assign({}, {
+  constructor({ assetManagerId, partyId, partyStatus='Active', partyClass='Organisation', partyType='Organisation', description='', addresses={}, emails={}, references={}, createdBy, updatedBy, createdTime, updatedTime, version }) {
+    super({
       assetManagerId,
       partyId,
+      partyStatus,
       partyClass,
       partyType,
-      references
+      description,
+      addresses,
+      emails,
+      references,
+      createdBy,
+      updatedBy,
+      createdTime,
+      updatedTime,
+      version
     })
-    super(superOptions)
   }
 }
 

@@ -1,15 +1,23 @@
 import Organisation from '../Organisation/organisation.js'
 
 class GovernmentAgency extends Organisation {
-  constructor({ assetManagerId, partyId, description='', references={} }) {
-    const superOptions = Object.assign({}, {
+  constructor({ assetManagerId, partyId, partyStatus='Active', partyClass='Organisation', partyType='GovernmentAgency', description='', addresses={}, emails={}, references={}, createdBy, updatedBy, createdTime, updatedTime, version }) {
+    super({
       assetManagerId,
       partyId,
-      partyType: 'Government Agency',
+      partyStatus,
+      partyClass,
+      partyType,
       description,
-      references
+      addresses,
+      emails,
+      references,
+      createdBy,
+      updatedBy,
+      createdTime,
+      updatedTime,
+      version
     })
-    super(superOptions)
   }
 }
 

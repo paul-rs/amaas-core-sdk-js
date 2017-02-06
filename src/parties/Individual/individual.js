@@ -1,8 +1,8 @@
 import Party from '../Party/party.js'
 
 class Individual extends Party {
-  constructor({ assetManagerId, partyId, partyStatus='Active', partyClass='Individual', partyType='Individual', description='', addresses=[], emails=[], references={} }) {
-    const superOptions = Object.assign({}, {
+  constructor({ assetManagerId, partyId, partyStatus='Active', partyClass='Individual', partyType='Individual', description='', addresses={}, emails={}, references={}, createdBy, updatedBy, createdTime, updatedTime, version }) {
+    super({
       assetManagerId,
       partyId,
       partyStatus,
@@ -11,9 +11,13 @@ class Individual extends Party {
       description,
       addresses,
       emails,
-      references
+      references,
+      createdBy,
+      updatedBy,
+      createdTime,
+      updatedTime,
+      version
     })
-    super(superOptions)
   }
 }
 

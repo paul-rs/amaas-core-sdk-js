@@ -8,7 +8,7 @@ describe('GovernmentAgency', () => {
     })
     it('should set partyType to Government Agency', () => {
       const testGov = new GovernmentAgency({})
-      expect(testGov.partyType).toEqual('Government Agency')
+      expect(testGov.partyType).toEqual('GovernmentAgency')
     })
   })
 })
