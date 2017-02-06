@@ -39,4 +39,8 @@ jspm_packages
 # Distribution folder
 dist
 
+#Environment Variables
 .env
+
+#Docs
+out
