@@ -6,6 +6,12 @@ import Exchange from '../../parties/Exchange/exchange.js'
 import Fund from '../../parties/Fund/fund.js'
 import GovernmentAgency from '../../parties/GovernmentAgency/governmentagency.js'
 
+/**
+ * Retrieve Party data for specified AMId and partyId
+ * @param {number} AMId - Asset Manager ID of the Party
+ * @param {string} [partyId] - Party ID of the Party. Omitting this will return all Parties associated with that AMId
+ * @param {function} callback - Called with two arguments (error, result) on completion of retrieveData function
+ */
 function getParty(AMId, partyId, callback) {
   const params = {
     AMaaSClass: 'parties',

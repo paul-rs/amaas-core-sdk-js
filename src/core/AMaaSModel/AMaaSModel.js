@@ -1,5 +1,5 @@
 /**
- * Class representing a AMaaSModel
+ * Class representing a AMaaSModel.
  * This is the Base Class for almost every other class
  */
 class AMaaSModel {
