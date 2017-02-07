@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "jest --verbose --watch",
-    "build": "babel src --presets babel-preset-es2015 --out-dir dist --ignore '**.test.js'"
+    "build": "babel src --presets babel-preset-es2015 --out-dir dist --ignore '**.test.js'",
+    "docs": "jsdoc2md ./src/transactions/**/*.js > ./docs/api.md"
   },
   "jest": {
     "transform": {
@@ -28,6 +29,7 @@
     "jest": "^18.1.0",
     "jest-cli": "^18.1.0",
     "jsdoc": "^3.4.3",
+    "jsdoc-to-markdown": "^2.0.1",
     "nock": "^9.0.2"
   },
   "dependencies": {
