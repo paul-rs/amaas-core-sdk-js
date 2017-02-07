@@ -7,13 +7,14 @@ import { AMaaSModel } from '../../core'
 class Code extends AMaaSModel {
   /**
    * Construct a new Code object
-   * @param {string} codeValue - The code itself
-   * @param {bool} active - Whether this Code is active
-   * @param {string} createdBy - ID of the user that created this object (required if creating a new Code)
-   * @param {string} updatedBy - ID of the user that updated this object (use if amending existing Code)
-   * @param {date} createdTime - Time that the Code was created (required if creating new Code)
-   * @param {date} updatedTime - Time that the Code was updated (required if amending existing Code)
-   * @param {number} version - Version number of the Code
+   * @param {object} options - Code creation options
+   * @param {string} options.codeValue - The code itself
+   * @param {bool} options.active - Whether this Code is active
+   * @param {string} options.createdBy - ID of the user that created this object (required if creating a new Code)
+   * @param {string} options.updatedBy - ID of the user that updated this object (use if amending existing Code)
+   * @param {date} options.createdTime - Time that the Code was created (required if creating new Code)
+   * @param {date} options.updatedTime - Time that the Code was updated (required if amending existing Code)
+   * @param {number} options.version - Version number of the Code
    */
   constructor({ codeValue, active, createdBy, updatedBy, createdTime, updatedTime, version }) {
     super({
