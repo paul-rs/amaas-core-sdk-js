@@ -5,11 +5,12 @@
 class AMaaSModel {
   /**
    * Construct new AMaaSModel object
-   * @param {string} createdBy - ID of the user that created this object (required if creating a new AMaaSModel)
-   * @param {string} updatedBy - ID of the user that updated this object (use if amending existing AMaaSModel)
-   * @param {date} createdTime - Time that the AMaaSModel was created (required if creating new AMaaSModel)
-   * @param {date} updatedTime - Time that the AMaaSModel was updated (required if amending existing AMaaSModel)
-   * @param {number} version - Version number of the AMaaSModel
+   * @param {object} params - AMaaSModelparams. creation options
+   * @param {string} params.createdBy - ID of the user that created this object (required if creating a new AMaaSModel)
+   * @param {string} params.updatedBy - ID of the user that updated this object (use if amending existing AMaaSModel)
+   * @param {date} params.createdTime - Time that the AMaaSModel was created (required if creating new AMaaSModel)
+   * @param {date} params.updatedTime - Time that the AMaaSModel was updated (required if amending existing AMaaSModel)
+   * @param {number} params.version - Version number of the AMaaSModel
  */
   constructor({ createdBy='TEMP', updatedBy='TEMP', createdTime, updatedTime, version }={ createdBy: 'TEMP', updatedBy: 'TEMP' }) {
    this.createdBy = createdBy

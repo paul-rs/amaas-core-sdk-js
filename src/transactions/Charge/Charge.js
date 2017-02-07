@@ -8,14 +8,15 @@ const Decimal = require('decimal.js')
 class Charge extends AMaaSModel {
   /**
    * Construct a new Charge object
-   * @param {string} chargeValue - Value of the charge
-   * @param {string} currency - Currency of the charge (e.g. SGD, USD etc.)
-   * @param {bool} active - Whether this Charge is active
-   * @param {string} createdBy - ID of the user that created this object (required if creating a new Charge)
-   * @param {string} updatedBy - ID of the user that updated this object (use if amending existing Charge)
-   * @param {date} createdTime - Time that the Charge was created (required if creating new Charge)
-   * @param {date} updatedTime - Time that the Charge was updated (required if amending existing Charge)
-   * @param {number} version - Version number of the Charge
+   * @param {object} params - Charge creation options
+   * @param {string} params.chargeValue - Value of the charge
+   * @param {string} params.currency - Currency of the charge (e.g. SGD, USD etc.)
+   * @param {bool} params.active - Whether this Charge is active
+   * @param {string} params.createdBy - ID of the user that created this object (required if creating a new Charge)
+   * @param {string} params.updatedBy - ID of the user that updated this object (use if amending existing Charge)
+   * @param {date} params.createdTime - Time that the Charge was created (required if creating new Charge)
+   * @param {date} params.updatedTime - Time that the Charge was updated (required if amending existing Charge)
+   * @param {number} params.version - Version number of the Charge
    */
   constructor({ chargeValue, currency, active, netAffecting, createdBy, updatedBy, createdTime, updatedTime, version }) {
     super({
