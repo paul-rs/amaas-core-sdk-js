@@ -43,6 +43,18 @@ class Reference extends AMaaSModel {
   get active() {
     return this._active
   }
+
+  toJSON() {
+    return {
+      reference_value: this.referenceValue,
+      active: this.active,
+      created_by: this.createdBy,
+      updated_by: this.updatedBy,
+      created_time: this.createdTime,
+      updated_time: this.updatedTime,
+      version: this.version
+    }
+  }
 }
 
 export default Reference

@@ -46,6 +46,36 @@ class Email extends AMaaSModel {
   get active() {
     return this._active
   }
+
+  set emailPrimary(newEmailPrimary) {
+    switch (newEmailPrimary) {
+      case false:
+        this._emailPrimary = false
+        break
+      case undefined:
+        this._emailPrimary = true
+        break
+      default:
+        this._emailPrimary = newEmailPrimary
+    }
+
+    get emailPrimary() {
+      return this._emailPrimary
+    }
+  }
+
+  toJSON() {
+    return {
+      email_primary: this.emailPrimary,
+      email: this.email,
+      active: this.active,
+      created_by: this.createdBy,
+      updated_by: this.updatedBy,
+      created_time: this.createdTime,
+      updated_time: this.updatedTime,
+      version: this.version
+    }
+  }
 }
 
 export default Email
