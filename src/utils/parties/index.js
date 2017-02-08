@@ -1,10 +1,14 @@
-import { retrieveData } from '../network'
+import { retrieveData, insertData } from '../network'
 import Party from '../../parties/Party/party.js'
 import Individual from '../../parties/Individual/individual.js'
 import Broker from '../../parties/Broker/broker.js'
 import Exchange from '../../parties/Exchange/exchange.js'
 import Fund from '../../parties/Fund/fund.js'
-import GovernmentAgency from '../../parties/GovernmentAgency/governmentagency.js'
+import GovernmentAgency from '../../parties/GovernmentAgency/governmentAgency.js'
+
+import Address from '../../parties/Children/address.js'
+import Email from '../../parties/Children/email.js'
+import Reference from '../../core/Reference/Reference.js'
 
 /**
  * Retrieve Party data for specified AMId and partyId
@@ -12,7 +16,7 @@ import GovernmentAgency from '../../parties/GovernmentAgency/governmentagency.js
  * @param {string} [partyId] - Party ID of the Party. Omitting this will return all Parties associated with that AMId
  * @param {function} callback - Called with two arguments (error, result) on completion of retrieveData function
  */
-function getParty(AMId, partyId, callback) {
+export function getParty(AMId, partyId, callback) {
   const params = {
     AMaaSClass: 'parties',
     AMId,
@@ -28,8 +32,80 @@ function getParty(AMId, partyId, callback) {
   })
 }
 
+export function insertNewParty(party, callback) {
+  const params = {
+    AMaaSClass: 'parties',
+    data: party
+  }
+  insertData(params, (error, result) => {
+    if (error) {
+      callback(error)
+    } else {
+      console.log(result)
+    }
+  })
+}
+
+export function _parseChildren(type, children) {
+  let parsedChildren = {}
+  switch (type) {
+    case 'address':
+      for (let child in children) {
+        parsedChildren[child] = new Address({
+          addressPrimary: children[child].address_primary,
+          lineOne: children[child].line_one,
+          lineTwo: children[child].line_two,
+          city: children[child].city,
+          region: children[child].region,
+          postalCode: children[child].postal_code,
+          countryId: children[child].country_id,
+          active: children[child].active,
+          createdBy: children[child].created_by,
+          updatedBy: children[child].updated_by,
+          createdTime: children[child].created_time,
+          updatedTime: children[child].updated_time,
+          version: children[child].version
+        })
+      }
+      break
+    case 'email':
+      for (let child in children) {
+        parsedChildren[child] = new Email({
+          emailPrimary: children[child].email_primary,
+          email: children[child].email,
+          active: children[child].active,
+          createdBy: children[child].created_by,
+          updatedBy: children[child].updated_by,
+          createdTime: children[child].created_time,
+          updatedTime: children[child].updated_time,
+          version: children[child].version
+        })
+      }
+      break
+    case 'reference':
+      for (let child in children) {
+        parsedChildren[child] = new Reference({
+          referenceValue: children[child].reference_value,
+          active: children[child].active,
+          createdBy: children[child].created_by,
+          updatedBy: children[child].updated_by,
+          createdTime: children[child].created_time,
+          updatedTime: children[child].updated_time,
+          version: children[child].version
+        })
+      }
+      break
+    default:
+      throw new Error('Child type not defined (parseChildren)')
+  }
+  return parsedChildren
+}
+
 export function _parseParty(object) {
   let party
+  const addresses = _parseChildren('address', object.addresses)
+  const emails = _parseChildren('email', object.emails)
+  const references = _parseChildren('reference', object.references)
   switch (object.party_type) {
     case 'Individual':
       party = new Individual({
@@ -39,13 +115,13 @@ export function _parseParty(object) {
         partyClass: object.party_class,
         partyType: object.party_type,
         description: object.description,
-        addresses: object.addresses,
-        emails: object.emails,
-        references: object.references,
-        createdBy: object.createdBy,
-        updatedBy: object.updatedBy,
-        createdTime: object.createdTime,
-        updatedTime: object.updatedTime,
+        addresses,
+        emails,
+        references,
+        createdBy: object.created_by,
+        updatedBy: object.updated_by,
+        createdTime: object.created_time,
+        updatedTime: object.updated_time,
         version: object.version
       })
       break
@@ -57,13 +133,13 @@ export function _parseParty(object) {
         partyClass: object.party_class,
         partyType: object.party_type,
         description: object.description,
-        addresses: object.addresses,
-        emails: object.emails,
-        references: object.references,
-        createdBy: object.createdBy,
-        updatedBy: object.updatedBy,
-        createdTime: object.createdTime,
-        updatedTime: object.updatedTime,
+        addresses,
+        emails,
+        references,
+        createdBy: object.created_by,
+        updatedBy: object.updated_by,
+        createdTime: object.created_time,
+        updatedTime: object.updated_time,
         version: object.version
       })
       break
@@ -75,13 +151,13 @@ export function _parseParty(object) {
         partyClass: object.party_class,
         partyType: object.party_type,
         description: object.description,
-        addresses: object.addresses,
-        emails: object.emails,
-        references: object.references,
-        createdBy: object.createdBy,
-        updatedBy: object.updatedBy,
-        createdTime: object.createdTime,
-        updatedTime: object.updatedTime,
+        addresses,
+        emails,
+        references,
+        createdBy: object.created_by,
+        updatedBy: object.updated_by,
+        createdTime: object.created_time,
+        updatedTime: object.updated_time,
         version: object.version
       })
       break
@@ -93,13 +169,13 @@ export function _parseParty(object) {
         partyClass: object.party_class,
         partyType: object.party_type,
         description: object.description,
-        addresses: object.addresses,
-        emails: object.emails,
-        references: object.references,
-        createdBy: object.createdBy,
-        updatedBy: object.updatedBy,
-        createdTime: object.createdTime,
-        updatedTime: object.updatedTime,
+        addresses,
+        emails,
+        references,
+        createdBy: object.created_by,
+        updatedBy: object.updated_by,
+        createdTime: object.created_time,
+        updatedTime: object.updated_time,
         version: object.version
       })
       break
@@ -111,13 +187,13 @@ export function _parseParty(object) {
         partyClass: object.party_class,
         partyType: object.party_type,
         description: object.description,
-        addresses: object.addresses,
-        emails: object.emails,
-        references: object.references,
-        createdBy: object.createdBy,
-        updatedBy: object.updatedBy,
-        createdTime: object.createdTime,
-        updatedTime: object.updatedTime,
+        addresses,
+        emails,
+        references,
+        createdBy: object.created_by,
+        updatedBy: object.updated_by,
+        createdTime: object.created_time,
+        updatedTime: object.updated_time,
         version: object.version
       })
       break
@@ -129,17 +205,17 @@ export function _parseParty(object) {
         partyClass: object.party_class,
         partyType: object.party_type,
         description: object.description,
-        addresses: object.addresses,
-        emails: object.emails,
-        references: object.references,
-        createdBy: object.createdBy,
-        updatedBy: object.updatedBy,
-        createdTime: object.createdTime,
-        updatedTime: object.updatedTime,
+        addresses,
+        emails,
+        references,
+        createdBy: object.created_by,
+        updatedBy: object.updated_by,
+        createdTime: object.created_time,
+        updatedTime: object.updated_time,
         version: object.version
       })
   }
   return party
 }
 
-export default getParty
+// export default getParty
