@@ -33,9 +33,10 @@ export function getParty(AMId, partyId, callback) {
 }
 
 export function insertNewParty(party, callback) {
+  const stringified = JSON.stringify(party)
   const params = {
     AMaaSClass: 'parties',
-    data: party
+    data: JSON.parse(stringified)
   }
   insertData(params, (error, result) => {
     if (error) {

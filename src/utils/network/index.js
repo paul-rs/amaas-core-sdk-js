@@ -85,16 +85,16 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
  * @param {string} data: data to insert into database
 */
 export function insertData({ AMaaSClass, AMId, data }, callback) {
-  if (!AMaaSClass || !AMId || !data) {
-    throw new Error('Class, AMId and data to insert are required')
-  }
+  // if (!AMaaSClass || !AMId || !data) {
+  //   throw new Error('Class, AMId and data to insert are required')
+  // }
   const url = buildURL({
     AMaaSClass,
     AMId
   })
   // Data is object with required key value pairs for that class
-  const am = 'asset_manager_id'
-  data[am] = AMId
+  // const am = 'asset_manager_id'
+  // data[am] = AMId
   const params = {
     url,
     json: data
@@ -106,6 +106,7 @@ export function insertData({ AMaaSClass, AMId, data }, callback) {
       callback(error)
     } else {
       console.log(`Server returned with status code ${response.statusCode}`)
+      console.log(`Error message: ${response.body.message}`)
     }
   })
 }

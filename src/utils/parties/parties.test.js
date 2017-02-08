@@ -1,10 +1,34 @@
 import nock from 'nock'
 import ENDPOINTS from '../../config.js'
-import { getParty, _parseParty } from './'
+import { getParty, _parseParty, insertNewParty } from './'
 import Party from '../../parties/Party/party.js'
 import Address from '../../parties/Children/address.js'
 
 describe('parties util functions', () => {
+  describe.only('insertNewParty function', () => {
+    it.only('should stringify party correctly', () => {
+      const address = new Address({
+        addressPrimary: true,
+        lineOne: "VCF5H1W9KLAAN8DIJ0R4",
+        lineTwo: null,
+        city: "NODC740NZO",
+        region: "SX3JEVA03B",
+        postalCode: "YUIJDP",
+        countryId: "O21",
+        active: true,
+        createdBy: "TEMP",
+        updatedBy: "TEMP",
+        createdTime: "2017-01-27T00:31:02",
+        updatedTime: "2017-01-27T00:31:02",
+        version: 1,
+      })
+      const party = new Party({ assetManagerId: '1234', partyId: 'AMID1234', addresses: { Registered: address }, createdBy: 'TEMP' })
+      console.log(JSON.stringify(party))
+      // insertNewParty(party, () => {
+      //   // no-op
+      // })
+    })
+  })
   describe('getParty function', () => {
     it('should call callback with error if retrieveData fails', () => {
       nock(ENDPOINTS.parties)
@@ -26,7 +50,7 @@ describe('parties util functions', () => {
     })
   })
   describe('_parseParty function', () => {
-    it.only('should parse the response to the appropriate class', () => {
+    it('should parse the response to the appropriate class', () => {
       const address = new Address({
         addressPrimary: true,
         lineOne: "VCF5H1W9KLAAN8DIJ0R4",
