@@ -5,5 +5,7 @@
 
 require('dotenv').config()
 
+import { getParty, insertNewParty } from './utils/parties'
+
 export { default as Party } from './parties/Party/party.js'
-export { default as getParty } from './utils/parties'
+export { getParty, insertNewParty }

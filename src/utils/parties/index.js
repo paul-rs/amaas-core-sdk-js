@@ -14,7 +14,7 @@ import Reference from '../../core/Reference/Reference.js'
  * Retrieve Party data for specified AMId and partyId
  * @param {number} AMId - Asset Manager ID of the Party
  * @param {string} [partyId] - Party ID of the Party. Omitting this will return all Parties associated with that AMId
- * @param {function} callback - Called with two arguments (error, result) on completion of retrieveData function
+ * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function getParty(AMId, partyId, callback) {
   const params = {
@@ -32,16 +32,22 @@ export function getParty(AMId, partyId, callback) {
   })
 }
 
+/**
+ * Insert a new Party into the database
+ * @param {Party} party - Party instance to insert
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ */
 export function insertNewParty(party, callback) {
+  const stringified = JSON.stringify(party)
   const params = {
     AMaaSClass: 'parties',
-    data: party
+    data: JSON.parse(stringified)
   }
   insertData(params, (error, result) => {
     if (error) {
       callback(error)
     } else {
-      console.log(result)
+      callback(null, result)
     }
   })
 }
