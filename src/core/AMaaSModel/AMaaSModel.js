@@ -1,14 +1,18 @@
+/**
+ * Class representing a AMaaSModel.
+ * This is the Base Class for almost every other class
+ */
 class AMaaSModel {
+  /**
+   * Construct new AMaaSModel object
+   * @param {object} params - AMaaSModelparams. creation options
+   * @param {string} params.createdBy - ID of the user that created this object (required if creating a new AMaaSModel)
+   * @param {string} params.updatedBy - ID of the user that updated this object (use if amending existing AMaaSModel)
+   * @param {date} params.createdTime - Time that the AMaaSModel was created (required if creating new AMaaSModel)
+   * @param {date} params.updatedTime - Time that the AMaaSModel was updated (required if amending existing AMaaSModel)
+   * @param {number} params.version - Version number of the AMaaSModel
+ */
   constructor({ createdBy='TEMP', updatedBy='TEMP', createdTime, updatedTime, version }={ createdBy: 'TEMP', updatedBy: 'TEMP' }) {
-    /**
-     * Constructs new AMaaSModel object
-     * @param {object} coreData: creation options
-     * @param {string} createdBy: Who created the object (auto set)
-     * @param {string} updatedBy: Who last updated the object (auto set)
-     * @param {date} createdTime: When it was created (from database)
-     * @param {date} updatedTime: When it was last updated (from database)
-     * @param {string} version: Version number of the object
-   */
    this.createdBy = createdBy
    this.updatedBy = updatedBy
    this.createdTime = createdTime

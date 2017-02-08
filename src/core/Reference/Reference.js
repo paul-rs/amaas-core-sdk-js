@@ -1,13 +1,19 @@
 import { AMaaSModel } from '../'
 
+/**
+ * Class representing a Reference
+ * @extends AMaaSModel
+ */
 class Reference extends AMaaSModel {
   /**
-    * Constructs a new Reference object
-    * @param {object} referenceData: creation options
-    * @param {string} referenceData.referenceValue: The reference to the object e.g. Transaction ID
-    * @param {bool} referenceData.active: Whether the object is active or not
-    * @param {string} referenceData.version: The version of the object (incremented by e.g. amends)
-    * @param {object} coreData: AMaasModel constructor options
+    * Construct a new Reference object
+    * @param {object} params - Reference creation options
+    * @param {string} params.referenceValue - The identifier of this Reference (e.g. transactionId)
+    * @param {string} params.createdBy - ID of the user that created this object (required if creating a new Reference)
+    * @param {string} params.updatedBy - ID of the user that updated this object (use if amending existing Reference)
+    * @param {date} params.createdTime - Time that the Reference was created (required if creating new Reference)
+    * @param {date} params.updatedTime - Time that the Reference was updated (required if amending existing Reference)
+    * @param {number} params.version - Version number of the Reference
   */
   constructor({ referenceValue, active, createdBy, updatedBy, createdTime, updatedTime, version }) {
     super({

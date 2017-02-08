@@ -3,7 +3,29 @@ import { Address, Email } from '../Children'
 
 import { retrieveData } from '../../utils/network'
 
+/**
+ * Class representing a Party
+ * @extends AMaaSModel
+ */
 class Party extends AMaaSModel {
+  /**
+   * Construct a new Party object
+   * @param {object} params - Party creation options
+   * @param {number} params.assetManagerId - Asset Manager ID of the Party
+   * @param {string} params.partyId - Party ID of the Party
+   * @param {string} params.partyStatus=Active - Status of the Party (e.g. 'Active')
+   * @param {string} params.partyClass=Party - Class of the Party
+   * @param {string} params.partyType=Party - Type of the Party
+   * @param {string} params.description - Description of the Party
+   * @param {object} params.addresses - Object of Addresses associated with this Party
+   * @param (object) params.emails - Object of Emails associated with this Party
+   * @param {object} params.references - Object of References associated with this Party
+   * @param {string} params.createdBy - ID of the user that created the Party (required if creating a new Party)
+   * @param {string} params.updatedBy - ID of the user that updated the Party (use if amending existing Party)
+   * @param {date} params.createdTime - Time that the Party was created (required if creating new Party)
+   * @param {date} params.updatedTime - Time that the Party was updated (required if amending existing Party)
+   * @param {number} params.version - Version number of the Party
+   */
   constructor({ assetManagerId, partyId, partyStatus='Active', partyClass='Party', partyType='Party', description='', addresses={}, emails={}, references={}, createdBy, updatedBy, createdTime, updatedTime, version }) {
     super({
       createdBy,

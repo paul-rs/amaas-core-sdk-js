@@ -3,43 +3,48 @@ import { Asset } from '../'
 
 import Decimal from 'decimal.js'
 
-/** @class */
+/**
+ * Class representing a Base Bond
+ * @extends Asset
+ */
 class BondBase extends Asset {
   /**
-   * Constructs new Base Bond class
-   * @param {object} anonymous: creation options
-   * @param {string} assetManagerId: ID of Bond's Asset Manager
-   * @param {string} assetId: ID of asset
-   * @param {date} maturityDate: Date of Bond's maturity
-   * @param {decimal} coupon: The Bond's coupon (represented as a fraction of 1 i.e. 0.05 = 5%)
-   * @param {decimal} par: The Bond's par
-   * @param {string} assetIssuerId: ID of the Bond Issuer
-   * @param {string} assetStatus: Status of the Bond
-   * @param {string} description: Description of the Bond
-   * @param {string} countryId: ID of the Bond's origin country
-   * @param {string} venueId: ID of the Bond's venue
-   * @param {string} clientId: ID of the client
-   * @param {date} issueDate: Date of Bond issue
-   * @param {object} references: Object of references for the Bond
-   * @param {object} args: Other misc arguments
-   * @param {object} coreData: Asset constructor options
+   * Construct new Base Bond class
+   * @param {object} params - BondBase creation options
+   * @param {string} params.assetManagerId - ID of Bond's Asset Manager
+   * @param {string} params.assetId - ID of asset
+   * @param {date} params.maturityDate - Date of Bond's maturity
+   * @param {decimal} params.coupon - The Bond's coupon (represented as a fraction of 1 i.e. 0.05 = 5%)
+   * @param {decimal} params.par - The Bond's par
+   * @param {string} params.assetIssuerId - ID of the Bond Issuer
+   * @param {string} params.assetStatus - Status of the Bond
+   * @param {string} params.description - Description of the Bond
+   * @param {string} params.countryId - ID of the Bond's origin country
+   * @param {string} params.venueId - ID of the Bond's venue
+   * @param {string} params.clientId - ID of the client
+   * @param {date} params.issueDate - Date of Bond issue
+   * @param {object} params.references - Object of references for the Bond
   */
-  constructor({ assetManagerId, assetId, maturityDate, coupon, par, assetIssuerId, assetStatus, description, countryId, venueId, clientId, issueDate, references }, args, coreData) {
-    const assetConstruct = Object.assign({}, {
+  constructor({ assetManagerId, fungible, assetIssuerId, assetId, assetClass='Bond', assetStatus, countryId, venueId, maturityDate, description='', references={}, coupon, par, clientId, issueDate, createdBy, updatedBy, createdTime, updatedTime, version }) {
+    super({
       assetManagerId,
-      assetId,
-      fungible: true,
+      fungible,
       assetIssuerId,
+      assetId,
+      assetClass,
       assetStatus,
-      description,
       countryId,
       venueId,
       maturityDate,
+      description,
       references,
-      clientId
+      createdBy,
+      updatedBy,
+      createdTime,
+      updatedTime,
+      version
     })
-    super(assetConstruct, args, coreData)
-    this.assetClass = 'Bond'
+    this.clientId = clientId
     this.issueDate = issueDate
     this.coupon = coupon
     this.par = par

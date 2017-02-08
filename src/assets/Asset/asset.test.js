@@ -1,9 +1,12 @@
 import { Asset } from '../'
+import Reference from '../../core/Reference/reference.js'
 
-describe.skip('Asset', () => {
+describe('Asset', () => {
   describe('constructor', () => {
-    it('should', () => {
-
+    it('should set the AMaaS reference as assetId', () => {
+      const testAsset = new Asset({ assetId: 'testId' })
+      const expectedRef = new Reference({ referenceValue: 'testId' })
+      expect(testAsset.references.AMaaS).toEqual(expectedRef)
     })
   })
 })

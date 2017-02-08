@@ -2,32 +2,34 @@ import { AMaaSModel, Reference } from '../../core'
 import uuid from 'uuid'
 const Decimal = require('decimal.js')
 
-/** @class */
+/**
+ * Class representing a Transaction
+ * @extends AMaaSModel
+ */
 class Transaction extends AMaaSModel {
   /**
-   * Constructs new Transaction object
-   * @param {object} transactionData: creation options
-   * @param {string} transactionData.assetManagerId: ID of the Transaction's Asset Manager
-   * @param {string} transactionData.assetBookId: ID of the Transaction's book
-   * @param {string} transactionData.counterpartyBookId: ID of the counterparty to this Transaction
-   * @param {string} transactionData.transactionAction: Transaction action e.g. BUY/SELL
-   * @param {string} transactionData.assetId: ID of the asset being transacted
-   * @param {number} transactionData.quantity: Quantity being transacted
-   * @param {date} transactionData.transactionDate: Date of transactionDate
-   * @param {date} transactionData.settlementDate: Date of settlement e.g. T+2 where T = transactionDate
-   * @param {decimal} transactionData.price: price of Asset being transacted
-   * @param {string} transactionData.transactionCurrency: Currency that the Transaction takes place in
-   * @param {string} transactionData.settlementCurrency: Currency that the Transaction is settled in
-   * @param {Asset} transactionData.transactionType: Type of Transaction e.g. Trade, Allocation
-   * @param {*} transactionData.transactionStatus: *
-   * @param {date} transactionData.executionTime: Time that the Transaction was executed
-   * @param {string} transactionData.transactionId: ID of the Transaction
-   * @param {object} transactionData.charges: Object of all charges (Charge class)
-   * @param {object} transactionData.codes: Object of all codes (Code class)
-   * @param {object} transactionData.references: *
-   * @param {*} transactionData.postings: *
-   * @param {*} asset: *
-   * @param {object} transactionData.coreData: AMaaSModel constructor options
+   * Construct a new Transaction object
+   * @param {object} params - Transaction creation options
+   * @param {string} params.assetManagerId - ID of the Transaction's Asset Manager
+   * @param {string} params.assetBookId - ID of the Transaction's book
+   * @param {string} params.counterpartyBookId - ID of the counterparty to this Transaction
+   * @param {string} params.transactionAction - Transaction action e.g. BUY/SELL
+   * @param {string} params.assetId - ID of the asset being transacted
+   * @param {number} params.quantity - Quantity being transacted
+   * @param {date} params.transactionDate - Date of transactionDate
+   * @param {date} params.settlementDate - Date of settlement e.g. T+2 where T = transactionDate
+   * @param {decimal} params.price - price of Asset being transacted
+   * @param {string} params.transactionCurrency - Currency that the Transaction takes place in
+   * @param {string} params.settlementCurrency - Currency that the Transaction is settled in
+   * @param {Asset} params.transactionType - Type of Transaction e.g. Trade, Allocation
+   * @param {*} params.transactionStatus - *
+   * @param {date} params.executionTime - Time that the Transaction was executed
+   * @param {string} params.transactionId - ID of the Transaction
+   * @param {object} params.charges - Object of all charges (Charge class)
+   * @param {object} params.codes - Object of all codes (Code class)
+   * @param {object} params.references - *
+   * @param {*} params.postings - *
+   * @param {*} params.asset - *
   */
   constructor({
     assetManagerId,
