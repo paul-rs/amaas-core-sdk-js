@@ -103,14 +103,7 @@ export function insertData({ AMaaSClass, AMId, data }, callback) {
     json: data
   }
   request.post(params, (error, response, body) => {
-    if (!error && response.statusCode == 200) {
-      callback(null, body)
-    } else if (error) {
-      callback(error)
-    } else {
-      console.log(`Server returned with status code ${response.statusCode}`)
-      console.log(`Error message: ${response.body.message}`)
-    }
+    _networkCallback(error, response, body, callback)
   })
 }
 
@@ -125,13 +118,7 @@ export function putData({ AMaaSClass, AMId, resourceId, data }, callback) {
     json: data
   }
   request.put(params, (error, response, body) => {
-    if (!error && response.statusCode === 200) {
-      callback(null, body)
-    } else if (error) {
-      callback(error)
-    } else {
-      callback({ response, body })
-    }
+    _networkCallback(error, response, body, callback)
   })
 }
 
@@ -146,12 +133,27 @@ export function patchData({ AMaaSClass, AMId, resourceId, data }, callback) {
     json: data
   }
   request.patch(params, (error, response, body) => {
-    if (!error && response.statusCode === 200) {
-      callback(null, body)
-    } else if (error) {
-      callback(error)
-    } else {
-      callback({ response, body })
-    }
+    _networkCallback(error, response, body, callback)
   })
+}
+
+export function deleteData({ AMaaSClass, AMId, resourceId }, callback) {
+  const url = buildURL({
+    AMaaSClass,
+    AMId,
+    resourceId
+  })
+  request.delete(url, (error, response, body) => {
+    _networkCallback(error, response, body, callback)
+  })
+}
+
+function _networkCallback(error, response, body, callback) {
+  if (!error && response.statusCode === 200) {
+    callback(null, body)
+  } else if (error) {
+    callback(error)
+  } else {
+    callback({ response, body })
+  }
 }

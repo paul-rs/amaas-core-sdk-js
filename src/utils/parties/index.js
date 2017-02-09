@@ -1,4 +1,4 @@
-import { retrieveData, insertData, patchData, putData } from '../network'
+import { retrieveData, insertData, patchData, putData, deleteData } from '../network'
 import Party from '../../parties/Party/party.js'
 import Individual from '../../parties/Individual/individual.js'
 import Broker from '../../parties/Broker/broker.js'
@@ -91,6 +91,21 @@ export function partialAmendParty(changes, AMId, resourceId, callback) {
     data: changes
   }
   patchData(params, (error, result) => {
+    if (error) {
+      callback(error)
+    } else {
+      callback(null, result)
+    }
+  })
+}
+
+export function deleteParty(AMId, resourceId, callback) {
+  const params = {
+    AMaaSClass: 'parties',
+    AMId,
+    resourceId
+  }
+  deleteData(params, (error, result) => {
     if (error) {
       callback(error)
     } else {

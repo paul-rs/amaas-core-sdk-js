@@ -1,6 +1,6 @@
 import nock from 'nock'
 import ENDPOINTS from '../../config.js'
-import { getParty, _parseParty, insertNewParty, partialAmendParty, amendParty } from './'
+import { getParty, _parseParty, insertNewParty, partialAmendParty, amendParty, deleteParty } from './'
 import Party from '../../parties/Party/party.js'
 import Address from '../../parties/Children/address.js'
 
@@ -95,8 +95,15 @@ describe('parties util functions', () => {
       expect(party).toEqual(new Party({}))
     })
   })
-  describe.skip('amendParty', () => {
+  describe.skip('delete', () => {
     it('should', () => {
+      // deleteParty('193', '750', (error, result) => {
+      //   if (error) {
+      //     console.log(error)
+      //   } else {
+      //     console.log(result)
+      //   }
+      // })
     })
   })
 })
