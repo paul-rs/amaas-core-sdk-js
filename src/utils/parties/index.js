@@ -99,6 +99,12 @@ export function partialAmendParty(changes, AMId, resourceId, callback) {
   })
 }
 
+/**
+ * Delete an exising Party. This will set the Party status to 'Inactive'.
+ * @param {string} AMId - AMId of the Party to be deleted
+ * @param {string} resourceId - Party ID of the Party to be deleted
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ */
 export function deleteParty(AMId, resourceId, callback) {
   const params = {
     AMaaSClass: 'parties',
