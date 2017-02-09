@@ -1,4 +1,4 @@
-import { retrieveData, insertData } from '../network'
+import { retrieveData, insertData, patchData, putData, deleteData } from '../network'
 import Party from '../../parties/Party/party.js'
 import Individual from '../../parties/Individual/individual.js'
 import Broker from '../../parties/Broker/broker.js'
@@ -44,6 +44,74 @@ export function insertNewParty(party, callback) {
     data: JSON.parse(stringified)
   }
   insertData(params, (error, result) => {
+    if (error) {
+      callback(error)
+    } else {
+      callback(null, result)
+    }
+  })
+}
+
+/**
+ * Amend an existing Party. WARNING: This makes a HTTP PUT request and will replace the existing Party with the one passed in
+ * @param {Party} party - Amended Party instance to PUT
+ * @param {number} AMId - AMId of the Party to amend
+ * @param {string} resourceId - Party ID of the Party to amend
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ */
+export function amendParty(party, AMId, resourceId, callback) {
+  const stringified = JSON.stringify(party)
+  const params = {
+    AMaaSClass: 'parties',
+    AMId,
+    resourceId,
+    data: JSON.parse(stringified)
+  }
+  putData(params, (error, result) => {
+    if (error) {
+      callback(error)
+    } else {
+      callback(null, result)
+    }
+  })
+}
+
+/**
+ * Partially amend an existing Party. WARNING: The changes object should be keyed in snake case (e.g. party_id instead of partyId)
+ * @param {object} changes - Object of changes to the Party. Keys must be snake cased form of Party properties
+ * @param {string} AMId - AMId of the Party to be partially amended
+ * @param {string} resourceId - Party ID of the Party to be partially amended
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ */
+export function partialAmendParty(changes, AMId, resourceId, callback) {
+  const params = {
+    AMaaSClass: 'parties',
+    AMId,
+    resourceId,
+    data: changes
+  }
+  patchData(params, (error, result) => {
+    if (error) {
+      callback(error)
+    } else {
+      callback(null, result)
+    }
+  })
+}
+
+/**
+ * Delete an exising Party. This will set the Party status to 'Inactive'.
+ * @param {string} AMId - AMId of the Party to be deleted
+ * @param {string} resourceId - Party ID of the Party to be deleted
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ */
+export function deleteParty(AMId, resourceId, callback) {
+  const params = {
+    AMaaSClass: 'parties',
+    AMId,
+    resourceId
+  }
+  deleteData(params, (error, result) => {
     if (error) {
       callback(error)
     } else {
