@@ -113,3 +113,45 @@ export function insertData({ AMaaSClass, AMId, data }, callback) {
     }
   })
 }
+
+export function putData({ AMaaSClass, AMId, resourceId, data }, callback) {
+  const url = buildURL({
+    AMaaSClass,
+    AMId,
+    resourceId
+  })
+  const params = {
+    url,
+    json: data
+  }
+  request.put(params, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      callback(null, body)
+    } else if (error) {
+      callback(error)
+    } else {
+      callback({ response, body })
+    }
+  })
+}
+
+export function patchData({ AMaaSClass, AMId, resourceId, data }, callback) {
+  const url = buildURL({
+    AMaaSClass,
+    AMId,
+    resourceId
+  })
+  const params = {
+    url,
+    json: data
+  }
+  request.patch(params, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      callback(null, body)
+    } else if (error) {
+      callback(error)
+    } else {
+      callback({ response, body })
+    }
+  })
+}

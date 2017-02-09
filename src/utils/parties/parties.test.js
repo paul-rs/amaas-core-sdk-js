@@ -1,12 +1,12 @@
 import nock from 'nock'
 import ENDPOINTS from '../../config.js'
-import { getParty, _parseParty, insertNewParty } from './'
+import { getParty, _parseParty, insertNewParty, partialAmendParty, amendParty } from './'
 import Party from '../../parties/Party/party.js'
 import Address from '../../parties/Children/address.js'
 
 describe('parties util functions', () => {
-  describe.only('insertNewParty function', () => {
-    it.only('should stringify party correctly', () => {
+  describe('insertNewParty function', () => {
+    it('should stringify party correctly', () => {
       const address = new Address({
         addressPrimary: true,
         lineOne: "VCF5H1W9KLAAN8DIJ0R4",
@@ -93,6 +93,10 @@ describe('parties util functions', () => {
       const party = _parseParty({})
       expect(party).toBeInstanceOf(Party)
       expect(party).toEqual(new Party({}))
+    })
+  })
+  describe.skip('amendParty', () => {
+    it('should', () => {
     })
   })
 })
