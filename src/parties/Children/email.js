@@ -58,10 +58,10 @@ class Email extends AMaaSModel {
       default:
         this._emailPrimary = newEmailPrimary
     }
+  }
 
-    get emailPrimary() {
-      return this._emailPrimary
-    }
+  get emailPrimary() {
+    return this._emailPrimary
   }
 
   toJSON() {

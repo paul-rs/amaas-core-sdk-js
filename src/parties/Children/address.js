@@ -68,11 +68,12 @@ class Address extends AMaaSModel {
       default:
         this._addressPrimary = newAddressPrimary
     }
-
-    get addressPrimary() {
-      return this._addressPrimary
-    }
   }
+
+  get addressPrimary() {
+    return this._addressPrimary
+  }
+
 
   toJSON() {
     return {
