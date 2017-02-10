@@ -25,7 +25,26 @@ class Asset extends AMaaSModel {
    * @param {date} params.updatedTime - Time that the Link was updated (required if amending existing Link)
    * @param {number} params.version - Version number of the Link
   */
-  constructor({ assetManagerId, fungible, assetIssuerId, assetId, assetClass='Asset', assetType='Asset', assetStatus='Active', countryId, venueId, maturityDate, description='', references={} }, createdBy, updatedBy, createdTime, updatedTime, version) {
+  constructor({
+    assetManagerId,
+    fungible,
+    assetIssuerId,
+    assetId,
+    assetClass='Asset',
+    assetType='Asset',
+    assetStatus='Active',
+    countryId,
+    venueId,
+    maturityDate,
+    description='',
+    clientId,
+    references={},
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version
+  }) {
     super({
       createdBy,
       updatedBy,
@@ -44,6 +63,7 @@ class Asset extends AMaaSModel {
     this.venueId = venueId
     this.maturityDate = maturityDate
     this.description = description
+    this.clientId = clientId
     this.references = references
     this.references.AMaaS = new Reference({ referenceValue: assetId })
   }

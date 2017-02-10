@@ -25,18 +25,42 @@ class BondBase extends Asset {
    * @param {date} params.issueDate - Date of Bond issue
    * @param {object} params.references - Object of references for the Bond
   */
-  constructor({ assetManagerId, fungible, assetIssuerId, assetId, assetClass='Bond', assetStatus, countryId, venueId, maturityDate, description='', references={}, coupon, par, clientId, issueDate, createdBy, updatedBy, createdTime, updatedTime, version }) {
+  constructor({
+    assetManagerId,
+    fungible,
+    assetIssuerId,
+    assetId,
+    assetClass='Bond',
+    assetType='Bond',
+    assetStatus='Active',
+    countryId,
+    venueId,
+    maturityDate,
+    description='',
+    clientId,
+    issueDate,
+    coupon,
+    par,
+    references={},
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version
+  }) {
     super({
       assetManagerId,
       fungible,
       assetIssuerId,
       assetId,
       assetClass,
+      assetType,
       assetStatus,
       countryId,
       venueId,
       maturityDate,
       description,
+      clientId,
       references,
       createdBy,
       updatedBy,
@@ -44,7 +68,6 @@ class BondBase extends Asset {
       updatedTime,
       version
     })
-    this.clientId = clientId
     this.issueDate = issueDate
     this.coupon = coupon
     this.par = par
