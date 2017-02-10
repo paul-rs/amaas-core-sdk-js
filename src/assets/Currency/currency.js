@@ -14,6 +14,7 @@ class Currency extends Asset {
     maturityDate,
     description='',
     clientId,
+    deliverable,
     references={},
     createdBy,
     updatedBy,
@@ -41,6 +42,7 @@ class Currency extends Asset {
       updatedTime,
       version
     })
+    this.deliverable = deliverable
   }
 
   toJSON() {
@@ -57,6 +59,7 @@ class Currency extends Asset {
       maturity_date: this.maturityDate,
       description: this.description,
       client_id: this.clientId,
+      deliverable: this.deliverable,
       references: this.references,
       created_by: this.createdBy,
       updated_by: this.updatedBy,
