@@ -1,6 +1,8 @@
 import { retrieveData, insertData, patchData, putData, deleteData } from '../network'
 import Party from '../../parties/Party/party.js'
 import Individual from '../../parties/Individual/individual.js'
+import Organisation from '../../parties/Organisation/organisation.js'
+import Company from '../../parties/Company/company.js'
 import Broker from '../../parties/Broker/broker.js'
 import Exchange from '../../parties/Exchange/exchange.js'
 import Fund from '../../parties/Fund/fund.js'
@@ -255,6 +257,42 @@ export function _parseParty(object) {
       break
     case 'GovernmentAgency':
       party = new GovernmentAgency({
+        assetManagerId: object.asset_manager_id,
+        partyId: object.party_id,
+        partyStatus: object.party_status,
+        partyClass: object.party_class,
+        partyType: object.party_type,
+        description: object.description,
+        addresses,
+        emails,
+        references,
+        createdBy: object.created_by,
+        updatedBy: object.updated_by,
+        createdTime: object.created_time,
+        updatedTime: object.updated_time,
+        version: object.version
+      })
+      break
+    case 'Organisation':
+      party = new Organisation({
+        assetManagerId: object.asset_manager_id,
+        partyId: object.party_id,
+        partyStatus: object.party_status,
+        partyClass: object.party_class,
+        partyType: object.party_type,
+        description: object.description,
+        addresses,
+        emails,
+        references,
+        createdBy: object.created_by,
+        updatedBy: object.updated_by,
+        createdTime: object.created_time,
+        updatedTime: object.updated_time,
+        version: object.version
+      })
+      break
+    case 'Company':
+      party = new Company({
         assetManagerId: object.asset_manager_id,
         partyId: object.party_id,
         partyStatus: object.party_status,
