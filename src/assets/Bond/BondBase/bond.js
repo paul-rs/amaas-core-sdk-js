@@ -1,5 +1,5 @@
-import { AMaaSModel, Reference } from '../../core'
-import { Asset } from '../'
+import { AMaaSModel, Reference } from '../../../core'
+import Asset from '../../Asset/asset.js'
 
 import Decimal from 'decimal.js'
 

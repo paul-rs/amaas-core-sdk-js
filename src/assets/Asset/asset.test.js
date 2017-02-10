@@ -1,4 +1,4 @@
-import { Asset } from '../'
+import Asset from './asset.js'
 import Reference from '../../core/Reference/reference.js'
 
 describe('Asset', () => {

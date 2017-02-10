@@ -1,4 +1,4 @@
-import { BondBase } from '../'
+import BondBase from './bond.js'
 
 import Decimal from 'decimal.js'
 
