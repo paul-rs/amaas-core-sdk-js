@@ -43,6 +43,14 @@ class FXBase extends Asset {
     })
   }
 
+  getBaseCurrency() {
+    return this.assetId.slice(0,3)
+  }
+
+  getCounterCurrency() {
+    return this.assetId.slice(3,7)
+  }
+
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
