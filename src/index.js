@@ -5,11 +5,9 @@
 
 require('dotenv').config()
 
-// import { getParty, insertNewParty, amendParty, partialAmendParty } from './utils/parties'
 import * as AMaaSParties from './utils/parties'
-import { getAssetManager } from './utils/assetManagers'
+import * as AMaaSAM from './utils/assetManagers'
 
 export { default as Party } from './parties/Party/party.js'
 // export { getParty, insertNewParty, amendParty, partialAmendParty }
-export { AMaaSParties }
-export { getAssetManager }
+export { AMaaSParties, AMaaSAM }

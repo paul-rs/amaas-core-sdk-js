@@ -1,6 +1,6 @@
 import nock from 'nock'
 import ENDPOINTS from '../../config.js'
-import { getParty, _parseParty, insertNewParty, partialAmendParty, amendParty, deleteParty } from './'
+import { getParty, _parseParty, insertNewParty, partialAmendParty, amendParty, deleteParty } from './parties.js'
 import Party from '../../parties/Party/party.js'
 import Address from '../../parties/Children/address.js'
 
