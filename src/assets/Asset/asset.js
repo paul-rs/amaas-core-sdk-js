@@ -8,10 +8,10 @@ class Asset extends AMaaSModel {
   /**
    * Construct a new Asset object
    * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager
-   * @param {bool} params.fungible - Whether this asset is fungible
+   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
+   * @param {bool} params.fungible - Whether this asset is fungible (required)
    * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {integer} params.assetId - ID of the Asset
+   * @param {integer} params.assetId - ID of the Asset (required)
    * @param {string} params.assetClass - Class of the Asset
    * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
    * @param {string} params.countryId - ID of Asset's country

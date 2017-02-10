@@ -46,11 +46,7 @@ export function insert(party, callback) {
     data: JSON.parse(stringified)
   }
   insertData(params, (error, result) => {
-    if (error) {
-      callback(error)
-    } else {
-      callback(null, result)
-    }
+    _handleCallback(error, result, callback)
   })
 }
 
@@ -70,11 +66,7 @@ export function amend(party, AMId, resourceId, callback) {
     data: JSON.parse(stringified)
   }
   putData(params, (error, result) => {
-    if (error) {
-      callback(error)
-    } else {
-      callback(null, result)
-    }
+    _handleCallback(error, result, callback)
   })
 }
 
@@ -93,11 +85,7 @@ export function partialAmend(changes, AMId, resourceId, callback) {
     data: changes
   }
   patchData(params, (error, result) => {
-    if (error) {
-      callback(error)
-    } else {
-      callback(null, result)
-    }
+    _handleCallback(error, result, callback)
   })
 }
 
@@ -114,11 +102,7 @@ export function deactivate(AMId, resourceId, callback) {
     resourceId
   }
   deleteData(params, (error, result) => {
-    if (error) {
-      callback(error)
-    } else {
-      callback(null, result)
-    }
+    _handleCallback(error, result, callback)
   })
 }
 
@@ -328,6 +312,14 @@ export function _parseParty(object) {
       })
   }
   return party
+}
+
+function _handleCallback(error, result, callback) {
+  if (error) {
+    callback(error)
+  } else {
+    callback(null, result)
+  }
 }
 
 // export default getParty

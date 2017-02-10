@@ -6,7 +6,7 @@ import Broker from '../../parties/Broker/broker.js'
 import Address from '../../parties/Children/address.js'
 
 describe('parties util functions', () => {
-  describe.only('insert function', () => {
+  describe('insert function', () => {
     it('should stringify party correctly', () => {
       const address = new Address({
         addressPrimary: true,
