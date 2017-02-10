@@ -8,10 +8,10 @@ class Asset extends AMaaSModel {
   /**
    * Construct a new Asset object
    * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager
-   * @param {bool} params.fungible - Whether this asset is fungible
+   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
+   * @param {bool} params.fungible - Whether this asset is fungible (required)
    * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {integer} params.assetId - ID of the Asset
+   * @param {integer} params.assetId - ID of the Asset (required)
    * @param {string} params.assetClass - Class of the Asset
    * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
    * @param {string} params.countryId - ID of Asset's country
@@ -25,7 +25,26 @@ class Asset extends AMaaSModel {
    * @param {date} params.updatedTime - Time that the Link was updated (required if amending existing Link)
    * @param {number} params.version - Version number of the Link
   */
-  constructor({ assetManagerId, fungible, assetIssuerId, assetId, assetClass='Asset', assetType='Asset', assetStatus='Active', countryId, venueId, maturityDate, description='', references={} }, createdBy, updatedBy, createdTime, updatedTime, version) {
+  constructor({
+    assetManagerId,
+    fungible,
+    assetIssuerId,
+    assetId,
+    assetClass='Asset',
+    assetType='Asset',
+    assetStatus='Active',
+    countryId,
+    venueId,
+    maturityDate,
+    description='',
+    clientId,
+    references={},
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version
+  }) {
     super({
       createdBy,
       updatedBy,
@@ -44,8 +63,32 @@ class Asset extends AMaaSModel {
     this.venueId = venueId
     this.maturityDate = maturityDate
     this.description = description
+    this.clientId = clientId
     this.references = references
     this.references.AMaaS = new Reference({ referenceValue: assetId })
+  }
+
+  toJSON() {
+    return {
+      asset_manager_id: this.assetManagerId,
+      fungible: this.fungible,
+      asset_issuer_id: this.assetIssuerId,
+      asset_id: this.assetId,
+      asset_class: this.assetClass,
+      asset_type: this.assetType,
+      asset_status: this.assetStatus,
+      country_id: this.countryId,
+      venue_id: this.venueId,
+      maturity_date: this.maturityDate,
+      description: this.description,
+      client_id: this.clientId,
+      references: this.references,
+      created_by: this.createdBy,
+      updated_by: this.updatedBy,
+      created_time: this.createdTime,
+      updated_time: this.updatedTime,
+      version: this.version
+    }
   }
 }
 

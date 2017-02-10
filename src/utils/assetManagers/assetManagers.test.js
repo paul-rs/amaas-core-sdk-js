@@ -1,4 +1,4 @@
-import { _parseAM, getAssetManager } from './'
+import { _parseAM, getAssetManager } from './assetManagers.js'
 import AssetManager from '../../assetManagers/AssetManager/assetManager.js'
 
 describe('_parseAM function', () => {

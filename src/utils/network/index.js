@@ -29,6 +29,9 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
     case 'assetManagers':
       baseURL = `${ENDPOINTS.assetManagers}/asset_managers`
       break
+    case 'assets':
+      baseURL = `${ENDPOINTS.assets}/assets`
+      break
     default:
       // baseURL = process.env.booksURL
       baseURL = `${ENDPOINTS.books}/books`

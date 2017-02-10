@@ -1,5 +1,5 @@
-import { AMaaSModel, Reference } from '../../core'
-import { Asset } from '../'
+import { AMaaSModel, Reference } from '../../../core'
+import Asset from '../../Asset/asset.js'
 
 import Decimal from 'decimal.js'
 
@@ -25,18 +25,42 @@ class BondBase extends Asset {
    * @param {date} params.issueDate - Date of Bond issue
    * @param {object} params.references - Object of references for the Bond
   */
-  constructor({ assetManagerId, fungible, assetIssuerId, assetId, assetClass='Bond', assetStatus, countryId, venueId, maturityDate, description='', references={}, coupon, par, clientId, issueDate, createdBy, updatedBy, createdTime, updatedTime, version }) {
+  constructor({
+    assetManagerId,
+    fungible,
+    assetIssuerId,
+    assetId,
+    assetClass='Bond',
+    assetType='Bond',
+    assetStatus='Active',
+    countryId,
+    venueId,
+    maturityDate,
+    description='',
+    clientId,
+    issueDate,
+    coupon,
+    par,
+    references={},
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version
+  }) {
     super({
       assetManagerId,
       fungible,
       assetIssuerId,
       assetId,
       assetClass,
+      assetType,
       assetStatus,
       countryId,
       venueId,
       maturityDate,
       description,
+      clientId,
       references,
       createdBy,
       updatedBy,
@@ -44,7 +68,6 @@ class BondBase extends Asset {
       updatedTime,
       version
     })
-    this.clientId = clientId
     this.issueDate = issueDate
     this.coupon = coupon
     this.par = par
@@ -99,6 +122,32 @@ class BondBase extends Asset {
 
   get defaulted() {
     return this._defaulted
+  }
+
+  toJSON() {
+    return {
+      asset_manager_id: this.assetManagerId,
+      fungible: this.fungible,
+      asset_issuer_id: this.assetIssuerId,
+      asset_id: this.assetId,
+      asset_class: this.assetClass,
+      asset_type: this.assetType,
+      asset_status: this.assetStatus,
+      country_id: this.countryId,
+      venue_id: this.venueId,
+      maturity_date: this.maturityDate,
+      description: this.description,
+      client_id: this.clientId,
+      issue_date: this.issueDate,
+      coupon: this.coupon,
+      par: this.par,
+      references: this.references,
+      created_by: this.createdBy,
+      updated_by: this.updatedBy,
+      created_time: this.createdTime,
+      updated_time: this.updatedTime,
+      version: this.version
+    }
   }
 }
 

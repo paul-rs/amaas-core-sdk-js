@@ -1,11 +1,12 @@
 import nock from 'nock'
 import ENDPOINTS from '../../config.js'
-import { getParty, _parseParty, insertNewParty, partialAmendParty, amendParty, deleteParty } from './'
+import { retrieve, _parseParty, insert, partialAmend, amend, deactivate } from './parties.js'
 import Party from '../../parties/Party/party.js'
+import Broker from '../../parties/Broker/broker.js'
 import Address from '../../parties/Children/address.js'
 
 describe('parties util functions', () => {
-  describe('insertNewParty function', () => {
+  describe('insert function', () => {
     it('should stringify party correctly', () => {
       const address = new Address({
         addressPrimary: true,
@@ -22,19 +23,39 @@ describe('parties util functions', () => {
         updatedTime: "2017-01-27T00:31:02",
         version: 1,
       })
-      const party = new Party({ assetManagerId: '1234', partyId: 'AMID1234', addresses: { Registered: address }, createdBy: 'TEMP' })
+      const address2 = new Address({
+        addressPrimary: false,
+        lineOne: "VCF5H1W9KLAAN8DIJ0R4",
+        lineTwo: null,
+        city: "NODC740NZO",
+        region: "SX3JEVA03B",
+        postalCode: "YUIJDP",
+        countryId: "O21",
+        active: true,
+        createdBy: "TEMP",
+        updatedBy: "TEMP",
+        createdTime: "2017-01-27T00:31:02",
+        updatedTime: "2017-01-27T00:31:02",
+        version: 1,
+      })
+      const party = new Party({ assetManagerId: '1234', partyId: 'AMID1234', addresses: { Registered: address, Legal: address2 }, createdBy: 'TEMP' })
       console.log(JSON.stringify(party))
-      // insertNewParty(party, () => {
+      // retrieve('646', '30', (error, result) => {
+      //   if (result) {
+      //     console.log(result)
+      //   }
+      // })
+      // insert(party, () => {
       //   // no-op
       // })
     })
   })
-  describe('getParty function', () => {
+  describe('retrieve function', () => {
     it('should call callback with error if retrieveData fails', () => {
       nock(ENDPOINTS.parties)
         .get('/parties/1/party')
         .reply(400)
-      getParty('1', 'party', (error, result) => {
+      retrieve('1', 'party', (error, result) => {
         expect(result).toBeUndefined()
         expect(error).toEqual({ error: null, statusCode: 400 })
       })
@@ -43,7 +64,7 @@ describe('parties util functions', () => {
       nock(ENDPOINTS.parties)
         .get('/parties/1/party')
         .reply(200, '{"Message": "Success"}')
-      getParty('1', 'party', (error, result) => {
+      retrieve('1', 'party', (error, result) => {
         expect(error).toBeNull()
         expect(result).toEqual(new Party({}))
       })
