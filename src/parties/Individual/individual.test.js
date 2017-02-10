@@ -1,4 +1,5 @@
 import Individual from './individual.js'
+import Address from '../Children/address.js'
 
 describe('Individual', () => {
   describe('constructor', () => {
@@ -11,6 +12,43 @@ describe('Individual', () => {
       const testIndividual = new Individual({})
       expect(testIndividual.partyClass).toEqual('Individual')
       expect(testIndividual.partyType).toEqual('Individual')
+    })
+    it('should follow Party rules for setting children', () => {
+      const address = new Address({
+        addressPrimary: true,
+        lineOne: "VCF5H1W9KLAAN8DIJ0R4",
+        lineTwo: null,
+        city: "NODC740NZO",
+        region: "SX3JEVA03B",
+        postalCode: "YUIJDP",
+        countryId: "O21",
+        active: true,
+        createdBy: "TEMP",
+        updatedBy: "TEMP",
+        createdTime: "2017-01-27T00:31:02",
+        updatedTime: "2017-01-27T00:31:02",
+        version: 1,
+      })
+      const address2 = new Address({
+        addressPrimary: true,
+        lineOne: "VCF5H1W9KLAAN8DIJ0R4",
+        lineTwo: null,
+        city: "NODC740NZO",
+        region: "SX3JEVA03B",
+        postalCode: "YUIJDP",
+        countryId: "O21",
+        active: true,
+        createdBy: "TEMP",
+        updatedBy: "TEMP",
+        createdTime: "2017-01-27T00:31:02",
+        updatedTime: "2017-01-27T00:31:02",
+        version: 1,
+      })
+      const testIndividual = new Individual({ addresses: { Registered: address } })
+      function tester() {
+        testIndividual.addresses = { Legal: address2 }
+      }
+      expect(tester).toThrowError('Primary Address is already set for this Party')
     })
   })
 })
