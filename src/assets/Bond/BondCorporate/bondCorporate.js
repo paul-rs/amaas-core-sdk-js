@@ -1,4 +1,4 @@
-import BondBase from '../Bondbase/bond.js'
+import BondBase from '../BondBase/bond.js'
 
 class BondCorporate extends BondBase {
   constructor({

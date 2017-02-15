@@ -1,6 +1,26 @@
+// Network functions
 import * as AMaaSParties from './utils/parties'
 import * as AMaaSAM from './utils/assetManagers'
 import * as AMaaSAssets from './utils/assets'
 
-export { default as Party } from './parties/Party/party.js'
-export { AMaaSParties, AMaaSAM, AMaaSAssets }
+// Financial Classes
+import {
+  Party,
+  Individual,
+  Broker,
+  Exchange,
+  Fund,
+  GovernmentAgency
+} from './parties'
+
+export {
+  AMaaSParties,
+  AMaaSAM,
+  AMaaSAssets,
+  Party,
+  Individual,
+  Broker,
+  Exchange,
+  Fund,
+  GovernmentAgency
+}
