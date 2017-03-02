@@ -133,6 +133,38 @@ class Transaction extends AMaaSModel {
     }
     return netCharges
   }
+
+  toJSON() {
+    return {
+      asset_manager_id: this.assetManagerId,
+      asset_book_id: this.assetBookId,
+      counterparty_book_id: this.counterpartyBookId,
+      transaction_action: this.transactionAction,
+      asset_id: this.assetId,
+      quantity: this.quantity,
+      transaction_date: this.transactionDate,
+      settlement_date: this.settlementDate,
+      price: this.price,
+      transaction_currency: this.transactionCurrency,
+      settlement_currency: this.settlementCurrency,
+      asset: this.asset,
+      execution_time: this.executionTime,
+      transaction_type: this.transactionType,
+      transaction_id: this.transactionId,
+      transaction_status: this.transactionStatus,
+      charges: this.charges,
+      codes: this.codes,
+      comments: this.comments,
+      links: this.links,
+      parties: this.parties,
+      references: this.references,
+      created_by: this.createdBy,
+      updated_by: this.updatedBy,
+      created_time: this.createdTime,
+      updated_time: this.updatedTime,
+      version: this.version
+    }
+  }
 }
 
 export default Transaction

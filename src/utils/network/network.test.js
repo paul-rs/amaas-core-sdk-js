@@ -1,7 +1,8 @@
 import {
   buildURL,
   retrieveData,
-  insertData
+  insertData,
+  searchData
 } from './'
 
 import ENDPOINTS from '../../config.js'
@@ -91,4 +92,23 @@ describe('insertData', () => {
       expect(result).toEqual({ param1: 'testResponse' })
     })
   })
+})
+
+describe('searchData', () => {
+  const testParams = {
+    AMaaSClass: 'positions',
+    queryKey: 'asset_manager_book_id',
+    queryValue: [7, 532, 841]
+  }
+  const expectedResult = {
+    asset_book_id: '1,2,3,abc'
+  }
+  // searchData(testParams, (error, result) => {
+  //   if (error) {
+  //     console.log(error)
+  //   } else {
+  //     console.log(result)
+  //   }
+  // })
+  expect(searchData(testParams)).toEqual(expectedResult)
 })

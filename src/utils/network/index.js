@@ -32,6 +32,9 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
     case 'assets':
       baseURL = `${ENDPOINTS.assets}/assets`
       break
+    case 'positions':
+      baseURL = `${ENDPOINTS.transactions}/positions`
+      break
     default:
       // baseURL = process.env.booksURL
       baseURL = `${ENDPOINTS.books}/books`
@@ -147,6 +150,22 @@ export function deleteData({ AMaaSClass, AMId, resourceId }, callback) {
     resourceId
   })
   request.delete(url, (error, response, body) => {
+    _networkCallback(error, response, body, callback)
+  })
+}
+
+export function searchData({ AMaaSClass, queryKey, queryValue }, callback) {
+  const url = buildURL({
+    AMaaSClass
+  })
+  let qString = {}
+  const qValueString = queryValue.join()
+  qString[queryKey] = qValueString
+  const params = {
+    url,
+    qs: qString
+  }
+  request.get(params, (error, response, body) => {
     _networkCallback(error, response, body, callback)
   })
 }
