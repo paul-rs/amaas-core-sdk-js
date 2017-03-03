@@ -2,7 +2,7 @@
 // import * as types from '../../core/types.js'
 import ENDPOINTS from '../../config.js'
 
-import request from 'request'
+import request from 'superagent'
 require('dotenv').config()
 
 /***
@@ -69,11 +69,18 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
   // If resourceId is supplied, append to url. Otherwise, return all data for AMId
   const url = buildURL({ AMaaSClass, AMId, resourceId })
   // const url = resourceId ? `${baseURL}${AMaaSClass}/${AMId}/${resourceId}` : `${baseURL}${AMaaSClass}/${AMId}/`
-  request(url, (error, response, body) => {
-    if (!error && response.statusCode == 200) {
-      callback(null, JSON.parse(body))
+
+  request.get(url).end((error, response) => {
+    if (!error && response.status == 200) {
+      let body = response.body
+      if (body == null || body.length <= 0) {
+        body = {}
+      } else {
+        body = JSON.parse(body)
+      }
+      callback(null, body)
     } else {
-      const statusCode = response ? response.statusCode : ''
+      const statusCode = response ? response.status : ''
       const requestError = {
         statusCode,
         error
@@ -108,8 +115,8 @@ export function insertData({ AMaaSClass, AMId, data }, callback) {
     url,
     json: data
   }
-  request.post(params, (error, response, body) => {
-    _networkCallback(error, response, body, callback)
+  request.post(url).send(data).end((error, response) => {
+    _networkCallback(error, response, response.body, callback)
   })
 }
 
@@ -123,8 +130,8 @@ export function putData({ AMaaSClass, AMId, resourceId, data }, callback) {
     url,
     json: data
   }
-  request.put(params, (error, response, body) => {
-    _networkCallback(error, response, body, callback)
+  request.put(url).send(data).end((error, response) => {
+    _networkCallback(error, response, response.body, callback)
   })
 }
 
@@ -138,8 +145,8 @@ export function patchData({ AMaaSClass, AMId, resourceId, data }, callback) {
     url,
     json: data
   }
-  request.patch(params, (error, response, body) => {
-    _networkCallback(error, response, body, callback)
+  request.patch(url).send(data).end((error, response) => {
+    _networkCallback(error, response, response.body, callback)
   })
 }
 
@@ -149,8 +156,8 @@ export function deleteData({ AMaaSClass, AMId, resourceId }, callback) {
     AMId,
     resourceId
   })
-  request.delete(url, (error, response, body) => {
-    _networkCallback(error, response, body, callback)
+  request.delete(url).end((error, response) => {
+    _networkCallback(error, response, response.body, callback)
   })
 }
 
@@ -165,13 +172,13 @@ export function searchData({ AMaaSClass, queryKey, queryValue }, callback) {
     url,
     qs: qString
   }
-  request.get(params, (error, response, body) => {
-    _networkCallback(error, response, body, callback)
+  request.get(url).query(qString).end((error, response) => {
+    _networkCallback(error, response, response.body, callback)
   })
 }
 
 function _networkCallback(error, response, body, callback) {
-  if (!error && response.statusCode === 200) {
+  if (!error && response.status === 200) {
     callback(null, body)
   } else if (error) {
     callback(error)
