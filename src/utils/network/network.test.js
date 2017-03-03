@@ -110,5 +110,7 @@ describe('searchData', () => {
   //     console.log(result)
   //   }
   // })
-  expect(searchData(testParams)).toEqual(expectedResult)
+  searchData(testParams, (error, result) => {
+    expect(result).toEqual(expectedResult)
+  })
 })
