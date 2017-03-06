@@ -72,13 +72,7 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
 
   request.get(url).end((error, response) => {
     if (!error && response.status == 200) {
-      let body = response.body
-      if (body == null || body.length <= 0) {
-        body = {}
-      } else {
-        body = JSON.parse(body)
-      }
-      callback(null, body)
+      callback(null, JSON.parse(response.body))
     } else {
       const statusCode = response ? response.status : ''
       const requestError = {
