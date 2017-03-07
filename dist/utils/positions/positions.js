@@ -41,7 +41,7 @@ function search(queryKey, queryValue, callback) {
     if (error) {
       callback(error);
     } else {
-      var positions = JSON.parse(result).map(function (pos) {
+      var positions = result.map(function (pos) {
         return _parsePos(pos);
       });
       callback(null, positions);

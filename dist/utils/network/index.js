@@ -15,9 +15,9 @@ var _config = require('../../config.js');
 
 var _config2 = _interopRequireDefault(_config);
 
-var _request = require('request');
+var _superagent = require('superagent');
 
-var _request2 = _interopRequireDefault(_request);
+var _superagent2 = _interopRequireDefault(_superagent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -97,11 +97,12 @@ function retrieveData(_ref2, callback) {
   // If resourceId is supplied, append to url. Otherwise, return all data for AMId
   var url = buildURL({ AMaaSClass: AMaaSClass, AMId: AMId, resourceId: resourceId });
   // const url = resourceId ? `${baseURL}${AMaaSClass}/${AMId}/${resourceId}` : `${baseURL}${AMaaSClass}/${AMId}/`
-  (0, _request2.default)(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      callback(null, JSON.parse(body));
+
+  _superagent2.default.get(url).end(function (error, response) {
+    if (!error && response.status == 200) {
+      callback(null, response.body);
     } else {
-      var statusCode = response ? response.statusCode : '';
+      var statusCode = response ? response.status : '';
       var requestError = {
         statusCode: statusCode,
         error: error
@@ -140,8 +141,8 @@ function insertData(_ref3, callback) {
     url: url,
     json: data
   };
-  _request2.default.post(params, function (error, response, body) {
-    _networkCallback(error, response, body, callback);
+  _superagent2.default.post(url).send(data).end(function (error, response) {
+    _networkCallback(error, response, response.body, callback);
   });
 }
 
@@ -160,8 +161,8 @@ function putData(_ref4, callback) {
     url: url,
     json: data
   };
-  _request2.default.put(params, function (error, response, body) {
-    _networkCallback(error, response, body, callback);
+  _superagent2.default.put(url).send(data).end(function (error, response) {
+    _networkCallback(error, response, response.body, callback);
   });
 }
 
@@ -180,8 +181,8 @@ function patchData(_ref5, callback) {
     url: url,
     json: data
   };
-  _request2.default.patch(params, function (error, response, body) {
-    _networkCallback(error, response, body, callback);
+  _superagent2.default.patch(url).send(data).end(function (error, response) {
+    _networkCallback(error, response, response.body, callback);
   });
 }
 
@@ -195,8 +196,8 @@ function deleteData(_ref6, callback) {
     AMId: AMId,
     resourceId: resourceId
   });
-  _request2.default.delete(url, function (error, response, body) {
-    _networkCallback(error, response, body, callback);
+  _superagent2.default.delete(url).end(function (error, response) {
+    _networkCallback(error, response, response.body, callback);
   });
 }
 
@@ -215,13 +216,13 @@ function searchData(_ref7, callback) {
     url: url,
     qs: qString
   };
-  _request2.default.get(params, function (error, response, body) {
-    _networkCallback(error, response, body, callback);
+  _superagent2.default.get(url).query(qString).end(function (error, response) {
+    _networkCallback(error, response, response.body, callback);
   });
 }
 
 function _networkCallback(error, response, body, callback) {
-  if (!error && response.statusCode === 200) {
+  if (!error && response.status === 200) {
     callback(null, body);
   } else if (error) {
     callback(error);
