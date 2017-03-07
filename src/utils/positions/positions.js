@@ -28,7 +28,7 @@ export function search(queryKey, queryValue, callback) {
     if (error) {
       callback(error)
     } else {
-      const positions = JSON.parse(result).map((pos) => {
+      const positions = result.map((pos) => {
         return _parsePos(pos)
       })
       callback(null, positions)
