@@ -45,7 +45,7 @@ describe('retrieveData', () => {
     AMaaSClass: 'books',
     AMId: '1234'
   }
-  it('should hit the correct endpoint', () => {
+  it('should hit the correct endpoint', callback => {
     // const scope = nock(process.env.baseURL)
     const scope = nock(ENDPOINTS.books)
       .get('/books/1234')
@@ -54,15 +54,17 @@ describe('retrieveData', () => {
       })
     retrieveData(testParams, (error, result) => {
       expect(result).toEqual({ param1: 'testBody' })
+      callback()
     })
   })
-  it('should receive the correct HTTP status code', () => {
+  it('should receive the correct HTTP status code', callback => {
     // const scope = nock(process.env.baseURL)
     const scope = nock(ENDPOINTS.books)
       .get('/books/1234')
       .reply(501)
     retrieveData(testParams, (error, result) => {
       expect(error.statusCode).toEqual(501)
+      callback()
     })
   })
 })
@@ -81,7 +83,7 @@ describe('insertData', () => {
     }
     expect(tester).toThrowError('Class, AMId and data to insert are required')
   })
-  it('should build the correct url and POST to it', () => {
+  it('should build the correct url and POST to it', callback => {
     // const scope = nock(process.env.baseURL)
     const scope = nock(ENDPOINTS.books)
       .post('/books/1234')
@@ -90,6 +92,7 @@ describe('insertData', () => {
       })
     insertData(testParams, (error, result) => {
       expect(result).toEqual({ param1: 'testResponse' })
+      callback()
     })
   })
 })
@@ -110,7 +113,7 @@ describe('searchData', () => {
   //     console.log(result)
   //   }
   // })
-  searchData(testParams, (error, result) => {
-    expect(result).toEqual(expectedResult)
-  })
+  // searchData(testParams, (error, result) => {
+  //   expect(result).toEqual(expectedResult)
+  // })
 })
