@@ -110,7 +110,7 @@ export function insertData({ AMaaSClass, AMId, data }, callback) {
     json: data
   }
   request.post(url).send(data).end((error, response) => {
-    _networkCallback(error, response, response.text, callback)
+    _networkCallback(error, response, response.body, callback)
   })
 }
 
@@ -125,7 +125,7 @@ export function putData({ AMaaSClass, AMId, resourceId, data }, callback) {
     json: data
   }
   request.put(url).send(data).end((error, response) => {
-    _networkCallback(error, response, response.text, callback)
+    _networkCallback(error, response, response.body, callback)
   })
 }
 
@@ -140,7 +140,7 @@ export function patchData({ AMaaSClass, AMId, resourceId, data }, callback) {
     json: data
   }
   request.patch(url).send(data).end((error, response) => {
-    _networkCallback(error, response, response.text, callback)
+    _networkCallback(error, response, response.body, callback)
   })
 }
 
@@ -151,7 +151,7 @@ export function deleteData({ AMaaSClass, AMId, resourceId }, callback) {
     resourceId
   })
   request.delete(url).end((error, response) => {
-    _networkCallback(error, response, response.text, callback)
+    _networkCallback(error, response, response.body, callback)
   })
 }
 
@@ -167,7 +167,7 @@ export function searchData({ AMaaSClass, queryKey, queryValue }, callback) {
     qs: qString
   }
   request.get(url).query(qString).end((error, response) => {
-    _networkCallback(error, response, response.text, callback)
+    _networkCallback(error, response, response.body, callback)
   })
 }
 
