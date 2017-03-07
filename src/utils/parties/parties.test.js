@@ -57,7 +57,7 @@ describe('parties util functions', () => {
         .reply(400)
       retrieve('1', 'party', (error, result) => {
         expect(result).toBeUndefined()
-        expect(error).toEqual({ error: null, statusCode: 400 })
+        expect(error.statusCode).toBe(400)
       })
     })
     it('should call callback with success if retrieveData succeeds', () => {
