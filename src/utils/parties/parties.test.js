@@ -51,22 +51,24 @@ describe('parties util functions', () => {
     })
   })
   describe('retrieve function', () => {
-    it('should call callback with error if retrieveData fails', () => {
+    it('should call callback with error if retrieveData fails', callback => {
       nock(ENDPOINTS.parties)
         .get('/parties/1/party')
         .reply(400)
       retrieve('1', 'party', (error, result) => {
         expect(result).toBeUndefined()
         expect(error.statusCode).toBe(400)
+        callback()
       })
     })
-    it('should call callback with success if retrieveData succeeds', () => {
+    it('should call callback with success if retrieveData succeeds', callback => {
       nock(ENDPOINTS.parties)
         .get('/parties/1/party')
         .reply(200, '{"Message": "Success"}')
       retrieve('1', 'party', (error, result) => {
         expect(error).toBeNull()
         expect(result).toEqual(new Party({}))
+        callback()
       })
     })
   })
