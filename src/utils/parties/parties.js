@@ -30,7 +30,7 @@ export function retrieve({AMId, partyId, token}, callback) {
       callback(error)
     } else {
       const parties = result.map(party => (
-        _parseParty(party)
+        this._parseParty(party)
       ))
       callback(null, parties)
     }
