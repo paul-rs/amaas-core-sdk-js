@@ -80,8 +80,10 @@ function retrieve(_ref, callback) {
     if (error) {
       callback(error);
     } else {
-      var party = _parseParty(result);
-      callback(null, party);
+      var parties = result.map(function (party) {
+        return _parseParty(party);
+      });
+      callback(null, parties);
     }
   });
 }
