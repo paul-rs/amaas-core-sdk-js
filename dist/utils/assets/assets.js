@@ -28,11 +28,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {string} [partyId] - Party ID of the Asset. Omitting this will return all Assets associated with that AMId
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-function retrieve(AMId, resourceId, callback) {
+function retrieve(_ref, callback) {
+  var AMId = _ref.AMId,
+      resourceId = _ref.resourceId,
+      token = _ref.token;
+
   var params = {
     AMaaSClass: 'assets',
     AMId: AMId,
-    resourceId: resourceId
+    resourceId: resourceId,
+    token: token
   };
   (0, _network.retrieveData)(params, function (error, result) {
     if (error) {
@@ -49,11 +54,15 @@ function retrieve(AMId, resourceId, callback) {
  * @param {Asset} asset - Asset instance to insert
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-function insert(asset, callback) {
+function insert(_ref2, callback) {
+  var asset = _ref2.asset,
+      token = _ref2.token;
+
   var stringified = JSON.stringify(asset);
   var params = {
     AMaaSClass: 'assets',
-    data: JSON.parse(stringified)
+    data: JSON.parse(stringified),
+    token: token
   };
   (0, _network.insertData)(params, function (error, result) {
     _handleCallback(error, result, callback);
@@ -67,13 +76,19 @@ function insert(asset, callback) {
  * @param {string} resourceId - Asset ID of the Party to amend
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-function amend(asset, AMId, resourceId, callback) {
+function amend(_ref3, callback) {
+  var asset = _ref3.asset,
+      AMId = _ref3.AMId,
+      resourceId = _ref3.resourceId,
+      token = _ref3.token;
+
   var stringified = JSON.stringify(asset);
   var params = {
     AMaaSClass: 'assets',
     AMId: AMId,
     resourceId: resourceId,
-    data: JSON.parse(stringified)
+    data: JSON.parse(stringified),
+    token: token
   };
   (0, _network.putData)(params, function (error, result) {
     _handleCallback(error, result, callback);
@@ -87,12 +102,18 @@ function amend(asset, AMId, resourceId, callback) {
  * @param {string} resourceId - Asset ID of the Asset to be partially amended
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-function partialAmend(changes, AMId, resourceId, callback) {
+function partialAmend(_ref4, callback) {
+  var changes = _ref4.changes,
+      AMId = _ref4.AMId,
+      resourceId = _ref4.resourceId,
+      token = _ref4.token;
+
   var params = {
     AMaaSClass: 'assets',
     AMId: AMId,
     resourceId: resourceId,
-    data: changes
+    data: changes,
+    token: token
   };
   (0, _network.patchData)(params, function (error, result) {
     _handleCallback(error, result, callback);
@@ -105,7 +126,11 @@ function partialAmend(changes, AMId, resourceId, callback) {
  * @param {string} resourceId - Asset ID of the Asset to be deleted
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-function deactivate(AMId, resourceId, callback) {
+function deactivate(_ref5, callback) {
+  var AMId = _ref5.AMId,
+      resourceId = _ref5.resourceId,
+      token = _ref5.token;
+
   var params = {
     AMaaSClass: 'assets',
     AMId: AMId,
