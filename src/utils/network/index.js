@@ -66,6 +66,9 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, token, callback) 
   if (!AMaaSClass || !AMId) {
     throw new Error('Both class and AMId are required')
   }
+  if (!token) {
+    throw new Error('Missing Authorization')
+  }
   // If resourceId is supplied, append to url. Otherwise, return all data for AMId
   const url = buildURL({ AMaaSClass, AMId, resourceId })
   // const url = resourceId ? `${baseURL}${AMaaSClass}/${AMId}/${resourceId}` : `${baseURL}${AMaaSClass}/${AMId}/`
@@ -98,6 +101,9 @@ export function insertData({ AMaaSClass, AMId, data }, token, callback) {
   // if (!AMaaSClass || !AMId || !data) {
   //   throw new Error('Class, AMId and data to insert are required')
   // }
+  if (!token) {
+    throw new Error('Missing Authorization')
+  }
   const url = buildURL({
     AMaaSClass,
     AMId
@@ -115,6 +121,9 @@ export function insertData({ AMaaSClass, AMId, data }, token, callback) {
 }
 
 export function putData({ AMaaSClass, AMId, resourceId, data }, token, callback) {
+  if (!token) {
+    throw new Error('Missing Authorization')
+  }
   const url = buildURL({
     AMaaSClass,
     AMId,
@@ -130,6 +139,9 @@ export function putData({ AMaaSClass, AMId, resourceId, data }, token, callback)
 }
 
 export function patchData({ AMaaSClass, AMId, resourceId, data }, token, callback) {
+  if (!token) {
+    throw new Error('Missing Authorization')
+  }
   const url = buildURL({
     AMaaSClass,
     AMId,
@@ -145,6 +157,9 @@ export function patchData({ AMaaSClass, AMId, resourceId, data }, token, callbac
 }
 
 export function deleteData({ AMaaSClass, AMId, resourceId }, token, callback) {
+  if (!token) {
+    throw new Error('Missing Authorization')
+  }
   const url = buildURL({
     AMaaSClass,
     AMId,
@@ -156,6 +171,9 @@ export function deleteData({ AMaaSClass, AMId, resourceId }, token, callback) {
 }
 
 export function searchData({ AMaaSClass, queryKey, queryValue }, token, callback) {
+  if (!token) {
+    throw new Error('Missing Authorization')
+  }
   const url = buildURL({
     AMaaSClass
   })
