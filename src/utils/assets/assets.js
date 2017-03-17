@@ -24,11 +24,12 @@ import { _parseChildren } from '../parties/parties.js'
  * @param {string} [partyId] - Party ID of the Asset. Omitting this will return all Assets associated with that AMId
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function retrieve(AMId, resourceId, callback) {
+export function retrieve({AMId, resourceId, token}, callback) {
   const params = {
     AMaaSClass: 'assets',
     AMId,
-    resourceId
+    resourceId,
+    token
   }
   retrieveData(params, (error, result) => {
     if (error) {
@@ -45,11 +46,12 @@ export function retrieve(AMId, resourceId, callback) {
  * @param {Asset} asset - Asset instance to insert
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function insert(asset, callback) {
+export function insert({asset, token}, callback) {
   const stringified = JSON.stringify(asset)
   const params = {
     AMaaSClass: 'assets',
-    data: JSON.parse(stringified)
+    data: JSON.parse(stringified),
+    token
   }
   insertData(params, (error, result) => {
     _handleCallback(error, result, callback)
@@ -63,13 +65,14 @@ export function insert(asset, callback) {
  * @param {string} resourceId - Asset ID of the Party to amend
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function amend(asset, AMId, resourceId, callback) {
+export function amend({asset, AMId, resourceId, token}, callback) {
   const stringified = JSON.stringify(asset)
   const params = {
     AMaaSClass: 'assets',
     AMId,
     resourceId,
-    data: JSON.parse(stringified)
+    data: JSON.parse(stringified),
+    token
   }
   putData(params, (error, result) => {
     _handleCallback(error, result, callback)
@@ -83,12 +86,13 @@ export function amend(asset, AMId, resourceId, callback) {
  * @param {string} resourceId - Asset ID of the Asset to be partially amended
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function partialAmend(changes, AMId, resourceId, callback) {
+export function partialAmend({changes, AMId, resourceId, token}, callback) {
   const params = {
     AMaaSClass: 'assets',
     AMId,
     resourceId,
-    data: changes
+    data: changes,
+    token
   }
   patchData(params, (error, result) => {
     _handleCallback(error, result, callback)
@@ -101,7 +105,7 @@ export function partialAmend(changes, AMId, resourceId, callback) {
  * @param {string} resourceId - Asset ID of the Asset to be deleted
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function deactivate(AMId, resourceId, callback) {
+export function deactivate({AMId, resourceId, token}, callback) {
   const params = {
     AMaaSClass: 'assets',
     AMId,
