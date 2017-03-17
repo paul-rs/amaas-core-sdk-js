@@ -6,10 +6,10 @@ import AssetManager from '../../assetManagers/AssetManager/assetManager.js'
  * @param {number} AMId - Asset Manager ID to retrieve
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function retrieve(AMId, callback) {
+export function retrieve({AMId, token}, callback) {
   const params = {
     AMaaSClass: 'assetManagers',
-    AMId
+    AMId, token
   }
   retrieveData(params, (error, result) => {
     if (error) {
@@ -26,11 +26,12 @@ export function retrieve(AMId, callback) {
  * @param {AssetManager} assetManager - Asset Manager instance to insert
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function insert(assetManager, callback) {
+export function insert({assetManager, token}, callback) {
   const stringified = JSON.stringify(assetManager)
   const params = {
     AMaaSClass: 'assetManagers',
-    data: JSON.parse(stringified)
+    data: JSON.parse(stringified),
+    token
   }
   insertData(params, (error, result) => {
     _handleCallback(error, result, callback)
@@ -67,10 +68,11 @@ export function insert(assetManager, callback) {
  * @param {string} AMId - AM ID of the AM to deactive
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function deactivate(AMId, callback) {
+export function deactivate({AMId, token}, callback) {
   const params = {
     AMaaSClass: 'assetManagers',
-    AMId
+    AMId,
+    token
   }
   deleteData(params, (error, result) => {
     _handleCallback(error, result, callback)

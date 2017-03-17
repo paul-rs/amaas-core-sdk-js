@@ -18,11 +18,12 @@ import Reference from '../../core/Reference/Reference.js'
  * @param {string} [partyId] - Party ID of the Party. Omitting this will return all Parties associated with that AMId
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function retrieve(AMId, partyId, callback) {
+export function retrieve({AMId, partyId, token}, callback) {
   const params = {
     AMaaSClass: 'parties',
     AMId,
-    resourceId: partyId
+    resourceId: partyId,
+    token
   }
   retrieveData(params, (error, result) => {
     if (error) {
@@ -39,11 +40,12 @@ export function retrieve(AMId, partyId, callback) {
  * @param {Party} party - Party instance to insert
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function insert(party, callback) {
+export function insert({party, token}, callback) {
   const stringified = JSON.stringify(party)
   const params = {
     AMaaSClass: 'parties',
-    data: JSON.parse(stringified)
+    data: JSON.parse(stringified),
+    token
   }
   insertData(params, (error, result) => {
     _handleCallback(error, result, callback)
@@ -57,13 +59,14 @@ export function insert(party, callback) {
  * @param {string} resourceId - Party ID of the Party to amend
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function amend(party, AMId, resourceId, callback) {
+export function amend({party, AMId, resourceId, token}, callback) {
   const stringified = JSON.stringify(party)
   const params = {
     AMaaSClass: 'parties',
     AMId,
     resourceId,
-    data: JSON.parse(stringified)
+    data: JSON.parse(stringified),
+    token
   }
   putData(params, (error, result) => {
     _handleCallback(error, result, callback)
@@ -77,12 +80,13 @@ export function amend(party, AMId, resourceId, callback) {
  * @param {string} resourceId - Party ID of the Party to be partially amended
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function partialAmend(changes, AMId, resourceId, callback) {
+export function partialAmend({changes, AMId, resourceId, token}, callback) {
   const params = {
     AMaaSClass: 'parties',
     AMId,
     resourceId,
-    data: changes
+    data: changes,
+    token
   }
   patchData(params, (error, result) => {
     _handleCallback(error, result, callback)
@@ -95,11 +99,12 @@ export function partialAmend(changes, AMId, resourceId, callback) {
  * @param {string} resourceId - Party ID of the Party to be deleted
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function deactivate(AMId, resourceId, callback) {
+export function deactivate({AMId, resourceId, token}, callback) {
   const params = {
     AMaaSClass: 'parties',
     AMId,
-    resourceId
+    resourceId,
+    token
   }
   deleteData(params, (error, result) => {
     _handleCallback(error, result, callback)
