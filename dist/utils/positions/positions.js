@@ -19,9 +19,10 @@ function retrieve(AMId, resourceId, token, callback) {
   var params = {
     AMaaSClass: 'positions',
     AMId: AMId,
-    resourceId: resourceId
+    resourceId: resourceId,
+    token: token
   };
-  (0, _network.retrieveData)(params, token, function (error, result) {
+  (0, _network.retrieveData)(params, function (error, result) {
     if (error) {
       callback(error);
     } else {
@@ -35,9 +36,10 @@ function search(queryKey, queryValue, token, callback) {
   var params = {
     AMaaSClass: 'positions',
     queryKey: queryKey,
-    queryValue: queryValue
+    queryValue: queryValue,
+    token: token
   };
-  (0, _network.searchData)(params, token, function (error, result) {
+  (0, _network.searchData)(params, function (error, result) {
     if (error) {
       callback(error);
     } else {

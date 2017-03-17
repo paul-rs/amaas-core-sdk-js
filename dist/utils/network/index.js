@@ -84,15 +84,19 @@ function buildURL(_ref) {
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} resourceId: Id of the resource being requested (e.g. book_id)
 */
-function retrieveData(_ref2, token, callback) {
+function retrieveData(_ref2, callback) {
   var AMaaSClass = _ref2.AMaaSClass,
       AMId = _ref2.AMId,
-      resourceId = _ref2.resourceId;
+      resourceId = _ref2.resourceId,
+      token = _ref2.token;
 
   // callback(err, result)
   // Class and AMId needed to build the Url and for authorization
   if (!AMaaSClass || !AMId) {
     throw new Error('Both class and AMId are required');
+  }
+  if (!token) {
+    throw new Error('Missing Authorization');
   }
   // If resourceId is supplied, append to url. Otherwise, return all data for AMId
   var url = buildURL({ AMaaSClass: AMaaSClass, AMId: AMId, resourceId: resourceId });
@@ -122,14 +126,18 @@ function retrieveData(_ref2, token, callback) {
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} data: data to insert into database
 */
-function insertData(_ref3, token, callback) {
+function insertData(_ref3, callback) {
   var AMaaSClass = _ref3.AMaaSClass,
       AMId = _ref3.AMId,
-      data = _ref3.data;
+      data = _ref3.data,
+      token = _ref3.token;
 
   // if (!AMaaSClass || !AMId || !data) {
   //   throw new Error('Class, AMId and data to insert are required')
   // }
+  if (!token) {
+    throw new Error('Missing Authorization');
+  }
   var url = buildURL({
     AMaaSClass: AMaaSClass,
     AMId: AMId
@@ -146,12 +154,16 @@ function insertData(_ref3, token, callback) {
   });
 }
 
-function putData(_ref4, token, callback) {
+function putData(_ref4, callback) {
   var AMaaSClass = _ref4.AMaaSClass,
       AMId = _ref4.AMId,
       resourceId = _ref4.resourceId,
-      data = _ref4.data;
+      data = _ref4.data,
+      token = _ref4.token;
 
+  if (!token) {
+    throw new Error('Missing Authorization');
+  }
   var url = buildURL({
     AMaaSClass: AMaaSClass,
     AMId: AMId,
@@ -166,12 +178,16 @@ function putData(_ref4, token, callback) {
   });
 }
 
-function patchData(_ref5, token, callback) {
+function patchData(_ref5, callback) {
   var AMaaSClass = _ref5.AMaaSClass,
       AMId = _ref5.AMId,
       resourceId = _ref5.resourceId,
-      data = _ref5.data;
+      data = _ref5.data,
+      token = _ref5.token;
 
+  if (!token) {
+    throw new Error('Missing Authorization');
+  }
   var url = buildURL({
     AMaaSClass: AMaaSClass,
     AMId: AMId,
@@ -186,11 +202,15 @@ function patchData(_ref5, token, callback) {
   });
 }
 
-function deleteData(_ref6, token, callback) {
+function deleteData(_ref6, callback) {
   var AMaaSClass = _ref6.AMaaSClass,
       AMId = _ref6.AMId,
-      resourceId = _ref6.resourceId;
+      resourceId = _ref6.resourceId,
+      token = _ref6.token;
 
+  if (!token) {
+    throw new Error('Missing Authorization');
+  }
   var url = buildURL({
     AMaaSClass: AMaaSClass,
     AMId: AMId,
@@ -201,11 +221,15 @@ function deleteData(_ref6, token, callback) {
   });
 }
 
-function searchData(_ref7, token, callback) {
+function searchData(_ref7, callback) {
   var AMaaSClass = _ref7.AMaaSClass,
       queryKey = _ref7.queryKey,
-      queryValue = _ref7.queryValue;
+      queryValue = _ref7.queryValue,
+      token = _ref7.token;
 
+  if (!token) {
+    throw new Error('Missing Authorization');
+  }
   var url = buildURL({
     AMaaSClass: AMaaSClass
   });
