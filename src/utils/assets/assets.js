@@ -35,8 +35,14 @@ export function retrieve({AMId, resourceId, token}, callback) {
     if (error) {
       callback(error)
     } else {
-      const asset = _parseAsset(result)
-      callback(null, asset)
+      if (!Array.isArray(result)) {
+        callback(null, _parseAsset(result))
+        return
+      }
+      const assets = result.map(asset => {
+        return _parseAsset(asset)
+      })
+      callback(null, assets)
     }
   })
 }

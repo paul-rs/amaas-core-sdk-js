@@ -43,8 +43,14 @@ function retrieve(_ref, callback) {
     if (error) {
       callback(error);
     } else {
-      var asset = _parseAsset(result);
-      callback(null, asset);
+      if (!Array.isArray(result)) {
+        callback(null, _parseAsset(result));
+        return;
+      }
+      var assets = result.map(function (asset) {
+        return _parseAsset(asset);
+      });
+      callback(null, assets);
     }
   });
 }
