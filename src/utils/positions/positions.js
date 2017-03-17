@@ -2,13 +2,13 @@ import { retrieveData, insertData, patchData, putData, deleteData, searchData } 
 
 import Position from '../../transactions/Positions/position.js'
 
-export function retrieve(AMId, resourceId, callback) {
+export function retrieve(AMId, resourceId, token, callback) {
   const params = {
     AMaaSClass: 'positions',
     AMId,
     resourceId
   }
-  retrieveData(params, (error, result) => {
+  retrieveData(params, token, (error, result) => {
     if (error) {
       callback(error)
     } else {
@@ -18,13 +18,13 @@ export function retrieve(AMId, resourceId, callback) {
   })
 }
 
-export function search(queryKey, queryValue, callback) {
+export function search(queryKey, queryValue, token, callback) {
   const params = {
     AMaaSClass: 'positions',
     queryKey,
     queryValue
   }
-  searchData(params, (error, result) => {
+  searchData(params, token, (error, result) => {
     if (error) {
       callback(error)
     } else {
