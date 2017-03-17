@@ -22,10 +22,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {number} AMId - Asset Manager ID to retrieve
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-function retrieve(AMId, callback) {
+function retrieve(_ref, callback) {
+  var AMId = _ref.AMId,
+      token = _ref.token;
+
   var params = {
     AMaaSClass: 'assetManagers',
-    AMId: AMId
+    AMId: AMId, token: token
   };
   (0, _network.retrieveData)(params, function (error, result) {
     if (error) {
@@ -42,11 +45,15 @@ function retrieve(AMId, callback) {
  * @param {AssetManager} assetManager - Asset Manager instance to insert
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-function insert(assetManager, callback) {
+function insert(_ref2, callback) {
+  var assetManager = _ref2.assetManager,
+      token = _ref2.token;
+
   var stringified = JSON.stringify(assetManager);
   var params = {
     AMaaSClass: 'assetManagers',
-    data: JSON.parse(stringified)
+    data: JSON.parse(stringified),
+    token: token
   };
   (0, _network.insertData)(params, function (error, result) {
     _handleCallback(error, result, callback);
@@ -83,10 +90,14 @@ function insert(assetManager, callback) {
  * @param {string} AMId - AM ID of the AM to deactive
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-function deactivate(AMId, callback) {
+function deactivate(_ref3, callback) {
+  var AMId = _ref3.AMId,
+      token = _ref3.token;
+
   var params = {
     AMaaSClass: 'assetManagers',
-    AMId: AMId
+    AMId: AMId,
+    token: token
   };
   (0, _network.deleteData)(params, function (error, result) {
     _handleCallback(error, result, callback);
