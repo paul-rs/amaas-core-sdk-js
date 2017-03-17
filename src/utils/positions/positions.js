@@ -2,7 +2,7 @@ import { retrieveData, insertData, patchData, putData, deleteData, searchData } 
 
 import Position from '../../transactions/Positions/position.js'
 
-export function retrieve(AMId, resourceId, token, callback) {
+export function retrieve({AMId, resourceId, token}, callback) {
   const params = {
     AMaaSClass: 'positions',
     AMId,
@@ -19,7 +19,7 @@ export function retrieve(AMId, resourceId, token, callback) {
   })
 }
 
-export function search(queryKey, queryValue, token, callback) {
+export function search({queryKey, queryValue, token}, callback) {
   const params = {
     AMaaSClass: 'positions',
     queryKey,

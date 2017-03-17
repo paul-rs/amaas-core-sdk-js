@@ -15,7 +15,11 @@ var _position2 = _interopRequireDefault(_position);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function retrieve(AMId, resourceId, token, callback) {
+function retrieve(_ref, callback) {
+  var AMId = _ref.AMId,
+      resourceId = _ref.resourceId,
+      token = _ref.token;
+
   var params = {
     AMaaSClass: 'positions',
     AMId: AMId,
@@ -32,7 +36,11 @@ function retrieve(AMId, resourceId, token, callback) {
   });
 }
 
-function search(queryKey, queryValue, token, callback) {
+function search(_ref2, callback) {
+  var queryKey = _ref2.queryKey,
+      queryValue = _ref2.queryValue,
+      token = _ref2.token;
+
   var params = {
     AMaaSClass: 'positions',
     queryKey: queryKey,
