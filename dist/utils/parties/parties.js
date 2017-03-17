@@ -80,6 +80,10 @@ function retrieve(_ref, callback) {
     if (error) {
       callback(error);
     } else {
+      if (!Array.isArray(result)) {
+        callback(null, _parseParty(result));
+        return;
+      }
       var parties = result.map(function (party) {
         return _parseParty(party);
       });
