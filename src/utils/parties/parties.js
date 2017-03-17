@@ -29,8 +29,10 @@ export function retrieve({AMId, partyId, token}, callback) {
     if (error) {
       callback(error)
     } else {
-      const party = _parseParty(result)
-      callback(null, party)
+      const parties = result.map(party => {
+        return _parseParty(party)
+      })
+      callback(null, parties)
     }
   })
 }
@@ -116,21 +118,23 @@ export function _parseChildren(type, children) {
   switch (type) {
     case 'address':
       for (let child in children) {
-        parsedChildren[child] = new Address({
-          addressPrimary: children[child].address_primary,
-          lineOne: children[child].line_one,
-          lineTwo: children[child].line_two,
-          city: children[child].city,
-          region: children[child].region,
-          postalCode: children[child].postal_code,
-          countryId: children[child].country_id,
-          active: children[child].active,
-          createdBy: children[child].created_by,
-          updatedBy: children[child].updated_by,
-          createdTime: children[child].created_time,
-          updatedTime: children[child].updated_time,
-          version: children[child].version
-        })
+        if (children.hasOwnProperty(child)) {
+          parsedChildren[child] = new Address({
+            addressPrimary: children[child].address_primary,
+            lineOne: children[child].line_one,
+            lineTwo: children[child].line_two,
+            city: children[child].city,
+            region: children[child].region,
+            postalCode: children[child].postal_code,
+            countryId: children[child].country_id,
+            active: children[child].active,
+            createdBy: children[child].created_by,
+            updatedBy: children[child].updated_by,
+            createdTime: children[child].created_time,
+            updatedTime: children[child].updated_time,
+            version: children[child].version
+          })
+        }
       }
       break
     case 'email':

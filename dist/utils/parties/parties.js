@@ -80,8 +80,10 @@ function retrieve(_ref, callback) {
     if (error) {
       callback(error);
     } else {
-      var party = _parseParty(result);
-      callback(null, party);
+      var parties = result.map(function (party) {
+        return _parseParty(party);
+      });
+      callback(null, parties);
     }
   });
 }
@@ -184,21 +186,23 @@ function _parseChildren(type, children) {
   switch (type) {
     case 'address':
       for (var child in children) {
-        parsedChildren[child] = new _address2.default({
-          addressPrimary: children[child].address_primary,
-          lineOne: children[child].line_one,
-          lineTwo: children[child].line_two,
-          city: children[child].city,
-          region: children[child].region,
-          postalCode: children[child].postal_code,
-          countryId: children[child].country_id,
-          active: children[child].active,
-          createdBy: children[child].created_by,
-          updatedBy: children[child].updated_by,
-          createdTime: children[child].created_time,
-          updatedTime: children[child].updated_time,
-          version: children[child].version
-        });
+        if (children.hasOwnProperty(child)) {
+          parsedChildren[child] = new _address2.default({
+            addressPrimary: children[child].address_primary,
+            lineOne: children[child].line_one,
+            lineTwo: children[child].line_two,
+            city: children[child].city,
+            region: children[child].region,
+            postalCode: children[child].postal_code,
+            countryId: children[child].country_id,
+            active: children[child].active,
+            createdBy: children[child].created_by,
+            updatedBy: children[child].updated_by,
+            createdTime: children[child].created_time,
+            updatedTime: children[child].updated_time,
+            version: children[child].version
+          });
+        }
       }
       break;
     case 'email':
