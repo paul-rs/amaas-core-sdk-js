@@ -66,8 +66,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 function retrieve(_ref, callback) {
-  var _this = this;
-
   var AMId = _ref.AMId,
       partyId = _ref.partyId,
       token = _ref.token;
@@ -83,7 +81,7 @@ function retrieve(_ref, callback) {
       callback(error);
     } else {
       var parties = result.map(function (party) {
-        return _this._parseParty(party);
+        return _parseParty(party);
       });
       callback(null, parties);
     }

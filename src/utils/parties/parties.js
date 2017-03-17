@@ -29,9 +29,9 @@ export function retrieve({AMId, partyId, token}, callback) {
     if (error) {
       callback(error)
     } else {
-      const parties = result.map(party => (
-        this._parseParty(party)
-      ))
+      const parties = result.map(party => {
+        return _parseParty(party)
+      })
       callback(null, parties)
     }
   })
