@@ -60,7 +60,7 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} resourceId: Id of the resource being requested (e.g. book_id)
 */
-export function retrieveData({ AMaaSClass, AMId, resourceId }, token, callback) {
+export function retrieveData({ AMaaSClass, AMId, resourceId, token }, callback) {
   // callback(err, result)
   // Class and AMId needed to build the Url and for authorization
   if (!AMaaSClass || !AMId) {
@@ -97,7 +97,7 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, token, callback) 
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} data: data to insert into database
 */
-export function insertData({ AMaaSClass, AMId, data }, token, callback) {
+export function insertData({ AMaaSClass, AMId, data, token }, callback) {
   // if (!AMaaSClass || !AMId || !data) {
   //   throw new Error('Class, AMId and data to insert are required')
   // }
@@ -120,7 +120,7 @@ export function insertData({ AMaaSClass, AMId, data }, token, callback) {
   })
 }
 
-export function putData({ AMaaSClass, AMId, resourceId, data }, token, callback) {
+export function putData({ AMaaSClass, AMId, resourceId, data, token }, callback) {
   if (!token) {
     throw new Error('Missing Authorization')
   }
@@ -138,7 +138,7 @@ export function putData({ AMaaSClass, AMId, resourceId, data }, token, callback)
   })
 }
 
-export function patchData({ AMaaSClass, AMId, resourceId, data }, token, callback) {
+export function patchData({ AMaaSClass, AMId, resourceId, data, token }, callback) {
   if (!token) {
     throw new Error('Missing Authorization')
   }
@@ -156,7 +156,7 @@ export function patchData({ AMaaSClass, AMId, resourceId, data }, token, callbac
   })
 }
 
-export function deleteData({ AMaaSClass, AMId, resourceId }, token, callback) {
+export function deleteData({ AMaaSClass, AMId, resourceId, token }, callback) {
   if (!token) {
     throw new Error('Missing Authorization')
   }
@@ -170,7 +170,7 @@ export function deleteData({ AMaaSClass, AMId, resourceId }, token, callback) {
   })
 }
 
-export function searchData({ AMaaSClass, queryKey, queryValue }, token, callback) {
+export function searchData({ AMaaSClass, queryKey, queryValue, token }, callback) {
   if (!token) {
     throw new Error('Missing Authorization')
   }

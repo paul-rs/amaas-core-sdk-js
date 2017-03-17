@@ -6,9 +6,10 @@ export function retrieve(AMId, resourceId, token, callback) {
   const params = {
     AMaaSClass: 'positions',
     AMId,
-    resourceId
+    resourceId,
+    token
   }
-  retrieveData(params, token, (error, result) => {
+  retrieveData(params, (error, result) => {
     if (error) {
       callback(error)
     } else {
@@ -22,9 +23,10 @@ export function search(queryKey, queryValue, token, callback) {
   const params = {
     AMaaSClass: 'positions',
     queryKey,
-    queryValue
+    queryValue,
+    token
   }
-  searchData(params, token, (error, result) => {
+  searchData(params, (error, result) => {
     if (error) {
       callback(error)
     } else {
