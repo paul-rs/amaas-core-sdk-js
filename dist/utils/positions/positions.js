@@ -15,13 +15,13 @@ var _position2 = _interopRequireDefault(_position);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function retrieve(AMId, resourceId, callback) {
+function retrieve(AMId, resourceId, token, callback) {
   var params = {
     AMaaSClass: 'positions',
     AMId: AMId,
     resourceId: resourceId
   };
-  (0, _network.retrieveData)(params, function (error, result) {
+  (0, _network.retrieveData)(params, token, function (error, result) {
     if (error) {
       callback(error);
     } else {
@@ -31,13 +31,13 @@ function retrieve(AMId, resourceId, callback) {
   });
 }
 
-function search(queryKey, queryValue, callback) {
+function search(queryKey, queryValue, token, callback) {
   var params = {
     AMaaSClass: 'positions',
     queryKey: queryKey,
     queryValue: queryValue
   };
-  (0, _network.searchData)(params, function (error, result) {
+  (0, _network.searchData)(params, token, function (error, result) {
     if (error) {
       callback(error);
     } else {

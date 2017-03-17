@@ -84,7 +84,7 @@ function buildURL(_ref) {
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} resourceId: Id of the resource being requested (e.g. book_id)
 */
-function retrieveData(_ref2, callback) {
+function retrieveData(_ref2, token, callback) {
   var AMaaSClass = _ref2.AMaaSClass,
       AMId = _ref2.AMId,
       resourceId = _ref2.resourceId;
@@ -98,7 +98,7 @@ function retrieveData(_ref2, callback) {
   var url = buildURL({ AMaaSClass: AMaaSClass, AMId: AMId, resourceId: resourceId });
   // const url = resourceId ? `${baseURL}${AMaaSClass}/${AMId}/${resourceId}` : `${baseURL}${AMaaSClass}/${AMId}/`
 
-  _superagent2.default.get(url).end(function (error, response) {
+  _superagent2.default.get(url).set('Authorization', token).end(function (error, response) {
     if (!error && response.status == 200) {
       callback(null, response.body);
     } else {
@@ -122,7 +122,7 @@ function retrieveData(_ref2, callback) {
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} data: data to insert into database
 */
-function insertData(_ref3, callback) {
+function insertData(_ref3, token, callback) {
   var AMaaSClass = _ref3.AMaaSClass,
       AMId = _ref3.AMId,
       data = _ref3.data;
@@ -141,12 +141,12 @@ function insertData(_ref3, callback) {
     url: url,
     json: data
   };
-  _superagent2.default.post(url).send(data).end(function (error, response) {
+  _superagent2.default.post(url).send(data).set('Authorization', token).end(function (error, response) {
     _networkCallback(error, response, response.body, callback);
   });
 }
 
-function putData(_ref4, callback) {
+function putData(_ref4, token, callback) {
   var AMaaSClass = _ref4.AMaaSClass,
       AMId = _ref4.AMId,
       resourceId = _ref4.resourceId,
@@ -161,12 +161,12 @@ function putData(_ref4, callback) {
     url: url,
     json: data
   };
-  _superagent2.default.put(url).send(data).end(function (error, response) {
+  _superagent2.default.put(url).send(data).set('Authorization', token).end(function (error, response) {
     _networkCallback(error, response, response.body, callback);
   });
 }
 
-function patchData(_ref5, callback) {
+function patchData(_ref5, token, callback) {
   var AMaaSClass = _ref5.AMaaSClass,
       AMId = _ref5.AMId,
       resourceId = _ref5.resourceId,
@@ -181,12 +181,12 @@ function patchData(_ref5, callback) {
     url: url,
     json: data
   };
-  _superagent2.default.patch(url).send(data).end(function (error, response) {
+  _superagent2.default.patch(url).send(data).set('Authorization', token).end(function (error, response) {
     _networkCallback(error, response, response.body, callback);
   });
 }
 
-function deleteData(_ref6, callback) {
+function deleteData(_ref6, token, callback) {
   var AMaaSClass = _ref6.AMaaSClass,
       AMId = _ref6.AMId,
       resourceId = _ref6.resourceId;
@@ -196,12 +196,12 @@ function deleteData(_ref6, callback) {
     AMId: AMId,
     resourceId: resourceId
   });
-  _superagent2.default.delete(url).end(function (error, response) {
+  _superagent2.default.delete(url).set('Authorization', token).end(function (error, response) {
     _networkCallback(error, response, response.body, callback);
   });
 }
 
-function searchData(_ref7, callback) {
+function searchData(_ref7, token, callback) {
   var AMaaSClass = _ref7.AMaaSClass,
       queryKey = _ref7.queryKey,
       queryValue = _ref7.queryValue;
@@ -216,7 +216,7 @@ function searchData(_ref7, callback) {
     url: url,
     qs: qString
   };
-  _superagent2.default.get(url).query(qString).end(function (error, response) {
+  _superagent2.default.get(url).set('Authorization', token).query(qString).end(function (error, response) {
     _networkCallback(error, response, response.body, callback);
   });
 }

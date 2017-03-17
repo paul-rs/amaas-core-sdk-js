@@ -60,7 +60,7 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} resourceId: Id of the resource being requested (e.g. book_id)
 */
-export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
+export function retrieveData({ AMaaSClass, AMId, resourceId }, token, callback) {
   // callback(err, result)
   // Class and AMId needed to build the Url and for authorization
   if (!AMaaSClass || !AMId) {
@@ -70,7 +70,7 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
   const url = buildURL({ AMaaSClass, AMId, resourceId })
   // const url = resourceId ? `${baseURL}${AMaaSClass}/${AMId}/${resourceId}` : `${baseURL}${AMaaSClass}/${AMId}/`
 
-  request.get(url).end((error, response) => {
+  request.get(url).set('Authorization', token).end((error, response) => {
     if (!error && response.status == 200) {
       callback(null, response.body)
     } else {
@@ -94,7 +94,7 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} data: data to insert into database
 */
-export function insertData({ AMaaSClass, AMId, data }, callback) {
+export function insertData({ AMaaSClass, AMId, data }, token, callback) {
   // if (!AMaaSClass || !AMId || !data) {
   //   throw new Error('Class, AMId and data to insert are required')
   // }
@@ -109,12 +109,12 @@ export function insertData({ AMaaSClass, AMId, data }, callback) {
     url,
     json: data
   }
-  request.post(url).send(data).end((error, response) => {
+  request.post(url).send(data).set('Authorization', token).end((error, response) => {
     _networkCallback(error, response, response.body, callback)
   })
 }
 
-export function putData({ AMaaSClass, AMId, resourceId, data }, callback) {
+export function putData({ AMaaSClass, AMId, resourceId, data }, token, callback) {
   const url = buildURL({
     AMaaSClass,
     AMId,
@@ -124,12 +124,12 @@ export function putData({ AMaaSClass, AMId, resourceId, data }, callback) {
     url,
     json: data
   }
-  request.put(url).send(data).end((error, response) => {
+  request.put(url).send(data).set('Authorization', token).end((error, response) => {
     _networkCallback(error, response, response.body, callback)
   })
 }
 
-export function patchData({ AMaaSClass, AMId, resourceId, data }, callback) {
+export function patchData({ AMaaSClass, AMId, resourceId, data }, token, callback) {
   const url = buildURL({
     AMaaSClass,
     AMId,
@@ -139,23 +139,23 @@ export function patchData({ AMaaSClass, AMId, resourceId, data }, callback) {
     url,
     json: data
   }
-  request.patch(url).send(data).end((error, response) => {
+  request.patch(url).send(data).set('Authorization', token).end((error, response) => {
     _networkCallback(error, response, response.body, callback)
   })
 }
 
-export function deleteData({ AMaaSClass, AMId, resourceId }, callback) {
+export function deleteData({ AMaaSClass, AMId, resourceId }, token, callback) {
   const url = buildURL({
     AMaaSClass,
     AMId,
     resourceId
   })
-  request.delete(url).end((error, response) => {
+  request.delete(url).set('Authorization', token).end((error, response) => {
     _networkCallback(error, response, response.body, callback)
   })
 }
 
-export function searchData({ AMaaSClass, queryKey, queryValue }, callback) {
+export function searchData({ AMaaSClass, queryKey, queryValue }, token, callback) {
   const url = buildURL({
     AMaaSClass
   })
@@ -166,7 +166,7 @@ export function searchData({ AMaaSClass, queryKey, queryValue }, callback) {
     url,
     qs: qString
   }
-  request.get(url).query(qString).end((error, response) => {
+  request.get(url).set('Authorization', token).query(qString).end((error, response) => {
     _networkCallback(error, response, response.body, callback)
   })
 }
