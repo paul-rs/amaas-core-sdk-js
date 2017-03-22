@@ -116,7 +116,9 @@ export function insertData({ AMaaSClass, AMId, data, token }, callback) {
     json: data
   }
   request.post(url).send(data).set('Authorization', token).end((error, response) => {
-    _networkCallback(error, response, response.body, callback)
+    let body
+    if (response) body = response.body
+    _networkCallback(error, response, body, callback)
   })
 }
 
@@ -134,7 +136,9 @@ export function putData({ AMaaSClass, AMId, resourceId, data, token }, callback)
     json: data
   }
   request.put(url).send(data).set('Authorization', token).end((error, response) => {
-    _networkCallback(error, response, response.body, callback)
+    let body
+    if (response) body = response.body
+    _networkCallback(error, response, body, callback)
   })
 }
 
@@ -152,7 +156,9 @@ export function patchData({ AMaaSClass, AMId, resourceId, data, token }, callbac
     json: data
   }
   request.patch(url).send(data).set('Authorization', token).end((error, response) => {
-    _networkCallback(error, response, response.body, callback)
+    let body
+    if (response) body = response.body
+    _networkCallback(error, response, body, callback)
   })
 }
 
@@ -166,7 +172,9 @@ export function deleteData({ AMaaSClass, AMId, resourceId, token }, callback) {
     resourceId
   })
   request.delete(url).set('Authorization', token).end((error, response) => {
-    _networkCallback(error, response, response.body, callback)
+    let body
+    if (response) body = response.body
+    _networkCallback(error, response, body, callback)
   })
 }
 
@@ -185,7 +193,9 @@ export function searchData({ AMaaSClass, queryKey, queryValue, token }, callback
     qs: qString
   }
   request.get(url).set('Authorization', token).query(qString).end((error, response) => {
-    _networkCallback(error, response, response.body, callback)
+    let body
+    if (response) body = response.body
+    _networkCallback(error, response, body, callback)
   })
 }
 
