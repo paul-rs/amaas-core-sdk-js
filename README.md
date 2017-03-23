@@ -16,6 +16,10 @@ $ npm install
 $ npm test
 ```
 
+## Contribution
+
+If you would like to contribute, please fork the repo and send in a pull request.
+
 ## Support
 
 For support with the SDKs, please raise issues on GitHub. The AMaaS team can be contacted at <support@amaas.com>. Customers who have purchased a support plan can find the contact details within AMaaS Admin.
