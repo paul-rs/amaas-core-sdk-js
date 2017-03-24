@@ -1,8 +1,10 @@
-// Network functions
-import * as AMaaSParties from './utils/parties'
-import * as AMaaSAM from './utils/assetManagers'
-import * as AMaaSAssets from './utils/assets'
-import * as AMaaSPositions from './utils/positions'
+// // Network functions
+// import * as AMaaSParties from './utils/parties'
+// import * as AMaaSAM from './utils/assetManagers'
+// import * as AMaaSAssets from './utils/assets'
+// import * as AMaaSPositions from './utils/positions'
+
+import * as api from './api'
 
 // Financial Classes
 import {
@@ -17,10 +19,7 @@ import {
 import { Position } from './transactions'
 
 export {
-  AMaaSParties,
-  AMaaSAM,
-  AMaaSAssets,
-  AMaaSPositions,
+  api,
   Party,
   Individual,
   Broker,
