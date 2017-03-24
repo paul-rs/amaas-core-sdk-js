@@ -12,6 +12,7 @@ describe('api.Positions', () => {
       expect(amendPromise).toBeInstanceOf(Promise)
       amendPromise.then(result => {
         expect(result).toBe("amended")
+        callback()
       })
     })
   })

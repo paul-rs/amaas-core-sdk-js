@@ -1,4 +1,4 @@
-import * as Positions from './positions/index'
+import Positions from './positions'
 
 let config = {}
 
