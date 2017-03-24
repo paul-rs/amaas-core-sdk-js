@@ -15,6 +15,7 @@ import {
 } from './parties'
 
 import { Position } from './transactions'
+import AssetManager from './assetManagers/AssetManager/assetManager.js'
 
 export {
   AMaaSParties,
@@ -27,5 +28,6 @@ export {
   Exchange,
   Fund,
   GovernmentAgency,
-  Position
+  Position,
+  AssetManager
 }

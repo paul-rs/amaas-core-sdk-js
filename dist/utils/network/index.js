@@ -150,7 +150,9 @@ function insertData(_ref3, callback) {
     json: data
   };
   _superagent2.default.post(url).send(data).set('Authorization', token).end(function (error, response) {
-    _networkCallback(error, response, response.body, callback);
+    var body = void 0;
+    if (response) body = response.body;
+    _networkCallback(error, response, body, callback);
   });
 }
 
@@ -174,7 +176,9 @@ function putData(_ref4, callback) {
     json: data
   };
   _superagent2.default.put(url).send(data).set('Authorization', token).end(function (error, response) {
-    _networkCallback(error, response, response.body, callback);
+    var body = void 0;
+    if (response) body = response.body;
+    _networkCallback(error, response, body, callback);
   });
 }
 
@@ -198,7 +202,9 @@ function patchData(_ref5, callback) {
     json: data
   };
   _superagent2.default.patch(url).send(data).set('Authorization', token).end(function (error, response) {
-    _networkCallback(error, response, response.body, callback);
+    var body = void 0;
+    if (response) body = response.body;
+    _networkCallback(error, response, body, callback);
   });
 }
 
@@ -217,7 +223,9 @@ function deleteData(_ref6, callback) {
     resourceId: resourceId
   });
   _superagent2.default.delete(url).set('Authorization', token).end(function (error, response) {
-    _networkCallback(error, response, response.body, callback);
+    var body = void 0;
+    if (response) body = response.body;
+    _networkCallback(error, response, body, callback);
   });
 }
 
@@ -241,7 +249,9 @@ function searchData(_ref7, callback) {
     qs: qString
   };
   _superagent2.default.get(url).set('Authorization', token).query(qString).end(function (error, response) {
-    _networkCallback(error, response, response.body, callback);
+    var body = void 0;
+    if (response) body = response.body;
+    _networkCallback(error, response, body, callback);
   });
 }
 
