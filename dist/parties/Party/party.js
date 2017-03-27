@@ -90,6 +90,13 @@ var Party = function (_AMaaSModel) {
 
   _createClass(Party, [{
     key: 'upsertAddress',
+
+
+    /**
+     * Upsert an Address
+     * @param {string} type - Type of Address (e.g. 'Registered', 'Legal')
+     * @param {Address} address - new Address. Note that the new Address cannot be primary if a primary Address already exists. Use this.addresses setter to replace primary Addresses (??)
+     */
     value: function upsertAddress(type, address) {
       var addresses = Object.assign({}, this.addresses);
       addresses[type] = address;
@@ -97,6 +104,13 @@ var Party = function (_AMaaSModel) {
     }
   }, {
     key: 'upsertEmail',
+
+
+    /**
+     * Upsert an Email
+     * @param {string} type - Type of Email (e.g. 'Work', 'Support')
+     * @param {Emails} email - new Email. Note that the new Email cannot be primary if a primary Email already exists. Use this.emails setter to replace primary Emails (??)
+     */
     value: function upsertEmail(type, email) {
       var emails = Object.assign({}, this.emails);
       emails[type] = email;
