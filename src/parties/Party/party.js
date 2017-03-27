@@ -47,11 +47,21 @@ class Party extends AMaaSModel {
 
   set addresses(newAddresses) {
     if (Object.keys(newAddresses).length > 0) {
-      this._addAddresses(newAddresses)
-    } else if (!this.addresses) {
+      let primaryAdd = 0
+      for (let type in newAddresses) {
+        if (newAddresses.hasOwnProperty(type)) {
+          this._checkTypes('address', newAddresses[type], Address)
+          if (newAddresses[type].addressPrimary) {
+            primaryAdd++
+          }
+        }
+      }
+      if (primaryAdd != 1) {
+        throw new Error('Exactly 1 primary address is allowed')
+      }
       this._addresses = newAddresses
     } else {
-      this._addresses = this.addresses
+      this._addresses = {}
     }
   }
 
@@ -59,13 +69,30 @@ class Party extends AMaaSModel {
     return this._addresses
   }
 
+  upsertAddress(type, address) {
+    const addresses = Object.assign({}, this.addresses)
+    addresses[type] = address
+    this.addresses = addresses
+  }
+
   set emails(newEmails) {
     if (Object.keys(newEmails).length > 0) {
-      this._addEmails(newEmails)
-    } else if (!this.emails) {
+      let primaryEmail = 0
+      for (let type in newEmails) {
+        if (newEmails.hasOwnProperty(type)) {
+          this._checkTypes('email', newEmails[type], Email)
+          this._checkEmail(newEmails[type].email)
+          if (newEmails[type].emailPrimary) {
+            primaryEmail++
+          }
+        }
+      }
+      if (primaryEmail != 1) {
+        throw new Error('Exactly 1 primary email is allowed')
+      }
       this._emails = newEmails
     } else {
-      this._emails = this.emails
+      this._emails = {}
     }
   }
 
@@ -73,39 +100,16 @@ class Party extends AMaaSModel {
     return this._emails
   }
 
-  // Read the types of newContacts values and assign helper variables
-  _readTypes(type, newContacts) {
-    let inputTypes
-    let inputPrimary
-    switch (type) {
-      case 'address':
-        this._checkTypes(type, newContacts, Address)
-        inputTypes = 'addresses'
-        inputPrimary = 'addressPrimary'
-        break
-      case 'email':
-        this._checkTypes(type, newContacts, Email)
-        inputTypes = 'emails'
-        inputPrimary = 'emailPrimary'
-        // Check that every Email has a valid email in the email field
-        for (let contact in newContacts) {
-          this._checkEmail(newContacts[contact].email)
-        }
-        break
-      default:
-        this._checkTypes(type, newContacts, Address)
-        inputTypes = 'addresses'
-        inputPrimary = 'addressPrimary'
-    }
-    return { inputTypes, inputPrimary }
+  upsertEmail(type, email) {
+    const emails = Object.assign({}, this.emails)
+    emails[type] = email
+    this.emails = emails
   }
 
-  // Check that every value in the object has the correct type
-  _checkTypes(type, contacts, classType) {
-    for (let contact in contacts) {
-      if (!(contacts[contact] instanceof classType)) {
-        throw new Error(`Found ${type} with wrong class`)
-      }
+  // Check that the object has the correct type
+  _checkTypes(type, contact, classType) {
+    if (!(contact instanceof classType)) {
+      throw new Error(`Found ${type} with wrong class`)
     }
   }
 
@@ -114,61 +118,6 @@ class Party extends AMaaSModel {
     const regex = new RegExp('^.+@.+\..+$')
     if (!regex.test(email)) {
       throw new Error('Not a valid email')
-    }
-  }
-
-  _validatePrimary(type, newContacts) {
-    const readResult = this._readTypes(type, newContacts)
-    const inputTypes = readResult.inputTypes
-    const inputPrimary = readResult.inputPrimary
-
-    // If there are no existing contacts, set the existing contacts to {}
-    let existingContacts = this[inputTypes]
-    if (!existingContacts) {
-      existingContacts = {}
-    }
-
-    // Count the number of primary contacts in newContacts
-    let primaryInNew = 0
-    for (let contact in newContacts) {
-      if (newContacts[contact][inputPrimary]) {
-        primaryInNew++
-      }
-    }
-    // If there are no existing contacts, then there needs to be exactly 1
-    // primary contact in newContacts
-    if (Object.keys(existingContacts).length == 0) {
-      if (primaryInNew != 1) {
-        throw new Error('Exactly 1 primary address is allowed')
-      } else {
-        // existingContacts = existingContacts.concat(newContacts)
-        Object.assign(existingContacts, newContacts)
-      }
-    // If there are existing contacts, then there needs to be exactly 0
-    // primary contacts in newContacts (because existence of existing contacts
-    // implies existence of exactly 1 primary contact)
-    } else {
-      if (primaryInNew != 0) {
-        throw new Error('Primary Address is already set for this Party')
-      } else {
-        // existingContacts = existingContacts.concat(newContacts)
-        Object.assign(existingContacts, newContacts)
-      }
-    }
-    return existingContacts
-  }
-
-  _addAddresses(newAddresses) {
-    const validated = this._validatePrimary('address', newAddresses)
-    if (validated) {
-      this._addresses = validated
-    }
-  }
-
-  _addEmails(newEmails) {
-    const validated = this._validatePrimary('email', newEmails)
-    if (validated) {
-      this._emails = validated
     }
   }
 

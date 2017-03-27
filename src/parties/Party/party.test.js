@@ -1,12 +1,6 @@
 import Party from './party.js'
 import { Address, Email } from '../Children'
 
-import nock from 'nock'
-
-// const network = require('../../utils/network/index.js')
-// let retrieveData = network.retrieveData
-// import { retrieveData } from '../../utils/network'
-
 describe('Party', () => {
   describe('constructor', () => {
     it('should set addresses to empty object if class is instantiated without contacts', () => {
@@ -15,7 +9,7 @@ describe('Party', () => {
     })
 
   })
-  describe('validatePrimary', () => {
+  describe('addresses', () => {
     it('should throw if called with an object that has a non-Address as a value', () => {
       const testParty = new Party({}, null, {})
       function tester() {
@@ -37,25 +31,27 @@ describe('Party', () => {
       const primaryOne = new Address({ addressPrimary: true }, null, {})
       const primaryTwo = new Address({ addressPrimary: true }, null, {})
       const testParty = new Party({ addresses: { primaryOne } }, null, {})
-      // testParty.addresses = { primaryOne }
       function tester() {
-        testParty.addresses = { primaryTwo }
+        testParty.upsertAddress('new', primaryTwo)
       }
-      expect(tester).toThrowError('Primary Address is already set for this Party')
+      expect(tester).toThrowError('Exactly 1 primary address is allowed')
     })
-    it('should add address and preserve existing ones if validation passes', () => {
+    it('should add address and preserve existing ones on upsert', () => {
       const primaryOne = new Address({ addressPrimary: true, lineOne: 'testRoad' }, null, {})
       const primaryTwo = new Address({ addressPrimary: false, lineOne: 'testStreet' }, null, {})
-      const testParty = new Party({}, null, {})
-      testParty.addresses = { primaryOne }
-      testParty.addresses = { primaryTwo }
+      const testParty = new Party({ addresses: { primaryOne } }, null, {})
+      testParty.upsertAddress('primaryTwo', primaryTwo)
       expect(testParty.addresses).toEqual({ primaryOne, primaryTwo })
     })
   })
 
-  describe('addEmails', () => {
+  describe('emails', () => {
+    it('should set emails to empty object if class is instantiated without emails', () => {
+      const testParty = new Party({})
+      expect(testParty.emails).toEqual({})
+    })
     it('should throw if called with an array containing a non-Email class instance', () => {
-      const testParty = new Party({}, null, {})
+      const testParty = new Party({})
       function tester() {
         testParty.emails = { email: 'notanEmail' }
       }
@@ -65,15 +61,35 @@ describe('Party', () => {
       const testParty = new Party({}, null, {})
       const testEmails = new Email({ email: 'not an email' }, null, {})
       function tester() {
-        testParty.emails = { testEmails }
+        testParty.upsertEmail('test', testEmails)
       }
       expect(tester).toThrowError('Not a valid email')
     })
-    it('should not overwrite existing emails if attempting to set an empty object', () => {
-      const testEmail = new Email({ emailPrimary: true, email: 'test@test.com' }, null, {})
-      const testParty = new Party({ emails: { testEmail } }, null, {})
-      testParty.emails = {}
-      expect(Object.keys(testParty.emails).length).toEqual(1)
+    it('should throw if attempting to add multiple primary emails', () => {
+      const primaryOne = new Email({ emailPrimary: true, email: 'test@test.com' }, null, {})
+      const primaryTwo = new Email({ emailPrimary: true, email: 'test@test.com' }, null, {})
+      const params = { primaryOne, primaryTwo }
+      const testParty = new Party({}, null, {})
+      function tester() {
+        testParty.emails = params
+      }
+      expect(tester).toThrowError('Exactly 1 primary email is allowed')
+    })
+    it('should throw if attempting to add primary email to existing primary email', () => {
+      const primaryOne = new Email({ emailPrimary: true, email: 'test@test.com' }, null, {})
+      const primaryTwo = new Email({ emailPrimary: true, email: 'test@test.com' }, null, {})
+      const testParty = new Party({ emails: { primaryOne } })
+      function tester() {
+        testParty.upsertEmail('new', primaryTwo)
+      }
+      expect(tester).toThrowError('Exactly 1 primary email is allowed')
+    })
+    it('should add email and preserve existing ones on upsert', () => {
+      const primaryOne = new Email({ emailPrimary: true, email: 'test@test.com' })
+      const primaryTwo = new Email({ emailPrimary: false, email: 'test@test.com' })
+      const testParty = new Party({ emails: { primaryOne } })
+      testParty.upsertEmail('primaryTwo', primaryTwo)
+      expect(testParty.emails).toEqual({ primaryOne, primaryTwo })
     })
   })
 })

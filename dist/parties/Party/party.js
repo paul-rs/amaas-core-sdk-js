@@ -89,45 +89,27 @@ var Party = function (_AMaaSModel) {
   }
 
   _createClass(Party, [{
-    key: '_readTypes',
-
-
-    // Read the types of newContacts values and assign helper variables
-    value: function _readTypes(type, newContacts) {
-      var inputTypes = void 0;
-      var inputPrimary = void 0;
-      switch (type) {
-        case 'address':
-          this._checkTypes(type, newContacts, _Children.Address);
-          inputTypes = 'addresses';
-          inputPrimary = 'addressPrimary';
-          break;
-        case 'email':
-          this._checkTypes(type, newContacts, _Children.Email);
-          inputTypes = 'emails';
-          inputPrimary = 'emailPrimary';
-          // Check that every Email has a valid email in the email field
-          for (var contact in newContacts) {
-            this._checkEmail(newContacts[contact].email);
-          }
-          break;
-        default:
-          this._checkTypes(type, newContacts, _Children.Address);
-          inputTypes = 'addresses';
-          inputPrimary = 'addressPrimary';
-      }
-      return { inputTypes: inputTypes, inputPrimary: inputPrimary };
+    key: 'upsertAddress',
+    value: function upsertAddress(type, address) {
+      var addresses = Object.assign({}, this.addresses);
+      addresses[type] = address;
+      this.addresses = addresses;
+    }
+  }, {
+    key: 'upsertEmail',
+    value: function upsertEmail(type, email) {
+      var emails = Object.assign({}, this.emails);
+      emails[type] = email;
+      this.emails = emails;
     }
 
-    // Check that every value in the object has the correct type
+    // Check that the object has the correct type
 
   }, {
     key: '_checkTypes',
-    value: function _checkTypes(type, contacts, classType) {
-      for (var contact in contacts) {
-        if (!(contacts[contact] instanceof classType)) {
-          throw new Error('Found ' + type + ' with wrong class');
-        }
+    value: function _checkTypes(type, contact, classType) {
+      if (!(contact instanceof classType)) {
+        throw new Error('Found ' + type + ' with wrong class');
       }
     }
 
@@ -139,64 +121,6 @@ var Party = function (_AMaaSModel) {
       var regex = new RegExp('^.+@.+\..+$');
       if (!regex.test(email)) {
         throw new Error('Not a valid email');
-      }
-    }
-  }, {
-    key: '_validatePrimary',
-    value: function _validatePrimary(type, newContacts) {
-      var readResult = this._readTypes(type, newContacts);
-      var inputTypes = readResult.inputTypes;
-      var inputPrimary = readResult.inputPrimary;
-
-      // If there are no existing contacts, set the existing contacts to {}
-      var existingContacts = this[inputTypes];
-      if (!existingContacts) {
-        existingContacts = {};
-      }
-
-      // Count the number of primary contacts in newContacts
-      var primaryInNew = 0;
-      for (var contact in newContacts) {
-        if (newContacts[contact][inputPrimary]) {
-          primaryInNew++;
-        }
-      }
-      // If there are no existing contacts, then there needs to be exactly 1
-      // primary contact in newContacts
-      if (Object.keys(existingContacts).length == 0) {
-        if (primaryInNew != 1) {
-          throw new Error('Exactly 1 primary address is allowed');
-        } else {
-          // existingContacts = existingContacts.concat(newContacts)
-          Object.assign(existingContacts, newContacts);
-        }
-        // If there are existing contacts, then there needs to be exactly 0
-        // primary contacts in newContacts (because existence of existing contacts
-        // implies existence of exactly 1 primary contact)
-      } else {
-        if (primaryInNew != 0) {
-          throw new Error('Primary Address is already set for this Party');
-        } else {
-          // existingContacts = existingContacts.concat(newContacts)
-          Object.assign(existingContacts, newContacts);
-        }
-      }
-      return existingContacts;
-    }
-  }, {
-    key: '_addAddresses',
-    value: function _addAddresses(newAddresses) {
-      var validated = this._validatePrimary('address', newAddresses);
-      if (validated) {
-        this._addresses = validated;
-      }
-    }
-  }, {
-    key: '_addEmails',
-    value: function _addEmails(newEmails) {
-      var validated = this._validatePrimary('email', newEmails);
-      if (validated) {
-        this._emails = validated;
       }
     }
   }, {
@@ -223,11 +147,21 @@ var Party = function (_AMaaSModel) {
     key: 'addresses',
     set: function set(newAddresses) {
       if (Object.keys(newAddresses).length > 0) {
-        this._addAddresses(newAddresses);
-      } else if (!this.addresses) {
+        var primaryAdd = 0;
+        for (var type in newAddresses) {
+          if (newAddresses.hasOwnProperty(type)) {
+            this._checkTypes('address', newAddresses[type], _Children.Address);
+            if (newAddresses[type].addressPrimary) {
+              primaryAdd++;
+            }
+          }
+        }
+        if (primaryAdd != 1) {
+          throw new Error('Exactly 1 primary address is allowed');
+        }
         this._addresses = newAddresses;
       } else {
-        this._addresses = this.addresses;
+        this._addresses = {};
       }
     },
     get: function get() {
@@ -237,11 +171,22 @@ var Party = function (_AMaaSModel) {
     key: 'emails',
     set: function set(newEmails) {
       if (Object.keys(newEmails).length > 0) {
-        this._addEmails(newEmails);
-      } else if (!this.emails) {
+        var primaryEmail = 0;
+        for (var type in newEmails) {
+          if (newEmails.hasOwnProperty(type)) {
+            this._checkTypes('email', newEmails[type], _Children.Email);
+            this._checkEmail(newEmails[type].email);
+            if (newEmails[type].emailPrimary) {
+              primaryEmail++;
+            }
+          }
+        }
+        if (primaryEmail != 1) {
+          throw new Error('Exactly 1 primary email is allowed');
+        }
         this._emails = newEmails;
       } else {
-        this._emails = this.emails;
+        this._emails = {};
       }
     },
     get: function get() {
