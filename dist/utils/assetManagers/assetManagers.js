@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.retrieve = retrieve;
 exports.insert = insert;
+exports.amendAM = amendAM;
 exports.deactivate = deactivate;
 exports._parseAM = _parseAM;
 exports._handleCallback = _handleCallback;
@@ -60,19 +61,23 @@ function insert(_ref2, callback) {
   });
 }
 
-// export function amendAM(assetManager, AMId, resourceId, callback) {
-//   const stringified = JSON.stringify(assetManager)
-//   const params = {
-//     AMaaSClass: 'assetManagers',
-//     AMId,
-//     resourceId,
-//     data: JSON.parse(stringified)
-//   }
-//   putData(params, (error, result) => {
-//     _handleCallback(error, result, callback)
-//   })
-// }
-//
+function amendAM(_ref3, callback) {
+  var assetManager = _ref3.assetManager,
+      AMId = _ref3.AMId,
+      token = _ref3.token;
+
+  var stringified = JSON.stringify(assetManager);
+  var params = {
+    AMaaSClass: 'assetManagers',
+    AMId: AMId,
+    data: JSON.parse(stringified),
+    token: token
+  };
+  (0, _network.putData)(params, function (error, result) {
+    _handleCallback(error, result, callback);
+  });
+}
+
 // export function partialAmendAM(changes, AMId, resourceId, callback) {
 //   const params = {
 //     AMaaSClass: 'assetManagers',
@@ -90,9 +95,9 @@ function insert(_ref2, callback) {
  * @param {string} AMId - AM ID of the AM to deactive
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-function deactivate(_ref3, callback) {
-  var AMId = _ref3.AMId,
-      token = _ref3.token;
+function deactivate(_ref4, callback) {
+  var AMId = _ref4.AMId,
+      token = _ref4.token;
 
   var params = {
     AMaaSClass: 'assetManagers',

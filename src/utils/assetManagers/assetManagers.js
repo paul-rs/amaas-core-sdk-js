@@ -38,19 +38,19 @@ export function insert({assetManager, token}, callback) {
   })
 }
 
-// export function amendAM(assetManager, AMId, resourceId, callback) {
-//   const stringified = JSON.stringify(assetManager)
-//   const params = {
-//     AMaaSClass: 'assetManagers',
-//     AMId,
-//     resourceId,
-//     data: JSON.parse(stringified)
-//   }
-//   putData(params, (error, result) => {
-//     _handleCallback(error, result, callback)
-//   })
-// }
-//
+export function amendAM({assetManager, AMId, token}, callback) {
+  const stringified = JSON.stringify(assetManager)
+  const params = {
+    AMaaSClass: 'assetManagers',
+    AMId,
+    data: JSON.parse(stringified),
+    token
+  }
+  putData(params, (error, result) => {
+    _handleCallback(error, result, callback)
+  })
+}
+
 // export function partialAmendAM(changes, AMId, resourceId, callback) {
 //   const params = {
 //     AMaaSClass: 'assetManagers',
