@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AssetManager = exports.Position = exports.GovernmentAgency = exports.Fund = exports.Exchange = exports.Broker = exports.Individual = exports.Party = exports.AMaaSPositions = exports.AMaaSAssets = exports.AMaaSAM = exports.AMaaSParties = undefined;
+exports.AssetManager = exports.Position = exports.Email = exports.Address = exports.GovernmentAgency = exports.Fund = exports.Exchange = exports.Broker = exports.Individual = exports.Party = exports.AMaaSPositions = exports.AMaaSAssets = exports.AMaaSAM = exports.AMaaSParties = undefined;
 
 var _parties = require('./utils/parties');
 
@@ -43,6 +43,8 @@ exports.Broker = _parties2.Broker;
 exports.Exchange = _parties2.Exchange;
 exports.Fund = _parties2.Fund;
 exports.GovernmentAgency = _parties2.GovernmentAgency;
+exports.Address = _parties2.Address;
+exports.Email = _parties2.Email;
 exports.Position = _transactions.Position;
 exports.AssetManager = _assetManager2.default;
 

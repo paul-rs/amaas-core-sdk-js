@@ -399,7 +399,7 @@ function _handleCallback(error, result, callback) {
   if (error) {
     callback(error);
   } else {
-    callback(null, result);
+    callback(null, _parseParty(result));
   }
 }
 

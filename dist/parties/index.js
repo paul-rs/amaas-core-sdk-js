@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Email = exports.Address = exports.GovernmentAgency = exports.Fund = exports.Exchange = exports.Broker = exports.Individual = exports.Party = undefined;
 
 var _party = require('./Party/party.js');
 
@@ -58,4 +59,9 @@ Object.defineProperty(exports, 'GovernmentAgency', {
   }
 });
 
+var _Children = require('./Children');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.Address = _Children.Address;
+exports.Email = _Children.Email;

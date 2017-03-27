@@ -11,7 +11,9 @@ import {
   Broker,
   Exchange,
   Fund,
-  GovernmentAgency
+  GovernmentAgency,
+  Address,
+  Email
 } from './parties'
 
 import { Position } from './transactions'
@@ -28,6 +30,8 @@ export {
   Exchange,
   Fund,
   GovernmentAgency,
+  Address,
+  Email,
   Position,
   AssetManager
 }
