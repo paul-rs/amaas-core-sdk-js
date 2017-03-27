@@ -11,15 +11,15 @@ describe('Party', () => {
   })
   describe('addresses', () => {
     it('should throw if called with an object that has a non-Address as a value', () => {
-      const testParty = new Party({}, null, {})
+      const testParty = new Party({})
       function tester() {
         testParty.addresses = { address: 'notAnAddress' }
       }
       expect(tester).toThrowError('Found address with wrong class')
     })
     it('should throw if attempting to add multiple primary addresses', () => {
-      const primaryOne = new Address({ addressPrimary: true }, null, {})
-      const primaryTwo = new Address({ addressPrimary: true }, null, {})
+      const primaryOne = new Address({ addressPrimary: true })
+      const primaryTwo = new Address({ addressPrimary: true })
       const params = { primaryOne, primaryTwo }
       const testParty = new Party({}, null, {})
       function tester() {
@@ -28,18 +28,18 @@ describe('Party', () => {
       expect(tester).toThrowError('Exactly 1 primary address is allowed')
     })
     it('should throw if attempting to add primary address to existing primary address', () => {
-      const primaryOne = new Address({ addressPrimary: true }, null, {})
-      const primaryTwo = new Address({ addressPrimary: true }, null, {})
-      const testParty = new Party({ addresses: { primaryOne } }, null, {})
+      const primaryOne = new Address({ addressPrimary: true })
+      const primaryTwo = new Address({ addressPrimary: true })
+      const testParty = new Party({ addresses: { primaryOne } })
       function tester() {
         testParty.upsertAddress('new', primaryTwo)
       }
       expect(tester).toThrowError('Exactly 1 primary address is allowed')
     })
     it('should add address and preserve existing ones on upsert', () => {
-      const primaryOne = new Address({ addressPrimary: true, lineOne: 'testRoad' }, null, {})
-      const primaryTwo = new Address({ addressPrimary: false, lineOne: 'testStreet' }, null, {})
-      const testParty = new Party({ addresses: { primaryOne } }, null, {})
+      const primaryOne = new Address({ addressPrimary: true, lineOne: 'testRoad' })
+      const primaryTwo = new Address({ addressPrimary: false, lineOne: 'testStreet' })
+      const testParty = new Party({ addresses: { primaryOne } })
       testParty.upsertAddress('primaryTwo', primaryTwo)
       expect(testParty.addresses).toEqual({ primaryOne, primaryTwo })
     })
@@ -58,26 +58,26 @@ describe('Party', () => {
       expect(tester).toThrowError('Found email with wrong class')
     })
     it('should throw if Email contains invalid email', () => {
-      const testParty = new Party({}, null, {})
-      const testEmails = new Email({ email: 'not an email' }, null, {})
+      const testParty = new Party({})
+      const testEmails = new Email({ email: 'not an email' })
       function tester() {
         testParty.upsertEmail('test', testEmails)
       }
       expect(tester).toThrowError('Not a valid email')
     })
     it('should throw if attempting to add multiple primary emails', () => {
-      const primaryOne = new Email({ emailPrimary: true, email: 'test@test.com' }, null, {})
-      const primaryTwo = new Email({ emailPrimary: true, email: 'test@test.com' }, null, {})
+      const primaryOne = new Email({ emailPrimary: true, email: 'test@test.com' })
+      const primaryTwo = new Email({ emailPrimary: true, email: 'test@test.com' })
       const params = { primaryOne, primaryTwo }
-      const testParty = new Party({}, null, {})
+      const testParty = new Party({})
       function tester() {
         testParty.emails = params
       }
       expect(tester).toThrowError('Exactly 1 primary email is allowed')
     })
     it('should throw if attempting to add primary email to existing primary email', () => {
-      const primaryOne = new Email({ emailPrimary: true, email: 'test@test.com' }, null, {})
-      const primaryTwo = new Email({ emailPrimary: true, email: 'test@test.com' }, null, {})
+      const primaryOne = new Email({ emailPrimary: true, email: 'test@test.com' })
+      const primaryTwo = new Email({ emailPrimary: true, email: 'test@test.com' })
       const testParty = new Party({ emails: { primaryOne } })
       function tester() {
         testParty.upsertEmail('new', primaryTwo)
