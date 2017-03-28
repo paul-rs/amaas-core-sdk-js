@@ -66,7 +66,7 @@ class Address extends AMaaSModel {
         this._addressPrimary = true
         break
       default:
-        this._addressPrimary = newAddressPrimary
+        this._addressPrimary = !!newAddressPrimary
     }
   }
 

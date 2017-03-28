@@ -122,7 +122,7 @@ var Address = function (_AMaaSModel) {
           this._addressPrimary = true;
           break;
         default:
-          this._addressPrimary = newAddressPrimary;
+          this._addressPrimary = !!newAddressPrimary;
       }
     },
     get: function get() {

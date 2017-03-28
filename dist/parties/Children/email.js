@@ -101,7 +101,7 @@ var Email = function (_AMaaSModel) {
           this._emailPrimary = true;
           break;
         default:
-          this._emailPrimary = newEmailPrimary;
+          this._emailPrimary = !!newEmailPrimary;
       }
     },
     get: function get() {

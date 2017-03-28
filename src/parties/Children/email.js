@@ -56,7 +56,7 @@ class Email extends AMaaSModel {
         this._emailPrimary = true
         break
       default:
-        this._emailPrimary = newEmailPrimary
+        this._emailPrimary = !!newEmailPrimary
     }
   }
 
