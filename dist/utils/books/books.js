@@ -59,7 +59,7 @@ function search(_ref2, callback) {
     queryValue: queryValue,
     token: token
   };
-  searchData(params, function (error, result) {
+  (0, _network.searchData)(params, function (error, result) {
     if (error) {
       callback(error);
     } else {

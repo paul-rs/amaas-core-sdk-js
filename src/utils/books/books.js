@@ -1,4 +1,4 @@
-import { retrieveData, insertData, patchData, putData, deleteData } from '../network'
+import { retrieveData, searchData } from '../network'
 import Book from './../../books/Book/book'
 
 /**

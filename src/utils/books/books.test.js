@@ -12,4 +12,15 @@ describe('utils/books', () => {
       callback(error)
     })
   })
+
+  test("search", callback => {
+    search({
+      queryKey: 'asset_manager_ids',
+      queryValue: [269]
+    }, (error, result) => {
+      console.log(result)
+      expect(Array.isArray(result)).toBeTruthy()
+      callback(error)
+    })
+  })
 })
