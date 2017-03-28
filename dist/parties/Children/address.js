@@ -114,7 +114,7 @@ var Address = function (_AMaaSModel) {
   }, {
     key: 'addressPrimary',
     set: function set(newAddressPrimary) {
-      switch (newAddressPrimary) {
+      switch (!!newAddressPrimary) {
         case false:
           this._addressPrimary = false;
           break;

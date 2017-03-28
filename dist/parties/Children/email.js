@@ -93,7 +93,7 @@ var Email = function (_AMaaSModel) {
   }, {
     key: 'emailPrimary',
     set: function set(newEmailPrimary) {
-      switch (newEmailPrimary) {
+      switch (!!newEmailPrimary) {
         case false:
           this._emailPrimary = false;
           break;

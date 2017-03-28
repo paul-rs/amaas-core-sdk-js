@@ -48,7 +48,7 @@ class Email extends AMaaSModel {
   }
 
   set emailPrimary(newEmailPrimary) {
-    switch (newEmailPrimary) {
+    switch (!!newEmailPrimary) {
       case false:
         this._emailPrimary = false
         break

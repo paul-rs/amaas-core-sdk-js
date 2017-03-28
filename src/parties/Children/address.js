@@ -58,7 +58,7 @@ class Address extends AMaaSModel {
   }
 
   set addressPrimary(newAddressPrimary) {
-    switch (newAddressPrimary) {
+    switch (!!newAddressPrimary) {
       case false:
         this._addressPrimary = false
         break
