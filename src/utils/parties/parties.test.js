@@ -55,7 +55,7 @@ describe('parties util functions', () => {
       nock(ENDPOINTS.parties)
         .get('/parties/1/party')
         .reply(400)
-      retrieve('1', 'party', (error, result) => {
+      retrieve({AMId: 1, partyId: 'party', token: 'testToken'}, (error, result) => {
         expect(result).toBeUndefined()
         expect(error.statusCode).toBe(400)
         callback()
@@ -65,7 +65,7 @@ describe('parties util functions', () => {
       nock(ENDPOINTS.parties)
         .get('/parties/1/party')
         .reply(200, '{"Message": "Success"}')
-      retrieve('1', 'party', (error, result) => {
+      retrieve({AMId: 1, partyId: 'party', token: 'testToken'}, (error, result) => {
         expect(error).toBeNull()
         expect(result).toEqual(new Party({}))
         callback()

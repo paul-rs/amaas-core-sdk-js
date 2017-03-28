@@ -46,9 +46,9 @@ describe('Individual', () => {
       })
       const testIndividual = new Individual({ addresses: { Registered: address } })
       function tester() {
-        testIndividual.addresses = { Legal: address2 }
+        testIndividual.upsertAddress('Legal', address2)
       }
-      expect(tester).toThrowError('Primary Address is already set for this Party')
+      expect(tester).toThrowError('Exactly 1 primary address is allowed')
     })
   })
 })

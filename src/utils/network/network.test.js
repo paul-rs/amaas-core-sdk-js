@@ -43,7 +43,8 @@ describe('buildURL function', () => {
 describe('retrieveData', () => {
   const testParams = {
     AMaaSClass: 'books',
-    AMId: '1234'
+    AMId: '1234',
+    token: 'testToken'
   }
   it('should hit the correct endpoint', callback => {
     // const scope = nock(process.env.baseURL)
@@ -73,6 +74,7 @@ describe('insertData', () => {
   const testParams = {
     AMaaSClass: 'books',
     AMId: '1234',
+    token: 'testToken',
     data: {
       price: 20
     }
@@ -101,7 +103,8 @@ describe('searchData', () => {
   const testParams = {
     AMaaSClass: 'positions',
     queryKey: 'asset_manager_book_id',
-    queryValue: [7, 532, 841]
+    queryValue: [7, 532, 841],
+    token: 'testToken'
   }
   const expectedResult = {
     asset_book_id: '1,2,3,abc'
