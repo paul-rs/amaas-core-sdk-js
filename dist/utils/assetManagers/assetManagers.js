@@ -8,7 +8,6 @@ exports.insert = insert;
 exports.amendAM = amendAM;
 exports.deactivate = deactivate;
 exports._parseAM = _parseAM;
-exports._handleCallback = _handleCallback;
 
 var _network = require('../network');
 
@@ -31,13 +30,19 @@ function retrieve(_ref, callback) {
     AMaaSClass: 'assetManagers',
     AMId: AMId, token: token
   };
-  (0, _network.retrieveData)(params, function (error, result) {
-    if (error) {
-      callback(error);
-    } else {
-      var assetManager = _parseAM(result);
+  var promise = (0, _network.retrieveData)(params).then(function (result) {
+    var assetManager = _parseAM(result);
+    if (typeof callback === 'function') {
       callback(null, assetManager);
     }
+    return assetManager;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -50,14 +55,29 @@ function insert(_ref2, callback) {
   var assetManager = _ref2.assetManager,
       token = _ref2.token;
 
-  var stringified = JSON.stringify(assetManager);
+  var stringified = void 0,
+      data = void 0;
+  if (assetManager) {
+    stringified = JSON.stringify(assetManager);
+    data = JSON.parse(stringified);
+  }
   var params = {
     AMaaSClass: 'assetManagers',
-    data: JSON.parse(stringified),
+    data: data,
     token: token
   };
-  (0, _network.insertData)(params, function (error, result) {
-    _handleCallback(error, result, callback);
+  var promise = (0, _network.insertData)(params).then(function (result) {
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -66,15 +86,30 @@ function amendAM(_ref3, callback) {
       AMId = _ref3.AMId,
       token = _ref3.token;
 
-  var stringified = JSON.stringify(assetManager);
+  var stringified = void 0,
+      data = void 0;
+  if (assetManager) {
+    stringified = JSON.stringify(assetManager);
+    data = JSON.parse(stringified);
+  }
   var params = {
     AMaaSClass: 'assetManagers',
     AMId: AMId,
-    data: JSON.parse(stringified),
+    data: data,
     token: token
   };
-  (0, _network.putData)(params, function (error, result) {
-    _handleCallback(error, result, callback);
+  var promise = (0, _network.putData)(params).then(function (result) {
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -104,8 +139,18 @@ function deactivate(_ref4, callback) {
     AMId: AMId,
     token: token
   };
-  (0, _network.deleteData)(params, function (error, result) {
-    _handleCallback(error, result, callback);
+  var promise = (0, _network.deleteData)(params).then(function (result) {
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -124,12 +169,4 @@ function _parseAM(object) {
     createdTime: object.created_time,
     updatedTime: object.updated_time
   });
-}
-
-function _handleCallback(error, result, callback) {
-  if (error) {
-    callback(error);
-  } else {
-    callback(null, result);
-  }
 }

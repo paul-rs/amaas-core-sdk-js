@@ -26,13 +26,20 @@ function retrieve(_ref, callback) {
     resourceId: resourceId,
     token: token
   };
-  (0, _network.retrieveData)(params, function (error, result) {
-    if (error) {
-      callback(error);
-    } else {
-      var pos = _parsePos(result);
+  var promise = (0, _network.retrieveData)(params).then(function (result) {
+    var pos = _parsePos(result);
+    if (typeof callback === 'function') {
       callback(null, pos);
+    } else {
+      return pos;
     }
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -47,15 +54,22 @@ function search(_ref2, callback) {
     queryValue: queryValue,
     token: token
   };
-  (0, _network.searchData)(params, function (error, result) {
-    if (error) {
-      callback(error);
-    } else {
-      var positions = result.map(function (pos) {
-        return _parsePos(pos);
-      });
+  var promise = (0, _network.searchData)(params).then(function (result) {
+    var positions = result.map(function (pos) {
+      return _parsePos(pos);
+    });
+    if (typeof callback === 'function') {
       callback(null, positions);
+    } else {
+      return positions;
     }
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
