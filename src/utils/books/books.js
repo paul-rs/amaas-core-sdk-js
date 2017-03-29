@@ -14,20 +14,26 @@ export function retrieve({AMId, resourceId, token}, callback) {
     resourceId,
     token
   }
-  retrieveData(params, (error, result) => {
-    if (error) {
-      callback(error)
-    } else {
-      if (!Array.isArray(result)) {
-        callback(null, _parseBook(result))
-        return
-      }
-      const books = result.map(book => {
-        return _parseBook(book)
-      })
-      callback(null, books)
+  let handleFullfilled = result => {
+    if (!Array.isArray(result)) {
+      callback(null, _parseBook(result))
+      return
     }
-  })
+    const books = result.map(book => {
+      return _parseBook(book)
+    })
+    if (typeof callback === 'function') {
+      callback(null, books)
+    } else {
+      return books
+    }
+  }
+  let promise = retrieveData(params).then(handleFullfilled)
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 export function search({queryKey, queryValue, token}, callback) {
@@ -37,16 +43,22 @@ export function search({queryKey, queryValue, token}, callback) {
     queryValue,
     token
   }
-  searchData(params, (error, result) => {
-    if (error) {
-      callback(error)
-    } else {
-      const books = result.map((book) => {
-        return _parseBook(book)
-      })
+  let handleFullfilled = result => {
+    const books = result.map((book) => {
+      return _parseBook(book)
+    })
+    if (typeof callback === 'function') {
       callback(null, books)
+    } else {
+      return books
     }
-  })
+  }
+  let promise = searchData(params).then(handleFullfilled)
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 export function _parseBook(object) {
