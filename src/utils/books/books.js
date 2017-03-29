@@ -14,7 +14,7 @@ export function retrieve({AMId, resourceId, token}, callback) {
     resourceId,
     token
   }
-  let handleFullfilled = result => {
+  let promise = retrieveData(params).then(result => {
     if (!Array.isArray(result)) {
       callback(null, _parseBook(result))
       return
@@ -27,8 +27,7 @@ export function retrieve({AMId, resourceId, token}, callback) {
     } else {
       return books
     }
-  }
-  let promise = retrieveData(params).then(handleFullfilled)
+  })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise
@@ -43,7 +42,7 @@ export function search({queryKey, queryValue, token}, callback) {
     queryValue,
     token
   }
-  let handleFullfilled = result => {
+  let promise = searchData(params).then(result => {
     const books = result.map((book) => {
       return _parseBook(book)
     })
@@ -52,8 +51,7 @@ export function search({queryKey, queryValue, token}, callback) {
     } else {
       return books
     }
-  }
-  let promise = searchData(params).then(handleFullfilled)
+  })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise
