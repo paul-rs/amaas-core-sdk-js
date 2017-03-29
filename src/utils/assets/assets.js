@@ -31,20 +31,22 @@ export function retrieve({AMId, resourceId, token}, callback) {
     resourceId,
     token
   }
-  retrieveData(params, (error, result) => {
-    if (error) {
-      callback(error)
+  let promise = retrieveData(params).then(result => {
+    if (Array.isArray(result)) {
+      result = result.map(asset => _parseAsset(asset))
     } else {
-      if (!Array.isArray(result)) {
-        callback(null, _parseAsset(result))
-        return
-      }
-      const assets = result.map(asset => {
-        return _parseAsset(asset)
-      })
-      callback(null, assets)
+      result = _parseAsset(result)
     }
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 /**
@@ -59,9 +61,17 @@ export function insert({asset, token}, callback) {
     data: JSON.parse(stringified),
     token
   }
-  insertData(params, (error, result) => {
-    _handleCallback(error, result, callback)
+  let promise = insertData(params).then(result => {
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 /**
@@ -80,9 +90,17 @@ export function amend({asset, AMId, resourceId, token}, callback) {
     data: JSON.parse(stringified),
     token
   }
-  putData(params, (error, result) => {
-    _handleCallback(error, result, callback)
+  let promise = putData(params).then(result => {
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 /**
@@ -100,9 +118,17 @@ export function partialAmend({changes, AMId, resourceId, token}, callback) {
     data: changes,
     token
   }
-  patchData(params, (error, result) => {
-    _handleCallback(error, result, callback)
+  let promise = patchData(params).then(result => {
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 /**
@@ -117,9 +143,17 @@ export function deactivate({AMId, resourceId, token}, callback) {
     AMId,
     resourceId
   }
-  deleteData(params, (error, result) => {
-    _handleCallback(error, result, callback)
+  let promise = deleteData(params).then(result => {
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 export function _parseAsset(object) {
@@ -409,12 +443,4 @@ export function _parseAsset(object) {
       })
   }
   return asset
-}
-
-function _handleCallback(error, result, callback) {
-  if (error) {
-    callback(error)
-  } else {
-    callback(null, result)
-  }
 }
