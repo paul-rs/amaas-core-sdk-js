@@ -2,7 +2,10 @@ import {
   buildURL,
   retrieveData,
   insertData,
-  searchData
+  searchData,
+  putData,
+  patchData,
+  deleteData
 } from './'
 
 import ENDPOINTS from '../../config.js'
@@ -10,6 +13,8 @@ import ENDPOINTS from '../../config.js'
 // import { baseURL } from './constants.js'
 
 import nock from 'nock'
+
+let token = process.env.API_TOKEN
 
 describe('buildURL function', () => {
   it('should throw if no class supplied', () => {
@@ -68,6 +73,10 @@ describe('retrieveData', () => {
       callback()
     })
   })
+  it('should return a promise if callback is not provided', () => {
+    let promise = retrieveData(testParams).catch(error => {})
+    expect(promise).toBeInstanceOf(Promise)
+  })
 })
 
 describe('insertData', () => {
@@ -97,6 +106,10 @@ describe('insertData', () => {
       callback()
     })
   })
+  it('should return a promise if callback is not provided', () => {
+    let promise = insertData(testParams).catch(error => {})
+    expect(promise).toBeInstanceOf(Promise)
+  })
 })
 
 describe('searchData', () => {
@@ -109,6 +122,10 @@ describe('searchData', () => {
   const expectedResult = {
     asset_book_id: '1,2,3,abc'
   }
+  it('should return a promise if callback is not provided', () => {
+    let promise = searchData(testParams).catch(error => {})
+    expect(promise).toBeInstanceOf(Promise)
+  })
   // searchData(testParams, (error, result) => {
   //   if (error) {
   //     console.log(error)
@@ -119,4 +136,20 @@ describe('searchData', () => {
   // searchData(testParams, (error, result) => {
   //   expect(result).toEqual(expectedResult)
   // })
+})
+
+describe('putData', () => {
+  let params = {token, AMaaSClass: 'positions'}
+  it('should return a promise if callback is not provided', () => {
+    let promise = putData(params).catch(error => {})
+    expect(promise).toBeInstanceOf(Promise)
+  })
+})
+
+describe('patchData', () => {
+  let params = {token, AMaaSClass: 'positions'}
+  it('should return a promise if callback is not provided', () => {
+    let promise = patchData(params).catch(error => {})
+    expect(promise).toBeInstanceOf(Promise)
+  })
 })
