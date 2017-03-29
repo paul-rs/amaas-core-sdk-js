@@ -49,10 +49,14 @@ export function retrieve({AMId, partyId, token}, callback) {
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function insert({party, token}, callback) {
-  const stringified = JSON.stringify(party)
+  let stringified, data
+  if (party) {
+    stringified = JSON.stringify(party)
+    data = JSON.parse(stringified)
+  }
   const params = {
     AMaaSClass: 'parties',
-    data: JSON.parse(stringified),
+    data,
     token
   }
   let promise = insertData(params).then(result => {
@@ -76,12 +80,16 @@ export function insert({party, token}, callback) {
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function amend({party, AMId, resourceId, token}, callback) {
-  const stringified = JSON.stringify(party)
+  let stringified, data
+  if (party) {
+    stringified = JSON.stringify(party)
+    data = JSON.parse(stringified)
+  }
   const params = {
     AMaaSClass: 'parties',
     AMId,
     resourceId,
-    data: JSON.parse(stringified),
+    data,
     token
   }
   let promise = putData(params).then(result => {
