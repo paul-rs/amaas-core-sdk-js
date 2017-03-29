@@ -149,7 +149,8 @@ export function deactivate({AMId, resourceId, token}, callback) {
   const params = {
     AMaaSClass: 'assets',
     AMId,
-    resourceId
+    resourceId,
+    token
   }
   let promise = deleteData(params).then(result => {
     if (typeof callback === 'function') {
