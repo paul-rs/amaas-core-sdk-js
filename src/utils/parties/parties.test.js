@@ -39,7 +39,6 @@ describe('parties util functions', () => {
         version: 1,
       })
       const party = new Party({ assetManagerId: '1234', partyId: 'AMID1234', addresses: { Registered: address, Legal: address2 }, createdBy: 'TEMP' })
-      console.log(JSON.stringify(party))
       // retrieve('646', '30', (error, result) => {
       //   if (result) {
       //     console.log(result)
@@ -57,7 +56,7 @@ describe('parties util functions', () => {
         .reply(400)
       retrieve({AMId: 1, partyId: 'party', token: 'testToken'}, (error, result) => {
         expect(result).toBeUndefined()
-        expect(error.statusCode).toBe(400)
+        expect(error.status).toBe(400)
         callback()
       })
     })
