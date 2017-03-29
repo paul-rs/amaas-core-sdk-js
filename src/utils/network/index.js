@@ -76,13 +76,11 @@ export function retrieveData({ AMaaSClass, AMId, resourceId, token }, callback) 
   let promise = request.get(url).set('Authorization', token)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
-    return promise
+    return promise.then(response => response.body)
   }
   promise.end((error, response) => {
     if (!error && response.status == 200) {
-      if (typeof callback === 'function') {
-        callback(null, response.body)
-      }
+      callback(null, response.body)
     } else {
       const statusCode = response ? response.status : ''
       const requestError = {statusCode, error}
@@ -124,7 +122,7 @@ export function insertData({ AMaaSClass, AMId, data, token }, callback) {
   let promise = request.post(url).send(data).set('Authorization', token)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
-    return promise
+    return promise.then(response => response.body)
   }
   promise.end((error, response) => {
     let body
@@ -149,7 +147,7 @@ export function putData({ AMaaSClass, AMId, resourceId, data, token }, callback)
   let promise = request.put(url).send(data).set('Authorization', token)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
-    return promise
+    return promise.then(response => response.body)
   }
   promise.end((error, response) => {
     let body
@@ -174,7 +172,7 @@ export function patchData({ AMaaSClass, AMId, resourceId, data, token }, callbac
   let promise = request.patch(url).send(data).set('Authorization', token)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
-    return promise
+    return promise.then(response => response.body)
   }
   promise.end((error, response) => {
     let body
@@ -195,7 +193,7 @@ export function deleteData({ AMaaSClass, AMId, resourceId, token }, callback) {
   let promise = request.delete(url).set('Authorization', token)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
-    return promise
+    return promise.then(response => response.body)
   }
   promise.end((error, response) => {
     let body
@@ -221,7 +219,7 @@ export function searchData({ AMaaSClass, queryKey, queryValue, token }, callback
   let promise = request.get(url).set('Authorization', token).query(qString)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
-    return promise
+    return promise.then(response => response.body)
   }
   promise.end((error, response) => {
     let body
