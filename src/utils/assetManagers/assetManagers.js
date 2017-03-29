@@ -11,14 +11,18 @@ export function retrieve({AMId, token}, callback) {
     AMaaSClass: 'assetManagers',
     AMId, token
   }
-  retrieveData(params, (error, result) => {
-    if (error) {
-      callback(error)
-    } else {
-      const assetManager = _parseAM(result)
+  let promise = retrieveData(params).then(result => {
+    const assetManager = _parseAM(result)
+    if (typeof callback === 'function') {
       callback(null, assetManager)
     }
+    return assetManager
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 /**
@@ -33,9 +37,17 @@ export function insert({assetManager, token}, callback) {
     data: JSON.parse(stringified),
     token
   }
-  insertData(params, (error, result) => {
-    _handleCallback(error, result, callback)
+  let promise = insertData(params).then(result => {
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 export function amendAM({assetManager, AMId, token}, callback) {
@@ -46,9 +58,17 @@ export function amendAM({assetManager, AMId, token}, callback) {
     data: JSON.parse(stringified),
     token
   }
-  putData(params, (error, result) => {
-    _handleCallback(error, result, callback)
+  let promise = putData(params).then(result => {
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 // export function partialAmendAM(changes, AMId, resourceId, callback) {
@@ -74,9 +94,17 @@ export function deactivate({AMId, token}, callback) {
     AMId,
     token
   }
-  deleteData(params, (error, result) => {
-    _handleCallback(error, result, callback)
+  let promise = deleteData(params).then(result => {
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 export function _parseAM(object) {
@@ -94,12 +122,4 @@ export function _parseAM(object) {
     createdTime: object.created_time,
     updatedTime: object.updated_time
   })
-}
-
-export function _handleCallback(error, result, callback) {
-  if (error) {
-    callback(error)
-  } else {
-    callback(null, result)
-  }
 }
