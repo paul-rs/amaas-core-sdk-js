@@ -51,7 +51,7 @@ describe('parties util functions', () => {
       // })
     })
     test('with promise', () => {
-      let promise = insert({token})
+      let promise = insert({token}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
   })
@@ -78,7 +78,9 @@ describe('parties util functions', () => {
       })
     })
     test('with promise', () => {
-      let promise = retrieve({AMId: 1, partyId: 'party', token})
+      let promise = retrieve({
+        AMId: 1, partyId: 'party', token
+      }).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
   })
