@@ -55,10 +55,14 @@ export function retrieve({AMId, resourceId, token}, callback) {
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function insert({asset, token}, callback) {
-  const stringified = JSON.stringify(asset)
+  let stringified, data
+  if (asset) {
+    stringified = JSON.stringify(asset)
+    data = JSON.parse(stringified)
+  }
   const params = {
     AMaaSClass: 'assets',
-    data: JSON.parse(stringified),
+    data,
     token
   }
   let promise = insertData(params).then(result => {
@@ -82,12 +86,16 @@ export function insert({asset, token}, callback) {
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function amend({asset, AMId, resourceId, token}, callback) {
-  const stringified = JSON.stringify(asset)
+  let stringified, data
+  if (asset) {
+    stringified = JSON.stringify(asset)
+    data = JSON.parse(stringified)
+  }
   const params = {
     AMaaSClass: 'assets',
     AMId,
     resourceId,
-    data: JSON.parse(stringified),
+    data,
     token
   }
   let promise = putData(params).then(result => {
