@@ -5,6 +5,8 @@ import Party from '../../parties/Party/party.js'
 import Broker from '../../parties/Broker/broker.js'
 import Address from '../../parties/Children/address.js'
 
+let token = process.env.API_TOKEN
+
 describe('parties util functions', () => {
   describe('insert function', () => {
     it('should stringify party correctly', () => {
@@ -48,7 +50,12 @@ describe('parties util functions', () => {
       //   // no-op
       // })
     })
+    test('with promise', () => {
+      let promise = insert({token})
+      expect(promise).toBeInstanceOf(Promise)
+    })
   })
+
   describe('retrieve function', () => {
     it('should call callback with error if retrieveData fails', callback => {
       nock(ENDPOINTS.parties)
@@ -70,7 +77,33 @@ describe('parties util functions', () => {
         callback()
       })
     })
+    test('with promise', () => {
+      let promise = retrieve({AMId: 1, partyId: 'party', token})
+      expect(promise).toBeInstanceOf(Promise)
+    })
   })
+
+  describe('amend', () => {
+    test('with promise', () => {
+      let promise = amend({token}).catch(error => {})
+      expect(promise).toBeInstanceOf(Promise)
+    })
+  })
+
+  describe('partialAmend', () => {
+    test('with promise', () => {
+      let promise = partialAmend({token}).catch(error => {})
+      expect(promise).toBeInstanceOf(Promise)
+    })
+  })
+
+  describe('deactivate', () => {
+    test('with promise', () => {
+      let promise = deactivate({token}).catch(error => {})
+      expect(promise).toBeInstanceOf(Promise)
+    })
+  })
+
   describe('_parseParty function', () => {
     it('should parse the response to the appropriate class', () => {
       const address = new Address({
