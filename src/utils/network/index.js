@@ -64,15 +64,32 @@ export function retrieveData({ AMaaSClass, AMId, resourceId, token }, callback) 
   // callback(err, result)
   // Class and AMId needed to build the Url and for authorization
   if (!AMaaSClass || !AMId) {
-    throw new Error('Both class and AMId are required')
+    if (typeof callback !== 'function') {
+      return Promise.reject('Both class and AMId are required')
+    }
+    callback('Both class and AMId are required')
+    return
+    // throw new Error('Both class and AMId are required')
   }
   if (!token) {
-    throw new Error('Missing Authorization')
+    if (typeof callback !== 'function') {
+      return Promise.reject('Missing Authorization')
+    }
+    callback('Missing Authorization')
+    return
+    // throw new Error('Missing Authorization')
   }
+  let url
   // If resourceId is supplied, append to url. Otherwise, return all data for AMId
-  const url = buildURL({ AMaaSClass, AMId, resourceId })
-  // const url = resourceId ? `${baseURL}${AMaaSClass}/${AMId}/${resourceId}` : `${baseURL}${AMaaSClass}/${AMId}/`
-
+  try {
+    url = buildURL({ AMaaSClass, AMId, resourceId })
+  } catch (e) {
+    if (typeof callback !== 'function') {
+      return Promise.reject(e)
+    }
+    callback(e)
+    return
+  }
   let promise = request.get(url).set('Authorization', token)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -106,12 +123,25 @@ export function insertData({ AMaaSClass, AMId, data, token }, callback) {
   //   throw new Error('Class, AMId and data to insert are required')
   // }
   if (!token) {
-    throw new Error('Missing Authorization')
+    if (typeof callback !== 'function') {
+      return Promise.reject('Missing Authorization')
+    }
+    callback('Missing Authorization')
+    return
   }
-  const url = buildURL({
-    AMaaSClass,
-    AMId
-  })
+  let url
+  try {
+    url = buildURL({
+      AMaaSClass,
+      AMId
+    })
+  } catch (e) {
+    if (typeof callback !== 'function') {
+      return Promise.reject(e)
+    }
+    callback(e)
+    return
+  }
   // Data is object with required key value pairs for that class
   // const am = 'asset_manager_id'
   // data[am] = AMId
@@ -133,13 +163,26 @@ export function insertData({ AMaaSClass, AMId, data, token }, callback) {
 
 export function putData({ AMaaSClass, AMId, resourceId, data, token }, callback) {
   if (!token) {
-    throw new Error('Missing Authorization')
+    if (typeof callback !== 'function') {
+      return Promise.reject('Missing Authorization')
+    }
+    callback('Missing Authorization')
+    return
   }
-  const url = buildURL({
-    AMaaSClass,
-    AMId,
-    resourceId
-  })
+  let url
+  try {
+    url = buildURL({
+      AMaaSClass,
+      AMId,
+      resourceId
+    })
+  } catch (e) {
+    if (typeof callback !== 'function') {
+      return Promise.reject(e)
+    }
+    callback(e)
+    return
+  }
   const params = {
     url,
     json: data
@@ -158,13 +201,26 @@ export function putData({ AMaaSClass, AMId, resourceId, data, token }, callback)
 
 export function patchData({ AMaaSClass, AMId, resourceId, data, token }, callback) {
   if (!token) {
-    throw new Error('Missing Authorization')
+    if (typeof callback !== 'function') {
+      return Promise.reject('Missing Authorization')
+    }
+    callback('Missing Authorization')
+    return
   }
-  const url = buildURL({
-    AMaaSClass,
-    AMId,
-    resourceId
-  })
+  let url
+  try {
+    url = buildURL({
+      AMaaSClass,
+      AMId,
+      resourceId
+    })
+  } catch (e) {
+    if (typeof callback !== 'function') {
+      return Promise.reject(e)
+    }
+    callback(e)
+    return
+  }
   const params = {
     url,
     json: data
@@ -183,13 +239,26 @@ export function patchData({ AMaaSClass, AMId, resourceId, data, token }, callbac
 
 export function deleteData({ AMaaSClass, AMId, resourceId, token }, callback) {
   if (!token) {
-    throw new Error('Missing Authorization')
+    if (typeof callback !== 'function') {
+      return Promise.reject('Missing Authorization')
+    }
+    callback('Missing Authorization')
+    return
   }
-  const url = buildURL({
-    AMaaSClass,
-    AMId,
-    resourceId
-  })
+  let url
+  try {
+    url = buildURL({
+      AMaaSClass,
+      AMId,
+      resourceId
+    })
+  } catch (e) {
+    if (typeof callback !== 'function') {
+      return Promise.reject(e)
+    }
+    callback(e)
+    return
+  }
   let promise = request.delete(url).set('Authorization', token)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -204,11 +273,24 @@ export function deleteData({ AMaaSClass, AMId, resourceId, token }, callback) {
 
 export function searchData({ AMaaSClass, queryKey, queryValue, token }, callback) {
   if (!token) {
-    throw new Error('Missing Authorization')
+    if (typeof callback !== 'function') {
+      return Promise.reject('Missing Authorization')
+    }
+    callback('Missing Authorization')
+    return
   }
-  const url = buildURL({
-    AMaaSClass
-  })
+  let url
+  try {
+    url = buildURL({
+      AMaaSClass
+    })
+  } catch (e) {
+    if (typeof callback !== 'function') {
+      return Promise.reject(e)
+    }
+    callback(e)
+    return
+  }
   let qString = {}
   const qValueString = queryValue.join()
   qString[queryKey] = qValueString

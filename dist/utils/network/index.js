@@ -93,15 +93,32 @@ function retrieveData(_ref2, callback) {
   // callback(err, result)
   // Class and AMId needed to build the Url and for authorization
   if (!AMaaSClass || !AMId) {
-    throw new Error('Both class and AMId are required');
+    if (typeof callback !== 'function') {
+      return Promise.reject('Both class and AMId are required');
+    }
+    callback('Both class and AMId are required');
+    return;
+    // throw new Error('Both class and AMId are required')
   }
   if (!token) {
-    throw new Error('Missing Authorization');
+    if (typeof callback !== 'function') {
+      return Promise.reject('Missing Authorization');
+    }
+    callback('Missing Authorization');
+    return;
+    // throw new Error('Missing Authorization')
   }
+  var url = void 0;
   // If resourceId is supplied, append to url. Otherwise, return all data for AMId
-  var url = buildURL({ AMaaSClass: AMaaSClass, AMId: AMId, resourceId: resourceId });
-  // const url = resourceId ? `${baseURL}${AMaaSClass}/${AMId}/${resourceId}` : `${baseURL}${AMaaSClass}/${AMId}/`
-
+  try {
+    url = buildURL({ AMaaSClass: AMaaSClass, AMId: AMId, resourceId: resourceId });
+  } catch (e) {
+    if (typeof callback !== 'function') {
+      return Promise.reject(e);
+    }
+    callback(e);
+    return;
+  }
   var promise = _superagent2.default.get(url).set('Authorization', token);
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -142,12 +159,25 @@ function insertData(_ref3, callback) {
   //   throw new Error('Class, AMId and data to insert are required')
   // }
   if (!token) {
-    throw new Error('Missing Authorization');
+    if (typeof callback !== 'function') {
+      return Promise.reject('Missing Authorization');
+    }
+    callback('Missing Authorization');
+    return;
   }
-  var url = buildURL({
-    AMaaSClass: AMaaSClass,
-    AMId: AMId
-  });
+  var url = void 0;
+  try {
+    url = buildURL({
+      AMaaSClass: AMaaSClass,
+      AMId: AMId
+    });
+  } catch (e) {
+    if (typeof callback !== 'function') {
+      return Promise.reject(e);
+    }
+    callback(e);
+    return;
+  }
   // Data is object with required key value pairs for that class
   // const am = 'asset_manager_id'
   // data[am] = AMId
@@ -177,13 +207,26 @@ function putData(_ref4, callback) {
       token = _ref4.token;
 
   if (!token) {
-    throw new Error('Missing Authorization');
+    if (typeof callback !== 'function') {
+      return Promise.reject('Missing Authorization');
+    }
+    callback('Missing Authorization');
+    return;
   }
-  var url = buildURL({
-    AMaaSClass: AMaaSClass,
-    AMId: AMId,
-    resourceId: resourceId
-  });
+  var url = void 0;
+  try {
+    url = buildURL({
+      AMaaSClass: AMaaSClass,
+      AMId: AMId,
+      resourceId: resourceId
+    });
+  } catch (e) {
+    if (typeof callback !== 'function') {
+      return Promise.reject(e);
+    }
+    callback(e);
+    return;
+  }
   var params = {
     url: url,
     json: data
@@ -210,13 +253,26 @@ function patchData(_ref5, callback) {
       token = _ref5.token;
 
   if (!token) {
-    throw new Error('Missing Authorization');
+    if (typeof callback !== 'function') {
+      return Promise.reject('Missing Authorization');
+    }
+    callback('Missing Authorization');
+    return;
   }
-  var url = buildURL({
-    AMaaSClass: AMaaSClass,
-    AMId: AMId,
-    resourceId: resourceId
-  });
+  var url = void 0;
+  try {
+    url = buildURL({
+      AMaaSClass: AMaaSClass,
+      AMId: AMId,
+      resourceId: resourceId
+    });
+  } catch (e) {
+    if (typeof callback !== 'function') {
+      return Promise.reject(e);
+    }
+    callback(e);
+    return;
+  }
   var params = {
     url: url,
     json: data
@@ -242,13 +298,26 @@ function deleteData(_ref6, callback) {
       token = _ref6.token;
 
   if (!token) {
-    throw new Error('Missing Authorization');
+    if (typeof callback !== 'function') {
+      return Promise.reject('Missing Authorization');
+    }
+    callback('Missing Authorization');
+    return;
   }
-  var url = buildURL({
-    AMaaSClass: AMaaSClass,
-    AMId: AMId,
-    resourceId: resourceId
-  });
+  var url = void 0;
+  try {
+    url = buildURL({
+      AMaaSClass: AMaaSClass,
+      AMId: AMId,
+      resourceId: resourceId
+    });
+  } catch (e) {
+    if (typeof callback !== 'function') {
+      return Promise.reject(e);
+    }
+    callback(e);
+    return;
+  }
   var promise = _superagent2.default.delete(url).set('Authorization', token);
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -270,11 +339,24 @@ function searchData(_ref7, callback) {
       token = _ref7.token;
 
   if (!token) {
-    throw new Error('Missing Authorization');
+    if (typeof callback !== 'function') {
+      return Promise.reject('Missing Authorization');
+    }
+    callback('Missing Authorization');
+    return;
   }
-  var url = buildURL({
-    AMaaSClass: AMaaSClass
-  });
+  var url = void 0;
+  try {
+    url = buildURL({
+      AMaaSClass: AMaaSClass
+    });
+  } catch (e) {
+    if (typeof callback !== 'function') {
+      return Promise.reject(e);
+    }
+    callback(e);
+    return;
+  }
   var qString = {};
   var qValueString = queryValue.join();
   qString[queryKey] = qValueString;
