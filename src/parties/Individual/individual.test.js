@@ -45,10 +45,9 @@ describe('Individual', () => {
         version: 1,
       })
       const testIndividual = new Individual({ addresses: { Registered: address } })
-      function tester() {
-        testIndividual.upsertAddress('Legal', address2)
-      }
-      expect(tester).toThrowError('Exactly 1 primary address is allowed')
+      testIndividual.upsertAddress('Legal', address2)
+      expect(testIndividual.addresses.Registered.addressPrimary).toBeFalsy()
+      expect(testIndividual.addresses.Legal.addressPrimary).toBeTruthy()
     })
   })
 })

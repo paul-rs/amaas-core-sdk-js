@@ -67,6 +67,7 @@ function insert(_ref2, callback) {
     token: token
   };
   var promise = (0, _network.insertData)(params).then(function (result) {
+    result = _parseAM(result);
     if (typeof callback === 'function') {
       callback(null, result);
     }
@@ -99,6 +100,7 @@ function amendAM(_ref3, callback) {
     token: token
   };
   var promise = (0, _network.putData)(params).then(function (result) {
+    result = _parseAM(result);
     if (typeof callback === 'function') {
       callback(null, result);
     }

@@ -66,6 +66,7 @@ export function insert({asset, token}, callback) {
     token
   }
   let promise = insertData(params).then(result => {
+    result = _parseAsset(result)
     if (typeof callback === 'function') {
       callback(null, result)
     }
@@ -99,6 +100,7 @@ export function amend({asset, AMId, resourceId, token}, callback) {
     token
   }
   let promise = putData(params).then(result => {
+    result = _parseAsset(result)
     if (typeof callback === 'function') {
       callback(null, result)
     }
@@ -127,6 +129,7 @@ export function partialAmend({changes, AMId, resourceId, token}, callback) {
     token
   }
   let promise = patchData(params).then(result => {
+    result = _parseAsset(result)
     if (typeof callback === 'function') {
       callback(null, result)
     }

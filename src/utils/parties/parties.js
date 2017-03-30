@@ -60,6 +60,7 @@ export function insert({party, token}, callback) {
     token
   }
   let promise = insertData(params).then(result => {
+    result = _parseParty(result)
     if (typeof callback === 'function') {
       callback(null, result)
     }
@@ -93,6 +94,7 @@ export function amend({party, AMId, resourceId, token}, callback) {
     token
   }
   let promise = putData(params).then(result => {
+    result = _parseParty(result)
     if (typeof callback === 'function') {
       callback(null, result)
     }
@@ -121,6 +123,7 @@ export function partialAmend({changes, AMId, resourceId, token}, callback) {
     token
   }
   let promise = patchData(params).then(result => {
+    result = _parseParty(result)
     if (typeof callback === 'function') {
       callback(null, result)
     }

@@ -42,6 +42,7 @@ export function insert({assetManager, token}, callback) {
     token
   }
   let promise = insertData(params).then(result => {
+    result = _parseAM(result)
     if (typeof callback === 'function') {
       callback(null, result)
     }
@@ -67,6 +68,7 @@ export function amendAM({assetManager, AMId, token}, callback) {
     token
   }
   let promise = putData(params).then(result => {
+    result = _parseAM(result)
     if (typeof callback === 'function') {
       callback(null, result)
     }

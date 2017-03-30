@@ -82,6 +82,7 @@ function insert(_ref2, callback) {
     token: token
   };
   var promise = (0, _network.insertData)(params).then(function (result) {
+    result = _parseAsset(result);
     if (typeof callback === 'function') {
       callback(null, result);
     }
@@ -123,6 +124,7 @@ function amend(_ref3, callback) {
     token: token
   };
   var promise = (0, _network.putData)(params).then(function (result) {
+    result = _parseAsset(result);
     if (typeof callback === 'function') {
       callback(null, result);
     }
@@ -158,6 +160,7 @@ function partialAmend(_ref4, callback) {
     token: token
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
+    result = _parseAsset(result);
     if (typeof callback === 'function') {
       callback(null, result);
     }
