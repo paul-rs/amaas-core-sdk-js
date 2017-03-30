@@ -39,19 +39,25 @@ function retrieve(_ref, callback) {
     resourceId: resourceId,
     token: token
   };
-  (0, _network.retrieveData)(params, function (error, result) {
-    if (error) {
-      callback(error);
-    } else {
-      if (!Array.isArray(result)) {
-        callback(null, _parseAsset(result));
-        return;
-      }
-      var assets = result.map(function (asset) {
+  var promise = (0, _network.retrieveData)(params).then(function (result) {
+    if (Array.isArray(result)) {
+      result = result.map(function (asset) {
         return _parseAsset(asset);
       });
-      callback(null, assets);
+    } else {
+      result = _parseAsset(result);
     }
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -64,14 +70,29 @@ function insert(_ref2, callback) {
   var asset = _ref2.asset,
       token = _ref2.token;
 
-  var stringified = JSON.stringify(asset);
+  var stringified = void 0,
+      data = void 0;
+  if (asset) {
+    stringified = JSON.stringify(asset);
+    data = JSON.parse(stringified);
+  }
   var params = {
     AMaaSClass: 'assets',
-    data: JSON.parse(stringified),
+    data: data,
     token: token
   };
-  (0, _network.insertData)(params, function (error, result) {
-    _handleCallback(error, result, callback);
+  var promise = (0, _network.insertData)(params).then(function (result) {
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -88,16 +109,31 @@ function amend(_ref3, callback) {
       resourceId = _ref3.resourceId,
       token = _ref3.token;
 
-  var stringified = JSON.stringify(asset);
+  var stringified = void 0,
+      data = void 0;
+  if (asset) {
+    stringified = JSON.stringify(asset);
+    data = JSON.parse(stringified);
+  }
   var params = {
     AMaaSClass: 'assets',
     AMId: AMId,
     resourceId: resourceId,
-    data: JSON.parse(stringified),
+    data: data,
     token: token
   };
-  (0, _network.putData)(params, function (error, result) {
-    _handleCallback(error, result, callback);
+  var promise = (0, _network.putData)(params).then(function (result) {
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -121,8 +157,18 @@ function partialAmend(_ref4, callback) {
     data: changes,
     token: token
   };
-  (0, _network.patchData)(params, function (error, result) {
-    _handleCallback(error, result, callback);
+  var promise = (0, _network.patchData)(params).then(function (result) {
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -140,10 +186,21 @@ function deactivate(_ref5, callback) {
   var params = {
     AMaaSClass: 'assets',
     AMId: AMId,
-    resourceId: resourceId
+    resourceId: resourceId,
+    token: token
   };
-  (0, _network.deleteData)(params, function (error, result) {
-    _handleCallback(error, result, callback);
+  var promise = (0, _network.deleteData)(params).then(function (result) {
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -434,12 +491,4 @@ function _parseAsset(object) {
       });
   }
   return asset;
-}
-
-function _handleCallback(error, result, callback) {
-  if (error) {
-    callback(error);
-  } else {
-    callback(null, result);
-  }
 }

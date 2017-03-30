@@ -13,7 +13,7 @@ AMaaS Core features a secure, encrypted database, which serves as the foundation
 
 ```
 $ npm install
-$ npm test
+$ API_TOKEN=xxxxx npm test
 ```
 
 ## Contribution

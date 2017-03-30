@@ -1,27 +1,46 @@
 import { retrieve, insert, amend, partialAmend, deactivate } from './assets.js'
 import Asset from '../../assets/Asset/asset.js'
 
-describe('assets util functions', () => {
+let token = process.env.API_TOKEN
+
+describe('utils/assets', () => {
   describe('retrieve', () => {
-    it('should', () => {
-      // retrieve('1', '4bd2cfd84d154eef9b70f24262609a4b', (error, result) => {
-      //   if (!error) {
-      //     console.log(result)
-      //   }
-      // })
-      const asset = new Asset({
-        assetManagerId: '1',
-        fungible: true,
-        assetId:'test_asset',
-        description: 'testThomasAssetAmended'
+    test('with promise', callback => {
+      let promise = retrieve({token, AMId: 1})
+      expect(promise).toBeInstanceOf(Promise)
+      promise.then(assets => {
+        expect(Array.isArray(assets)).toBeTruthy()
+        expect(assets[0]).toBeInstanceOf(Asset)
+        callback()
       })
-      // amend(asset, '1', 'test_asset', (error, result) => {
-      //   if (error) {
-      //     console.log(error)
-      //   } else {
-      //     console.log(result)
-      //   }
-      // })
+    })
+  })
+
+  describe('insert', () => {
+    test('with promise', () => {
+      let promise = insert({token}).catch(error => {})
+      expect(promise).toBeInstanceOf(Promise)
+    })
+  })
+
+  describe('amend', () => {
+    test('with promise', () => {
+      let promise = amend({token}).catch(error => {})
+      expect(promise).toBeInstanceOf(Promise)
+    })
+  })
+
+  describe('partialAmend', () => {
+    test('with promise', () => {
+      let promise = partialAmend({token}).catch(error => {})
+      expect(promise).toBeInstanceOf(Promise)
+    })
+  })
+
+  describe('deactivate', () => {
+    test('with promise', () => {
+      let promise = deactivate({token}).catch(error => {})
+      expect(promise).toBeInstanceOf(Promise)
     })
   })
 })

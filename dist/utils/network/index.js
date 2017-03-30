@@ -102,16 +102,22 @@ function retrieveData(_ref2, callback) {
   var url = buildURL({ AMaaSClass: AMaaSClass, AMId: AMId, resourceId: resourceId });
   // const url = resourceId ? `${baseURL}${AMaaSClass}/${AMId}/${resourceId}` : `${baseURL}${AMaaSClass}/${AMId}/`
 
-  _superagent2.default.get(url).set('Authorization', token).end(function (error, response) {
+  var promise = _superagent2.default.get(url).set('Authorization', token);
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise.then(function (response) {
+      return response.body;
+    });
+  }
+  promise.end(function (error, response) {
     if (!error && response.status == 200) {
       callback(null, response.body);
     } else {
       var statusCode = response ? response.status : '';
-      var requestError = {
-        statusCode: statusCode,
-        error: error
-      };
-      callback(requestError);
+      var requestError = { statusCode: statusCode, error: error };
+      if (typeof callback === 'function') {
+        callback(requestError);
+      }
     }
   });
 }
@@ -149,7 +155,14 @@ function insertData(_ref3, callback) {
     url: url,
     json: data
   };
-  _superagent2.default.post(url).send(data).set('Authorization', token).end(function (error, response) {
+  var promise = _superagent2.default.post(url).send(data).set('Authorization', token);
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise.then(function (response) {
+      return response.body;
+    });
+  }
+  promise.end(function (error, response) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
@@ -175,7 +188,14 @@ function putData(_ref4, callback) {
     url: url,
     json: data
   };
-  _superagent2.default.put(url).send(data).set('Authorization', token).end(function (error, response) {
+  var promise = _superagent2.default.put(url).send(data).set('Authorization', token);
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise.then(function (response) {
+      return response.body;
+    });
+  }
+  promise.end(function (error, response) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
@@ -201,7 +221,14 @@ function patchData(_ref5, callback) {
     url: url,
     json: data
   };
-  _superagent2.default.patch(url).send(data).set('Authorization', token).end(function (error, response) {
+  var promise = _superagent2.default.patch(url).send(data).set('Authorization', token);
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise.then(function (response) {
+      return response.body;
+    });
+  }
+  promise.end(function (error, response) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
@@ -222,7 +249,14 @@ function deleteData(_ref6, callback) {
     AMId: AMId,
     resourceId: resourceId
   });
-  _superagent2.default.delete(url).set('Authorization', token).end(function (error, response) {
+  var promise = _superagent2.default.delete(url).set('Authorization', token);
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise.then(function (response) {
+      return response.body;
+    });
+  }
+  promise.end(function (error, response) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
@@ -248,7 +282,14 @@ function searchData(_ref7, callback) {
     url: url,
     qs: qString
   };
-  _superagent2.default.get(url).set('Authorization', token).query(qString).end(function (error, response) {
+  var promise = _superagent2.default.get(url).set('Authorization', token).query(qString);
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise.then(function (response) {
+      return response.body;
+    });
+  }
+  promise.end(function (error, response) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
@@ -256,6 +297,9 @@ function searchData(_ref7, callback) {
 }
 
 function _networkCallback(error, response, body, callback) {
+  if (typeof callback !== 'function') {
+    return false;
+  }
   if (!error && response.status === 200) {
     callback(null, body);
   } else if (error) {

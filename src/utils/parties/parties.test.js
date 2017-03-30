@@ -5,6 +5,8 @@ import Party from '../../parties/Party/party.js'
 import Broker from '../../parties/Broker/broker.js'
 import Address from '../../parties/Children/address.js'
 
+let token = process.env.API_TOKEN
+
 describe('parties util functions', () => {
   describe('insert function', () => {
     it('should stringify party correctly', () => {
@@ -39,7 +41,6 @@ describe('parties util functions', () => {
         version: 1,
       })
       const party = new Party({ assetManagerId: '1234', partyId: 'AMID1234', addresses: { Registered: address, Legal: address2 }, createdBy: 'TEMP' })
-      console.log(JSON.stringify(party))
       // retrieve('646', '30', (error, result) => {
       //   if (result) {
       //     console.log(result)
@@ -49,7 +50,12 @@ describe('parties util functions', () => {
       //   // no-op
       // })
     })
+    test('with promise', () => {
+      let promise = insert({token}).catch(error => {})
+      expect(promise).toBeInstanceOf(Promise)
+    })
   })
+
   describe('retrieve function', () => {
     it('should call callback with error if retrieveData fails', callback => {
       nock(ENDPOINTS.parties)
@@ -57,7 +63,7 @@ describe('parties util functions', () => {
         .reply(400)
       retrieve({AMId: 1, partyId: 'party', token: 'testToken'}, (error, result) => {
         expect(result).toBeUndefined()
-        expect(error.statusCode).toBe(400)
+        expect(error.status).toBe(400)
         callback()
       })
     })
@@ -71,7 +77,35 @@ describe('parties util functions', () => {
         callback()
       })
     })
+    test('with promise', () => {
+      let promise = retrieve({
+        AMId: 1, partyId: 'party', token
+      }).catch(error => {})
+      expect(promise).toBeInstanceOf(Promise)
+    })
   })
+
+  describe('amend', () => {
+    test('with promise', () => {
+      let promise = amend({token}).catch(error => {})
+      expect(promise).toBeInstanceOf(Promise)
+    })
+  })
+
+  describe('partialAmend', () => {
+    test('with promise', () => {
+      let promise = partialAmend({token}).catch(error => {})
+      expect(promise).toBeInstanceOf(Promise)
+    })
+  })
+
+  describe('deactivate', () => {
+    test('with promise', () => {
+      let promise = deactivate({token}).catch(error => {})
+      expect(promise).toBeInstanceOf(Promise)
+    })
+  })
+
   describe('_parseParty function', () => {
     it('should parse the response to the appropriate class', () => {
       const address = new Address({

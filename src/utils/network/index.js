@@ -73,16 +73,20 @@ export function retrieveData({ AMaaSClass, AMId, resourceId, token }, callback) 
   const url = buildURL({ AMaaSClass, AMId, resourceId })
   // const url = resourceId ? `${baseURL}${AMaaSClass}/${AMId}/${resourceId}` : `${baseURL}${AMaaSClass}/${AMId}/`
 
-  request.get(url).set('Authorization', token).end((error, response) => {
+  let promise = request.get(url).set('Authorization', token)
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise.then(response => response.body)
+  }
+  promise.end((error, response) => {
     if (!error && response.status == 200) {
       callback(null, response.body)
     } else {
       const statusCode = response ? response.status : ''
-      const requestError = {
-        statusCode,
-        error
+      const requestError = {statusCode, error}
+      if (typeof callback === 'function') {
+        callback(requestError)
       }
-      callback(requestError)
     }
   })
 }
@@ -115,7 +119,12 @@ export function insertData({ AMaaSClass, AMId, data, token }, callback) {
     url,
     json: data
   }
-  request.post(url).send(data).set('Authorization', token).end((error, response) => {
+  let promise = request.post(url).send(data).set('Authorization', token)
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise.then(response => response.body)
+  }
+  promise.end((error, response) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
@@ -135,7 +144,12 @@ export function putData({ AMaaSClass, AMId, resourceId, data, token }, callback)
     url,
     json: data
   }
-  request.put(url).send(data).set('Authorization', token).end((error, response) => {
+  let promise = request.put(url).send(data).set('Authorization', token)
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise.then(response => response.body)
+  }
+  promise.end((error, response) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
@@ -155,7 +169,12 @@ export function patchData({ AMaaSClass, AMId, resourceId, data, token }, callbac
     url,
     json: data
   }
-  request.patch(url).send(data).set('Authorization', token).end((error, response) => {
+  let promise = request.patch(url).send(data).set('Authorization', token)
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise.then(response => response.body)
+  }
+  promise.end((error, response) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
@@ -171,7 +190,12 @@ export function deleteData({ AMaaSClass, AMId, resourceId, token }, callback) {
     AMId,
     resourceId
   })
-  request.delete(url).set('Authorization', token).end((error, response) => {
+  let promise = request.delete(url).set('Authorization', token)
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise.then(response => response.body)
+  }
+  promise.end((error, response) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
@@ -192,7 +216,12 @@ export function searchData({ AMaaSClass, queryKey, queryValue, token }, callback
     url,
     qs: qString
   }
-  request.get(url).set('Authorization', token).query(qString).end((error, response) => {
+  let promise = request.get(url).set('Authorization', token).query(qString)
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise.then(response => response.body)
+  }
+  promise.end((error, response) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
@@ -200,6 +229,9 @@ export function searchData({ AMaaSClass, queryKey, queryValue, token }, callback
 }
 
 function _networkCallback(error, response, body, callback) {
+  if (typeof callback !== 'function') {
+    return false
+  }
   if (!error && response.status === 200) {
     callback(null, body)
   } else if (error) {

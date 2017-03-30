@@ -76,19 +76,25 @@ function retrieve(_ref, callback) {
     resourceId: partyId,
     token: token
   };
-  (0, _network.retrieveData)(params, function (error, result) {
-    if (error) {
-      callback(error);
-    } else {
-      if (!Array.isArray(result)) {
-        callback(null, _parseParty(result));
-        return;
-      }
-      var parties = result.map(function (party) {
+  var promise = (0, _network.retrieveData)(params).then(function (result) {
+    if (Array.isArray(result)) {
+      result = result.map(function (party) {
         return _parseParty(party);
       });
-      callback(null, parties);
+    } else {
+      result = _parseParty(result);
     }
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -101,14 +107,29 @@ function insert(_ref2, callback) {
   var party = _ref2.party,
       token = _ref2.token;
 
-  var stringified = JSON.stringify(party);
+  var stringified = void 0,
+      data = void 0;
+  if (party) {
+    stringified = JSON.stringify(party);
+    data = JSON.parse(stringified);
+  }
   var params = {
     AMaaSClass: 'parties',
-    data: JSON.parse(stringified),
+    data: data,
     token: token
   };
-  (0, _network.insertData)(params, function (error, result) {
-    _handleCallback(error, result, callback);
+  var promise = (0, _network.insertData)(params).then(function (result) {
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -125,16 +146,31 @@ function amend(_ref3, callback) {
       resourceId = _ref3.resourceId,
       token = _ref3.token;
 
-  var stringified = JSON.stringify(party);
+  var stringified = void 0,
+      data = void 0;
+  if (party) {
+    stringified = JSON.stringify(party);
+    data = JSON.parse(stringified);
+  }
   var params = {
     AMaaSClass: 'parties',
     AMId: AMId,
     resourceId: resourceId,
-    data: JSON.parse(stringified),
+    data: data,
     token: token
   };
-  (0, _network.putData)(params, function (error, result) {
-    _handleCallback(error, result, callback);
+  var promise = (0, _network.putData)(params).then(function (result) {
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -158,8 +194,18 @@ function partialAmend(_ref4, callback) {
     data: changes,
     token: token
   };
-  (0, _network.patchData)(params, function (error, result) {
-    _handleCallback(error, result, callback);
+  var promise = (0, _network.patchData)(params).then(function (result) {
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -180,8 +226,18 @@ function deactivate(_ref5, callback) {
     resourceId: resourceId,
     token: token
   };
-  (0, _network.deleteData)(params, function (error, result) {
-    _handleCallback(error, result, callback);
+  var promise = (0, _network.deleteData)(params).then(function (result) {
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
   });
 }
 
@@ -393,14 +449,6 @@ function _parseParty(object) {
       });
   }
   return party;
-}
-
-function _handleCallback(error, result, callback) {
-  if (error) {
-    callback(error);
-  } else {
-    callback(null, _parseParty(result));
-  }
 }
 
 // export default getParty

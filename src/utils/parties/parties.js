@@ -25,20 +25,22 @@ export function retrieve({AMId, partyId, token}, callback) {
     resourceId: partyId,
     token
   }
-  retrieveData(params, (error, result) => {
-    if (error) {
-      callback(error)
+  let promise = retrieveData(params).then(result => {
+    if (Array.isArray(result)) {
+      result = result.map(party => _parseParty(party))
     } else {
-      if (!Array.isArray(result)) {
-        callback(null, _parseParty(result))
-        return
-      }
-      const parties = result.map(party => {
-        return _parseParty(party)
-      })
-      callback(null, parties)
+      result = _parseParty(result)
     }
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 /**
@@ -47,15 +49,27 @@ export function retrieve({AMId, partyId, token}, callback) {
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function insert({party, token}, callback) {
-  const stringified = JSON.stringify(party)
+  let stringified, data
+  if (party) {
+    stringified = JSON.stringify(party)
+    data = JSON.parse(stringified)
+  }
   const params = {
     AMaaSClass: 'parties',
-    data: JSON.parse(stringified),
+    data,
     token
   }
-  insertData(params, (error, result) => {
-    _handleCallback(error, result, callback)
+  let promise = insertData(params).then(result => {
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 /**
@@ -66,17 +80,29 @@ export function insert({party, token}, callback) {
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function amend({party, AMId, resourceId, token}, callback) {
-  const stringified = JSON.stringify(party)
+  let stringified, data
+  if (party) {
+    stringified = JSON.stringify(party)
+    data = JSON.parse(stringified)
+  }
   const params = {
     AMaaSClass: 'parties',
     AMId,
     resourceId,
-    data: JSON.parse(stringified),
+    data,
     token
   }
-  putData(params, (error, result) => {
-    _handleCallback(error, result, callback)
+  let promise = putData(params).then(result => {
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 /**
@@ -94,9 +120,17 @@ export function partialAmend({changes, AMId, resourceId, token}, callback) {
     data: changes,
     token
   }
-  patchData(params, (error, result) => {
-    _handleCallback(error, result, callback)
+  let promise = patchData(params).then(result => {
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 /**
@@ -112,9 +146,17 @@ export function deactivate({AMId, resourceId, token}, callback) {
     resourceId,
     token
   }
-  deleteData(params, (error, result) => {
-    _handleCallback(error, result, callback)
+  let promise = deleteData(params).then(result => {
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 export function _parseChildren(type, children) {
@@ -325,14 +367,6 @@ export function _parseParty(object) {
       })
   }
   return party
-}
-
-function _handleCallback(error, result, callback) {
-  if (error) {
-    callback(error)
-  } else {
-    callback(null, _parseParty(result))
-  }
 }
 
 // export default getParty

@@ -9,14 +9,19 @@ export function retrieve({AMId, resourceId, token}, callback) {
     resourceId,
     token
   }
-  retrieveData(params, (error, result) => {
-    if (error) {
-      callback(error)
-    } else {
-      const pos = _parsePos(result)
+  let promise = retrieveData(params).then(result => {
+    const pos = _parsePos(result)
+    if (typeof callback === 'function') {
       callback(null, pos)
+    } else {
+      return pos
     }
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 export function search({queryKey, queryValue, token}, callback) {
@@ -26,16 +31,21 @@ export function search({queryKey, queryValue, token}, callback) {
     queryValue,
     token
   }
-  searchData(params, (error, result) => {
-    if (error) {
-      callback(error)
-    } else {
-      const positions = result.map((pos) => {
-        return _parsePos(pos)
-      })
+  let promise = searchData(params).then(result => {
+    const positions = result.map((pos) => {
+      return _parsePos(pos)
+    })
+    if (typeof callback === 'function') {
       callback(null, positions)
+    } else {
+      return positions
     }
   })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
 }
 
 export function _parsePos(pos) {
