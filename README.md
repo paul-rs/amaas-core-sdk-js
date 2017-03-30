@@ -11,8 +11,18 @@ AMaaS Core features a secure, encrypted database, which serves as the foundation
 
 ## Tests
 
+Install dependencies:
 ```
 $ npm install
+```
+
+Running tests that do not require API access
+```
+$ npm test -- 'src\/(?!utils)'
+```
+
+Running full tests (requires API_TOKEN)
+```
 $ API_TOKEN=xxxxx npm test
 ```
 
