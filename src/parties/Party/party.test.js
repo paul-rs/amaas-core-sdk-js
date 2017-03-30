@@ -17,24 +17,23 @@ describe('Party', () => {
       }
       expect(tester).toThrowError('Found address with wrong class')
     })
-    it('should throw if attempting to add multiple primary addresses', () => {
+    it('should set addressPrimary of existing addresses to false when supplying new primary address', () => {
       const primaryOne = new Address({ addressPrimary: true })
       const primaryTwo = new Address({ addressPrimary: true })
-      const params = { primaryOne, primaryTwo }
-      const testParty = new Party({}, null, {})
-      function tester() {
-        testParty.addresses = params
-      }
-      expect(tester).toThrowError('Exactly 1 primary address is allowed')
+      const primaryThree = new Address({ addressPrimary: true })
+      const testParty = new Party({ addresses: { add1: primaryOne, add2: primaryTwo } })
+      testParty.upsertAddress('add3', primaryThree)
+      expect(testParty.addresses.add1.addressPrimary).toBeFalsy()
+      expect(testParty.addresses.add2.addressPrimary).toBeFalsy()
     })
-    it('should throw if attempting to add primary address to existing primary address', () => {
-      const primaryOne = new Address({ addressPrimary: true })
-      const primaryTwo = new Address({ addressPrimary: true })
-      const testParty = new Party({ addresses: { primaryOne } })
+    it('should throw if attempting to add primary address without primary address', () => {
+      // const primaryOne = new Address({ addressPrimary: true })
+      const primaryTwo = new Address({ addressPrimary: false })
+      const testParty = new Party({})
       function tester() {
         testParty.upsertAddress('new', primaryTwo)
       }
-      expect(tester).toThrowError('Exactly 1 primary address is allowed')
+      expect(tester).toThrowError('At least 1 primary address must be supplied')
     })
     it('should add address and preserve existing ones on upsert', () => {
       const primaryOne = new Address({ addressPrimary: true, lineOne: 'testRoad' })
@@ -65,24 +64,22 @@ describe('Party', () => {
       }
       expect(tester).toThrowError('Not a valid email')
     })
-    it('should throw if attempting to add multiple primary emails', () => {
+    it('should set emailPrimary of existing emails to false when supplying new primary email', () => {
       const primaryOne = new Email({ emailPrimary: true, email: 'test@test.com' })
       const primaryTwo = new Email({ emailPrimary: true, email: 'test@test.com' })
-      const params = { primaryOne, primaryTwo }
-      const testParty = new Party({})
-      function tester() {
-        testParty.emails = params
-      }
-      expect(tester).toThrowError('Exactly 1 primary email is allowed')
+      const primaryThree = new Email({ emailPrimary: true, email: 'test@test.com' })
+      const testParty = new Party({ emails: { e1: primaryOne, e2: primaryTwo } })
+      testParty.upsertEmail('e3', primaryThree)
+      expect(testParty.emails.e1.emailPrimary).toBeFalsy()
+      expect(testParty.emails.e2.emailPrimary).toBeFalsy()
     })
-    it('should throw if attempting to add primary email to existing primary email', () => {
-      const primaryOne = new Email({ emailPrimary: true, email: 'test@test.com' })
-      const primaryTwo = new Email({ emailPrimary: true, email: 'test@test.com' })
-      const testParty = new Party({ emails: { primaryOne } })
+    it('should throw if attempting to add primary email without primary email', () => {
+      const primaryTwo = new Email({ emailPrimary: false, email: 'test@test.com' })
+      const testParty = new Party({})
       function tester() {
         testParty.upsertEmail('new', primaryTwo)
       }
-      expect(tester).toThrowError('Exactly 1 primary email is allowed')
+      expect(tester).toThrowError('At least 1 primary email must be supplied')
     })
     it('should add email and preserve existing ones on upsert', () => {
       const primaryOne = new Email({ emailPrimary: true, email: 'test@test.com' })

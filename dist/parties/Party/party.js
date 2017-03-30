@@ -99,6 +99,13 @@ var Party = function (_AMaaSModel) {
      */
     value: function upsertAddress(type, address) {
       var addresses = Object.assign({}, this.addresses);
+      if (address.addressPrimary) {
+        for (var ref in addresses) {
+          if (addresses.hasOwnProperty(ref)) {
+            addresses[ref].addressPrimary = false;
+          }
+        }
+      }
       addresses[type] = address;
       this.addresses = addresses;
     }
@@ -113,6 +120,13 @@ var Party = function (_AMaaSModel) {
      */
     value: function upsertEmail(type, email) {
       var emails = Object.assign({}, this.emails);
+      if (email.emailPrimary) {
+        for (var ref in emails) {
+          if (emails.hasOwnProperty(ref)) {
+            emails[ref].emailPrimary = false;
+          }
+        }
+      }
       emails[type] = email;
       this.emails = emails;
     }
@@ -170,8 +184,8 @@ var Party = function (_AMaaSModel) {
             }
           }
         }
-        if (primaryAdd != 1) {
-          throw new Error('Exactly 1 primary address is allowed');
+        if (primaryAdd == 0) {
+          throw new Error('At least 1 primary address must be supplied');
         }
         this._addresses = newAddresses;
       } else {
@@ -195,8 +209,8 @@ var Party = function (_AMaaSModel) {
             }
           }
         }
-        if (primaryEmail != 1) {
-          throw new Error('Exactly 1 primary email is allowed');
+        if (primaryEmail == 0) {
+          throw new Error('At least 1 primary email must be supplied');
         }
         this._emails = newEmails;
       } else {
