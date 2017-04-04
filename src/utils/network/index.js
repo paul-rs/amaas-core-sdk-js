@@ -27,7 +27,7 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
       baseURL = `${ENDPOINTS.parties}/parties`
       break
     case 'assetManagers':
-      baseURL = `${ENDPOINTS.assetManagers}/asset_managers`
+      baseURL = `${ENDPOINTS.assetManagers}/asset-managers`
       break
     case 'assets':
       baseURL = `${ENDPOINTS.assets}/assets`
