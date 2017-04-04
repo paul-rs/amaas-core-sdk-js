@@ -51,7 +51,7 @@ function buildURL(_ref) {
       baseURL = _config2.default.parties + '/parties';
       break;
     case 'assetManagers':
-      baseURL = _config2.default.assetManagers + '/asset_managers';
+      baseURL = _config2.default.assetManagers + '/asset-managers';
       break;
     case 'assets':
       baseURL = _config2.default.assets + '/assets';
