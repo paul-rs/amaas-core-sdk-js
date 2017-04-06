@@ -271,31 +271,35 @@ function _parseChildren(type, children) {
       break;
     case 'email':
       for (var _child in children) {
-        parsedChildren[_child] = new _email2.default(children[_child]);
-        // parsedChildren[child] = new Email({
-        //   emailPrimary: children[child].email_primary,
-        //   email: children[child].email,
-        //   active: children[child].active,
-        //   createdBy: children[child].created_by,
-        //   updatedBy: children[child].updated_by,
-        //   createdTime: children[child].created_time,
-        //   updatedTime: children[child].updated_time,
-        //   version: children[child].version
-        // })
+        if (children.hasOwnProperty(_child)) {
+          parsedChildren[_child] = new _email2.default(children[_child]);
+          // parsedChildren[child] = new Email({
+          //   emailPrimary: children[child].email_primary,
+          //   email: children[child].email,
+          //   active: children[child].active,
+          //   createdBy: children[child].created_by,
+          //   updatedBy: children[child].updated_by,
+          //   createdTime: children[child].created_time,
+          //   updatedTime: children[child].updated_time,
+          //   version: children[child].version
+          // })
+        }
       }
       break;
     case 'reference':
       for (var _child2 in children) {
-        parsedChildren[_child2] = new _Reference2.default(children[_child2]);
-        // parsedChildren[child] = new Reference({
-        //   referenceValue: children[child].reference_value,
-        //   active: children[child].active,
-        //   createdBy: children[child].created_by,
-        //   updatedBy: children[child].updated_by,
-        //   createdTime: children[child].created_time,
-        //   updatedTime: children[child].updated_time,
-        //   version: children[child].version
-        // })
+        if (children.hasOwnProperty(_child2)) {
+          parsedChildren[_child2] = new _Reference2.default(children[_child2]);
+          // parsedChildren[child] = new Reference({
+          //   referenceValue: children[child].reference_value,
+          //   active: children[child].active,
+          //   createdBy: children[child].created_by,
+          //   updatedBy: children[child].updated_by,
+          //   createdTime: children[child].created_time,
+          //   updatedTime: children[child].updated_time,
+          //   version: children[child].version
+          // })
+        }
       }
       break;
     default:

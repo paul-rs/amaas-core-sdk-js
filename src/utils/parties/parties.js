@@ -189,31 +189,35 @@ export function _parseChildren(type, children) {
       break
     case 'email':
       for (let child in children) {
-        parsedChildren[child] = new Email(children[child])
-        // parsedChildren[child] = new Email({
-        //   emailPrimary: children[child].email_primary,
-        //   email: children[child].email,
-        //   active: children[child].active,
-        //   createdBy: children[child].created_by,
-        //   updatedBy: children[child].updated_by,
-        //   createdTime: children[child].created_time,
-        //   updatedTime: children[child].updated_time,
-        //   version: children[child].version
-        // })
+        if (children.hasOwnProperty(child)) {
+          parsedChildren[child] = new Email(children[child])
+          // parsedChildren[child] = new Email({
+          //   emailPrimary: children[child].email_primary,
+          //   email: children[child].email,
+          //   active: children[child].active,
+          //   createdBy: children[child].created_by,
+          //   updatedBy: children[child].updated_by,
+          //   createdTime: children[child].created_time,
+          //   updatedTime: children[child].updated_time,
+          //   version: children[child].version
+          // })
+        }
       }
       break
     case 'reference':
       for (let child in children) {
-        parsedChildren[child] = new Reference(children[child])
-        // parsedChildren[child] = new Reference({
-        //   referenceValue: children[child].reference_value,
-        //   active: children[child].active,
-        //   createdBy: children[child].created_by,
-        //   updatedBy: children[child].updated_by,
-        //   createdTime: children[child].created_time,
-        //   updatedTime: children[child].updated_time,
-        //   version: children[child].version
-        // })
+        if (children.hasOwnProperty(child)) {
+          parsedChildren[child] = new Reference(children[child])
+          // parsedChildren[child] = new Reference({
+          //   referenceValue: children[child].reference_value,
+          //   active: children[child].active,
+          //   createdBy: children[child].created_by,
+          //   updatedBy: children[child].updated_by,
+          //   createdTime: children[child].created_time,
+          //   updatedTime: children[child].updated_time,
+          //   version: children[child].version
+          // })
+        }
       }
       break
     default:
