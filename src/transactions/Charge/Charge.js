@@ -26,53 +26,102 @@ class Charge extends AMaaSModel {
       updatedTime,
       version
     })
+    Object.defineProperties(this, {
+      _active: { writable: true, enumerable: false },
+      active: {
+        get: () => this._active,
+        set: (newActive) => {
+          switch (newActive) {
+            case false:
+              this._active = false
+              break
+            case undefined:
+              this._active = true
+              break
+            default:
+              this._active = newActive
+          }
+        }, enumerable: true
+      },
+      _netAffecting: { writable: true, enumerable: false },
+      netAffecting: {
+        get: () => this._netAffecting,
+        set: (newNetAffecting) => {
+          switch (newNetAffecting) {
+            case false:
+              this._netAffecting = false
+              break
+            case undefined:
+              this._netAffecting = true
+              break
+            default:
+              this._netAffecting = newNetAffecting
+          }
+        }, enumerable: true
+      },
+      _chargeValue: { writable: true, enumerable: false },
+      chargeValue: {
+        get: () => this._chargeValue,
+        set: (newChargeValue=0) => {
+          this._chargeValue = new Decimal(newChargeValue)
+        }, enumerable: true
+      }
+    })
     this.chargeValue = chargeValue
     this.currency = currency
     this.active = active
     this.netAffecting = netAffecting === false ? false : true
   }
 
-  set active(newActive) {
-    switch (newActive) {
-      case false:
-        this._active = false
-        break
-      case undefined:
-        this._active = true
-        break
-      default:
-        this._active = newActive
-    }
-  }
+  // set active(newActive) {
+  //   switch (newActive) {
+  //     case false:
+  //       this._active = false
+  //       break
+  //     case undefined:
+  //       this._active = true
+  //       break
+  //     default:
+  //       this._active = newActive
+  //   }
+  // }
+  //
+  // get active() {
+  //   return this._active
+  // }
+  //
+  // set netAffecting(newNetAffecting) {
+  //   switch (newNetAffecting) {
+  //     case false:
+  //       this._netAffecting = false
+  //       break
+  //     case undefined:
+  //       this._netAffecting = true
+  //       break
+  //     default:
+  //       this._netAffecting = newNetAffecting
+  //   }
+  // }
+  //
+  // get netAffecting() {
+  //   return this._netAffecting
+  // }
+  //
+  // set chargeValue(newChargeValue=0) {
+  //   this._chargeValue = new Decimal(newChargeValue)
+  // }
+  //
+  // get chargeValue() {
+  //   return this._chargeValue
+  // }
 
-  get active() {
-    return this._active
-  }
-
-  set netAffecting(newNetAffecting) {
-    switch (newNetAffecting) {
-      case false:
-        this._netAffecting = false
-        break
-      case undefined:
-        this._netAffecting = true
-        break
-      default:
-        this._netAffecting = newNetAffecting
-    }
-  }
-
-  get netAffecting() {
-    return this._netAffecting
-  }
-
-  set chargeValue(newChargeValue=0) {
-    this._chargeValue = new Decimal(newChargeValue)
-  }
-
-  get chargeValue() {
-    return this._chargeValue
-  }
+  // toJSON() {
+  //   return Object.assign({}, {
+  //     active: this.active,
+  //     netAffecting: this.netAffecting,
+  //     chargeValue: this.chargeValue
+  //   }, this)
+  // }
 }
 
 export default Charge

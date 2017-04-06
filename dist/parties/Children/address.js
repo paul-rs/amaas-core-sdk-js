@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _core = require('../../core');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -64,6 +62,44 @@ var Address = function (_AMaaSModel) {
       version: version
     }));
 
+    Object.defineProperties(_this, {
+      _active: { writable: true, enumerable: false },
+      active: {
+        get: function get() {
+          return _this._active;
+        },
+        set: function set(newActive) {
+          switch (newActive) {
+            case false:
+              _this._active = false;
+              break;
+            case undefined:
+              _this._active = true;
+              break;
+            default:
+              _this._active = newActive;
+          }
+        }, enumerable: true
+      },
+      _addressPrimary: { writable: true, enumerable: false },
+      addressPrimary: {
+        get: function get() {
+          return _this._addressPrimary;
+        },
+        set: function set(newAddressPrimary) {
+          switch (!!newAddressPrimary) {
+            case false:
+              _this._addressPrimary = false;
+              break;
+            case undefined:
+              _this._addressPrimary = true;
+              break;
+            default:
+              _this._addressPrimary = !!newAddressPrimary;
+          }
+        }, enumerable: true
+      }
+    });
     _this.addressPrimary = addressPrimary;
     _this.lineOne = lineOne;
     _this.lineTwo = lineTwo;
@@ -75,62 +111,62 @@ var Address = function (_AMaaSModel) {
     return _this;
   }
 
-  _createClass(Address, [{
-    key: 'active',
-    set: function set(newActive) {
-      switch (newActive) {
-        case false:
-          this._active = false;
-          break;
-        case undefined:
-          this._active = true;
-          break;
-        default:
-          this._active = newActive;
-      }
-    },
-    get: function get() {
-      return this._active;
-    }
-  }, {
-    key: 'addressPrimary',
-    set: function set(newAddressPrimary) {
-      switch (!!newAddressPrimary) {
-        case false:
-          this._addressPrimary = false;
-          break;
-        case undefined:
-          this._addressPrimary = true;
-          break;
-        default:
-          this._addressPrimary = !!newAddressPrimary;
-      }
-    },
-    get: function get() {
-      return this._addressPrimary;
-    }
+  // set active(newActive) {
+  //   switch (newActive) {
+  //     case false:
+  //       this._active = false
+  //       break
+  //     case undefined:
+  //       this._active = true
+  //       break
+  //     default:
+  //       this._active = newActive
+  //   }
+  // }
+  //
+  // get active() {
+  //   return this._active
+  // }
+  //
+  // set addressPrimary(newAddressPrimary) {
+  //   switch (!!newAddressPrimary) {
+  //     case false:
+  //       this._addressPrimary = false
+  //       break
+  //     case undefined:
+  //       this._addressPrimary = true
+  //       break
+  //     default:
+  //       this._addressPrimary = !!newAddressPrimary
+  //   }
+  // }
+  //
+  // get addressPrimary() {
+  //   return this._addressPrimary
+  // }
 
-    /*
-    toJSON() {
-      return {
-        address_primary: this.addressPrimary,
-        line_one: this.lineOne,
-        line_two: this.lineTwo,
-        city: this.city,
-        region: this.region,
-        postal_code: this.postalCode,
-        country_id: this.countryId,
-        active: this.active,
-        created_by: this.createdBy,
-        created_time: this.createdTime,
-        updated_by: this.updatedBy,
-        updated_time: this.updatedTime,
-        version: this.version
-      }
-    }
-    */
 
-  }]);
+  // toJSON() {
+  //   return Object.assign({}, {
+  //     addressPrimary: this.addressPrimary,
+  //     active: this.active
+  //   }, this)
+  // return {
+  //   address_primary: this.addressPrimary,
+  //   line_one: this.lineOne,
+  //   line_two: this.lineTwo,
+  //   city: this.city,
+  //   region: this.region,
+  //   postal_code: this.postalCode,
+  //   country_id: this.countryId,
+  //   active: this.active,
+  //   created_by: this.createdBy,
+  //   created_time: this.createdTime,
+  //   updated_by: this.updatedBy,
+  //   updated_time: this.updatedTime,
+  //   version: this.version
+  // }
+  // }
 
   return Address;
 }(_core.AMaaSModel);

@@ -5,7 +5,7 @@ import Decimal from 'decimal.js'
 describe('BondBase', () => {
   describe('stringify', () => {
     it('should stringify and parse correctly', () => {
-      const bond = new BondBase({ clientId: 'testId' })
+      const bond = new BondBase({ clientId: 'testId', par: 1.2 })
       expect(JSON.parse(JSON.stringify(bond)).clientId).toEqual('testId')
     })
   })

@@ -108,8 +108,8 @@ export function amend({party, AMId, resourceId, token}, callback) {
 }
 
 /**
- * Partially amend an existing Party. WARNING: The changes object should be keyed in snake case (e.g. party_id instead of partyId)
- * @param {object} changes - Object of changes to the Party. Keys must be snake cased form of Party properties
+ * Partially amend an existing Party.
+ * @param {object} changes - Object of changes to the Party.
  * @param {string} AMId - AMId of the Party to be partially amended
  * @param {string} resourceId - Party ID of the Party to be partially amended
  * @param {function} callback - Called with two arguments (error, result) on completion

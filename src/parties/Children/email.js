@@ -25,59 +25,97 @@ class Email extends AMaaSModel {
       updatedTime,
       version
     })
+    Object.defineProperties(this, {
+      _active: { writable: true, enumerable: false },
+      active: {
+        get: () => this._active,
+        set: (newActive) => {
+          switch (newActive) {
+            case false:
+              this._active = false
+              break
+            case undefined:
+              this._active = true
+              break
+            default:
+              this._active = newActive
+          }
+        }, enumerable: true
+      },
+      _emailPrimary: { writable: true, enumerable: false },
+      emailPrimary: {
+        get: () => this._emailPrimary,
+        set: (newEmailPrimary) => {
+          switch (!!newEmailPrimary) {
+            case false:
+              this._emailPrimary = false
+              break
+            case undefined:
+              this._emailPrimary = true
+              break
+            default:
+              this._emailPrimary = !!newEmailPrimary
+          }
+        }, enumerable: true
+      }
+    })
     this.emailPrimary = emailPrimary
     this.email = email
     this.active = active
   }
 
-  set active(newActive) {
-    switch (newActive) {
-      case false:
-        this._active = false
-        break
-      case undefined:
-        this._active = true
-        break
-      default:
-        this._active = newActive
-    }
-  }
+  // set active(newActive) {
+  //   switch (newActive) {
+  //     case false:
+  //       this._active = false
+  //       break
+  //     case undefined:
+  //       this._active = true
+  //       break
+  //     default:
+  //       this._active = newActive
+  //   }
+  // }
+  //
+  // get active() {
+  //   return this._active
+  // }
+  //
+  // set emailPrimary(newEmailPrimary) {
+  //   switch (!!newEmailPrimary) {
+  //     case false:
+  //       this._emailPrimary = false
+  //       break
+  //     case undefined:
+  //       this._emailPrimary = true
+  //       break
+  //     default:
+  //       this._emailPrimary = !!newEmailPrimary
+  //   }
+  // }
+  //
+  // get emailPrimary() {
+  //   return this._emailPrimary
+  // }
 
-  get active() {
-    return this._active
-  }
 
-  set emailPrimary(newEmailPrimary) {
-    switch (!!newEmailPrimary) {
-      case false:
-        this._emailPrimary = false
-        break
-      case undefined:
-        this._emailPrimary = true
-        break
-      default:
-        this._emailPrimary = !!newEmailPrimary
-    }
-  }
+  // toJSON() {
+  //   return Object.assign({}, {
+  //     emailPrimary: this.emailPrimary,
+  //     active: this.active
+  //   }, this)
+    // return {
+    //   email_primary: this.emailPrimary,
+    //   email: this.email,
+    //   active: this.active,
+    //   created_by: this.createdBy,
+    //   updated_by: this.updatedBy,
+    //   created_time: this.createdTime,
+    //   updated_time: this.updatedTime,
+    //   version: this.version
+    // }
+  // }
 
-  get emailPrimary() {
-    return this._emailPrimary
-  }
-
-  /*
-  toJSON() {
-    return {
-      email_primary: this.emailPrimary,
-      email: this.email,
-      active: this.active,
-      created_by: this.createdBy,
-      updated_by: this.updatedBy,
-      created_time: this.createdTime,
-      updated_time: this.updatedTime,
-      version: this.version
-    }
-  }
-  */
 }
 
 export default Email

@@ -30,6 +30,40 @@ class Address extends AMaaSModel {
       updatedTime,
       version
     })
+    Object.defineProperties(this, {
+      _active: { writable: true, enumerable: false },
+      active: {
+        get: () => this._active,
+        set: (newActive) => {
+          switch (newActive) {
+            case false:
+              this._active = false
+              break
+            case undefined:
+              this._active = true
+              break
+            default:
+              this._active = newActive
+          }
+        }, enumerable: true
+      },
+      _addressPrimary: { writable: true, enumerable: false },
+      addressPrimary: {
+        get: () => this._addressPrimary,
+        set: (newAddressPrimary) => {
+          switch (!!newAddressPrimary) {
+            case false:
+              this._addressPrimary = false
+              break
+            case undefined:
+              this._addressPrimary = true
+              break
+            default:
+              this._addressPrimary = !!newAddressPrimary
+          }
+        }, enumerable: true
+      }
+    })
     this.addressPrimary = addressPrimary
     this.lineOne = lineOne
     this.lineTwo = lineTwo
@@ -40,59 +74,63 @@ class Address extends AMaaSModel {
     this.active = active
   }
 
-  set active(newActive) {
-    switch (newActive) {
-      case false:
-        this._active = false
-        break
-      case undefined:
-        this._active = true
-        break
-      default:
-        this._active = newActive
-    }
-  }
+  // set active(newActive) {
+  //   switch (newActive) {
+  //     case false:
+  //       this._active = false
+  //       break
+  //     case undefined:
+  //       this._active = true
+  //       break
+  //     default:
+  //       this._active = newActive
+  //   }
+  // }
+  //
+  // get active() {
+  //   return this._active
+  // }
+  //
+  // set addressPrimary(newAddressPrimary) {
+  //   switch (!!newAddressPrimary) {
+  //     case false:
+  //       this._addressPrimary = false
+  //       break
+  //     case undefined:
+  //       this._addressPrimary = true
+  //       break
+  //     default:
+  //       this._addressPrimary = !!newAddressPrimary
+  //   }
+  // }
+  //
+  // get addressPrimary() {
+  //   return this._addressPrimary
+  // }
 
-  get active() {
-    return this._active
-  }
 
-  set addressPrimary(newAddressPrimary) {
-    switch (!!newAddressPrimary) {
-      case false:
-        this._addressPrimary = false
-        break
-      case undefined:
-        this._addressPrimary = true
-        break
-      default:
-        this._addressPrimary = !!newAddressPrimary
-    }
-  }
+  // toJSON() {
+  //   return Object.assign({}, {
+  //     addressPrimary: this.addressPrimary,
+  //     active: this.active
+  //   }, this)
+    // return {
+    //   address_primary: this.addressPrimary,
+    //   line_one: this.lineOne,
+    //   line_two: this.lineTwo,
+    //   city: this.city,
+    //   region: this.region,
+    //   postal_code: this.postalCode,
+    //   country_id: this.countryId,
+    //   active: this.active,
+    //   created_by: this.createdBy,
+    //   created_time: this.createdTime,
+    //   updated_by: this.updatedBy,
+    //   updated_time: this.updatedTime,
+    //   version: this.version
+    // }
+  // }
 
-  get addressPrimary() {
-    return this._addressPrimary
-  }
-
-  /*
-  toJSON() {
-    return {
-      address_primary: this.addressPrimary,
-      line_one: this.lineOne,
-      line_two: this.lineTwo,
-      city: this.city,
-      region: this.region,
-      postal_code: this.postalCode,
-      country_id: this.countryId,
-      active: this.active,
-      created_by: this.createdBy,
-      created_time: this.createdTime,
-      updated_by: this.updatedBy,
-      updated_time: this.updatedTime,
-      version: this.version
-    }
-  }
-  */
 }
 
 export default Address

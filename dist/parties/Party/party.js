@@ -76,6 +76,60 @@ var Party = function (_AMaaSModel) {
       version: version
     }));
 
+    Object.defineProperties(_this, {
+      _emails: { writable: true, enumerable: false },
+      emails: {
+        get: function get() {
+          return this._emails;
+        },
+        set: function set(newEmails) {
+          if (Object.keys(newEmails).length > 0) {
+            var primaryEmail = 0;
+            for (var type in newEmails) {
+              if (newEmails.hasOwnProperty(type)) {
+                this._checkTypes('email', newEmails[type], _Children.Email);
+                this._checkEmail(newEmails[type].email);
+                if (newEmails[type].emailPrimary) {
+                  primaryEmail++;
+                }
+              }
+            }
+            if (primaryEmail == 0) {
+              throw new Error('At least 1 primary email must be supplied');
+            }
+            this._emails = newEmails;
+          } else {
+            this._emails = {};
+          }
+        },
+        enumerable: true
+      },
+      _addresses: { writable: true, enumerable: false },
+      addresses: {
+        get: function get() {
+          return this._addresses;
+        },
+        set: function set(newAddresses) {
+          if (Object.keys(newAddresses).length > 0) {
+            var primaryAdd = 0;
+            for (var type in newAddresses) {
+              if (newAddresses.hasOwnProperty(type)) {
+                this._checkTypes('address', newAddresses[type], _Children.Address);
+                if (newAddresses[type].addressPrimary) {
+                  primaryAdd++;
+                }
+              }
+            }
+            if (primaryAdd == 0) {
+              throw new Error('At least 1 primary address must be supplied');
+            }
+            this._addresses = newAddresses;
+          } else {
+            this._addresses = {};
+          }
+        }
+      }
+    });
     _this.assetManagerId = assetManagerId;
     _this.partyId = partyId;
     _this.partyStatus = partyStatus;
@@ -85,18 +139,43 @@ var Party = function (_AMaaSModel) {
     _this.addresses = addresses;
     _this.emails = emails;
     _this.references = references;
+
     return _this;
   }
 
+  // set addresses(newAddresses) {
+  //   if (Object.keys(newAddresses).length > 0) {
+  //     let primaryAdd = 0
+  //     for (let type in newAddresses) {
+  //       if (newAddresses.hasOwnProperty(type)) {
+  //         this._checkTypes('address', newAddresses[type], Address)
+  //         if (newAddresses[type].addressPrimary) {
+  //           primaryAdd++
+  //         }
+  //       }
+  //     }
+  //     if (primaryAdd == 0) {
+  //       throw new Error('At least 1 primary address must be supplied')
+  //     }
+  //     this._addresses = newAddresses
+  //   } else {
+  //     this._addresses = {}
+  //   }
+  // }
+  //
+  // get addresses() {
+  //   return this._addresses
+  // }
+
+  /**
+   * Upsert an Address
+   * @param {string} type - Type of Address (e.g. 'Registered', 'Legal')
+   * @param {Address} address - new Address. Note that the new Address cannot be primary if a primary Address already exists. Use this.addresses setter to replace primary Addresses (??)
+   */
+
+
   _createClass(Party, [{
     key: 'upsertAddress',
-
-
-    /**
-     * Upsert an Address
-     * @param {string} type - Type of Address (e.g. 'Registered', 'Legal')
-     * @param {Address} address - new Address. Note that the new Address cannot be primary if a primary Address already exists. Use this.addresses setter to replace primary Addresses (??)
-     */
     value: function upsertAddress(type, address) {
       var addresses = Object.assign({}, this.addresses);
       if (address.addressPrimary) {
@@ -109,15 +188,40 @@ var Party = function (_AMaaSModel) {
       addresses[type] = address;
       this.addresses = addresses;
     }
-  }, {
-    key: 'upsertEmail',
 
+    // set emails(newEmails) {
+    //   if (Object.keys(newEmails).length > 0) {
+    //     let primaryEmail = 0
+    //     for (let type in newEmails) {
+    //       if (newEmails.hasOwnProperty(type)) {
+    //         this._checkTypes('email', newEmails[type], Email)
+    //         this._checkEmail(newEmails[type].email)
+    //         if (newEmails[type].emailPrimary) {
+    //           primaryEmail++
+    //         }
+    //       }
+    //     }
+    //     if (primaryEmail == 0) {
+    //       throw new Error('At least 1 primary email must be supplied')
+    //     }
+    //     this._emails = newEmails
+    //   } else {
+    //     this._emails = {}
+    //   }
+    // }
+    //
+    // get emails() {
+    //   return this._emails
+    // }
 
     /**
      * Upsert an Email
      * @param {string} type - Type of Email (e.g. 'Work', 'Support')
      * @param {Emails} email - new Email. Note that the new Email cannot be primary if a primary Email already exists. Use this.emails setter to replace primary Emails (??)
      */
+
+  }, {
+    key: 'upsertEmail',
     value: function upsertEmail(type, email) {
       var emails = Object.assign({}, this.emails);
       if (email.emailPrimary) {
@@ -152,76 +256,14 @@ var Party = function (_AMaaSModel) {
       }
     }
 
-    /*
-    toJSON() {
-      return {
-        asset_manager_id: this.assetManagerId,
-        party_id: this.partyId,
-        party_status: this.partyStatus,
-        party_class: this.partyClass,
-        party_type: this.partyType,
-        description: this.description,
-        addresses: this.addresses,
-        emails: this.emails,
-        references: this.references,
-        created_by: this.createdBy,
-        updated_by: this.updatedBy,
-        created_time: this.createdTime,
-        updated_time: this.updatedTime,
-        version: this.version
-      }
-    }
-    */
+    // toJSON() {
+    //   return Object.assign({}, {
+    //     addresses: this.addresses,
+    //     emails: this.emails,
+    //     references: this.references
+    //   }, this)
+    // }
 
-  }, {
-    key: 'addresses',
-    set: function set(newAddresses) {
-      if (Object.keys(newAddresses).length > 0) {
-        var primaryAdd = 0;
-        for (var type in newAddresses) {
-          if (newAddresses.hasOwnProperty(type)) {
-            this._checkTypes('address', newAddresses[type], _Children.Address);
-            if (newAddresses[type].addressPrimary) {
-              primaryAdd++;
-            }
-          }
-        }
-        if (primaryAdd == 0) {
-          throw new Error('At least 1 primary address must be supplied');
-        }
-        this._addresses = newAddresses;
-      } else {
-        this._addresses = {};
-      }
-    },
-    get: function get() {
-      return this._addresses;
-    }
-  }, {
-    key: 'emails',
-    set: function set(newEmails) {
-      if (Object.keys(newEmails).length > 0) {
-        var primaryEmail = 0;
-        for (var type in newEmails) {
-          if (newEmails.hasOwnProperty(type)) {
-            this._checkTypes('email', newEmails[type], _Children.Email);
-            this._checkEmail(newEmails[type].email);
-            if (newEmails[type].emailPrimary) {
-              primaryEmail++;
-            }
-          }
-        }
-        if (primaryEmail == 0) {
-          throw new Error('At least 1 primary email must be supplied');
-        }
-        this._emails = newEmails;
-      } else {
-        this._emails = {};
-      }
-    },
-    get: function get() {
-      return this._emails;
-    }
   }]);
 
   return Party;

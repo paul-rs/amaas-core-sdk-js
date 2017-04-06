@@ -24,26 +24,50 @@ class Code extends AMaaSModel {
       updatedTime,
       version
     })
+    Object.defineProperties(this, {
+      _active: { writable: true, enumerable: false },
+      active: {
+        get: () => this._active,
+        set: (newActive) => {
+          switch (newActive) {
+            case false:
+              this._active = false
+              break
+            case undefined:
+              this._active = true
+              break
+            default:
+              this._active = newActive
+          }
+        }, enumerable: true
+      }
+    })
     this.codeValue = codeValue
     this.active = active
   }
 
-  set active(newActive) {
-    switch (newActive) {
-      case false:
-        this._active = false
-        break
-      case undefined:
-        this._active = true
-        break
-      default:
-        this._active = newActive
-    }
-  }
+  // set active(newActive) {
+  //   switch (newActive) {
+  //     case false:
+  //       this._active = false
+  //       break
+  //     case undefined:
+  //       this._active = true
+  //       break
+  //     default:
+  //       this._active = newActive
+  //   }
+  // }
+  //
+  // get active() {
+  //   return this._active
+  // }
 
-  get active() {
-    return this._active
-  }
+  // toJSON() {
+  //   return Object.assign({}, {
+  //     active: this.active
+  //   }, this)
+  // }
 }
 
 export default Code

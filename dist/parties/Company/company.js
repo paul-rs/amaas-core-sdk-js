@@ -84,27 +84,29 @@ var Company = function (_Organisation) {
     }));
   }
 
-  /*
-  toJSON() {
-    return {
-      asset_manager_id: this.assetManagerId,
-      party_id: this.partyId,
-      party_status: this.partyStatus,
-      party_class: this.partyClass,
-      party_type: this.partyType,
-      description: this.description,
-      addresses: this.addresses,
-      emails: this.emails,
-      references: this.references,
-      created_by: this.createdBy,
-      updated_by: this.updatedBy,
-      created_time: this.createdTime,
-      updated_time: this.updatedTime,
-      version: this.version
-    }
-  }
-  */
-
+  // toJSON() {
+  //   return Object.assign({}, {
+  //     addresses: this.addresses,
+  //     emails: this.emails,
+  //     references: this.references
+  //   }, this)
+  // return {
+  //   asset_manager_id: this.assetManagerId,
+  //   party_id: this.partyId,
+  //   party_status: this.partyStatus,
+  //   party_class: this.partyClass,
+  //   party_type: this.partyType,
+  //   description: this.description,
+  //   addresses: this.addresses,
+  //   emails: this.emails,
+  //   references: this.references,
+  //   created_by: this.createdBy,
+  //   updated_by: this.updatedBy,
+  //   created_time: this.createdTime,
+  //   updated_time: this.updatedTime,
+  //   version: this.version
+  // }
+  // }
 
   return Company;
 }(_organisation2.default);

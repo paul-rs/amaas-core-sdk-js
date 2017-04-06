@@ -68,89 +68,144 @@ class BondBase extends Asset {
       updatedTime,
       version
     })
+    Object.defineProperties(this, {
+      _cooupon: { writable: true, enumerable: false },
+      coupon: {
+        get: function() { return this._coupon },
+        set: function(newCoupon) {
+          switch (newCoupon) {
+            case 0:
+              this._coupon = new Decimal(0)
+              break
+            case undefined:
+              this._coupoon = undefined
+              break
+            default:
+              this._coupon = new Decimal(newCoupon)
+          }
+        }, enumerable: true
+      },
+      _par: { writable: true, enumerable: false },
+      par: {
+        get: function() { return this._par },
+        set: function(newPar) {
+          switch (newPar) {
+            case 0:
+              this._par = new Decimal(0)
+              break
+            case undefined:
+              this._par = undefined
+              break
+            default:
+              this._par = new Decimal(newPar)
+          }
+        }, enumerable: true
+      },
+      _defaulted: { writable: true, enumerable: false },
+      defaulted: {
+        get: function() { return this._defaulted },
+        set: function(newDefaulted) {
+          switch (newDefaulted) {
+            case false:
+              this._defaulted = false
+              break
+            case undefined:
+              this._defaulted = undefined
+              break
+            default:
+              this._defaulted = newDefaulted
+          }
+        }, enumerable: true
+      }
+    })
     this.issueDate = issueDate
     this.coupon = coupon
     this.par = par
   }
 
-  set coupon(newCoupon) {
-    switch (newCoupon) {
-      case 0:
-        this._coupon = new Decimal(0)
-        break
-      case undefined:
-        this._coupoon = undefined
-        break
-      default:
-        this._coupon = new Decimal(newCoupon)
-    }
-  }
+  // set coupon(newCoupon) {
+  //   switch (newCoupon) {
+  //     case 0:
+  //       this._coupon = new Decimal(0)
+  //       break
+  //     case undefined:
+  //       this._coupoon = undefined
+  //       break
+  //     default:
+  //       this._coupon = new Decimal(newCoupon)
+  //   }
+  // }
+  //
+  // get coupon() {
+  //   return this._coupon
+  // }
 
-  get coupon() {
-    return this._coupon
-  }
+  // set par(newPar) {
+  //   switch (newPar) {
+  //     case 0:
+  //       this._par = new Decimal(0)
+  //       break
+  //     case undefined:
+  //       this._par = undefined
+  //       break
+  //     default:
+  //       this._par = new Decimal(newPar)
+  //   }
+  // }
+  //
+  // get par() {
+  //   return this._par
+  // }
+  //
+  // set defaulted(newDefaulted) {
+  //   switch (newDefaulted) {
+  //     case false:
+  //       this._defaulted = false
+  //       break
+  //     case undefined:
+  //       this._defaulted = undefined
+  //       break
+  //     default:
+  //       this._defaulted = newDefaulted
+  //   }
+  // }
+  //
+  // get defaulted() {
+  //   return this._defaulted
+  // }
 
-  set par(newPar) {
-    switch (newPar) {
-      case 0:
-        this._par = new Decimal(0)
-        break
-      case undefined:
-        this._par = undefined
-        break
-      default:
-        this._par = new Decimal(newPar)
-    }
-  }
 
-  get par() {
-    return this._par
-  }
+  // toJSON() {
+  //   return Object.assign({}, {
+  //     par: this.par,
+  //     coupon: this.coupon,
+  //     defaulted: this.defaulted
+  //   }, this)
+    // return {
+    //   asset_manager_id: this.assetManagerId,
+    //   fungible: this.fungible,
+    //   asset_issuer_id: this.assetIssuerId,
+    //   asset_id: this.assetId,
+    //   asset_class: this.assetClass,
+    //   asset_type: this.assetType,
+    //   asset_status: this.assetStatus,
+    //   country_id: this.countryId,
+    //   venue_id: this.venueId,
+    //   maturity_date: this.maturityDate,
+    //   description: this.description,
+    //   client_id: this.clientId,
+    //   issue_date: this.issueDate,
+    //   coupon: this.coupon,
+    //   par: this.par,
+    //   references: this.references,
+    //   created_by: this.createdBy,
+    //   updated_by: this.updatedBy,
+    //   created_time: this.createdTime,
+    //   updated_time: this.updatedTime,
+    //   version: this.version
+    // }
+  // }
 
-  set defaulted(newDefaulted) {
-    switch (newDefaulted) {
-      case false:
-        this._defaulted = false
-        break
-      case undefined:
-        this._defaulted = undefined
-        break
-      default:
-        this._defaulted = newDefaulted
-    }
-  }
-
-  get defaulted() {
-    return this._defaulted
-  }
-
-  /*
-  toJSON() {
-    return {
-      asset_manager_id: this.assetManagerId,
-      fungible: this.fungible,
-      asset_issuer_id: this.assetIssuerId,
-      asset_id: this.assetId,
-      asset_class: this.assetClass,
-      asset_type: this.assetType,
-      asset_status: this.assetStatus,
-      country_id: this.countryId,
-      venue_id: this.venueId,
-      maturity_date: this.maturityDate,
-      description: this.description,
-      client_id: this.clientId,
-      issue_date: this.issueDate,
-      coupon: this.coupon,
-      par: this.par,
-      references: this.references,
-      created_by: this.createdBy,
-      updated_by: this.updatedBy,
-      created_time: this.createdTime,
-      updated_time: this.updatedTime,
-      version: this.version
-    }
-  }
-  */
 }
 
 export default BondBase

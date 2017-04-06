@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _core = require('../../core');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -51,29 +49,54 @@ var PartyChild = function (_AMaaSModel) {
       version: version
     }));
 
+    Object.defineProperties(_this, {
+      _active: { writable: true, enumerable: false },
+      active: {
+        get: function get() {
+          return _this._active;
+        },
+        set: function set(newActive) {
+          switch (newActive) {
+            case false:
+              _this._active = false;
+              break;
+            case undefined:
+              _this._active = true;
+              break;
+            default:
+              _this._active = newActive;
+          }
+        }, enumerable: true
+      }
+    });
     _this.partyId = partyId;
     _this.active = active;
     return _this;
   }
 
-  _createClass(PartyChild, [{
-    key: 'active',
-    set: function set(newActive) {
-      switch (newActive) {
-        case false:
-          this._active = false;
-          break;
-        case undefined:
-          this._active = true;
-          break;
-        default:
-          this._active = newActive;
-      }
-    },
-    get: function get() {
-      return this._active;
-    }
-  }]);
+  // set active(newActive) {
+  //   switch (newActive) {
+  //     case false:
+  //       this._active = false
+  //       break
+  //     case undefined:
+  //       this._active = true
+  //       break
+  //     default:
+  //       this._active = newActive
+  //   }
+  // }
+  //
+  // get active() {
+  //   return this._active
+  // }
+  //
+  // toJSON() {
+  //   return Object.assign({}, {
+  //     active: this.active
+  //   }, this)
+  // }
+
 
   return PartyChild;
 }(_core.AMaaSModel);

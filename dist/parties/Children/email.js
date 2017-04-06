@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _core = require('../../core');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53,63 +51,101 @@ var Email = function (_AMaaSModel) {
       version: version
     }));
 
+    Object.defineProperties(_this, {
+      _active: { writable: true, enumerable: false },
+      active: {
+        get: function get() {
+          return _this._active;
+        },
+        set: function set(newActive) {
+          switch (newActive) {
+            case false:
+              _this._active = false;
+              break;
+            case undefined:
+              _this._active = true;
+              break;
+            default:
+              _this._active = newActive;
+          }
+        }, enumerable: true
+      },
+      _emailPrimary: { writable: true, enumerable: false },
+      emailPrimary: {
+        get: function get() {
+          return _this._emailPrimary;
+        },
+        set: function set(newEmailPrimary) {
+          switch (!!newEmailPrimary) {
+            case false:
+              _this._emailPrimary = false;
+              break;
+            case undefined:
+              _this._emailPrimary = true;
+              break;
+            default:
+              _this._emailPrimary = !!newEmailPrimary;
+          }
+        }, enumerable: true
+      }
+    });
     _this.emailPrimary = emailPrimary;
     _this.email = email;
     _this.active = active;
     return _this;
   }
 
-  _createClass(Email, [{
-    key: 'active',
-    set: function set(newActive) {
-      switch (newActive) {
-        case false:
-          this._active = false;
-          break;
-        case undefined:
-          this._active = true;
-          break;
-        default:
-          this._active = newActive;
-      }
-    },
-    get: function get() {
-      return this._active;
-    }
-  }, {
-    key: 'emailPrimary',
-    set: function set(newEmailPrimary) {
-      switch (!!newEmailPrimary) {
-        case false:
-          this._emailPrimary = false;
-          break;
-        case undefined:
-          this._emailPrimary = true;
-          break;
-        default:
-          this._emailPrimary = !!newEmailPrimary;
-      }
-    },
-    get: function get() {
-      return this._emailPrimary;
-    }
+  // set active(newActive) {
+  //   switch (newActive) {
+  //     case false:
+  //       this._active = false
+  //       break
+  //     case undefined:
+  //       this._active = true
+  //       break
+  //     default:
+  //       this._active = newActive
+  //   }
+  // }
+  //
+  // get active() {
+  //   return this._active
+  // }
+  //
+  // set emailPrimary(newEmailPrimary) {
+  //   switch (!!newEmailPrimary) {
+  //     case false:
+  //       this._emailPrimary = false
+  //       break
+  //     case undefined:
+  //       this._emailPrimary = true
+  //       break
+  //     default:
+  //       this._emailPrimary = !!newEmailPrimary
+  //   }
+  // }
+  //
+  // get emailPrimary() {
+  //   return this._emailPrimary
+  // }
 
-    /*
-    toJSON() {
-      return {
-        email_primary: this.emailPrimary,
-        email: this.email,
-        active: this.active,
-        created_by: this.createdBy,
-        updated_by: this.updatedBy,
-        created_time: this.createdTime,
-        updated_time: this.updatedTime,
-        version: this.version
-      }
-    }
-    */
 
-  }]);
+  // toJSON() {
+  //   return Object.assign({}, {
+  //     emailPrimary: this.emailPrimary,
+  //     active: this.active
+  //   }, this)
+  // return {
+  //   email_primary: this.emailPrimary,
+  //   email: this.email,
+  //   active: this.active,
+  //   created_by: this.createdBy,
+  //   updated_by: this.updatedBy,
+  //   created_time: this.createdTime,
+  //   updated_time: this.updatedTime,
+  //   version: this.version
+  // }
+  // }
 
   return Email;
 }(_core.AMaaSModel);

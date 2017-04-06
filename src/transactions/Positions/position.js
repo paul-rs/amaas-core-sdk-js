@@ -27,6 +27,15 @@ class Position extends AMaaSModel {
       updatedTime,
       version
     })
+    Object.defineProperties(this, {
+      _quantity: { writable: true, enumerable: false },
+      quantity: {
+        get: () => this._quantity,
+        set: (newQuantity=0) => {
+            this._quantity = new Decimal(newQuantity)
+        }, enumerable: true
+      }
+    })
     this.assetManagerId = assetManagerId
     this.assetBookId = assetBookId
     this.assetId = assetId
@@ -39,13 +48,13 @@ class Position extends AMaaSModel {
     this.accountId = accountId
   }
 
-  set quantity(newQuantity) {
-    this._quantity = new Decimal(newQuantity)
-  }
-
-  get quantity() {
-    return this._quantity
-  }
+  // set quantity(newQuantity) {
+  //   this._quantity = new Decimal(newQuantity)
+  // }
+  //
+  // get quantity() {
+  //   return this._quantity
+  // }
 
   /*
   toJSON() {
@@ -67,6 +76,11 @@ class Position extends AMaaSModel {
     }
   }
   */
+  // toJSON() {
+  //   return Object.assign({}, {
+  //     quantity: this.quantity
+  //   }, this)
+  // }
 }
 
 export default Position

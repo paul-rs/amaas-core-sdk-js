@@ -66,6 +66,52 @@ class Transaction extends AMaaSModel {
       updatedTime,
       version
     })
+    Object.defineProperties(this, {
+      _quantity: { writable: true, enumerable: false },
+      quantity: {
+        get: () => this._quantity,
+        set: (newQuantity=0) => {
+          this._quantity = new Decimal(newQuantity)
+        }, enumerable: true
+      },
+      _price: { writable: true, enumerable: false },
+      price: {
+        get: () => this._price,
+        set: (newPrice=0) => {
+          this._price = new Decimal(newPrice)
+        }, enumerable: true
+      },
+      _grossSettlement: { writable: true, enumerable: false },
+      grossSettlement: {
+        get: () => this._grossSettlement ? this._grossSettlement : this.price.times(this.quantity),
+        set: (newGrossSettlement=0) => {
+          this._grossSettlement = new Decimal(newGrossSettlement)
+        }, enumerable: true
+      },
+      _netSettlement: { writable: true, enumerable: false },
+      netSettlement: {
+        get: () => this._netSettlement ? this._netSettlement : this.grossSettlement.minus(this.chargesNetEffect()),
+        set: (newNetSettlement=0) => {
+          this._netSettlement = new Decimal(newNetSettlement)
+        }, enumerable: true
+      }
+      // chargesNetEffect: {
+      //   value: () => {
+      //     if (Object.keys(this.charges).length == 0) {
+      //       return new Decimal(0)
+      //     }
+      //     let netCharges = new Decimal(0);
+      //     for (let chargeType in this.charges) {
+      //       if (this.charges[chargeType].active && this.charges[chargeType].netAffecting) {
+      //         netCharges = netCharges.plus(this.charges[chargeType].chargeValue)
+      //       }
+      //     }
+      //     return netCharges
+      //   },
+      //   writable: false,
+      //   enumerable: false
+      // }
+    })
     this.assetManagerId = assetManagerId
     this.assetBookId = assetBookId
     this.counterpartyBookId = counterpartyBookId
@@ -92,39 +138,42 @@ class Transaction extends AMaaSModel {
     this.asset = asset
   }
 
-  set quantity(newQuantity=0) {
-    this._quantity = new Decimal(newQuantity)
-  }
-
-  get quantity() {
-    return this._quantity
-  }
-
-  set price(newPrice=0) {
-    this._price = new Decimal(newPrice)
-  }
-
-  get price() {
-    return this._price
-  }
-
-  set grossSettlement(newGrossSettlement=0) {
-    this._grossSettlement = new Decimal(newGrossSettlement)
-  }
-
-  get grossSettlement() {
-    return this._grossSettlement ? this._grossSettlement : this.price.times(this.quantity)
-  }
-
-  set netSettlement(newNetSettlement=0) {
-    this._netSettlement = new Decimal(newNetSettlement)
-  }
-
-  get netSettlement() {
-    return this._netSettlement ? this._netSettlement : this.grossSettlement.minus(this.chargesNetEffect)
-  }
+  // set quantity(newQuantity=0) {
+  //   this._quantity = new Decimal(newQuantity)
+  // }
+  //
+  // get quantity() {
+  //   return this._quantity
+  // }
+  //
+  // set price(newPrice=0) {
+  //   this._price = new Decimal(newPrice)
+  // }
+  //
+  // get price() {
+  //   return this._price
+  // }
+  //
+  // set grossSettlement(newGrossSettlement=0) {
+  //   this._grossSettlement = new Decimal(newGrossSettlement)
+  // }
+  //
+  // get grossSettlement() {
+  //   return this._grossSettlement ? this._grossSettlement : this.price.times(this.quantity)
+  // }
+  //
+  // set netSettlement(newNetSettlement=0) {
+  //   this._netSettlement = new Decimal(newNetSettlement)
+  // }
+  //
+  // get netSettlement() {
+  //   return this._netSettlement ? this._netSettlement : this.grossSettlement.minus(this.chargesNetEffect)
+  // }
 
   chargesNetEffect() {
+    if (Object.keys(this.charges).length == 0) {
+      return new Decimal(0)
+    }
     let netCharges = new Decimal(0);
     for (let chargeType in this.charges) {
       if (this.charges[chargeType].active && this.charges[chargeType].netAffecting) {
@@ -134,39 +183,45 @@ class Transaction extends AMaaSModel {
     return netCharges
   }
 
-  /*
-  toJSON() {
-    return {
-      asset_manager_id: this.assetManagerId,
-      asset_book_id: this.assetBookId,
-      counterparty_book_id: this.counterpartyBookId,
-      transaction_action: this.transactionAction,
-      asset_id: this.assetId,
-      quantity: this.quantity,
-      transaction_date: this.transactionDate,
-      settlement_date: this.settlementDate,
-      price: this.price,
-      transaction_currency: this.transactionCurrency,
-      settlement_currency: this.settlementCurrency,
-      asset: this.asset,
-      execution_time: this.executionTime,
-      transaction_type: this.transactionType,
-      transaction_id: this.transactionId,
-      transaction_status: this.transactionStatus,
-      charges: this.charges,
-      codes: this.codes,
-      comments: this.comments,
-      links: this.links,
-      parties: this.parties,
-      references: this.references,
-      created_by: this.createdBy,
-      updated_by: this.updatedBy,
-      created_time: this.createdTime,
-      updated_time: this.updatedTime,
-      version: this.version
-    }
-  }
-  */
+
+  // toJSON() {
+  //   return Object.assign({}, {
+  //     quantity: this.quantity,
+  //     price: this.price,
+  //     grossSettlement: this.grossSettlement,
+  //     netSettlement: this.netSettlement
+  //   }, this)
+    // return {
+    //   asset_manager_id: this.assetManagerId,
+    //   asset_book_id: this.assetBookId,
+    //   counterparty_book_id: this.counterpartyBookId,
+    //   transaction_action: this.transactionAction,
+    //   asset_id: this.assetId,
+    //   quantity: this.quantity,
+    //   transaction_date: this.transactionDate,
+    //   settlement_date: this.settlementDate,
+    //   price: this.price,
+    //   transaction_currency: this.transactionCurrency,
+    //   settlement_currency: this.settlementCurrency,
+    //   asset: this.asset,
+    //   execution_time: this.executionTime,
+    //   transaction_type: this.transactionType,
+    //   transaction_id: this.transactionId,
+    //   transaction_status: this.transactionStatus,
+    //   charges: this.charges,
+    //   codes: this.codes,
+    //   comments: this.comments,
+    //   links: this.links,
+    //   parties: this.parties,
+    //   references: this.references,
+    //   created_by: this.createdBy,
+    //   updated_by: this.updatedBy,
+    //   created_time: this.createdTime,
+    //   updated_time: this.updatedTime,
+    //   version: this.version
+    // }
+  // }
+
 }
 
 export default Transaction

@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _core = require('../../../core');
 
 var _asset = require('../../Asset/asset.js');
@@ -99,93 +97,150 @@ var BondBase = function (_Asset) {
       version: version
     }));
 
+    Object.defineProperties(_this, {
+      _cooupon: { writable: true, enumerable: false },
+      coupon: {
+        get: function get() {
+          return this._coupon;
+        },
+        set: function set(newCoupon) {
+          switch (newCoupon) {
+            case 0:
+              this._coupon = new _decimal2.default(0);
+              break;
+            case undefined:
+              this._coupoon = undefined;
+              break;
+            default:
+              this._coupon = new _decimal2.default(newCoupon);
+          }
+        }, enumerable: true
+      },
+      _par: { writable: true, enumerable: false },
+      par: {
+        get: function get() {
+          return this._par;
+        },
+        set: function set(newPar) {
+          switch (newPar) {
+            case 0:
+              this._par = new _decimal2.default(0);
+              break;
+            case undefined:
+              this._par = undefined;
+              break;
+            default:
+              this._par = new _decimal2.default(newPar);
+          }
+        }, enumerable: true
+      },
+      _defaulted: { writable: true, enumerable: false },
+      defaulted: {
+        get: function get() {
+          return this._defaulted;
+        },
+        set: function set(newDefaulted) {
+          switch (newDefaulted) {
+            case false:
+              this._defaulted = false;
+              break;
+            case undefined:
+              this._defaulted = undefined;
+              break;
+            default:
+              this._defaulted = newDefaulted;
+          }
+        }, enumerable: true
+      }
+    });
     _this.issueDate = issueDate;
     _this.coupon = coupon;
     _this.par = par;
     return _this;
   }
 
-  _createClass(BondBase, [{
-    key: 'coupon',
-    set: function set(newCoupon) {
-      switch (newCoupon) {
-        case 0:
-          this._coupon = new _decimal2.default(0);
-          break;
-        case undefined:
-          this._coupoon = undefined;
-          break;
-        default:
-          this._coupon = new _decimal2.default(newCoupon);
-      }
-    },
-    get: function get() {
-      return this._coupon;
-    }
-  }, {
-    key: 'par',
-    set: function set(newPar) {
-      switch (newPar) {
-        case 0:
-          this._par = new _decimal2.default(0);
-          break;
-        case undefined:
-          this._par = undefined;
-          break;
-        default:
-          this._par = new _decimal2.default(newPar);
-      }
-    },
-    get: function get() {
-      return this._par;
-    }
-  }, {
-    key: 'defaulted',
-    set: function set(newDefaulted) {
-      switch (newDefaulted) {
-        case false:
-          this._defaulted = false;
-          break;
-        case undefined:
-          this._defaulted = undefined;
-          break;
-        default:
-          this._defaulted = newDefaulted;
-      }
-    },
-    get: function get() {
-      return this._defaulted;
-    }
+  // set coupon(newCoupon) {
+  //   switch (newCoupon) {
+  //     case 0:
+  //       this._coupon = new Decimal(0)
+  //       break
+  //     case undefined:
+  //       this._coupoon = undefined
+  //       break
+  //     default:
+  //       this._coupon = new Decimal(newCoupon)
+  //   }
+  // }
+  //
+  // get coupon() {
+  //   return this._coupon
+  // }
 
-    /*
-    toJSON() {
-      return {
-        asset_manager_id: this.assetManagerId,
-        fungible: this.fungible,
-        asset_issuer_id: this.assetIssuerId,
-        asset_id: this.assetId,
-        asset_class: this.assetClass,
-        asset_type: this.assetType,
-        asset_status: this.assetStatus,
-        country_id: this.countryId,
-        venue_id: this.venueId,
-        maturity_date: this.maturityDate,
-        description: this.description,
-        client_id: this.clientId,
-        issue_date: this.issueDate,
-        coupon: this.coupon,
-        par: this.par,
-        references: this.references,
-        created_by: this.createdBy,
-        updated_by: this.updatedBy,
-        created_time: this.createdTime,
-        updated_time: this.updatedTime,
-        version: this.version
-      }
-    }
-    */
+  // set par(newPar) {
+  //   switch (newPar) {
+  //     case 0:
+  //       this._par = new Decimal(0)
+  //       break
+  //     case undefined:
+  //       this._par = undefined
+  //       break
+  //     default:
+  //       this._par = new Decimal(newPar)
+  //   }
+  // }
+  //
+  // get par() {
+  //   return this._par
+  // }
+  //
+  // set defaulted(newDefaulted) {
+  //   switch (newDefaulted) {
+  //     case false:
+  //       this._defaulted = false
+  //       break
+  //     case undefined:
+  //       this._defaulted = undefined
+  //       break
+  //     default:
+  //       this._defaulted = newDefaulted
+  //   }
+  // }
+  //
+  // get defaulted() {
+  //   return this._defaulted
+  // }
 
-  }]);
+
+  // toJSON() {
+  //   return Object.assign({}, {
+  //     par: this.par,
+  //     coupon: this.coupon,
+  //     defaulted: this.defaulted
+  //   }, this)
+  // return {
+  //   asset_manager_id: this.assetManagerId,
+  //   fungible: this.fungible,
+  //   asset_issuer_id: this.assetIssuerId,
+  //   asset_id: this.assetId,
+  //   asset_class: this.assetClass,
+  //   asset_type: this.assetType,
+  //   asset_status: this.assetStatus,
+  //   country_id: this.countryId,
+  //   venue_id: this.venueId,
+  //   maturity_date: this.maturityDate,
+  //   description: this.description,
+  //   client_id: this.clientId,
+  //   issue_date: this.issueDate,
+  //   coupon: this.coupon,
+  //   par: this.par,
+  //   references: this.references,
+  //   created_by: this.createdBy,
+  //   updated_by: this.updatedBy,
+  //   created_time: this.createdTime,
+  //   updated_time: this.updatedTime,
+  //   version: this.version
+  // }
+  // }
 
   return BondBase;
 }(_asset2.default);

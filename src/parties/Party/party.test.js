@@ -5,6 +5,7 @@ describe('Party', () => {
   describe('serialization', () => {
     it('should serialize properly', () => {
       const test = new Party({ partyId: 'test' })
+      console.log(JSON.parse(JSON.stringify(test)))
       expect(JSON.parse(JSON.stringify(test)).partyId).toBeDefined()
       expect(JSON.parse(JSON.stringify(test)).partyId).toEqual('test')
     })

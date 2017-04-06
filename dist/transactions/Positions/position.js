@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _decimal = require('decimal.js');
 
 var _decimal2 = _interopRequireDefault(_decimal);
@@ -50,6 +48,19 @@ var Position = function (_AMaaSModel) {
       version: version
     }));
 
+    Object.defineProperties(_this, {
+      _quantity: { writable: true, enumerable: false },
+      quantity: {
+        get: function get() {
+          return _this._quantity;
+        },
+        set: function set() {
+          var newQuantity = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+          _this._quantity = new _decimal2.default(newQuantity);
+        }, enumerable: true
+      }
+    });
     _this.assetManagerId = assetManagerId;
     _this.assetBookId = assetBookId;
     _this.assetId = assetId;
@@ -63,37 +74,40 @@ var Position = function (_AMaaSModel) {
     return _this;
   }
 
-  _createClass(Position, [{
-    key: 'quantity',
-    set: function set(newQuantity) {
-      this._quantity = new _decimal2.default(newQuantity);
-    },
-    get: function get() {
-      return this._quantity;
-    }
+  // set quantity(newQuantity) {
+  //   this._quantity = new Decimal(newQuantity)
+  // }
+  //
+  // get quantity() {
+  //   return this._quantity
+  // }
 
-    /*
-    toJSON() {
-      return {
-        asset_manager_id: this.assetManagerId,
-        asset_book_id: this.assetBookId,
-        asset_id: this.assetId,
-        quantity: this.quantity,
-        valid_from: this.validFrom,
-        internal_id: this.internalId,
-        valid_to: this.validTo,
-        client_id: this.clientId,
-        accounting_type: this.accountingType,
-        account_id: this.accountId,
-        created_by: this.createdBy,
-        updated_by: this.updatedBy,
-        created_time: this.createdTime,
-        updated_time: this.updatedTime
-      }
+  /*
+  toJSON() {
+    return {
+      asset_manager_id: this.assetManagerId,
+      asset_book_id: this.assetBookId,
+      asset_id: this.assetId,
+      quantity: this.quantity,
+      valid_from: this.validFrom,
+      internal_id: this.internalId,
+      valid_to: this.validTo,
+      client_id: this.clientId,
+      accounting_type: this.accountingType,
+      account_id: this.accountId,
+      created_by: this.createdBy,
+      updated_by: this.updatedBy,
+      created_time: this.createdTime,
+      updated_time: this.updatedTime
     }
-    */
+  }
+  */
+  // toJSON() {
+  //   return Object.assign({}, {
+  //     quantity: this.quantity
+  //   }, this)
+  // }
 
-  }]);
 
   return Position;
 }(_core.AMaaSModel);

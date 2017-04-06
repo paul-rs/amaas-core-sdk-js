@@ -103,6 +103,68 @@ var Transaction = function (_AMaaSModel) {
       version: version
     }));
 
+    Object.defineProperties(_this, {
+      _quantity: { writable: true, enumerable: false },
+      quantity: {
+        get: function get() {
+          return _this._quantity;
+        },
+        set: function set() {
+          var newQuantity = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+          _this._quantity = new Decimal(newQuantity);
+        }, enumerable: true
+      },
+      _price: { writable: true, enumerable: false },
+      price: {
+        get: function get() {
+          return _this._price;
+        },
+        set: function set() {
+          var newPrice = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+          _this._price = new Decimal(newPrice);
+        }, enumerable: true
+      },
+      _grossSettlement: { writable: true, enumerable: false },
+      grossSettlement: {
+        get: function get() {
+          return _this._grossSettlement ? _this._grossSettlement : _this.price.times(_this.quantity);
+        },
+        set: function set() {
+          var newGrossSettlement = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+          _this._grossSettlement = new Decimal(newGrossSettlement);
+        }, enumerable: true
+      },
+      _netSettlement: { writable: true, enumerable: false },
+      netSettlement: {
+        get: function get() {
+          return _this._netSettlement ? _this._netSettlement : _this.grossSettlement.minus(_this.chargesNetEffect());
+        },
+        set: function set() {
+          var newNetSettlement = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+          _this._netSettlement = new Decimal(newNetSettlement);
+        }, enumerable: true
+      }
+      // chargesNetEffect: {
+      //   value: () => {
+      //     if (Object.keys(this.charges).length == 0) {
+      //       return new Decimal(0)
+      //     }
+      //     let netCharges = new Decimal(0);
+      //     for (let chargeType in this.charges) {
+      //       if (this.charges[chargeType].active && this.charges[chargeType].netAffecting) {
+      //         netCharges = netCharges.plus(this.charges[chargeType].chargeValue)
+      //       }
+      //     }
+      //     return netCharges
+      //   },
+      //   writable: false,
+      //   enumerable: false
+      // }
+    });
     _this.assetManagerId = assetManagerId;
     _this.assetBookId = assetBookId;
     _this.counterpartyBookId = counterpartyBookId;
@@ -130,9 +192,44 @@ var Transaction = function (_AMaaSModel) {
     return _this;
   }
 
+  // set quantity(newQuantity=0) {
+  //   this._quantity = new Decimal(newQuantity)
+  // }
+  //
+  // get quantity() {
+  //   return this._quantity
+  // }
+  //
+  // set price(newPrice=0) {
+  //   this._price = new Decimal(newPrice)
+  // }
+  //
+  // get price() {
+  //   return this._price
+  // }
+  //
+  // set grossSettlement(newGrossSettlement=0) {
+  //   this._grossSettlement = new Decimal(newGrossSettlement)
+  // }
+  //
+  // get grossSettlement() {
+  //   return this._grossSettlement ? this._grossSettlement : this.price.times(this.quantity)
+  // }
+  //
+  // set netSettlement(newNetSettlement=0) {
+  //   this._netSettlement = new Decimal(newNetSettlement)
+  // }
+  //
+  // get netSettlement() {
+  //   return this._netSettlement ? this._netSettlement : this.grossSettlement.minus(this.chargesNetEffect)
+  // }
+
   _createClass(Transaction, [{
     key: 'chargesNetEffect',
     value: function chargesNetEffect() {
+      if (Object.keys(this.charges).length == 0) {
+        return new Decimal(0);
+      }
       var netCharges = new Decimal(0);
       for (var chargeType in this.charges) {
         if (this.charges[chargeType].active && this.charges[chargeType].netAffecting) {
@@ -142,80 +239,44 @@ var Transaction = function (_AMaaSModel) {
       return netCharges;
     }
 
-    /*
-    toJSON() {
-      return {
-        asset_manager_id: this.assetManagerId,
-        asset_book_id: this.assetBookId,
-        counterparty_book_id: this.counterpartyBookId,
-        transaction_action: this.transactionAction,
-        asset_id: this.assetId,
-        quantity: this.quantity,
-        transaction_date: this.transactionDate,
-        settlement_date: this.settlementDate,
-        price: this.price,
-        transaction_currency: this.transactionCurrency,
-        settlement_currency: this.settlementCurrency,
-        asset: this.asset,
-        execution_time: this.executionTime,
-        transaction_type: this.transactionType,
-        transaction_id: this.transactionId,
-        transaction_status: this.transactionStatus,
-        charges: this.charges,
-        codes: this.codes,
-        comments: this.comments,
-        links: this.links,
-        parties: this.parties,
-        references: this.references,
-        created_by: this.createdBy,
-        updated_by: this.updatedBy,
-        created_time: this.createdTime,
-        updated_time: this.updatedTime,
-        version: this.version
-      }
-    }
-    */
+    // toJSON() {
+    //   return Object.assign({}, {
+    //     quantity: this.quantity,
+    //     price: this.price,
+    //     grossSettlement: this.grossSettlement,
+    //     netSettlement: this.netSettlement
+    //   }, this)
+    // return {
+    //   asset_manager_id: this.assetManagerId,
+    //   asset_book_id: this.assetBookId,
+    //   counterparty_book_id: this.counterpartyBookId,
+    //   transaction_action: this.transactionAction,
+    //   asset_id: this.assetId,
+    //   quantity: this.quantity,
+    //   transaction_date: this.transactionDate,
+    //   settlement_date: this.settlementDate,
+    //   price: this.price,
+    //   transaction_currency: this.transactionCurrency,
+    //   settlement_currency: this.settlementCurrency,
+    //   asset: this.asset,
+    //   execution_time: this.executionTime,
+    //   transaction_type: this.transactionType,
+    //   transaction_id: this.transactionId,
+    //   transaction_status: this.transactionStatus,
+    //   charges: this.charges,
+    //   codes: this.codes,
+    //   comments: this.comments,
+    //   links: this.links,
+    //   parties: this.parties,
+    //   references: this.references,
+    //   created_by: this.createdBy,
+    //   updated_by: this.updatedBy,
+    //   created_time: this.createdTime,
+    //   updated_time: this.updatedTime,
+    //   version: this.version
+    // }
+    // }
 
-  }, {
-    key: 'quantity',
-    set: function set() {
-      var newQuantity = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-      this._quantity = new Decimal(newQuantity);
-    },
-    get: function get() {
-      return this._quantity;
-    }
-  }, {
-    key: 'price',
-    set: function set() {
-      var newPrice = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-      this._price = new Decimal(newPrice);
-    },
-    get: function get() {
-      return this._price;
-    }
-  }, {
-    key: 'grossSettlement',
-    set: function set() {
-      var newGrossSettlement = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-      this._grossSettlement = new Decimal(newGrossSettlement);
-    },
-    get: function get() {
-      return this._grossSettlement ? this._grossSettlement : this.price.times(this.quantity);
-    }
-  }, {
-    key: 'netSettlement',
-    set: function set() {
-      var newNetSettlement = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-      this._netSettlement = new Decimal(newNetSettlement);
-    },
-    get: function get() {
-      return this._netSettlement ? this._netSettlement : this.grossSettlement.minus(this.chargesNetEffect);
-    }
   }]);
 
   return Transaction;

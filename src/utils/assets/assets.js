@@ -114,8 +114,8 @@ export function amend({asset, AMId, resourceId, token}, callback) {
 }
 
 /**
- * Partially amend an existing Asset. WARNING: The changes object should be keyed in snake case (e.g. asset_id instead of assetId)
- * @param {object} changes - Object of changes to the Asset. Keys must be snake cased form of Asset properties
+ * Partially amend an existing Asset.
+ * @param {object} changes - Object of changes to the Asset.
  * @param {string} AMId - AMId of the Asset to be partially amended
  * @param {string} resourceId - Asset ID of the Asset to be partially amended
  * @param {function} callback - Called with two arguments (error, result) on completion
