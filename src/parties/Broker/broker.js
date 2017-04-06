@@ -40,6 +40,7 @@ class Broker extends Company {
     })
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -58,6 +59,7 @@ class Broker extends Company {
       version: this.version
     }
   }
+  */
 }
 
 export default Broker

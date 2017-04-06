@@ -60,21 +60,22 @@ export function search({queryKey, queryValue, token}, callback) {
 }
 
 export function _parseBook(object) {
-  return new Book({
-    assetManagerId: object.asset_manager_id,
-    bookId: object.book_id,
-    bookStatus: object.book_status,
-    ownerId: object.owner_id,
-    closeTime: object.close_time,
-    timezone: object.timezone,
-    description: object.description,
-    positions: object.positions,
-    createdBy: object.created_by,
-    updatedBy: object.updated_by,
-    createdTime: object.created_time,
-    updatedTime: object.updated_time,
-    version: object.version
-  })
+  return new Book(object)
+  // return new Book({
+  //   assetManagerId: object.asset_manager_id,
+  //   bookId: object.book_id,
+  //   bookStatus: object.book_status,
+  //   ownerId: object.owner_id,
+  //   closeTime: object.close_time,
+  //   timezone: object.timezone,
+  //   description: object.description,
+  //   positions: object.positions,
+  //   createdBy: object.created_by,
+  //   updatedBy: object.updated_by,
+  //   createdTime: object.created_time,
+  //   updatedTime: object.updated_time,
+  //   version: object.version
+  // })
 }
 
 function _handleCallback(error, result, callback) {

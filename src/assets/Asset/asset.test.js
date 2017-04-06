@@ -8,5 +8,10 @@ describe('Asset', () => {
       const expectedRef = new Reference({ referenceValue: 'testId' })
       expect(testAsset.references.AMaaS).toEqual(expectedRef)
     })
+
+    it('should stringify correctly', () => {
+      const testAsset = new Asset({ assetId: 'testId' })
+      expect(JSON.parse(JSON.stringify(testAsset)).assetId).toEqual('testId')
+    })
   })
 })

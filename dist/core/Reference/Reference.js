@@ -56,19 +56,6 @@ var Reference = function (_AMaaSModel) {
   }
 
   _createClass(Reference, [{
-    key: 'toJSON',
-    value: function toJSON() {
-      return {
-        reference_value: this.referenceValue,
-        active: this.active,
-        created_by: this.createdBy,
-        updated_by: this.updatedBy,
-        created_time: this.createdTime,
-        updated_time: this.updatedTime,
-        version: this.version
-      };
-    }
-  }, {
     key: 'active',
     set: function set(newActive) {
       switch (newActive) {
@@ -85,6 +72,21 @@ var Reference = function (_AMaaSModel) {
     get: function get() {
       return this._active;
     }
+
+    /*
+    toJSON() {
+      return {
+        reference_value: this.referenceValue,
+        active: this.active,
+        created_by: this.createdBy,
+        updated_by: this.updatedBy,
+        created_time: this.createdTime,
+        updated_time: this.updatedTime,
+        version: this.version
+      }
+    }
+    */
+
   }]);
 
   return Reference;

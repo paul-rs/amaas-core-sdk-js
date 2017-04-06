@@ -43,6 +43,7 @@ class ForeignExchange extends FXBase {
     })
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -65,6 +66,7 @@ class ForeignExchange extends FXBase {
       version: this.version
     }
   }
+  */
 }
 
 export default ForeignExchange

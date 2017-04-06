@@ -49,6 +49,7 @@ class BondOption extends Derivative {
     this.strike = strike
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -74,6 +75,7 @@ class BondOption extends Derivative {
       version: this.version
     }
   }
+  */
 }
 
 export default BondOption

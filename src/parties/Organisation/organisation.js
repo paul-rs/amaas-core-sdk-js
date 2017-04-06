@@ -42,6 +42,7 @@ class Organisation extends Party {
     })
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -60,6 +61,7 @@ class Organisation extends Party {
       version: this.version
     }
   }
+  */
 }
 
 export default Organisation

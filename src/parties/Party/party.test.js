@@ -2,6 +2,13 @@ import Party from './party.js'
 import { Address, Email } from '../Children'
 
 describe('Party', () => {
+  describe('serialization', () => {
+    it('should serialize properly', () => {
+      const test = new Party({ partyId: 'test' })
+      expect(JSON.parse(JSON.stringify(test)).partyId).toBeDefined()
+      expect(JSON.parse(JSON.stringify(test)).partyId).toEqual('test')
+    })
+  })
   describe('constructor', () => {
     it('should set addresses to empty object if class is instantiated without contacts', () => {
       const testParty = new Party({})

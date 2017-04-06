@@ -8,6 +8,7 @@ describe('Broker', () => {
     })
     it('should set partyClass to Company', () => {
       const testBroker = new Broker({})
+      console.log(JSON.stringify(testBroker))
       expect(testBroker.partyClass).toEqual('Company')
     })
   })

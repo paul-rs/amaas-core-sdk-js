@@ -40,6 +40,7 @@ class AssetManager extends AMaaSModel {
     this.defaultBookCloseTime = defaultBookCloseTime
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -57,6 +58,7 @@ class AssetManager extends AMaaSModel {
       version: this.version
     }
   }
+  */
 }
 
 export default AssetManager

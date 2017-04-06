@@ -49,6 +49,7 @@ class BondCorporate extends BondBase {
     })
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -74,6 +75,7 @@ class BondCorporate extends BondBase {
       version: this.version
     }
   }
+  */
 }
 
 export default BondCorporate

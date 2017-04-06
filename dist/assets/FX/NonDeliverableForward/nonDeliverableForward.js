@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _fxBase = require('../FXBase/fxBase.js');
 
 var _fxBase2 = _interopRequireDefault(_fxBase);
@@ -70,31 +68,31 @@ var NonDeliverableForward = function (_FXBase) {
     }));
   }
 
-  _createClass(NonDeliverableForward, [{
-    key: 'toJSON',
-    value: function toJSON() {
-      return {
-        asset_manager_id: this.assetManagerId,
-        fungible: this.fungible,
-        asset_issuer_id: this.assetIssuerId,
-        asset_id: this.assetId,
-        asset_class: this.assetClass,
-        asset_type: this.assetType,
-        asset_status: this.assetStatus,
-        country_id: this.countryId,
-        venue_id: this.venueId,
-        maturity_date: this.maturityDate,
-        description: this.description,
-        client_id: this.clientId,
-        references: this.references,
-        created_by: this.createdBy,
-        updated_by: this.updatedBy,
-        created_time: this.createdTime,
-        updated_time: this.updatedTime,
-        version: this.version
-      };
+  /*
+  toJSON() {
+    return {
+      asset_manager_id: this.assetManagerId,
+      fungible: this.fungible,
+      asset_issuer_id: this.assetIssuerId,
+      asset_id: this.assetId,
+      asset_class: this.assetClass,
+      asset_type: this.assetType,
+      asset_status: this.assetStatus,
+      country_id: this.countryId,
+      venue_id: this.venueId,
+      maturity_date: this.maturityDate,
+      description: this.description,
+      client_id: this.clientId,
+      references: this.references,
+      created_by: this.createdBy,
+      updated_by: this.updatedBy,
+      created_time: this.createdTime,
+      updated_time: this.updatedTime,
+      version: this.version
     }
-  }]);
+  }
+  */
+
 
   return NonDeliverableForward;
 }(_fxBase2.default);

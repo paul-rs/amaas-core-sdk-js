@@ -45,6 +45,7 @@ class Currency extends Asset {
     this.deliverable = deliverable
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -68,6 +69,7 @@ class Currency extends Asset {
       version: this.version
     }
   }
+  */
 }
 
 export default Currency

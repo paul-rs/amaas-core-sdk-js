@@ -43,6 +43,7 @@ class NonDeliverableForward extends FXBase {
     })
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -65,6 +66,7 @@ class NonDeliverableForward extends FXBase {
       version: this.version
     }
   }
+  */
 }
 
 export default NonDeliverableForward

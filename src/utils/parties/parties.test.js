@@ -124,22 +124,22 @@ describe('parties util functions', () => {
         version: 1,
       })
       const party = _parseParty({
-        party_type: 'Individual',
+        partyType: 'Individual',
         addresses: {
           Registered: {
            city: "NODC740NZO",
-           address_primary: true,
-           updated_by: "TEMP",
-           internal_id :4,
-           line_one: "VCF5H1W9KLAAN8DIJ0R4",
+           addressPrimary: true,
+           updatedBy: "TEMP",
+           internalId :4,
+           lineOne: "VCF5H1W9KLAAN8DIJ0R4",
            region: "SX3JEVA03B",
-           country_id: "O21",
-           created_by: "TEMP",
-           updated_time: "2017-01-27T00:31:02",
-           created_time: "2017-01-27T00:31:02",
+           countryId: "O21",
+           createdBy: "TEMP",
+           updatedTime: "2017-01-27T00:31:02",
+           createdTime: "2017-01-27T00:31:02",
            version: 1,
-           postal_code: "YUIJDP",
-           line_two: null,
+           postalCode: "YUIJDP",
+           lineTwo: null,
            active: true
           }
         }

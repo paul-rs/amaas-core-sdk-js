@@ -76,25 +76,6 @@ var Address = function (_AMaaSModel) {
   }
 
   _createClass(Address, [{
-    key: 'toJSON',
-    value: function toJSON() {
-      return {
-        address_primary: this.addressPrimary,
-        line_one: this.lineOne,
-        line_two: this.lineTwo,
-        city: this.city,
-        region: this.region,
-        postal_code: this.postalCode,
-        country_id: this.countryId,
-        active: this.active,
-        created_by: this.createdBy,
-        created_time: this.createdTime,
-        updated_by: this.updatedBy,
-        updated_time: this.updatedTime,
-        version: this.version
-      };
-    }
-  }, {
     key: 'active',
     set: function set(newActive) {
       switch (newActive) {
@@ -128,6 +109,27 @@ var Address = function (_AMaaSModel) {
     get: function get() {
       return this._addressPrimary;
     }
+
+    /*
+    toJSON() {
+      return {
+        address_primary: this.addressPrimary,
+        line_one: this.lineOne,
+        line_two: this.lineTwo,
+        city: this.city,
+        region: this.region,
+        postal_code: this.postalCode,
+        country_id: this.countryId,
+        active: this.active,
+        created_by: this.createdBy,
+        created_time: this.createdTime,
+        updated_by: this.updatedBy,
+        updated_time: this.updatedTime,
+        version: this.version
+      }
+    }
+    */
+
   }]);
 
   return Address;

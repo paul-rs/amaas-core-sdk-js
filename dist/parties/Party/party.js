@@ -151,9 +151,9 @@ var Party = function (_AMaaSModel) {
         throw new Error('Not a valid email');
       }
     }
-  }, {
-    key: 'toJSON',
-    value: function toJSON() {
+
+    /*
+    toJSON() {
       return {
         asset_manager_id: this.assetManagerId,
         party_id: this.partyId,
@@ -169,8 +169,10 @@ var Party = function (_AMaaSModel) {
         created_time: this.createdTime,
         updated_time: this.updatedTime,
         version: this.version
-      };
+      }
     }
+    */
+
   }, {
     key: 'addresses',
     set: function set(newAddresses) {

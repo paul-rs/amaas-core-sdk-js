@@ -42,6 +42,7 @@ class Company extends Organisation {
     })
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -60,6 +61,7 @@ class Company extends Organisation {
       version: this.version
     }
   }
+  */
 }
 
 export default Company

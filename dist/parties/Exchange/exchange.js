@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _company = require('../Company/company.js');
 
 var _company2 = _interopRequireDefault(_company);
@@ -86,27 +84,27 @@ var Exchange = function (_Company) {
     }));
   }
 
-  _createClass(Exchange, [{
-    key: 'toJSON',
-    value: function toJSON() {
-      return {
-        asset_manager_id: this.assetManagerId,
-        party_id: this.partyId,
-        party_status: this.partyStatus,
-        party_class: this.partyClass,
-        party_type: this.partyType,
-        description: this.description,
-        addresses: this.addresses,
-        emails: this.emails,
-        references: this.references,
-        created_by: this.createdBy,
-        updated_by: this.updatedBy,
-        created_time: this.createdTime,
-        updated_time: this.updatedTime,
-        version: this.version
-      };
+  /*
+  toJSON() {
+    return {
+      asset_manager_id: this.assetManagerId,
+      party_id: this.partyId,
+      party_status: this.partyStatus,
+      party_class: this.partyClass,
+      party_type: this.partyType,
+      description: this.description,
+      addresses: this.addresses,
+      emails: this.emails,
+      references: this.references,
+      created_by: this.createdBy,
+      updated_by: this.updatedBy,
+      created_time: this.createdTime,
+      updated_time: this.updatedTime,
+      version: this.version
     }
-  }]);
+  }
+  */
+
 
   return Exchange;
 }(_company2.default);

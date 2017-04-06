@@ -68,6 +68,7 @@ class Asset extends AMaaSModel {
     this.references.AMaaS = new Reference({ referenceValue: assetId })
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -90,6 +91,7 @@ class Asset extends AMaaSModel {
       version: this.version
     }
   }
+  */
 }
 
 export default Asset
