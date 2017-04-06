@@ -45,6 +45,7 @@ class Derivative extends Asset {
     this.issueDate = issueDate
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -68,6 +69,7 @@ class Derivative extends Asset {
       version: this.version
     }
   }
+  */
 }
 
 export default Derivative

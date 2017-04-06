@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _core = require('../../core');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -74,26 +72,26 @@ var AssetManager = function (_AMaaSModel) {
     return _this;
   }
 
-  _createClass(AssetManager, [{
-    key: 'toJSON',
-    value: function toJSON() {
-      return {
-        asset_manager_id: this.assetManagerId,
-        asset_manager_type: this.assetManagerType,
-        asset_manager_status: this.assetManagerStatus,
-        client_id: this.clientId,
-        party_id: this.partyId,
-        default_book_owner_id: this.defaultBookOwnerId,
-        default_timezone: this.defaultTimezone,
-        default_book_close_time: this.defaultBookCloseTime,
-        created_by: this.createdBy,
-        updated_by: this.updatedBy,
-        created_time: this.createdTime,
-        updated_time: this.updatedTime,
-        version: this.version
-      };
+  /*
+  toJSON() {
+    return {
+      asset_manager_id: this.assetManagerId,
+      asset_manager_type: this.assetManagerType,
+      asset_manager_status: this.assetManagerStatus,
+      client_id: this.clientId,
+      party_id: this.partyId,
+      default_book_owner_id: this.defaultBookOwnerId,
+      default_timezone: this.defaultTimezone,
+      default_book_close_time: this.defaultBookCloseTime,
+      created_by: this.createdBy,
+      updated_by: this.updatedBy,
+      created_time: this.createdTime,
+      updated_time: this.updatedTime,
+      version: this.version
     }
-  }]);
+  }
+  */
+
 
   return AssetManager;
 }(_core.AMaaSModel);

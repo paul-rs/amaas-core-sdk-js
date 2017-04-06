@@ -90,7 +90,7 @@ export function retrieveData({ AMaaSClass, AMId, resourceId, token }, callback) 
     callback(e)
     return
   }
-  let promise = request.get(url).set('Authorization', token)
+  let promise = request.get(url).set('Authorization', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(response => response.body)
@@ -149,7 +149,7 @@ export function insertData({ AMaaSClass, AMId, data, token }, callback) {
     url,
     json: data
   }
-  let promise = request.post(url).send(data).set('Authorization', token)
+  let promise = request.post(url).send(data).set('Authorization', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(response => response.body)
@@ -187,7 +187,7 @@ export function putData({ AMaaSClass, AMId, resourceId, data, token }, callback)
     url,
     json: data
   }
-  let promise = request.put(url).send(data).set('Authorization', token)
+  let promise = request.put(url).send(data).set('Authorization', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(response => response.body)
@@ -225,7 +225,7 @@ export function patchData({ AMaaSClass, AMId, resourceId, data, token }, callbac
     url,
     json: data
   }
-  let promise = request.patch(url).send(data).set('Authorization', token)
+  let promise = request.patch(url).send(data).set('Authorization', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(response => response.body)
@@ -259,7 +259,7 @@ export function deleteData({ AMaaSClass, AMId, resourceId, token }, callback) {
     callback(e)
     return
   }
-  let promise = request.delete(url).set('Authorization', token)
+  let promise = request.delete(url).set('Authorization', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(response => response.body)
@@ -294,6 +294,7 @@ export function searchData({ AMaaSClass, queryKey, queryValue, token }, callback
   let qString = {}
   const qValueString = queryValue.join()
   qString[queryKey] = qValueString
+  qString.camelcase = true
   const params = {
     url,
     qs: qString

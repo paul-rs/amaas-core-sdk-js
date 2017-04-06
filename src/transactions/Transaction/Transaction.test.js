@@ -8,6 +8,13 @@ describe('Transaction class', () => {
     createdBy: 'testUser',
     createdTime: new Date(2017, 1, 30)
   }
+  describe('serialization', () => {
+    it('should serialize properly', () => {
+      const test = new Transaction({ transactionType: 'Trade' })
+      expect(JSON.parse(JSON.stringify(test)).transactionType).toBeDefined()
+      expect(JSON.parse(JSON.stringify(test)).transactionType).toEqual('Trade')
+    })
+  })
   describe('constructor', () => {
     const data = {
       quantity: 2.54,

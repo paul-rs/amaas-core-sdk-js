@@ -80,9 +80,9 @@ var FXBase = function (_Asset) {
     value: function getCounterCurrency() {
       return this.assetId.slice(3, 7);
     }
-  }, {
-    key: 'toJSON',
-    value: function toJSON() {
+
+    /*
+    toJSON() {
       return {
         asset_manager_id: this.assetManagerId,
         fungible: this.fungible,
@@ -102,8 +102,10 @@ var FXBase = function (_Asset) {
         created_time: this.createdTime,
         updated_time: this.updatedTime,
         version: this.version
-      };
+      }
     }
+    */
+
   }]);
 
   return FXBase;

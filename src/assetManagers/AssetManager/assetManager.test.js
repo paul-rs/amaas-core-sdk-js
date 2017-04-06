@@ -8,12 +8,12 @@ describe('AssetManager', () => {
         createdBy: 'almightyCreator'
       })
       const expectedObj = {
-        asset_manager_id: '48576',
-        created_by: 'almightyCreator',
-        updated_by: 'TEMP',
+        assetManagerId: '48576',
+        createdBy: 'almightyCreator',
+        updatedBy: 'TEMP',
         version: 1
       }
-      expect(JSON.stringify(testAM)).toEqual(JSON.stringify(expectedObj))
+      expect(JSON.parse(JSON.stringify(testAM))).toEqual(expectedObj)
     })
   })
 })

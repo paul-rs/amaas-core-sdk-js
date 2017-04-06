@@ -1,6 +1,13 @@
 import Reference from './Reference.js'
 
 describe('Reference', () => {
+  describe('serialization', () => {
+    it('should serialize properly', () => {
+      const test = new Reference({ updatedBy: 'test' })
+      expect(JSON.parse(JSON.stringify(test)).updatedBy).toBeDefined()
+      expect(JSON.parse(JSON.stringify(test)).updatedBy).toEqual('test')
+    })
+  })
   describe('constructor', () => {
     it('should set active to true if unassigned', () => {
       const testRef = new Reference({})

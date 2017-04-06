@@ -1,6 +1,13 @@
 import ForeignExchange from './foreignExchange.js'
 
 describe('ForeignExchange', () => {
+  describe('serialization', () => {
+    it('should serialize properly', () => {
+      const test = new ForeignExchange({ assetId: 'USDSGD' })
+      expect(JSON.parse(JSON.stringify(test)).assetId).toBeDefined()
+      expect(JSON.parse(JSON.stringify(test)).assetId).toEqual('USDSGD')
+    })
+  })
   describe('get currency functions', () => {
     const fx = new ForeignExchange({ assetId: 'USDSGD' })
     it('getBaseCurrency should return first 3 characters of assetId', () => {

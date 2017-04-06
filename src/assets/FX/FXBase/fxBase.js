@@ -51,6 +51,7 @@ class FXBase extends Asset {
     return this.assetId.slice(3,7)
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -73,6 +74,7 @@ class FXBase extends Asset {
       version: this.version
     }
   }
+  */
 }
 
 export default FXBase

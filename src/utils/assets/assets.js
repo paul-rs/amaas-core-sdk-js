@@ -173,286 +173,298 @@ export function _parseAsset(object) {
   const references = _parseChildren('reference', object.references)
   switch (object.asset_type) {
     case 'Asset':
-      asset = new Asset({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      asset = new Asset(Object.assign(object, { references }))
+      // asset = new Asset({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'Bond':
-      asset = new BondBase({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        issueDate: object.issue_date,
-        coupon: object.coupon,
-        par: object.par,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      asset = new BondBase(Object.assign(object, { references }))
+      // asset = new BondBase({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   issueDate: object.issue_date,
+      //   coupon: object.coupon,
+      //   par: object.par,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'BondCorporate':
-      asset = new BondCorporate({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        issueDate: object.issue_date,
-        coupon: object.coupon,
-        par: object.par,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      asset = new BondCorporate(Object.assign(object, { references }))
+      // asset = new BondCorporate({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   issueDate: object.issue_date,
+      //   coupon: object.coupon,
+      //   par: object.par,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'BondGovernment':
-      asset = new BondGovernment({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        issueDate: object.issue_date,
-        coupon: object.coupon,
-        par: object.par,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      asset = new BondGovernment(Object.assign(object, { references }))
+      // asset = new BondGovernment({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   issueDate: object.issue_date,
+      //   coupon: object.coupon,
+      //   par: object.par,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'BondMortgage':
-      asset = new BondMortgage({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        issueDate: object.issue_date,
-        coupon: object.coupon,
-        par: object.par,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      asset = new BondMortgage(Object.assign(object, { references }))
+      // asset = new BondMortgage({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   issueDate: object.issue_date,
+      //   coupon: object.coupon,
+      //   par: object.par,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'Currency':
-      asset = new Currency({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        deliverable: object.deliverable,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      asset = new Currency(Object.assign(object, { references }))
+      // asset = new Currency({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   deliverable: object.deliverable,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'Derivative':
-      asset = new Derivative({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        isseuDate: object.issue_date,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      asset = new Derivative(Object.assign(object, { references }))
+      // asset = new Derivative({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   isseuDate: object.issue_date,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'BondOption':
-      asset = new BondOption({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        isseuDate: object.issue_date,
-        putCall: object.put_call,
-        strike: object.strike,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      asset = new BondOption(Object.assign(object, { references }))
+      // asset = new BondOption({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   isseuDate: object.issue_date,
+      //   putCall: object.put_call,
+      //   strike: object.strike,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'Equity':
-      asset = new Equity({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      asset = new Equity(Object.assign(object, { references }))
+      // asset = new Equity({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'ForeignExchange':
-      asset = new ForeignExchange({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      asset = new ForeignExchange(Object.assign(object, { references }))
+      // asset = new ForeignExchange({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'NonDeliverableForward':
-      asset = new NonDeliverableForward({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      asset = new NonDeliverableForward(Object.assign(object, { references }))
+      // asset = new NonDeliverableForward({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     default:
-      asset = new Asset({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        deliverable: object.deliverable,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      asset = new Asset(Object.assign(object, { references }))
+      // asset = new Asset({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   deliverable: object.deliverable,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
   }
   return asset
 }

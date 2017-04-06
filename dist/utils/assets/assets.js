@@ -212,286 +212,298 @@ function _parseAsset(object) {
   var references = (0, _parties._parseChildren)('reference', object.references);
   switch (object.asset_type) {
     case 'Asset':
-      asset = new _assets.Asset({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        references: references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      });
+      asset = new _assets.Asset(Object.assign(object, { references: references }));
+      // asset = new Asset({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break;
     case 'Bond':
-      asset = new _assets.BondBase({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        issueDate: object.issue_date,
-        coupon: object.coupon,
-        par: object.par,
-        references: references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      });
+      asset = new _assets.BondBase(Object.assign(object, { references: references }));
+      // asset = new BondBase({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   issueDate: object.issue_date,
+      //   coupon: object.coupon,
+      //   par: object.par,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break;
     case 'BondCorporate':
-      asset = new _assets.BondCorporate({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        issueDate: object.issue_date,
-        coupon: object.coupon,
-        par: object.par,
-        references: references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      });
+      asset = new _assets.BondCorporate(Object.assign(object, { references: references }));
+      // asset = new BondCorporate({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   issueDate: object.issue_date,
+      //   coupon: object.coupon,
+      //   par: object.par,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break;
     case 'BondGovernment':
-      asset = new _assets.BondGovernment({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        issueDate: object.issue_date,
-        coupon: object.coupon,
-        par: object.par,
-        references: references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      });
+      asset = new _assets.BondGovernment(Object.assign(object, { references: references }));
+      // asset = new BondGovernment({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   issueDate: object.issue_date,
+      //   coupon: object.coupon,
+      //   par: object.par,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break;
     case 'BondMortgage':
-      asset = new _assets.BondMortgage({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        issueDate: object.issue_date,
-        coupon: object.coupon,
-        par: object.par,
-        references: references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      });
+      asset = new _assets.BondMortgage(Object.assign(object, { references: references }));
+      // asset = new BondMortgage({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   issueDate: object.issue_date,
+      //   coupon: object.coupon,
+      //   par: object.par,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break;
     case 'Currency':
-      asset = new _assets.Currency({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        deliverable: object.deliverable,
-        references: references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      });
+      asset = new _assets.Currency(Object.assign(object, { references: references }));
+      // asset = new Currency({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   deliverable: object.deliverable,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break;
     case 'Derivative':
-      asset = new _assets.Derivative({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        isseuDate: object.issue_date,
-        references: references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      });
+      asset = new _assets.Derivative(Object.assign(object, { references: references }));
+      // asset = new Derivative({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   isseuDate: object.issue_date,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break;
     case 'BondOption':
-      asset = new _assets.BondOption({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        isseuDate: object.issue_date,
-        putCall: object.put_call,
-        strike: object.strike,
-        references: references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      });
+      asset = new _assets.BondOption(Object.assign(object, { references: references }));
+      // asset = new BondOption({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   isseuDate: object.issue_date,
+      //   putCall: object.put_call,
+      //   strike: object.strike,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break;
     case 'Equity':
-      asset = new _assets.Equity({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        references: references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      });
+      asset = new _assets.Equity(Object.assign(object, { references: references }));
+      // asset = new Equity({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break;
     case 'ForeignExchange':
-      asset = new _assets.ForeignExchange({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        references: references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      });
+      asset = new _assets.ForeignExchange(Object.assign(object, { references: references }));
+      // asset = new ForeignExchange({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break;
     case 'NonDeliverableForward':
-      asset = new _assets.NonDeliverableForward({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        references: references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      });
+      asset = new _assets.NonDeliverableForward(Object.assign(object, { references: references }));
+      // asset = new NonDeliverableForward({
+      //   assetManagerId: object.asset_manager_id,
+      //   fungible: object.fungible,
+      //   assetIssuerId: object.asset_issuer_id,
+      //   assetId: object.asset_id,
+      //   assetClass: object.asset_class,
+      //   assetType: object.asset_type,
+      //   assetStatus: object.asset_status,
+      //   countryId: object.country_id,
+      //   venueId: object.venue_id,
+      //   maturityDate: object.maturity_date,
+      //   description: object.description,
+      //   clientId: object.client_id,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break;
     default:
-      asset = new _assets.Asset({
-        assetManagerId: object.asset_manager_id,
-        fungible: object.fungible,
-        assetIssuerId: object.asset_issuer_id,
-        assetId: object.asset_id,
-        assetClass: object.asset_class,
-        assetType: object.asset_type,
-        assetStatus: object.asset_status,
-        countryId: object.country_id,
-        venueId: object.venue_id,
-        maturityDate: object.maturity_date,
-        description: object.description,
-        clientId: object.client_id,
-        deliverable: object.deliverable,
-        references: references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      });
+      asset = new _assets.Asset(Object.assign(object, { references: references }));
+    // asset = new Asset({
+    //   assetManagerId: object.asset_manager_id,
+    //   fungible: object.fungible,
+    //   assetIssuerId: object.asset_issuer_id,
+    //   assetId: object.asset_id,
+    //   assetClass: object.asset_class,
+    //   assetType: object.asset_type,
+    //   assetStatus: object.asset_status,
+    //   countryId: object.country_id,
+    //   venueId: object.venue_id,
+    //   maturityDate: object.maturity_date,
+    //   description: object.description,
+    //   clientId: object.client_id,
+    //   deliverable: object.deliverable,
+    //   references,
+    //   createdBy: object.created_by,
+    //   updatedBy: object.updated_by,
+    //   createdTime: object.created_time,
+    //   updatedTime: object.updated_time,
+    //   version: object.version
+    // })
   }
   return asset;
 }

@@ -119,7 +119,7 @@ function retrieveData(_ref2, callback) {
     callback(e);
     return;
   }
-  var promise = _superagent2.default.get(url).set('Authorization', token);
+  var promise = _superagent2.default.get(url).set('Authorization', token).query({ camelcase: true });
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
@@ -185,7 +185,7 @@ function insertData(_ref3, callback) {
     url: url,
     json: data
   };
-  var promise = _superagent2.default.post(url).send(data).set('Authorization', token);
+  var promise = _superagent2.default.post(url).send(data).set('Authorization', token).query({ camelcase: true });
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
@@ -231,7 +231,7 @@ function putData(_ref4, callback) {
     url: url,
     json: data
   };
-  var promise = _superagent2.default.put(url).send(data).set('Authorization', token);
+  var promise = _superagent2.default.put(url).send(data).set('Authorization', token).query({ camelcase: true });
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
@@ -277,7 +277,7 @@ function patchData(_ref5, callback) {
     url: url,
     json: data
   };
-  var promise = _superagent2.default.patch(url).send(data).set('Authorization', token);
+  var promise = _superagent2.default.patch(url).send(data).set('Authorization', token).query({ camelcase: true });
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
@@ -318,7 +318,7 @@ function deleteData(_ref6, callback) {
     callback(e);
     return;
   }
-  var promise = _superagent2.default.delete(url).set('Authorization', token);
+  var promise = _superagent2.default.delete(url).set('Authorization', token).query({ camelcase: true });
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
@@ -360,6 +360,7 @@ function searchData(_ref7, callback) {
   var qString = {};
   var qValueString = queryValue.join();
   qString[queryKey] = qValueString;
+  qString.camelcase = true;
   var params = {
     url: url,
     qs: qString

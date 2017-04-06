@@ -64,6 +64,7 @@ class Email extends AMaaSModel {
     return this._emailPrimary
   }
 
+  /*
   toJSON() {
     return {
       email_primary: this.emailPrimary,
@@ -76,6 +77,7 @@ class Email extends AMaaSModel {
       version: this.version
     }
   }
+  */
 }
 
 export default Email

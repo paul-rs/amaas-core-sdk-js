@@ -43,6 +43,7 @@ class Equity extends Asset {
     })
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -65,6 +66,7 @@ class Equity extends Asset {
       version: this.version
     }
   }
+  */
 }
 
 export default Equity

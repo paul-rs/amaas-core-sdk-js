@@ -42,6 +42,7 @@ class Exchange extends Company {
     })
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -60,6 +61,7 @@ class Exchange extends Company {
       version: this.version
     }
   }
+  */
 }
 
 export default Exchange

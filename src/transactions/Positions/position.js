@@ -47,6 +47,7 @@ class Position extends AMaaSModel {
     return this._quantity
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -65,6 +66,7 @@ class Position extends AMaaSModel {
       updated_time: this.updatedTime
     }
   }
+  */
 }
 
 export default Position

@@ -74,7 +74,7 @@ class Address extends AMaaSModel {
     return this._addressPrimary
   }
 
-
+  /*
   toJSON() {
     return {
       address_primary: this.addressPrimary,
@@ -92,6 +92,7 @@ class Address extends AMaaSModel {
       version: this.version
     }
   }
+  */
 }
 
 export default Address

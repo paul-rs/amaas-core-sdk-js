@@ -44,6 +44,7 @@ class Reference extends AMaaSModel {
     return this._active
   }
 
+  /*
   toJSON() {
     return {
       reference_value: this.referenceValue,
@@ -55,6 +56,7 @@ class Reference extends AMaaSModel {
       version: this.version
     }
   }
+  */
 }
 
 export default Reference

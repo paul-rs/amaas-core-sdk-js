@@ -141,9 +141,9 @@ var Transaction = function (_AMaaSModel) {
       }
       return netCharges;
     }
-  }, {
-    key: 'toJSON',
-    value: function toJSON() {
+
+    /*
+    toJSON() {
       return {
         asset_manager_id: this.assetManagerId,
         asset_book_id: this.assetBookId,
@@ -172,8 +172,10 @@ var Transaction = function (_AMaaSModel) {
         created_time: this.createdTime,
         updated_time: this.updatedTime,
         version: this.version
-      };
+      }
     }
+    */
+
   }, {
     key: 'quantity',
     set: function set() {

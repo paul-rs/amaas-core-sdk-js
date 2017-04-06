@@ -124,6 +124,7 @@ class BondBase extends Asset {
     return this._defaulted
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -149,6 +150,7 @@ class BondBase extends Asset {
       version: this.version
     }
   }
+  */
 }
 
 export default BondBase

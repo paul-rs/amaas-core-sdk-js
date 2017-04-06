@@ -64,8 +64,16 @@ var Position = function (_AMaaSModel) {
   }
 
   _createClass(Position, [{
-    key: 'toJSON',
-    value: function toJSON() {
+    key: 'quantity',
+    set: function set(newQuantity) {
+      this._quantity = new _decimal2.default(newQuantity);
+    },
+    get: function get() {
+      return this._quantity;
+    }
+
+    /*
+    toJSON() {
       return {
         asset_manager_id: this.assetManagerId,
         asset_book_id: this.assetBookId,
@@ -81,16 +89,10 @@ var Position = function (_AMaaSModel) {
         updated_by: this.updatedBy,
         created_time: this.createdTime,
         updated_time: this.updatedTime
-      };
+      }
     }
-  }, {
-    key: 'quantity',
-    set: function set(newQuantity) {
-      this._quantity = new _decimal2.default(newQuantity);
-    },
-    get: function get() {
-      return this._quantity;
-    }
+    */
+
   }]);
 
   return Position;

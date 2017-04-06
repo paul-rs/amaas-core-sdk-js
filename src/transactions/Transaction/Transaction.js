@@ -134,6 +134,7 @@ class Transaction extends AMaaSModel {
     return netCharges
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -165,6 +166,7 @@ class Transaction extends AMaaSModel {
       version: this.version
     }
   }
+  */
 }
 
 export default Transaction

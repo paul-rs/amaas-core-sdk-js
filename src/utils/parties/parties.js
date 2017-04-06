@@ -168,49 +168,52 @@ export function _parseChildren(type, children) {
     case 'address':
       for (let child in children) {
         if (children.hasOwnProperty(child)) {
-          parsedChildren[child] = new Address({
-            addressPrimary: children[child].address_primary,
-            lineOne: children[child].line_one,
-            lineTwo: children[child].line_two,
-            city: children[child].city,
-            region: children[child].region,
-            postalCode: children[child].postal_code,
-            countryId: children[child].country_id,
-            active: children[child].active,
-            createdBy: children[child].created_by,
-            updatedBy: children[child].updated_by,
-            createdTime: children[child].created_time,
-            updatedTime: children[child].updated_time,
-            version: children[child].version
-          })
+          parsedChildren[child] = new Address(children[child])
+          // parsedChildren[child] = new Address({
+          //   addressPrimary: children[child].address_primary,
+          //   lineOne: children[child].line_one,
+          //   lineTwo: children[child].line_two,
+          //   city: children[child].city,
+          //   region: children[child].region,
+          //   postalCode: children[child].postal_code,
+          //   countryId: children[child].country_id,
+          //   active: children[child].active,
+          //   createdBy: children[child].created_by,
+          //   updatedBy: children[child].updated_by,
+          //   createdTime: children[child].created_time,
+          //   updatedTime: children[child].updated_time,
+          //   version: children[child].version
+          // })
         }
       }
       break
     case 'email':
       for (let child in children) {
-        parsedChildren[child] = new Email({
-          emailPrimary: children[child].email_primary,
-          email: children[child].email,
-          active: children[child].active,
-          createdBy: children[child].created_by,
-          updatedBy: children[child].updated_by,
-          createdTime: children[child].created_time,
-          updatedTime: children[child].updated_time,
-          version: children[child].version
-        })
+        parsedChildren[child] = new Email(children[child])
+        // parsedChildren[child] = new Email({
+        //   emailPrimary: children[child].email_primary,
+        //   email: children[child].email,
+        //   active: children[child].active,
+        //   createdBy: children[child].created_by,
+        //   updatedBy: children[child].updated_by,
+        //   createdTime: children[child].created_time,
+        //   updatedTime: children[child].updated_time,
+        //   version: children[child].version
+        // })
       }
       break
     case 'reference':
       for (let child in children) {
-        parsedChildren[child] = new Reference({
-          referenceValue: children[child].reference_value,
-          active: children[child].active,
-          createdBy: children[child].created_by,
-          updatedBy: children[child].updated_by,
-          createdTime: children[child].created_time,
-          updatedTime: children[child].updated_time,
-          version: children[child].version
-        })
+        parsedChildren[child] = new Reference(children[child])
+        // parsedChildren[child] = new Reference({
+        //   referenceValue: children[child].reference_value,
+        //   active: children[child].active,
+        //   createdBy: children[child].created_by,
+        //   updatedBy: children[child].updated_by,
+        //   createdTime: children[child].created_time,
+        //   updatedTime: children[child].updated_time,
+        //   version: children[child].version
+        // })
       }
       break
     default:
@@ -224,150 +227,158 @@ export function _parseParty(object) {
   const addresses = _parseChildren('address', object.addresses)
   const emails = _parseChildren('email', object.emails)
   const references = _parseChildren('reference', object.references)
-  switch (object.party_type) {
+  switch (object.partyType) {
     case 'Individual':
-      party = new Individual({
-        assetManagerId: object.asset_manager_id,
-        partyId: object.party_id,
-        partyStatus: object.party_status,
-        partyClass: object.party_class,
-        partyType: object.party_type,
-        description: object.description,
-        addresses,
-        emails,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      party = new Individual(Object.assign(object, { addresses, emails, references }))
+      // party = new Individual({
+      //   assetManagerId: object.asset_manager_id,
+      //   partyId: object.party_id,
+      //   partyStatus: object.party_status,
+      //   partyClass: object.party_class,
+      //   partyType: object.party_type,
+      //   description: object.description,
+      //   addresses,
+      //   emails,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'Broker':
-      party = new Broker({
-        assetManagerId: object.asset_manager_id,
-        partyId: object.party_id,
-        partyStatus: object.party_status,
-        partyClass: object.party_class,
-        partyType: object.party_type,
-        description: object.description,
-        addresses,
-        emails,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      party = new Broker(Object.assign(object, { addresses, emails, references }))
+      // party = new Broker({
+      //   assetManagerId: object.asset_manager_id,
+      //   partyId: object.party_id,
+      //   partyStatus: object.party_status,
+      //   partyClass: object.party_class,
+      //   partyType: object.party_type,
+      //   description: object.description,
+      //   addresses,
+      //   emails,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'Exchange':
-      party = new Exchange({
-        assetManagerId: object.asset_manager_id,
-        partyId: object.party_id,
-        partyStatus: object.party_status,
-        partyClass: object.party_class,
-        partyType: object.party_type,
-        description: object.description,
-        addresses,
-        emails,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+    party = new Exchange(Object.assign(object, { addresses, emails, references }))
+      // party = new Exchange({
+      //   assetManagerId: object.asset_manager_id,
+      //   partyId: object.party_id,
+      //   partyStatus: object.party_status,
+      //   partyClass: object.party_class,
+      //   partyType: object.party_type,
+      //   description: object.description,
+      //   addresses,
+      //   emails,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'Fund':
-      party = new Fund({
-        assetManagerId: object.asset_manager_id,
-        partyId: object.party_id,
-        partyStatus: object.party_status,
-        partyClass: object.party_class,
-        partyType: object.party_type,
-        description: object.description,
-        addresses,
-        emails,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      party = new Fund(Object.assign(object, { addresses, emails, references }))
+      // party = new Fund({
+      //   assetManagerId: object.asset_manager_id,
+      //   partyId: object.party_id,
+      //   partyStatus: object.party_status,
+      //   partyClass: object.party_class,
+      //   partyType: object.party_type,
+      //   description: object.description,
+      //   addresses,
+      //   emails,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'GovernmentAgency':
-      party = new GovernmentAgency({
-        assetManagerId: object.asset_manager_id,
-        partyId: object.party_id,
-        partyStatus: object.party_status,
-        partyClass: object.party_class,
-        partyType: object.party_type,
-        description: object.description,
-        addresses,
-        emails,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      party = new GovernmentAgency(Object.assign(object, { addresses, emails, references }))
+      // party = new GovernmentAgency({
+      //   assetManagerId: object.asset_manager_id,
+      //   partyId: object.party_id,
+      //   partyStatus: object.party_status,
+      //   partyClass: object.party_class,
+      //   partyType: object.party_type,
+      //   description: object.description,
+      //   addresses,
+      //   emails,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'Organisation':
-      party = new Organisation({
-        assetManagerId: object.asset_manager_id,
-        partyId: object.party_id,
-        partyStatus: object.party_status,
-        partyClass: object.party_class,
-        partyType: object.party_type,
-        description: object.description,
-        addresses,
-        emails,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      party = new Organisation(Object.assign(object, { addresses, emails, references }))
+      // party = new Organisation({
+      //   assetManagerId: object.asset_manager_id,
+      //   partyId: object.party_id,
+      //   partyStatus: object.party_status,
+      //   partyClass: object.party_class,
+      //   partyType: object.party_type,
+      //   description: object.description,
+      //   addresses,
+      //   emails,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     case 'Company':
-      party = new Company({
-        assetManagerId: object.asset_manager_id,
-        partyId: object.party_id,
-        partyStatus: object.party_status,
-        partyClass: object.party_class,
-        partyType: object.party_type,
-        description: object.description,
-        addresses,
-        emails,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      party = new Company(Object.assign(object, { addresses, emails, references }))
+      // party = new Company({
+      //   assetManagerId: object.asset_manager_id,
+      //   partyId: object.party_id,
+      //   partyStatus: object.party_status,
+      //   partyClass: object.party_class,
+      //   partyType: object.party_type,
+      //   description: object.description,
+      //   addresses,
+      //   emails,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
       break
     default:
-      party = new Party({
-        assetManagerId: object.asset_manager_id,
-        partyId: object.party_id,
-        partyStatus: object.party_status,
-        partyClass: object.party_class,
-        partyType: object.party_type,
-        description: object.description,
-        addresses,
-        emails,
-        references,
-        createdBy: object.created_by,
-        updatedBy: object.updated_by,
-        createdTime: object.created_time,
-        updatedTime: object.updated_time,
-        version: object.version
-      })
+      party = new Party(Object.assign(object, { addresses, emails, references }))
+      // party = new Party({
+      //   assetManagerId: object.asset_manager_id,
+      //   partyId: object.party_id,
+      //   partyStatus: object.party_status,
+      //   partyClass: object.party_class,
+      //   partyType: object.party_type,
+      //   description: object.description,
+      //   addresses,
+      //   emails,
+      //   references,
+      //   createdBy: object.created_by,
+      //   updatedBy: object.updated_by,
+      //   createdTime: object.created_time,
+      //   updatedTime: object.updated_time,
+      //   version: object.version
+      // })
   }
   return party
 }

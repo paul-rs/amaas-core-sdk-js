@@ -60,20 +60,6 @@ var Email = function (_AMaaSModel) {
   }
 
   _createClass(Email, [{
-    key: 'toJSON',
-    value: function toJSON() {
-      return {
-        email_primary: this.emailPrimary,
-        email: this.email,
-        active: this.active,
-        created_by: this.createdBy,
-        updated_by: this.updatedBy,
-        created_time: this.createdTime,
-        updated_time: this.updatedTime,
-        version: this.version
-      };
-    }
-  }, {
     key: 'active',
     set: function set(newActive) {
       switch (newActive) {
@@ -107,6 +93,22 @@ var Email = function (_AMaaSModel) {
     get: function get() {
       return this._emailPrimary;
     }
+
+    /*
+    toJSON() {
+      return {
+        email_primary: this.emailPrimary,
+        email: this.email,
+        active: this.active,
+        created_by: this.createdBy,
+        updated_by: this.updatedBy,
+        created_time: this.createdTime,
+        updated_time: this.updatedTime,
+        version: this.version
+      }
+    }
+    */
+
   }]);
 
   return Email;

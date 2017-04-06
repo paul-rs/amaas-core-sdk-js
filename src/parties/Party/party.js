@@ -145,6 +145,7 @@ class Party extends AMaaSModel {
     }
   }
 
+  /*
   toJSON() {
     return {
       asset_manager_id: this.assetManagerId,
@@ -163,6 +164,7 @@ class Party extends AMaaSModel {
       version: this.version
     }
   }
+  */
 }
 
 export default Party
