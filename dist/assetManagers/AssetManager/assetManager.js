@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _core = require('../../core');
 
+var _types = require('./types');
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -61,6 +63,23 @@ var AssetManager = function (_AMaaSModel) {
       version: version
     }));
 
+    Object.defineProperties(_this, {
+      _assetManagerType: { writable: true, enumerable: false },
+      assetManagerType: {
+        get: function get() {
+          return _this._assetManagerType;
+        },
+        set: function set(newAssetManagerType) {
+          if (newAssetManagerType) {
+            if (_types.AssetManagerTypes.indexOf(newAssetManagerType) == -1) {
+              throw new Error('Invalid Asset Manager Type');
+            } else {
+              _this._assetManagerType = newAssetManagerType;
+            }
+          }
+        }
+      }
+    });
     _this.assetManagerId = assetManagerId;
     _this.assetManagerType = assetManagerType;
     _this.assetManagerStatus = assetManagerStatus;
@@ -71,27 +90,6 @@ var AssetManager = function (_AMaaSModel) {
     _this.defaultBookCloseTime = defaultBookCloseTime;
     return _this;
   }
-
-  /*
-  toJSON() {
-    return {
-      asset_manager_id: this.assetManagerId,
-      asset_manager_type: this.assetManagerType,
-      asset_manager_status: this.assetManagerStatus,
-      client_id: this.clientId,
-      party_id: this.partyId,
-      default_book_owner_id: this.defaultBookOwnerId,
-      default_timezone: this.defaultTimezone,
-      default_book_close_time: this.defaultBookCloseTime,
-      created_by: this.createdBy,
-      updated_by: this.updatedBy,
-      created_time: this.createdTime,
-      updated_time: this.updatedTime,
-      version: this.version
-    }
-  }
-  */
-
 
   return AssetManager;
 }(_core.AMaaSModel);

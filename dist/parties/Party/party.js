@@ -127,7 +127,7 @@ var Party = function (_AMaaSModel) {
           } else {
             this._addresses = {};
           }
-        }
+        }, enumerable: true
       }
     });
     _this.assetManagerId = assetManagerId;
