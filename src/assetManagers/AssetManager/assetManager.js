@@ -1,4 +1,5 @@
 import { AMaaSModel } from '../../core'
+import { AssetManagerTypes } from './types'
 
 /**
  * Class representing an Asset Manager
@@ -30,6 +31,21 @@ class AssetManager extends AMaaSModel {
       updatedTime,
       version
     })
+    Object.defineProperties(this, {
+      _assetManagerType: { writable: true, enumerable: false },
+      assetManagerType: {
+        get: () => this._assetManagerType,
+        set: (newAssetManagerType) => {
+          if (newAssetManagerType) {
+            if (AssetManagerTypes.indexOf(newAssetManagerType) == -1) {
+              throw new Error('Invalid Asset Manager Type')
+            } else {
+              this._assetManagerType = newAssetManagerType
+            }
+          }
+        }
+      }
+    })
     this.assetManagerId = assetManagerId
     this.assetManagerType = assetManagerType
     this.assetManagerStatus = assetManagerStatus
@@ -39,26 +55,6 @@ class AssetManager extends AMaaSModel {
     this.defaultTimezone = defaultTimezone
     this.defaultBookCloseTime = defaultBookCloseTime
   }
-
-  /*
-  toJSON() {
-    return {
-      asset_manager_id: this.assetManagerId,
-      asset_manager_type: this.assetManagerType,
-      asset_manager_status: this.assetManagerStatus,
-      client_id: this.clientId,
-      party_id: this.partyId,
-      default_book_owner_id: this.defaultBookOwnerId,
-      default_timezone: this.defaultTimezone,
-      default_book_close_time: this.defaultBookCloseTime,
-      created_by: this.createdBy,
-      updated_by: this.updatedBy,
-      created_time: this.createdTime,
-      updated_time: this.updatedTime,
-      version: this.version
-    }
-  }
-  */
 }
 
 export default AssetManager
