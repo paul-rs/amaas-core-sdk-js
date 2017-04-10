@@ -81,7 +81,7 @@ class Party extends AMaaSModel {
           } else {
             this._addresses = {}
           }
-        }
+        }, enumerable: true
       }
     })
     this.assetManagerId = assetManagerId
