@@ -43,7 +43,7 @@ class AssetManager extends AMaaSModel {
               this._assetManagerType = newAssetManagerType
             }
           }
-        }
+        }, enumerable: true
       }
     })
     this.assetManagerId = assetManagerId

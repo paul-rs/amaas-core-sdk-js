@@ -77,7 +77,7 @@ var AssetManager = function (_AMaaSModel) {
               _this._assetManagerType = newAssetManagerType;
             }
           }
-        }
+        }, enumerable: true
       }
     });
     _this.assetManagerId = assetManagerId;
