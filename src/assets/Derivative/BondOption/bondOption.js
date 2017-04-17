@@ -1,4 +1,7 @@
+import { Decimal } from 'decimal.js'
+
 import Derivative from '../Derivative/derivative.js'
+import { OPTION_STYLES, OPTION_TYPES } from '../../enums'
 
 class BondOption extends Derivative {
   constructor({
@@ -53,10 +56,46 @@ class BondOption extends Derivative {
       updatedTime,
       version
     })
+    Object.defineProperties(this, {
+      _optionType: { writable: true, enumerable: false },
+      optionType: {
+        get: () => this._optionType,
+        set: (newOptionType) => {
+          if (OPTION_TYPES.indexOf(newOptionType) === -1) {
+            throw new Error(`Invalid Option Type: ${newOptionType}`)
+          }
+          this._optionType = newOptionType
+        },
+        enumerable: true
+      },
+      _optionStyle: { writable: true, enumerable: false },
+      optionStyle: {
+        get: () => this._optionStyle,
+        set: (newOptionStyle) => {
+          if (OPTION_STYLES.indexOf(newOptionStyle) === -1) {
+            throw new Error(`Invalid Option Style: ${newOptionStyle}`)
+          }
+          this._optionStyle = newOptionStyle
+        },
+        enumerable: true
+      },
+      _strike: { writable: true, enumerable: false },
+      strike: {
+        get: () => this._strike,
+        set: (newStrike) => {
+          if (!newStrike) {
+            this._strike = new Decimal(0)
+          } else {
+            this._strike = new Decimal(newStrike)
+          }
+        },
+        enumerable: true
+      }
+    })
+    this.optionStyle = optionStyle
     this.optionType = optionType
     this.strike = strike
     this.underlyingAssetId = underlyingAssetId
-    this.optionStyle = optionStyle
   }
 }
 
