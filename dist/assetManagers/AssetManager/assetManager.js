@@ -41,11 +41,13 @@ var AssetManager = function (_AMaaSModel) {
   function AssetManager(_ref) {
     var assetManagerId = _ref.assetManagerId,
         assetManagerType = _ref.assetManagerType,
-        assetManagerStatus = _ref.assetManagerStatus,
+        _ref$assetManagerStat = _ref.assetManagerStatus,
+        assetManagerStatus = _ref$assetManagerStat === undefined ? 'Active' : _ref$assetManagerStat,
         clientId = _ref.clientId,
         partyId = _ref.partyId,
         defaultBookOwnerId = _ref.defaultBookOwnerId,
-        defaultTimezone = _ref.defaultTimezone,
+        _ref$defaultTimezone = _ref.defaultTimezone,
+        defaultTimezone = _ref$defaultTimezone === undefined ? 'UTC' : _ref$defaultTimezone,
         defaultBookCloseTime = _ref.defaultBookCloseTime,
         createdBy = _ref.createdBy,
         updatedBy = _ref.updatedBy,
@@ -83,7 +85,6 @@ var AssetManager = function (_AMaaSModel) {
     _this.assetManagerId = assetManagerId;
     _this.assetManagerType = assetManagerType;
     _this.assetManagerStatus = assetManagerStatus;
-    _this.clientId = clientId;
     _this.partyId = partyId;
     _this.defaultBookOwnerId = defaultBookOwnerId;
     _this.defaultTimezone = defaultTimezone;

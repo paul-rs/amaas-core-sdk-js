@@ -6,6 +6,16 @@ Object.defineProperty(exports, "__esModule", {
 
 var _core = require('../../core');
 
+var _Comment = require('../../children/Comment');
+
+var _Comment2 = _interopRequireDefault(_Comment);
+
+var _Link = require('../../children/Link');
+
+var _Link2 = _interopRequireDefault(_Link);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -41,23 +51,24 @@ var Asset = function (_AMaaSModel) {
   */
   function Asset(_ref) {
     var assetManagerId = _ref.assetManagerId,
-        fungible = _ref.fungible,
-        assetIssuerId = _ref.assetIssuerId,
         assetId = _ref.assetId,
         _ref$assetClass = _ref.assetClass,
         assetClass = _ref$assetClass === undefined ? 'Asset' : _ref$assetClass,
-        _ref$assetType = _ref.assetType,
-        assetType = _ref$assetType === undefined ? 'Asset' : _ref$assetType,
+        fungible = _ref.fungible,
+        assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
         assetStatus = _ref$assetStatus === undefined ? 'Active' : _ref$assetStatus,
         countryId = _ref.countryId,
         venueId = _ref.venueId,
+        currency = _ref.currency,
+        issueDate = _ref.issueDate,
         maturityDate = _ref.maturityDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
         clientId = _ref.clientId,
-        _ref$references = _ref.references,
-        references = _ref$references === undefined ? {} : _ref$references,
+        comments = _ref.comments,
+        links = _ref.links,
+        references = _ref.references,
         createdBy = _ref.createdBy,
         updatedBy = _ref.updatedBy,
         createdTime = _ref.createdTime,
@@ -74,48 +85,121 @@ var Asset = function (_AMaaSModel) {
       version: version
     }));
 
+    Object.defineProperties(_this, {
+      _issueDate: { writable: true, enumerable: false },
+      issueDate: {
+        get: function get() {
+          return _this._issueDate;
+        },
+        set: function set(newIssueDate) {
+          // Accepts string 'yyyy-mm-dd'
+          if (newIssueDate) {
+            var dArray = newIssueDate.split('-');
+            var date = new Date(dArray[0], dArray[1] - 1, dArray[2]);
+            _this._issueDate = date;
+          }
+        },
+        enumerable: true
+      },
+      _maturityDate: { writable: true, enumerable: false },
+      maturityDate: {
+        get: function get() {
+          return _this._maturityDate;
+        },
+        set: function set(newMaturityDate) {
+          // Accepts string 'yyyy-mm-dd'
+          if (newMaturityDate) {
+            var dArray = newMaturityDate.split('-');
+            var date = new Date(dArray[0], dArray[1] - 1, dArray[2]);
+            _this._maturityDate = date;
+          }
+        },
+        enumerable: true
+      },
+      _comments: { writable: true, enumerable: false },
+      comments: {
+        get: function get() {
+          return _this._comments;
+        },
+        set: function set(newComments) {
+          if (newComments) {
+            var commentsClass = {};
+            for (var name in newComments) {
+              if (newComments.hasOwnProperty(name)) {
+                commentsClass[name] = new _Comment2.default(newComments[name]);
+              }
+            }
+            _this._comments = commentsClass;
+          } else {
+            _this._comments = {};
+          }
+        },
+        enumerable: true
+      },
+      _links: { writable: true, enumerable: false },
+      links: {
+        get: function get() {
+          return _this._links;
+        },
+        set: function set(newLinks) {
+          if (newLinks) {
+            var linksClass = {};
+            for (var name in newLinks) {
+              if (newLinks.hasOwnProperty(name)) {
+                linksClass[name] = newLinks[name].map(function (link) {
+                  return new _Link2.default(link);
+                });
+              }
+            }
+            _this._links = linksClass;
+          } else {
+            _this._links = {};
+          }
+        }
+      },
+      _references: { writable: true, enumerable: false },
+      references: {
+        get: function get() {
+          return _this._references;
+        },
+        set: function set(newReferences) {
+          if (newReferences) {
+            var refClass = {
+              AMaaS: new _core.Reference({ referenceValue: assetId })
+            };
+            for (var name in newReferences) {
+              if (newReferences.hasOwnProperty(name)) {
+                refClass[name] = new _core.Reference(newReferences[name]);
+              }
+            }
+            _this._references = refClass;
+          } else {
+            _this._references = {
+              AMaaS: new _core.Reference({ referenceValue: assetId })
+            };
+          }
+        }, enumerable: true
+      }
+    });
+
     _this.assetManagerId = assetManagerId;
     _this.assetId = assetId;
     _this.assetClass = assetClass;
-    _this.assetType = assetType;
+    _this.assetType = _this.constructor.name;
     _this.fungible = fungible;
     _this.assetIssuerId = assetIssuerId;
     _this.assetStatus = assetStatus;
     _this.countryId = countryId;
     _this.venueId = venueId;
+    _this.issueDate = issueDate;
     _this.maturityDate = maturityDate;
     _this.description = description;
     _this.clientId = clientId;
+    _this.comments = comments;
+    _this.links = links;
     _this.references = references;
-    _this.references.AMaaS = new _core.Reference({ referenceValue: assetId });
     return _this;
   }
-
-  /*
-  toJSON() {
-    return {
-      asset_manager_id: this.assetManagerId,
-      fungible: this.fungible,
-      asset_issuer_id: this.assetIssuerId,
-      asset_id: this.assetId,
-      asset_class: this.assetClass,
-      asset_type: this.assetType,
-      asset_status: this.assetStatus,
-      country_id: this.countryId,
-      venue_id: this.venueId,
-      maturity_date: this.maturityDate,
-      description: this.description,
-      client_id: this.clientId,
-      references: this.references,
-      created_by: this.createdBy,
-      updated_by: this.updatedBy,
-      created_time: this.createdTime,
-      updated_time: this.updatedTime,
-      version: this.version
-    }
-  }
-  */
-
 
   return Asset;
 }(_core.AMaaSModel);
