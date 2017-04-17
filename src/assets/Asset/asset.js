@@ -48,7 +48,8 @@ class Asset extends AMaaSModel {
     updatedBy,
     createdTime,
     updatedTime,
-    version
+    version,
+    ...clientAdditional,
   }) {
     super({
       createdBy,

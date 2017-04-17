@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _decimal = require('decimal.js');
 
-var _derivative = require('../Derivative/derivative.js');
+var _future = require('../Future/future');
 
-var _derivative2 = _interopRequireDefault(_derivative);
+var _future2 = _interopRequireDefault(_future);
 
-var _enums = require('../../enums');
+var _enums = require('../../enums.js');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20,14 +20,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var BondOption = function (_Derivative) {
-  _inherits(BondOption, _Derivative);
+var FutureOption = function (_Future) {
+  _inherits(FutureOption, _Future);
 
-  function BondOption(_ref) {
+  function FutureOption(_ref) {
     var assetManagerId = _ref.assetManagerId,
         assetId = _ref.assetId,
         _ref$assetClass = _ref.assetClass,
-        assetClass = _ref$assetClass === undefined ? 'Derivative' : _ref$assetClass,
+        assetClass = _ref$assetClass === undefined ? 'FutureOption' : _ref$assetClass,
         fungible = _ref.fungible,
         assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
@@ -40,11 +40,16 @@ var BondOption = function (_Derivative) {
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
         clientId = _ref.clientId,
-        premium = _ref.premium,
-        optionType = _ref.optionType,
-        strike = _ref.strike,
+        settlementType = _ref.settlementType,
+        contractSize = _ref.contractSize,
+        pointValue = _ref.pointValue,
+        tickSize = _ref.tickSize,
+        quoteUnit = _ref.quoteUnit,
         underlyingAssetId = _ref.underlyingAssetId,
+        expiryDate = _ref.expiryDate,
+        optionType = _ref.optionType,
         optionStyle = _ref.optionStyle,
+        strike = _ref.strike,
         comments = _ref.comments,
         links = _ref.links,
         references = _ref.references,
@@ -54,9 +59,9 @@ var BondOption = function (_Derivative) {
         updatedTime = _ref.updatedTime,
         version = _ref.version;
 
-    _classCallCheck(this, BondOption);
+    _classCallCheck(this, FutureOption);
 
-    var _this = _possibleConstructorReturn(this, (BondOption.__proto__ || Object.getPrototypeOf(BondOption)).call(this, {
+    var _this = _possibleConstructorReturn(this, (FutureOption.__proto__ || Object.getPrototypeOf(FutureOption)).call(this, {
       assetManagerId: assetManagerId,
       assetId: assetId,
       assetClass: assetClass,
@@ -70,7 +75,13 @@ var BondOption = function (_Derivative) {
       maturityDate: maturityDate,
       description: description,
       clientId: clientId,
-      premium: premium,
+      settlementType: settlementType,
+      contractSize: contractSize,
+      pointValue: pointValue,
+      tickSize: tickSize,
+      quoteUnit: quoteUnit,
+      underlyingAssetId: underlyingAssetId,
+      expiryDate: expiryDate,
       comments: comments,
       links: links,
       references: references,
@@ -88,10 +99,12 @@ var BondOption = function (_Derivative) {
           return _this._optionType;
         },
         set: function set(newOptionType) {
-          if (_enums.OPTION_TYPES.indexOf(newOptionType) === -1) {
-            throw new Error('Invalid Option Type: ' + newOptionType);
+          if (newOptionType) {
+            if (_enums.OPTION_TYPES.indexOf(newOptionType) === -1) {
+              throw new Error('Invalid Option Type: ' + newOptionType);
+            }
+            _this._optionType = newOptionType;
           }
-          _this._optionType = newOptionType;
         },
         enumerable: true
       },
@@ -101,10 +114,12 @@ var BondOption = function (_Derivative) {
           return _this._optionStyle;
         },
         set: function set(newOptionStyle) {
-          if (_enums.OPTION_STYLES.indexOf(newOptionStyle) === -1) {
-            throw new Error('Invalid Option Style: ' + newOptionStyle);
+          if (newOptionStyle) {
+            if (_enums.OPTION_STYLES.indexOf(newOptionStyle) === -1) {
+              throw new Error('Invalid Option Style: ' + newOptionStyle);
+            }
+            _this._optionStyle = newOptionStyle;
           }
-          _this._optionStyle = newOptionStyle;
         },
         enumerable: true
       },
@@ -123,14 +138,13 @@ var BondOption = function (_Derivative) {
         enumerable: true
       }
     });
-    _this.optionStyle = optionStyle;
     _this.optionType = optionType;
+    _this.optionStyle = optionStyle;
     _this.strike = strike;
-    _this.underlyingAssetId = underlyingAssetId;
     return _this;
   }
 
-  return BondOption;
-}(_derivative2.default);
+  return FutureOption;
+}(_future2.default);
 
-exports.default = BondOption;
+exports.default = FutureOption;

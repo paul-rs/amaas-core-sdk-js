@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _decimal = require('decimal.js');
 
-var _derivative = require('../Derivative/derivative.js');
+var _asset = require('../../Asset/asset');
 
-var _derivative2 = _interopRequireDefault(_derivative);
+var _asset2 = _interopRequireDefault(_asset);
 
-var _enums = require('../../enums');
+var _enums = require('../../enums.js');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20,14 +20,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var BondOption = function (_Derivative) {
-  _inherits(BondOption, _Derivative);
+var Fund = function (_Asset) {
+  _inherits(Fund, _Asset);
 
-  function BondOption(_ref) {
+  function Fund(_ref) {
     var assetManagerId = _ref.assetManagerId,
         assetId = _ref.assetId,
         _ref$assetClass = _ref.assetClass,
-        assetClass = _ref$assetClass === undefined ? 'Derivative' : _ref$assetClass,
+        assetClass = _ref$assetClass === undefined ? 'Fund' : _ref$assetClass,
         fungible = _ref.fungible,
         assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
@@ -40,11 +40,11 @@ var BondOption = function (_Derivative) {
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
         clientId = _ref.clientId,
-        premium = _ref.premium,
-        optionType = _ref.optionType,
-        strike = _ref.strike,
-        underlyingAssetId = _ref.underlyingAssetId,
-        optionStyle = _ref.optionStyle,
+        fundType = _ref.fundType,
+        creationDate = _ref.creationDate,
+        nav = _ref.nav,
+        expenseRatio = _ref.expenseRatio,
+        netAssets = _ref.netAssets,
         comments = _ref.comments,
         links = _ref.links,
         references = _ref.references,
@@ -54,9 +54,9 @@ var BondOption = function (_Derivative) {
         updatedTime = _ref.updatedTime,
         version = _ref.version;
 
-    _classCallCheck(this, BondOption);
+    _classCallCheck(this, Fund);
 
-    var _this = _possibleConstructorReturn(this, (BondOption.__proto__ || Object.getPrototypeOf(BondOption)).call(this, {
+    var _this = _possibleConstructorReturn(this, (Fund.__proto__ || Object.getPrototypeOf(Fund)).call(this, {
       assetManagerId: assetManagerId,
       assetId: assetId,
       assetClass: assetClass,
@@ -70,7 +70,6 @@ var BondOption = function (_Derivative) {
       maturityDate: maturityDate,
       description: description,
       clientId: clientId,
-      premium: premium,
       comments: comments,
       links: links,
       references: references,
@@ -82,55 +81,73 @@ var BondOption = function (_Derivative) {
     }));
 
     Object.defineProperties(_this, {
-      _optionType: { writable: true, enumerable: false },
-      optionType: {
+      _creationDate: { writable: true, enumerable: false },
+      creationDate: {
         get: function get() {
-          return _this._optionType;
+          return _this._creationDate;
         },
-        set: function set(newOptionType) {
-          if (_enums.OPTION_TYPES.indexOf(newOptionType) === -1) {
-            throw new Error('Invalid Option Type: ' + newOptionType);
+        set: function set(newCreationDate) {
+          if (newCreationDate) {
+            var dArray = newCreationDate.split('-');
+            var date = new Date(dArray[0], dArray[1] - 1, dArray[2]);
+            _this._creationDate = date;
           }
-          _this._optionType = newOptionType;
         },
         enumerable: true
       },
-      _optionStyle: { writable: true, enumerable: false },
-      optionStyle: {
+      _fundType: { writable: true, enumerable: false },
+      fundType: {
         get: function get() {
-          return _this._optionStyle;
+          return _this._fundType;
         },
-        set: function set(newOptionStyle) {
-          if (_enums.OPTION_STYLES.indexOf(newOptionStyle) === -1) {
-            throw new Error('Invalid Option Style: ' + newOptionStyle);
+        set: function set(newFundType) {
+          if (newFundType) {
+            if (_enums.FUND_TYPES.indexOf(newFundType) === -1) {
+              throw new Error('Invalid Fund Type: ' + newFundType);
+            }
+            _this._fundType = fundType;
           }
-          _this._optionStyle = newOptionStyle;
         },
         enumerable: true
       },
-      _strike: { writable: true, enumerable: false },
-      strike: {
+      _expenseRatio: { writable: true, enumerable: false },
+      expenseRatio: {
         get: function get() {
-          return _this._strike;
+          return _this._expenseRatio;
         },
-        set: function set(newStrike) {
-          if (!newStrike) {
-            _this._strike = new _decimal.Decimal(0);
+        set: function set(newExpenseRatio) {
+          if (!newExpenseRatio) {
+            _this._expenseRatio = new _decimal.Decimal(0);
           } else {
-            _this._strike = new _decimal.Decimal(newStrike);
+            _this._expenseRatio = new _decimal.Decimal(newExpenseRatio);
+          }
+        },
+        enumerable: true
+      },
+      _nav: { writable: true, enumerable: false },
+      nav: {
+        get: function get() {
+          return _this._nav;
+        },
+        set: function set(newNav) {
+          if (!newNav) {
+            _this._nav = new _decimal.Decimal(0);
+          } else {
+            _this._nav = new _decimal.Decimal(newNav);
           }
         },
         enumerable: true
       }
     });
-    _this.optionStyle = optionStyle;
-    _this.optionType = optionType;
-    _this.strike = strike;
-    _this.underlyingAssetId = underlyingAssetId;
+    _this.fundType = fundType;
+    _this.creationDate = creationDate;
+    _this.nav = nav;
+    _this.expenseRatio = expenseRatio;
+    _this.netAssets = netAssets;
     return _this;
   }
 
-  return BondOption;
-}(_derivative2.default);
+  return Fund;
+}(_asset2.default);
 
-exports.default = BondOption;
+exports.default = Fund;

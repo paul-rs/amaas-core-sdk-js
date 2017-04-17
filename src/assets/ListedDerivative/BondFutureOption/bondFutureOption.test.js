@@ -1,28 +1,28 @@
 import { Decimal } from 'decimal.js'
 
-import ForeignExchangeOption from './foreignExchangeOption'
+import BondFutureOption from './bondFutureOption'
 
-describe('ForeignExchangeOption', () => {
+describe('BondFutureOption', () => {
   describe('constructor', () => {
     it('should catch attempts to write invalid option type', () => {
-      let fxOption
+      let bondFOption
       function construct() {
-        fxOption = new ForeignExchangeOption({ optionType: 'notAType', optionStyle: 'American' })
+        bondFOption = new BondFutureOption({ optionType: 'notAType', optionStyle: 'American' })
       }
       expect(construct).toThrowError('Invalid Option Type: notAType')
     })
 
     it('should catch attempts to write invalid option style', () => {
-      let fxOption
+      let bondFOption
       function construct() {
-        fxOption = new ForeignExchangeOption({ optionType: 'Put', optionStyle: 'notAType' })
+        bondFOption = new BondFutureOption({ optionType: 'Put', optionStyle: 'notAType' })
       }
       expect(construct).toThrowError('Invalid Option Style: notAType')
     })
 
     it('should set strike to a decimal', () => {
-      const fxOption = new ForeignExchangeOption({})
-      expect(fxOption.strike).toEqual(new Decimal(0))
+      const bondFOption = new BondFutureOption({})
+      expect(bondFOption.strike).toEqual(new Decimal(0))
     })
   })
 })
