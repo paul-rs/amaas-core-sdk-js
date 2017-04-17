@@ -1,0 +1,54 @@
+import Derivative from '../Derivative/derivative'
+
+class CFD extends Derivative {
+  constructor({
+    assetManagerId,
+    assetId,
+    assetClass='CFD',
+    fungible,
+    assetIssuerId,
+    assetStatus='Active',
+    countryId,
+    venueId,
+    currency,
+    issueDate,
+    maturityDate,
+    description='',
+    clientId,
+    premium,
+    comments,
+    links,
+    references,
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version
+  }) {
+    super({
+      assetManagerId,
+      assetId,
+      assetClass,
+      fungible,
+      assetIssuerId,
+      assetStatus,
+      countryId,
+      venueId,
+      currency,
+      issueDate,
+      maturityDate,
+      description,
+      clientId,
+      premium,
+      comments,
+      links,
+      references,
+      createdBy,
+      updatedBy,
+      createdTime,
+      updatedTime,
+      version
+    })
+  }
+}
+export default CFD
