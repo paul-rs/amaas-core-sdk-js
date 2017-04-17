@@ -4,7 +4,7 @@ describe('ETF class', () => {
   describe('constructor', () => {
     it('should set fundType to ETF', () => {
       const etf = new ExchangeTradedFund({})
-      console.log(etf.fundType)
+      expect(etf.fundType).toEqual('ETF')
     })
   })
 })
