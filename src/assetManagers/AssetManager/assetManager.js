@@ -23,7 +23,7 @@ class AssetManager extends AMaaSModel {
    * @param {date} params.updatedTime - Time that the Asset Manager was updated (required if amending existing Asset Manager)
    * @param {number} params.version - Version number of the Asset Manager
    */
-  constructor({ assetManagerId, assetManagerType, assetManagerStatus, clientId, partyId, defaultBookOwnerId, defaultTimezone, defaultBookCloseTime, createdBy, updatedBy, createdTime, updatedTime, version }) {
+  constructor({ assetManagerId, assetManagerType, assetManagerStatus='Active', clientId, partyId, defaultBookOwnerId, defaultTimezone='UTC', defaultBookCloseTime, createdBy, updatedBy, createdTime, updatedTime, version }) {
     super({
       createdBy,
       updatedBy,
@@ -49,7 +49,6 @@ class AssetManager extends AMaaSModel {
     this.assetManagerId = assetManagerId
     this.assetManagerType = assetManagerType
     this.assetManagerStatus = assetManagerStatus
-    this.clientId = clientId
     this.partyId = partyId
     this.defaultBookOwnerId = defaultBookOwnerId
     this.defaultTimezone = defaultTimezone

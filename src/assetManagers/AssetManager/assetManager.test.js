@@ -14,7 +14,6 @@ describe('AssetManager', () => {
         assetManagerId: 'testAMId',
         assetManagerType: 'Venture Capital',
         assetManagerStatus: 'testAMStatus',
-        clientId: 'testClientId',
         partyId: 'testPartyId',
         defaultBookOwnerId: 'testId',
         defaultTimezone: 'testTimezone',
@@ -23,7 +22,6 @@ describe('AssetManager', () => {
       expect(testAM.assetManagerId).toEqual('testAMId')
       expect(testAM.assetManagerType).toEqual('Venture Capital')
       expect(testAM.assetManagerStatus).toEqual('testAMStatus')
-      expect(testAM.clientId).toEqual('testClientId')
       expect(testAM.partyId).toEqual('testPartyId')
       expect(testAM.defaultBookOwnerId).toEqual('testId')
       expect(testAM.defaultTimezone).toEqual('testTimezone')
@@ -43,7 +41,7 @@ describe('AssetManager', () => {
         updatedBy: 'TEMP',
         version: 1
       }
-      expect(JSON.parse(JSON.stringify(testAM))).toEqual(expectedObj)
+      expect(JSON.parse(JSON.stringify(testAM))).toEqual(expect.objectContaining(expectedObj))
     })
   })
 })
