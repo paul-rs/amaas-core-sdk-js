@@ -21,26 +21,28 @@ var BondCorporate = function (_BondBase) {
 
   function BondCorporate(_ref) {
     var assetManagerId = _ref.assetManagerId,
-        fungible = _ref.fungible,
-        assetIssuerId = _ref.assetIssuerId,
         assetId = _ref.assetId,
         _ref$assetClass = _ref.assetClass,
         assetClass = _ref$assetClass === undefined ? 'Bond' : _ref$assetClass,
-        _ref$assetType = _ref.assetType,
-        assetType = _ref$assetType === undefined ? 'BondCorporate' : _ref$assetType,
+        fungible = _ref.fungible,
+        assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
         assetStatus = _ref$assetStatus === undefined ? 'Active' : _ref$assetStatus,
         countryId = _ref.countryId,
         venueId = _ref.venueId,
+        currency = _ref.currency,
+        issueDate = _ref.issueDate,
         maturityDate = _ref.maturityDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
         clientId = _ref.clientId,
-        issueDate = _ref.issueDate,
         coupon = _ref.coupon,
         par = _ref.par,
-        _ref$references = _ref.references,
-        references = _ref$references === undefined ? {} : _ref$references,
+        payFrequency = _ref.payFrequency,
+        defaulted = _ref.defaulted,
+        comments = _ref.comments,
+        links = _ref.links,
+        references = _ref.references,
         createdBy = _ref.createdBy,
         updatedBy = _ref.updatedBy,
         createdTime = _ref.createdTime,
@@ -51,20 +53,24 @@ var BondCorporate = function (_BondBase) {
 
     return _possibleConstructorReturn(this, (BondCorporate.__proto__ || Object.getPrototypeOf(BondCorporate)).call(this, {
       assetManagerId: assetManagerId,
-      fungible: fungible,
-      assetIssuerId: assetIssuerId,
       assetId: assetId,
       assetClass: assetClass,
-      assetType: assetType,
+      fungible: fungible,
+      assetIssuerId: assetIssuerId,
       assetStatus: assetStatus,
       countryId: countryId,
       venueId: venueId,
+      currency: currency,
+      issueDate: issueDate,
       maturityDate: maturityDate,
       description: description,
       clientId: clientId,
-      issueDate: issueDate,
       coupon: coupon,
       par: par,
+      payFrequency: payFrequency,
+      defaulted: defaulted,
+      comments: comments,
+      links: links,
       references: references,
       createdBy: createdBy,
       updatedBy: updatedBy,
@@ -73,35 +79,6 @@ var BondCorporate = function (_BondBase) {
       version: version
     }));
   }
-
-  /*
-  toJSON() {
-    return {
-      asset_manager_id: this.assetManagerId,
-      fungible: this.fungible,
-      asset_issuer_id: this.assetIssuerId,
-      asset_id: this.assetId,
-      asset_class: this.assetClass,
-      asset_type: this.assetType,
-      asset_status: this.assetStatus,
-      country_id: this.countryId,
-      venue_id: this.venueId,
-      maturity_date: this.maturityDate,
-      description: this.description,
-      client_id: this.clientId,
-      issue_date: this.issueDate,
-      coupon: this.coupon,
-      par: this.par,
-      references: this.references,
-      created_by: this.createdBy,
-      updated_by: this.updatedBy,
-      created_time: this.createdTime,
-      updated_time: this.updatedTime,
-      version: this.version
-    }
-  }
-  */
-
 
   return BondCorporate;
 }(_bond2.default);

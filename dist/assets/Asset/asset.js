@@ -191,6 +191,7 @@ var Asset = function (_AMaaSModel) {
     _this.assetStatus = assetStatus;
     _this.countryId = countryId;
     _this.venueId = venueId;
+    _this.currency = currency;
     _this.issueDate = issueDate;
     _this.maturityDate = maturityDate;
     _this.description = description;

@@ -8,4 +8,15 @@ describe('FXBase', () => {
       expect(JSON.parse(JSON.stringify(test)).assetStatus).toEqual('Active')
     })
   })
+
+  describe('class methods', () => {
+    let fx
+    beforeAll(() => {
+      fx = new FXBase({ assetId: 'EURUSD' })
+    })
+    it('getBaseCurrency should return base currency', () => {
+      expect(fx.getBaseCurrency()).toEqual('EUR')
+      expect(fx.getCounterCurrency()).toEqual('USD')
+    })
+  })
 })

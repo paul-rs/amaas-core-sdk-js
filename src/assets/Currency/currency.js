@@ -3,19 +3,23 @@ import Asset from '../Asset/asset.js'
 class Currency extends Asset {
   constructor({
     assetManagerId,
+    assetId,
+    assetClass='Currency',
     fungible,
     assetIssuerId,
-    assetId,
-    assetClass='Asset',
-    assetType='Currency',
     assetStatus='Active',
     countryId,
     venueId,
+    currency,
+    issueDate,
     maturityDate,
     description='',
     clientId,
     deliverable,
-    references={},
+    minorUnitPlaces,
+    comments,
+    links,
+    references,
     createdBy,
     updatedBy,
     createdTime,
@@ -24,17 +28,20 @@ class Currency extends Asset {
   }) {
     super({
       assetManagerId,
-      fungible,
-      assetIssuerId,
       assetId,
       assetClass,
-      assetType,
+      fungible,
+      assetIssuerId,
       assetStatus,
       countryId,
       venueId,
+      currency,
+      issueDate,
       maturityDate,
       description,
       clientId,
+      comments,
+      links,
       references,
       createdBy,
       updatedBy,
@@ -42,34 +49,9 @@ class Currency extends Asset {
       updatedTime,
       version
     })
-    this.deliverable = deliverable
+    this.deliverable = deliverable === false ? false : true // Default to true
+    this.minorUnitPlaces = minorUnitPlaces
   }
-
-  /*
-  toJSON() {
-    return {
-      asset_manager_id: this.assetManagerId,
-      fungible: this.fungible,
-      asset_issuer_id: this.assetIssuerId,
-      asset_id: this.assetId,
-      asset_class: this.assetClass,
-      asset_type: this.assetType,
-      asset_status: this.assetStatus,
-      country_id: this.countryId,
-      venue_id: this.venueId,
-      maturity_date: this.maturityDate,
-      description: this.description,
-      client_id: this.clientId,
-      deliverable: this.deliverable,
-      references: this.references,
-      created_by: this.createdBy,
-      updated_by: this.updatedBy,
-      created_time: this.createdTime,
-      updated_time: this.updatedTime,
-      version: this.version
-    }
-  }
-  */
 }
 
 export default Currency

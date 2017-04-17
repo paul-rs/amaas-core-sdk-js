@@ -97,7 +97,6 @@ class BondBase extends Asset {
         }, enumerable: true
       }
     })
-    this.currency = currency
     this.defaulted = defaulted === true ? true : false // Default to false
     this.coupon = coupon
     this.par = par

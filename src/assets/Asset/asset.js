@@ -154,6 +154,7 @@ class Asset extends AMaaSModel {
     this.assetStatus = assetStatus
     this.countryId = countryId
     this.venueId = venueId
+    this.currency = currency
     this.issueDate = issueDate
     this.maturityDate = maturityDate
     this.description = description

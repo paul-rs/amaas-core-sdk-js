@@ -3,18 +3,21 @@ import Asset from '../../Asset/asset.js'
 class FXBase extends Asset {
   constructor({
     assetManagerId,
-    fungible,
-    assetIssuerId,
     assetId,
     assetClass='ForeignExchange',
-    assetType='ForeignExchange',
+    fungible,
+    assetIssuerId,
     assetStatus='Active',
     countryId,
     venueId,
+    currency,
+    issueDate,
     maturityDate,
     description='',
     clientId,
-    references={},
+    comments,
+    links,
+    references,
     createdBy,
     updatedBy,
     createdTime,
@@ -23,17 +26,20 @@ class FXBase extends Asset {
   }) {
     super({
       assetManagerId,
-      fungible,
-      assetIssuerId,
       assetId,
       assetClass,
-      assetType,
+      fungible,
+      assetIssuerId,
       assetStatus,
       countryId,
       venueId,
+      currency,
+      issueDate,
       maturityDate,
       description,
       clientId,
+      comments,
+      links,
       references,
       createdBy,
       updatedBy,
@@ -50,31 +56,6 @@ class FXBase extends Asset {
   getCounterCurrency() {
     return this.assetId.slice(3,7)
   }
-
-  /*
-  toJSON() {
-    return {
-      asset_manager_id: this.assetManagerId,
-      fungible: this.fungible,
-      asset_issuer_id: this.assetIssuerId,
-      asset_id: this.assetId,
-      asset_class: this.assetClass,
-      asset_type: this.assetType,
-      asset_status: this.assetStatus,
-      country_id: this.countryId,
-      venue_id: this.venueId,
-      maturity_date: this.maturityDate,
-      description: this.description,
-      client_id: this.clientId,
-      references: this.references,
-      created_by: this.createdBy,
-      updated_by: this.updatedBy,
-      created_time: this.createdTime,
-      updated_time: this.updatedTime,
-      version: this.version
-    }
-  }
-  */
 }
 
 export default FXBase

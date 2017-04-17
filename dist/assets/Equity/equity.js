@@ -21,23 +21,26 @@ var Equity = function (_Asset) {
 
   function Equity(_ref) {
     var assetManagerId = _ref.assetManagerId,
-        fungible = _ref.fungible,
-        assetIssuerId = _ref.assetIssuerId,
         assetId = _ref.assetId,
         _ref$assetClass = _ref.assetClass,
-        assetClass = _ref$assetClass === undefined ? 'Asset' : _ref$assetClass,
-        _ref$assetType = _ref.assetType,
-        assetType = _ref$assetType === undefined ? 'Equity' : _ref$assetType,
+        assetClass = _ref$assetClass === undefined ? 'Equity' : _ref$assetClass,
+        fungible = _ref.fungible,
+        assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
         assetStatus = _ref$assetStatus === undefined ? 'Active' : _ref$assetStatus,
         countryId = _ref.countryId,
         venueId = _ref.venueId,
+        currency = _ref.currency,
+        issueDate = _ref.issueDate,
         maturityDate = _ref.maturityDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
         clientId = _ref.clientId,
-        _ref$references = _ref.references,
-        references = _ref$references === undefined ? {} : _ref$references,
+        _ref$shareClass = _ref.shareClass,
+        shareClass = _ref$shareClass === undefined ? 'Common' : _ref$shareClass,
+        comments = _ref.comments,
+        links = _ref.links,
+        references = _ref.references,
         createdBy = _ref.createdBy,
         updatedBy = _ref.updatedBy,
         createdTime = _ref.createdTime,
@@ -46,19 +49,22 @@ var Equity = function (_Asset) {
 
     _classCallCheck(this, Equity);
 
-    return _possibleConstructorReturn(this, (Equity.__proto__ || Object.getPrototypeOf(Equity)).call(this, {
+    var _this = _possibleConstructorReturn(this, (Equity.__proto__ || Object.getPrototypeOf(Equity)).call(this, {
       assetManagerId: assetManagerId,
-      fungible: fungible,
-      assetIssuerId: assetIssuerId,
       assetId: assetId,
       assetClass: assetClass,
-      assetType: assetType,
+      fungible: fungible,
+      assetIssuerId: assetIssuerId,
       assetStatus: assetStatus,
       countryId: countryId,
       venueId: venueId,
+      currency: currency,
+      issueDate: issueDate,
       maturityDate: maturityDate,
       description: description,
       clientId: clientId,
+      comments: comments,
+      links: links,
       references: references,
       createdBy: createdBy,
       updatedBy: updatedBy,
@@ -66,33 +72,10 @@ var Equity = function (_Asset) {
       updatedTime: updatedTime,
       version: version
     }));
-  }
 
-  /*
-  toJSON() {
-    return {
-      asset_manager_id: this.assetManagerId,
-      fungible: this.fungible,
-      asset_issuer_id: this.assetIssuerId,
-      asset_id: this.assetId,
-      asset_class: this.assetClass,
-      asset_type: this.assetType,
-      asset_status: this.assetStatus,
-      country_id: this.countryId,
-      venue_id: this.venueId,
-      maturity_date: this.maturityDate,
-      description: this.description,
-      client_id: this.clientId,
-      references: this.references,
-      created_by: this.createdBy,
-      updated_by: this.updatedBy,
-      created_time: this.createdTime,
-      updated_time: this.updatedTime,
-      version: this.version
-    }
+    _this.shareClass = shareClass;
+    return _this;
   }
-  */
-
 
   return Equity;
 }(_asset2.default);

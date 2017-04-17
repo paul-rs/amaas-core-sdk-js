@@ -23,23 +23,24 @@ var FXBase = function (_Asset) {
 
   function FXBase(_ref) {
     var assetManagerId = _ref.assetManagerId,
-        fungible = _ref.fungible,
-        assetIssuerId = _ref.assetIssuerId,
         assetId = _ref.assetId,
         _ref$assetClass = _ref.assetClass,
         assetClass = _ref$assetClass === undefined ? 'ForeignExchange' : _ref$assetClass,
-        _ref$assetType = _ref.assetType,
-        assetType = _ref$assetType === undefined ? 'ForeignExchange' : _ref$assetType,
+        fungible = _ref.fungible,
+        assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
         assetStatus = _ref$assetStatus === undefined ? 'Active' : _ref$assetStatus,
         countryId = _ref.countryId,
         venueId = _ref.venueId,
+        currency = _ref.currency,
+        issueDate = _ref.issueDate,
         maturityDate = _ref.maturityDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
         clientId = _ref.clientId,
-        _ref$references = _ref.references,
-        references = _ref$references === undefined ? {} : _ref$references,
+        comments = _ref.comments,
+        links = _ref.links,
+        references = _ref.references,
         createdBy = _ref.createdBy,
         updatedBy = _ref.updatedBy,
         createdTime = _ref.createdTime,
@@ -50,17 +51,20 @@ var FXBase = function (_Asset) {
 
     return _possibleConstructorReturn(this, (FXBase.__proto__ || Object.getPrototypeOf(FXBase)).call(this, {
       assetManagerId: assetManagerId,
-      fungible: fungible,
-      assetIssuerId: assetIssuerId,
       assetId: assetId,
       assetClass: assetClass,
-      assetType: assetType,
+      fungible: fungible,
+      assetIssuerId: assetIssuerId,
       assetStatus: assetStatus,
       countryId: countryId,
       venueId: venueId,
+      currency: currency,
+      issueDate: issueDate,
       maturityDate: maturityDate,
       description: description,
       clientId: clientId,
+      comments: comments,
+      links: links,
       references: references,
       createdBy: createdBy,
       updatedBy: updatedBy,
@@ -80,32 +84,6 @@ var FXBase = function (_Asset) {
     value: function getCounterCurrency() {
       return this.assetId.slice(3, 7);
     }
-
-    /*
-    toJSON() {
-      return {
-        asset_manager_id: this.assetManagerId,
-        fungible: this.fungible,
-        asset_issuer_id: this.assetIssuerId,
-        asset_id: this.assetId,
-        asset_class: this.assetClass,
-        asset_type: this.assetType,
-        asset_status: this.assetStatus,
-        country_id: this.countryId,
-        venue_id: this.venueId,
-        maturity_date: this.maturityDate,
-        description: this.description,
-        client_id: this.clientId,
-        references: this.references,
-        created_by: this.createdBy,
-        updated_by: this.updatedBy,
-        created_time: this.createdTime,
-        updated_time: this.updatedTime,
-        version: this.version
-      }
-    }
-    */
-
   }]);
 
   return FXBase;
