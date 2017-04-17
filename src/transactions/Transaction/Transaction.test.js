@@ -1,5 +1,5 @@
 import Transaction from './Transaction.js'
-import Charge from '../Charge/Charge.js'
+import Charge from '../../children/Charge'
 
 const Decimal = require('decimal.js')
 
