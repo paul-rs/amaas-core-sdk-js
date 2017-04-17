@@ -13,35 +13,45 @@ class BondBase extends Asset {
    * @param {object} params - BondBase creation options
    * @param {string} params.assetManagerId - ID of Bond's Asset Manager
    * @param {string} params.assetId - ID of asset
-   * @param {date} params.maturityDate - Date of Bond's maturity
-   * @param {decimal} params.coupon - The Bond's coupon (represented as a fraction of 1 i.e. 0.05 = 5%)
-   * @param {decimal} params.par - The Bond's par
+   * @param {string} params.assetClass - Class of Asset. This should always be 'Bond'
+   * @param {boolean} params.fungible - Whether this Bond is fungible
    * @param {string} params.assetIssuerId - ID of the Bond Issuer
    * @param {string} params.assetStatus - Status of the Bond
-   * @param {string} params.description - Description of the Bond
    * @param {string} params.countryId - ID of the Bond's origin country
    * @param {string} params.venueId - ID of the Bond's venue
+   * @param {string} params.currency - Currency denomination of the Bond
+   * @param {string} params.issueDate - The date that the Bond was issued
+   * @param {string} params.maturityDate - Date of Bond's maturity
+   * @param {string} params.description - Description of the Bond
    * @param {string} params.clientId - ID of the client
-   * @param {date} params.issueDate - Date of Bond issue
+   * @param {decimal} params.coupon - The Bond's coupon (represented as a fraction of 1 i.e. 0.05 = 5%)
+   * @param {decimal} params.par - The Bond's par
+   * @param {???} payFrequency - ???
+   * @param {object} params.comments - Object of comments for the Bond. { name: string: comment: Comment }
+   * @param {object} params.links - Object of links for the Bond. { name: string: link: Link[] }
    * @param {object} params.references - Object of references for the Bond
   */
   constructor({
     assetManagerId,
-    fungible,
-    assetIssuerId,
     assetId,
     assetClass='Bond',
-    assetType='Bond',
+    fungible,
+    assetIssuerId,
     assetStatus='Active',
     countryId,
     venueId,
+    currency,
+    issueDate,
     maturityDate,
     description='',
     clientId,
-    issueDate,
     coupon,
     par,
-    references={},
+    payFrequency,
+    defaulted,
+    comments,
+    links,
+    references,
     createdBy,
     updatedBy,
     createdTime,
@@ -50,17 +60,20 @@ class BondBase extends Asset {
   }) {
     super({
       assetManagerId,
-      fungible,
-      assetIssuerId,
       assetId,
       assetClass,
-      assetType,
+      fungible,
+      assetIssuerId,
       assetStatus,
       countryId,
       venueId,
+      currency,
+      issueDate,
       maturityDate,
       description,
       clientId,
+      comments,
+      links,
       references,
       createdBy,
       updatedBy,
@@ -69,142 +82,27 @@ class BondBase extends Asset {
       version
     })
     Object.defineProperties(this, {
-      _cooupon: { writable: true, enumerable: false },
+      _coupon: { writable: true, enumerable: false },
       coupon: {
-        get: function() { return this._coupon },
-        set: function(newCoupon) {
-          switch (newCoupon) {
-            case 0:
-              this._coupon = new Decimal(0)
-              break
-            case undefined:
-              this._coupoon = undefined
-              break
-            default:
-              this._coupon = new Decimal(newCoupon)
-          }
+        get: () => this._coupon,
+        set: (newCoupon) => {
+          this._coupon = newCoupon ? new Decimal(newCoupon) : new Decimal(0)
         }, enumerable: true
       },
       _par: { writable: true, enumerable: false },
       par: {
-        get: function() { return this._par },
-        set: function(newPar) {
-          switch (newPar) {
-            case 0:
-              this._par = new Decimal(0)
-              break
-            case undefined:
-              this._par = undefined
-              break
-            default:
-              this._par = new Decimal(newPar)
-          }
-        }, enumerable: true
-      },
-      _defaulted: { writable: true, enumerable: false },
-      defaulted: {
-        get: function() { return this._defaulted },
-        set: function(newDefaulted) {
-          switch (newDefaulted) {
-            case false:
-              this._defaulted = false
-              break
-            case undefined:
-              this._defaulted = undefined
-              break
-            default:
-              this._defaulted = newDefaulted
-          }
+        get: () => this._par,
+        set: (newPar) => {
+          this._par = newPar ? new Decimal(newPar) : new Decimal(0)
         }, enumerable: true
       }
     })
-    this.issueDate = issueDate
+    this.currency = currency
+    this.defaulted = defaulted === true ? true : false // Default to false
     this.coupon = coupon
     this.par = par
+    this.payFrequency = payFrequency
   }
-
-  // set coupon(newCoupon) {
-  //   switch (newCoupon) {
-  //     case 0:
-  //       this._coupon = new Decimal(0)
-  //       break
-  //     case undefined:
-  //       this._coupoon = undefined
-  //       break
-  //     default:
-  //       this._coupon = new Decimal(newCoupon)
-  //   }
-  // }
-  //
-  // get coupon() {
-  //   return this._coupon
-  // }
-
-  // set par(newPar) {
-  //   switch (newPar) {
-  //     case 0:
-  //       this._par = new Decimal(0)
-  //       break
-  //     case undefined:
-  //       this._par = undefined
-  //       break
-  //     default:
-  //       this._par = new Decimal(newPar)
-  //   }
-  // }
-  //
-  // get par() {
-  //   return this._par
-  // }
-  //
-  // set defaulted(newDefaulted) {
-  //   switch (newDefaulted) {
-  //     case false:
-  //       this._defaulted = false
-  //       break
-  //     case undefined:
-  //       this._defaulted = undefined
-  //       break
-  //     default:
-  //       this._defaulted = newDefaulted
-  //   }
-  // }
-  //
-  // get defaulted() {
-  //   return this._defaulted
-  // }
-
-
-  // toJSON() {
-  //   return Object.assign({}, {
-  //     par: this.par,
-  //     coupon: this.coupon,
-  //     defaulted: this.defaulted
-  //   }, this)
-    // return {
-    //   asset_manager_id: this.assetManagerId,
-    //   fungible: this.fungible,
-    //   asset_issuer_id: this.assetIssuerId,
-    //   asset_id: this.assetId,
-    //   asset_class: this.assetClass,
-    //   asset_type: this.assetType,
-    //   asset_status: this.assetStatus,
-    //   country_id: this.countryId,
-    //   venue_id: this.venueId,
-    //   maturity_date: this.maturityDate,
-    //   description: this.description,
-    //   client_id: this.clientId,
-    //   issue_date: this.issueDate,
-    //   coupon: this.coupon,
-    //   par: this.par,
-    //   references: this.references,
-    //   created_by: this.createdBy,
-    //   updated_by: this.updatedBy,
-    //   created_time: this.createdTime,
-    //   updated_time: this.updatedTime,
-    //   version: this.version
-    // }
-  // }
 
 }
 
