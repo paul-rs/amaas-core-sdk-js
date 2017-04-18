@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _company = require('../Company/company.js');
+var _company = require('../Company/company');
 
 var _company2 = _interopRequireDefault(_company);
 
@@ -16,32 +16,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/**
- * Class representing an Exchange
- * @extends Company
- */
-var Exchange = function (_Company) {
-  _inherits(Exchange, _Company);
+var AssetManager = function (_Company) {
+  _inherits(AssetManager, _Company);
 
-  /**
-   * Construct a new Exchange object
-   * @param {object} params - Exchange creation options
-   * @param {number} params.assetManagerId - Asset Manager ID of the Exchange
-   * @param {string} params.partyId - Party ID of the Exchange
-   * @param {string} params.partyStatus=Active - Status of the Exchange (e.g. 'Active')
-   * @param {string} params.partyClass=Company - Class of the Exchange
-   * @param {string} params.partyType=Exchange - Class of the Exchange
-   * @param {string} params.description - Description of the Exchange
-   * @param {object} params.addresses - Object of Addresses associated with this Exchange
-   * @param (object) params.emails - Object of Emails associated with this Exchange
-   * @param {object} params.references - Object of References associated with this Exchange
-   * @param {string} params.createdBy - ID of the user that created the Exchange (required if creating a new Exchange)
-   * @param {string} params.updatedBy - ID of the user that updated the Exchange (use if amending existing Exchange)
-   * @param {date} params.createdTime - Time that the Exchange was created (required if creating new Exchange)
-   * @param {date} params.updatedTime - Time that the Exchange was updated (required if amending existing Exchange)
-   * @param {number} params.version - Version number of the Exchange
-   */
-  function Exchange(_ref) {
+  function AssetManager(_ref) {
     var assetManagerId = _ref.assetManagerId,
         partyId = _ref.partyId,
         _ref$partyStatus = _ref.partyStatus,
@@ -65,9 +43,9 @@ var Exchange = function (_Company) {
         updatedTime = _ref.updatedTime,
         version = _ref.version;
 
-    _classCallCheck(this, Exchange);
+    _classCallCheck(this, AssetManager);
 
-    return _possibleConstructorReturn(this, (Exchange.__proto__ || Object.getPrototypeOf(Exchange)).call(this, {
+    return _possibleConstructorReturn(this, (AssetManager.__proto__ || Object.getPrototypeOf(AssetManager)).call(this, {
       assetManagerId: assetManagerId,
       partyId: partyId,
       partyStatus: partyStatus,
@@ -86,7 +64,7 @@ var Exchange = function (_Company) {
     }));
   }
 
-  return Exchange;
+  return AssetManager;
 }(_company2.default);
 
-exports.default = Exchange;
+exports.default = AssetManager;

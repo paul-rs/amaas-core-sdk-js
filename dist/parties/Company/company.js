@@ -48,8 +48,7 @@ var Company = function (_Organisation) {
         partyStatus = _ref$partyStatus === undefined ? 'Active' : _ref$partyStatus,
         _ref$partyClass = _ref.partyClass,
         partyClass = _ref$partyClass === undefined ? 'Company' : _ref$partyClass,
-        _ref$partyType = _ref.partyType,
-        partyType = _ref$partyType === undefined ? 'Company' : _ref$partyType,
+        baseCurrency = _ref.baseCurrency,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
         _ref$addresses = _ref.addresses,
@@ -58,6 +57,10 @@ var Company = function (_Organisation) {
         emails = _ref$emails === undefined ? {} : _ref$emails,
         _ref$references = _ref.references,
         references = _ref$references === undefined ? {} : _ref$references,
+        _ref$comments = _ref.comments,
+        comments = _ref$comments === undefined ? {} : _ref$comments,
+        _ref$links = _ref.links,
+        links = _ref$links === undefined ? {} : _ref$links,
         createdBy = _ref.createdBy,
         updatedBy = _ref.updatedBy,
         createdTime = _ref.createdTime,
@@ -71,11 +74,13 @@ var Company = function (_Organisation) {
       partyId: partyId,
       partyStatus: partyStatus,
       partyClass: partyClass,
-      partyType: partyType,
+      baseCurrency: baseCurrency,
       description: description,
       addresses: addresses,
       emails: emails,
       references: references,
+      comments: comments,
+      links: links,
       createdBy: createdBy,
       updatedBy: updatedBy,
       createdTime: createdTime,
@@ -83,30 +88,6 @@ var Company = function (_Organisation) {
       version: version
     }));
   }
-
-  // toJSON() {
-  //   return Object.assign({}, {
-  //     addresses: this.addresses,
-  //     emails: this.emails,
-  //     references: this.references
-  //   }, this)
-  // return {
-  //   asset_manager_id: this.assetManagerId,
-  //   party_id: this.partyId,
-  //   party_status: this.partyStatus,
-  //   party_class: this.partyClass,
-  //   party_type: this.partyType,
-  //   description: this.description,
-  //   addresses: this.addresses,
-  //   emails: this.emails,
-  //   references: this.references,
-  //   created_by: this.createdBy,
-  //   updated_by: this.updatedBy,
-  //   created_time: this.createdTime,
-  //   updated_time: this.updatedTime,
-  //   version: this.version
-  // }
-  // }
 
   return Company;
 }(_organisation2.default);

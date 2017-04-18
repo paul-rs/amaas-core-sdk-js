@@ -3,9 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Email = exports.Address = exports.GovernmentAgency = exports.Fund = exports.Exchange = exports.Broker = exports.Individual = exports.Party = undefined;
+exports.Email = exports.Address = exports.GovernmentAgency = exports.Fund = exports.Exchange = exports.Broker = exports.AssetManager = exports.Company = exports.Organisation = exports.Individual = exports.Party = undefined;
 
-var _party = require('./Party/party.js');
+var _party = require('./Party/party');
 
 Object.defineProperty(exports, 'Party', {
   enumerable: true,
@@ -14,7 +14,7 @@ Object.defineProperty(exports, 'Party', {
   }
 });
 
-var _individual = require('./Individual/individual.js');
+var _individual = require('./Individual/individual');
 
 Object.defineProperty(exports, 'Individual', {
   enumerable: true,
@@ -23,7 +23,34 @@ Object.defineProperty(exports, 'Individual', {
   }
 });
 
-var _broker = require('./Broker/broker.js');
+var _organisation = require('./Organisation/organisation');
+
+Object.defineProperty(exports, 'Organisation', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_organisation).default;
+  }
+});
+
+var _company = require('./Company/company');
+
+Object.defineProperty(exports, 'Company', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_company).default;
+  }
+});
+
+var _assetManager = require('./AssetManager/assetManager');
+
+Object.defineProperty(exports, 'AssetManager', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_assetManager).default;
+  }
+});
+
+var _broker = require('./Broker/broker');
 
 Object.defineProperty(exports, 'Broker', {
   enumerable: true,
@@ -32,7 +59,7 @@ Object.defineProperty(exports, 'Broker', {
   }
 });
 
-var _exchange = require('./Exchange/exchange.js');
+var _exchange = require('./Exchange/exchange');
 
 Object.defineProperty(exports, 'Exchange', {
   enumerable: true,
@@ -41,7 +68,7 @@ Object.defineProperty(exports, 'Exchange', {
   }
 });
 
-var _fund = require('./Fund/fund.js');
+var _fund = require('./Fund/fund');
 
 Object.defineProperty(exports, 'Fund', {
   enumerable: true,

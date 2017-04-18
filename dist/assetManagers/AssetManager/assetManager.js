@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _core = require('../../core');
 
-var _types = require('./types');
+var _enums = require('../enums');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -73,8 +73,8 @@ var AssetManager = function (_AMaaSModel) {
         },
         set: function set(newAssetManagerType) {
           if (newAssetManagerType) {
-            if (_types.AssetManagerTypes.indexOf(newAssetManagerType) == -1) {
-              throw new Error('Invalid Asset Manager Type');
+            if (_enums.ASSET_MANAGER_TYPES.indexOf(newAssetManagerType) == -1) {
+              throw new Error('Invalid Asset Manager Type: ' + newAssetManagerType);
             } else {
               _this._assetManagerType = newAssetManagerType;
             }

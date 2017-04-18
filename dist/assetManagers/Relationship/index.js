@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _core = require('../../core');
 
-var _types = require('./types');
+var _enums = require('../enums');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -65,8 +65,8 @@ var Relationship = function (_AMaaSModel) {
         },
         set: function set(newRelationshipType) {
           if (newRelationshipType) {
-            if (_types.RelationshipTypes.indexOf(newRelationshipType) == -1) {
-              throw new Error('Invalid Relationship Type');
+            if (_enums.RELATIONSHIP_TYPES.indexOf(newRelationshipType) == -1) {
+              throw new Error('Invalid Relationship Type: ' + newRelationshipType);
             } else {
               _this._relationshipType = newRelationshipType;
             }
