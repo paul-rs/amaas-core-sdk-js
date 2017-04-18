@@ -62,6 +62,18 @@ class Address extends AMaaSModel {
               this._addressPrimary = !!newAddressPrimary
           }
         }, enumerable: true
+      },
+      _countryId: { writable: true, enumerable: false },
+      countryId: {
+        get: () => this._countryId,
+        set: (newCountryId) => {
+          if (newCountryId) {
+            if (newCountryId.length !== 3) {
+              throw new Error(`Invalid Country ID: ${newCountryId}`)
+            }
+          }
+        },
+        enumerable: true
       }
     })
     this.addressPrimary = addressPrimary
@@ -73,64 +85,6 @@ class Address extends AMaaSModel {
     this.countryId = countryId
     this.active = active
   }
-
-  // set active(newActive) {
-  //   switch (newActive) {
-  //     case false:
-  //       this._active = false
-  //       break
-  //     case undefined:
-  //       this._active = true
-  //       break
-  //     default:
-  //       this._active = newActive
-  //   }
-  // }
-  //
-  // get active() {
-  //   return this._active
-  // }
-  //
-  // set addressPrimary(newAddressPrimary) {
-  //   switch (!!newAddressPrimary) {
-  //     case false:
-  //       this._addressPrimary = false
-  //       break
-  //     case undefined:
-  //       this._addressPrimary = true
-  //       break
-  //     default:
-  //       this._addressPrimary = !!newAddressPrimary
-  //   }
-  // }
-  //
-  // get addressPrimary() {
-  //   return this._addressPrimary
-  // }
-
-
-  // toJSON() {
-  //   return Object.assign({}, {
-  //     addressPrimary: this.addressPrimary,
-  //     active: this.active
-  //   }, this)
-    // return {
-    //   address_primary: this.addressPrimary,
-    //   line_one: this.lineOne,
-    //   line_two: this.lineTwo,
-    //   city: this.city,
-    //   region: this.region,
-    //   postal_code: this.postalCode,
-    //   country_id: this.countryId,
-    //   active: this.active,
-    //   created_by: this.createdBy,
-    //   created_time: this.createdTime,
-    //   updated_by: this.updatedBy,
-    //   updated_time: this.updatedTime,
-    //   version: this.version
-    // }
-  // }
-
 }
 
 export default Address
