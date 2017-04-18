@@ -1,3 +1,4 @@
+// Classes
 import {
   Asset,
   BondBase,
@@ -35,6 +36,7 @@ import {
   SyntheticMultiLeg
 } from '../assets'
 
+// CRUD methods
 import {
   retrieve,
   insert,
@@ -43,6 +45,7 @@ import {
   deactivate
 } from '../utils/assets'
 
+// Exports
 export {
   Asset,
   BondBase,
