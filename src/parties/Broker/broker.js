@@ -21,17 +21,34 @@ class Broker extends Company {
    * @param {date} params.updatedTime - Time that the Broker was updated (required if amending existing Broker)
    * @param {number} params.version - Version number of the Broker
    */
-  constructor({ assetManagerId, partyId, partyStatus='Active', partyClass='Company', partyType='Broker', description='', addresses={}, emails={}, references={}, createdBy, updatedBy, createdTime, updatedTime, version }) {
+  constructor({
+    assetManagerId,
+    partyId,
+    partyStatus='Active',
+    baseCurrency,
+    description='',
+    addresses={},
+    emails={},
+    references={},
+    comments={},
+    links={},
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version
+  }) {
     super({
       assetManagerId,
       partyId,
       partyStatus,
-      partyClass,
-      partyType,
+      baseCurrency,
       description,
       addresses,
       emails,
       references,
+      comments,
+      links,
       createdBy,
       updatedBy,
       createdTime,
@@ -39,16 +56,6 @@ class Broker extends Company {
       version
     })
   }
-
-
-  // toJSON() {
-  //   return Object.assign({}, {
-  //     addresses: this.addresses,
-  //     emails: this.emails,
-  //     references: this.references
-  //   }, this)
-  // }
-
 }
 
 export default Broker

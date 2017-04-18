@@ -23,17 +23,36 @@ class Company extends Organisation {
    * @param {date} params.updatedTime - Time that the Company was updated (required if amending existing Company)
    * @param {number} params.version - Version number of the Company
    */
-  constructor({ assetManagerId, partyId, partyStatus='Active', partyClass='Company', partyType='Company', description='', addresses={}, emails={}, references={}, createdBy, updatedBy, createdTime, updatedTime, version }) {
+  constructor({
+    assetManagerId,
+    partyId,
+    partyStatus='Active',
+    partyClass='Company',
+    baseCurrency,
+    description='',
+    addresses={},
+    emails={},
+    references={},
+    comments={},
+    links={},
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version
+  }) {
     super({
       assetManagerId,
       partyId,
       partyStatus,
       partyClass,
-      partyType,
+      baseCurrency,
       description,
       addresses,
       emails,
       references,
+      comments,
+      links,
       createdBy,
       updatedBy,
       createdTime,
@@ -41,32 +60,6 @@ class Company extends Organisation {
       version
     })
   }
-
-
-  // toJSON() {
-  //   return Object.assign({}, {
-  //     addresses: this.addresses,
-  //     emails: this.emails,
-  //     references: this.references
-  //   }, this)
-    // return {
-    //   asset_manager_id: this.assetManagerId,
-    //   party_id: this.partyId,
-    //   party_status: this.partyStatus,
-    //   party_class: this.partyClass,
-    //   party_type: this.partyType,
-    //   description: this.description,
-    //   addresses: this.addresses,
-    //   emails: this.emails,
-    //   references: this.references,
-    //   created_by: this.createdBy,
-    //   updated_by: this.updatedBy,
-    //   created_time: this.createdTime,
-    //   updated_time: this.updatedTime,
-    //   version: this.version
-    // }
-  // }
-
 }
 
 export default Company

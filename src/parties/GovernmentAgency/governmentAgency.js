@@ -23,17 +23,34 @@ class GovernmentAgency extends Organisation {
    * @param {date} params.updatedTime - Time that the Government Agency was updated (required if amending existing Government Agency)
    * @param {number} params.version - Version number of the Government Agency
    */
-  constructor({ assetManagerId, partyId, partyStatus='Active', partyClass='Organisation', partyType='GovernmentAgency', description='', addresses={}, emails={}, references={}, createdBy, updatedBy, createdTime, updatedTime, version }) {
+  constructor({
+    assetManagerId,
+    partyId,
+    partyStatus='Active',
+    baseCurrency,
+    description='',
+    addresses={},
+    emails={},
+    references={},
+    comments={},
+    links={},
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version
+  }) {
     super({
       assetManagerId,
       partyId,
       partyStatus,
-      partyClass,
-      partyType,
+      baseCurrency,
       description,
       addresses,
       emails,
       references,
+      comments,
+      links,
       createdBy,
       updatedBy,
       createdTime,

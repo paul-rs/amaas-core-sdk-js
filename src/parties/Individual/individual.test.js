@@ -8,6 +8,10 @@ describe('Individual', () => {
       expect(testIndividual.assetManagerId).toEqual('1234')
       expect(testIndividual.partyId).toEqual('0987')
     })
+    it('should set description to givenNames and surname if no description given', () => {
+      const indie = new Individual({ givenNames: 'Warren', surname: 'Buffet' })
+      expect(indie.description).toEqual('Warren Buffet')
+    })
     it('should set party class and type to Individual', () => {
       const testIndividual = new Individual({})
       expect(testIndividual.partyClass).toEqual('Individual')

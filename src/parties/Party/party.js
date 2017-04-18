@@ -1,7 +1,6 @@
 import { AMaaSModel } from '../../core'
 import { Address, Email } from '../Children'
-
-import { retrieveData } from '../../utils/network'
+import { PARTY_STATUSES, PARTY_TYPES } from '../enums'
 
 /**
  * Class representing a Party
@@ -26,7 +25,24 @@ class Party extends AMaaSModel {
    * @param {date} params.updatedTime - Time that the Party was updated (required if amending existing Party)
    * @param {number} params.version - Version number of the Party
    */
-  constructor({ assetManagerId, partyId, partyStatus='Active', partyClass='Party', partyType='Party', description='', addresses={}, emails={}, references={}, createdBy, updatedBy, createdTime, updatedTime, version }) {
+  constructor({
+    assetManagerId,
+    partyId,
+    partyStatus='Active',
+    partyClass='Party',
+    baseCurrency,
+    description='',
+    addresses={},
+    emails={},
+    references={},
+    comments={},
+    links={},
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version
+  }) {
     super({
       createdBy,
       updatedBy,
@@ -37,8 +53,8 @@ class Party extends AMaaSModel {
     Object.defineProperties(this, {
       _emails: { writable: true, enumerable: false },
       emails: {
-        get: function() { return this._emails },
-        set: function(newEmails) {
+        get: () => this._emails,
+        set: (newEmails) => {
           if (Object.keys(newEmails).length > 0) {
             let primaryEmail = 0
             for (let type in newEmails) {
@@ -62,8 +78,8 @@ class Party extends AMaaSModel {
       },
       _addresses: { writable: true, enumerable: false },
       addresses: {
-        get: function() { return this._addresses },
-        set: function(newAddresses) {
+        get: () => this._addresses,
+        set: (newAddresses) => {
           if (Object.keys(newAddresses).length > 0) {
             let primaryAdd = 0
             for (let type in newAddresses) {
@@ -82,43 +98,34 @@ class Party extends AMaaSModel {
             this._addresses = {}
           }
         }, enumerable: true
+      },
+      _partyStatus: { writable: true, enumerable: false },
+      partyStatus: {
+        get: () => this._partyStatus,
+        set: (newPartyStatus) => {
+          if (newPartyStatus) {
+            if (PARTY_STATUSES.indexOf(newPartyStatus) === -1) {
+              throw new Error(`Invalid Party Status: ${newPartyStatus}`)
+            }
+            this._partyStatus = newPartyStatus
+          }
+        },
+        enumerable: true
       }
     })
     this.assetManagerId = assetManagerId
     this.partyId = partyId
     this.partyStatus = partyStatus
     this.partyClass = partyClass
-    this.partyType = partyType
+    this.partyType = this.constructor.name
+    this.baseCurrency = baseCurrency
     this.description = description
     this.addresses = addresses
     this.emails = emails
     this.references = references
-
+    this.comments = comments
+    this.links = links
   }
-
-  // set addresses(newAddresses) {
-  //   if (Object.keys(newAddresses).length > 0) {
-  //     let primaryAdd = 0
-  //     for (let type in newAddresses) {
-  //       if (newAddresses.hasOwnProperty(type)) {
-  //         this._checkTypes('address', newAddresses[type], Address)
-  //         if (newAddresses[type].addressPrimary) {
-  //           primaryAdd++
-  //         }
-  //       }
-  //     }
-  //     if (primaryAdd == 0) {
-  //       throw new Error('At least 1 primary address must be supplied')
-  //     }
-  //     this._addresses = newAddresses
-  //   } else {
-  //     this._addresses = {}
-  //   }
-  // }
-  //
-  // get addresses() {
-  //   return this._addresses
-  // }
 
   /**
    * Upsert an Address
@@ -137,31 +144,6 @@ class Party extends AMaaSModel {
     addresses[type] = address
     this.addresses = addresses
   }
-
-  // set emails(newEmails) {
-  //   if (Object.keys(newEmails).length > 0) {
-  //     let primaryEmail = 0
-  //     for (let type in newEmails) {
-  //       if (newEmails.hasOwnProperty(type)) {
-  //         this._checkTypes('email', newEmails[type], Email)
-  //         this._checkEmail(newEmails[type].email)
-  //         if (newEmails[type].emailPrimary) {
-  //           primaryEmail++
-  //         }
-  //       }
-  //     }
-  //     if (primaryEmail == 0) {
-  //       throw new Error('At least 1 primary email must be supplied')
-  //     }
-  //     this._emails = newEmails
-  //   } else {
-  //     this._emails = {}
-  //   }
-  // }
-  //
-  // get emails() {
-  //   return this._emails
-  // }
 
   /**
    * Upsert an Email
@@ -195,16 +177,6 @@ class Party extends AMaaSModel {
       throw new Error('Not a valid email')
     }
   }
-
-
-  // toJSON() {
-  //   return Object.assign({}, {
-  //     addresses: this.addresses,
-  //     emails: this.emails,
-  //     references: this.references
-  //   }, this)
-  // }
-
 }
 
 export default Party

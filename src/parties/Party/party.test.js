@@ -10,6 +10,15 @@ describe('Party', () => {
     })
   })
   describe('constructor', () => {
+
+    it('should throw if attempting to set invalid partyStatus', () => {
+      let party
+      function construct() {
+        party = new Party({ partyStatus: 'notAType' })
+      }
+      expect(construct).toThrowError(new Error('Invalid Party Status: notAType'))
+    })
+
     it('should set addresses to empty object if class is instantiated without contacts', () => {
       const testParty = new Party({})
       expect(testParty.addresses).toEqual({})

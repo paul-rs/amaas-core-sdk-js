@@ -6,5 +6,10 @@ describe('Organisation', () => {
       const testOrg = new Organisation({})
       expect(testOrg.partyClass).toEqual('Organisation')
     })
+
+    it('should set partyType to Organisation', () => {
+      const org = new Organisation({})
+      expect(org.partyType).toEqual('Organisation')
+    })
   })
 })

@@ -23,50 +23,49 @@ class Individual extends Party {
    * @param {date} params.updatedTime - Time that the Individual was updated (required if amending existing Individual)
    * @param {number} params.version - Version number of the Individual
    */
-  constructor({ assetManagerId, partyId, partyStatus='Active', partyClass='Individual', partyType='Individual', description='', addresses={}, emails={}, references={}, createdBy, updatedBy, createdTime, updatedTime, version }) {
+  constructor({
+    assetManagerId,
+    partyId,
+    partyStatus='Active',
+    partyClass='Individual',
+    baseCurrency,
+    description,
+    givenNames,
+    surname,
+    dateOfBirth,
+    addresses={},
+    emails={},
+    references={},
+    comments={},
+    links={},
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version
+  }) {
     super({
       assetManagerId,
       partyId,
       partyStatus,
       partyClass,
-      partyType,
-      description,
+      baseCurrency,
+      description: description || `${givenNames} ${surname}`,
       addresses,
       emails,
       references,
+      comments,
+      links,
       createdBy,
       updatedBy,
       createdTime,
       updatedTime,
       version
     })
+    this.givenNames = givenNames
+    this.surname = surname
+    this.dateOfBirth = dateOfBirth
   }
-
-
-  // toJSON() {
-  //   return Object.assign({}, {
-  //     addresses: this.addresses,
-  //     emails: this.emails,
-  //     references: this.references
-  //   }, this)
-    // return {
-    //   asset_manager_id: this.assetManagerId,
-    //   party_id: this.partyId,
-    //   party_status: this.partyStatus,
-    //   party_class: this.partyClass,
-    //   party_type: this.partyType,
-    //   description: this.description,
-    //   addresses: this.addresses,
-    //   emails: this.emails,
-    //   references: this.references,
-    //   created_by: this.createdBy,
-    //   created_time: this.createdTime,
-    //   updated_by: this.updatedBy,
-    //   updated_time: this.updatedTime,
-    //   version: this.version
-    // }
-  // }
-
 }
 
 export default Individual
