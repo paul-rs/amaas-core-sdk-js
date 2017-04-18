@@ -32,7 +32,7 @@ export {
   Exchange,
   Fund,
   GovernmentAgency,
-  Party
+  Party,
   Address,
   Email,
   retrieve,
