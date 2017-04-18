@@ -4,9 +4,9 @@ describe('Relationship', () => {
   describe('constructor', () => {
     it('should throw if invalid relationship type supplied', () => {
       function tester() {
-        const testRel = new Relationship({ relationshipType: 'NotAType' })
+        const testRel = new Relationship({ relationshipType: 'notAType' })
       }
-      expect(tester).toThrowError('Invalid Relationship Type')
+      expect(tester).toThrowError('Invalid Relationship Type: notAType')
     })
 
     it('should construct', () => {

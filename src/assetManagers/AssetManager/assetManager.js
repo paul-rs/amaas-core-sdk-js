@@ -1,5 +1,5 @@
 import { AMaaSModel } from '../../core'
-import { AssetManagerTypes } from './types'
+import { ASSET_MANAGER_TYPES } from '../enums'
 
 /**
  * Class representing an Asset Manager
@@ -37,8 +37,8 @@ class AssetManager extends AMaaSModel {
         get: () => this._assetManagerType,
         set: (newAssetManagerType) => {
           if (newAssetManagerType) {
-            if (AssetManagerTypes.indexOf(newAssetManagerType) == -1) {
-              throw new Error('Invalid Asset Manager Type')
+            if (ASSET_MANAGER_TYPES.indexOf(newAssetManagerType) == -1) {
+              throw new Error(`Invalid Asset Manager Type: ${newAssetManagerType}`)
             } else {
               this._assetManagerType = newAssetManagerType
             }

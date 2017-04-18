@@ -6,7 +6,7 @@ describe('AssetManager', () => {
       function tester() {
         const testAM = new AssetManager({ assetManagerType: 'notAType' })
       }
-      expect(tester).toThrowError('Invalid Asset Manager Type')
+      expect(tester).toThrowError('Invalid Asset Manager Type: notAType')
     })
 
     it('should construct', () => {

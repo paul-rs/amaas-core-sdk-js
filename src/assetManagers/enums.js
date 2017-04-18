@@ -1,4 +1,4 @@
-export const AssetManagerTypes = [
+export const ASSET_MANAGER_TYPES = [
   'Accredited Investor',
   'Bank',
   'Broker',
@@ -10,4 +10,11 @@ export const AssetManagerTypes = [
   'Private Equity',
   'Retail',
   'Venture Capital'
+]
+
+export const RELATIONSHIP_TYPES = [
+  'Administrator',
+  'External',
+  'Front Office',
+  'Employee'
 ]

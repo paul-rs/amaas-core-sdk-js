@@ -1,5 +1,5 @@
 import { AMaaSModel } from '../../core'
-import { RelationshipTypes } from './types'
+import { RELATIONSHIP_TYPES } from '../enums'
 
 /**
  * Class representing a Relationship
@@ -45,8 +45,8 @@ class Relationship extends AMaaSModel {
         get: () => this._relationshipType,
         set: (newRelationshipType) => {
           if (newRelationshipType) {
-            if (RelationshipTypes.indexOf(newRelationshipType) == -1) {
-              throw new Error('Invalid Relationship Type')
+            if (RELATIONSHIP_TYPES.indexOf(newRelationshipType) == -1) {
+              throw new Error(`Invalid Relationship Type: ${newRelationshipType}`)
             } else {
               this._relationshipType = newRelationshipType
             }
