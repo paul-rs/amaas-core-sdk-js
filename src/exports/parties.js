@@ -8,7 +8,7 @@ import {
   Exchange,
   Fund,
   GovernmentAgency,
-  Party
+  Party,
   Address,
   Email
 } from '../parties'
