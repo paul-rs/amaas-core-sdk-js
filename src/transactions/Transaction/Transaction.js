@@ -1,6 +1,14 @@
+import { Decimal } from 'decimal.js'
+
 import { AMaaSModel, Reference } from '../../core'
-import uuid from 'uuid'
-const Decimal = require('decimal.js')
+import {
+  Charge,
+  Code,
+  Comment,
+  Link,
+  Party
+} from '../../children'
+import * as types from '../enums'
 
 /**
  * Class representing a Transaction
@@ -13,7 +21,7 @@ class Transaction extends AMaaSModel {
    * @param {string} params.assetManagerId - ID of the Transaction's Asset Manager
    * @param {string} params.assetBookId - ID of the Transaction's book
    * @param {string} params.counterpartyBookId - ID of the counterparty to this Transaction
-   * @param {string} params.transactionAction - Transaction action e.g. BUY/SELL
+   * @param {string} params.transactionAction - Transaction action e.g. BUY, SELL etc.
    * @param {string} params.assetId - ID of the asset being transacted
    * @param {number} params.quantity - Quantity being transacted
    * @param {date} params.transactionDate - Date of transactionDate
@@ -21,15 +29,18 @@ class Transaction extends AMaaSModel {
    * @param {decimal} params.price - price of Asset being transacted
    * @param {string} params.transactionCurrency - Currency that the Transaction takes place in
    * @param {string} params.settlementCurrency - Currency that the Transaction is settled in
-   * @param {Asset} params.transactionType - Type of Transaction e.g. Trade, Allocation
-   * @param {*} params.transactionStatus - *
+   * @param {*} params.asset - *
    * @param {date} params.executionTime - Time that the Transaction was executed
+   * @param {Asset} params.transactionType - Type of Transaction e.g. Trade, Allocation
    * @param {string} params.transactionId - ID of the Transaction
+   * @param {*} params.transactionStatus - *
    * @param {object} params.charges - Object of all charges (Charge class)
    * @param {object} params.codes - Object of all codes (Code class)
+   * @param {object} params.comments - Object of all comments (Comment class)
+   * @param {object} params.links - Object of all links (Link class)
+   * @param {object} params.parties - Object of all parties as a Transaction child (PartyChild class)
    * @param {object} params.references - *
    * @param {*} params.postings - *
-   * @param {*} params.asset - *
   */
   constructor({
     assetManagerId,
@@ -44,21 +55,23 @@ class Transaction extends AMaaSModel {
     transactionCurrency,
     settlementCurrency,
     asset,
-    executionTime=new Date(),
+    executionTime,
     transactionType='Trade',
-    transactionId=uuid(),
+    transactionId,
     transactionStatus='New',
     charges={},
     codes={},
     comments={},
     links={},
     parties={},
-    references={},
+    references,
+    postings,
     createdBy,
     updatedBy,
     createdTime,
     updatedTime,
-    version }) {
+    version
+  }) {
     super({
       createdBy,
       updatedBy,
@@ -94,23 +107,150 @@ class Transaction extends AMaaSModel {
         set: (newNetSettlement=0) => {
           this._netSettlement = new Decimal(newNetSettlement)
         }, enumerable: true
+      },
+      _transactionAction: { writable: true, enumerable: false },
+      transactionAction: {
+        get: () => this._transactionAction,
+        set: (newTransactionAction) => {
+          if (newTransactionAction) {
+            if (types.TRANSACTION_ACTIONS.indexOf(newTransactionAction) === -1) {
+              throw new Error(`Invalid Transaction Action: ${newTransactionAction}`)
+            }
+            this._transactionAction = newTransactionAction
+          }
+        },
+        enumerable: true
+      },
+      _transactionStatus: { writable: true, enumerable: false },
+      transactionStatus: {
+        get: () => this._transactionStatus,
+        set: (newTransactionStatus) => {
+          if (newTransactionStatus) {
+            if (types.TRANSACTION_STATUSES.indexOf(newTransactionStatus) === -1) {
+              throw new Error(`Invalid Transaction Status: ${newTransactionStatus}`)
+            }
+            this._transactionStatus = newTransactionStatus
+          }
+        },
+        enumerable: true
+      },
+      _transactionType: { writable: true, enumerable: false },
+      transactionType: {
+        get: () => this._transactionType,
+        set: (newTransactionType) => {
+          if (newTransactionType) {
+            if (types.TRANSACTION_TYPES.indexOf(newTransactionType) === -1) {
+              throw new Error(`Invalid Transaction Type: ${newTransactionType}`)
+            }
+            this._transactionType = newTransactionType
+          }
+        },
+        enumerable: true
+      },
+      _references: { writable: true, enumerable: false },
+      references: {
+        get: () => this._references,
+        set: (newReferences) => {
+          const AMaaSRef = { AMaaS: new Reference({ referenceValue: this.transactionId }) }
+          if (!newReferences) {
+            this._references = AMaaSRef
+          } else {
+            let newRefs = {}
+            for (let ref in newReferences) {
+              if (newReferences.hasOwnProperty(ref)) {
+                newRefs[ref] = new Reference(Object.assign({}, newReferences[ref]))
+              }
+            }
+            this._references = {
+              AMaaS: new Reference({ referenceValue: this.transactionId }),
+              ...newRefs
+            }
+          }
+        },
+        enumerable: true
+      },
+      _charges: { writable: true, enumerable: false },
+      charges: {
+        get: () => this._charges,
+        set: (newCharges) => {
+          if (newCharges) {
+            let charges = {}
+            for (let ref in newCharges) {
+              if (newCharges.hasOwnProperty(ref)) {
+                charges[ref] = new Charge(Object.assign({}, newCharges[ref]))
+              }
+            }
+            this._charges = charges
+          }
+        },
+        enumerable: true
+      },
+      _codes: { writable: true, enumerable: false },
+      codes: {
+        get: () => this._codes,
+        set: (newCodes) => {
+          if (newCodes) {
+            let codes = {}
+            for (let ref in newCodes) {
+              if (newCodes.hasOwnProperty(ref)) {
+                codes[ref] = new Code(Object.assign({}, newCodes[ref]))
+              }
+            }
+            this._codes = codes
+          }
+        },
+        enumerable: true
+      },
+      _comments: { writable: true, enumerable: false },
+      comments: {
+        get: () => this._comments,
+        set: (newComments) => {
+          if (newComments) {
+            let comments = {}
+            for (let ref in newComments) {
+              if (newComments.hasOwnProperty(ref)) {
+                comments[ref] = new Comment(Object.assign({}, newComments[ref]))
+              }
+            }
+            this._comments = comments
+          }
+        },
+        enumerable: true
+      },
+      _links: { writable: true, enumerable: false },
+      links: {
+        get: () => this._links,
+        set: (newLinks) => {
+          if (newLinks) {
+            let links = {}
+            for (let ref in newLinks) {
+              if (newLinks.hasOwnProperty(ref)) {
+                links[ref] = newLinks[ref].map(link => {
+                  return new Link(Object.assign({}, link))
+                })
+              }
+            }
+            this._links = links
+          }
+        },
+        enumerable: true
+      },
+      _parties: { writable: true, enumerable: false },
+      parties: {
+        get: () => this._parties,
+        set: (newParties) => {
+          if (newParties) {
+            let parties = {}
+            for (let ref in newParties) {
+              if (newParties.hasOwnProperty(ref)) {
+                parties[ref] = new Party(Object.assign({}, newParties[ref]))
+              }
+            }
+            this._parties = parties
+          }
+        },
+        enumerable: true
       }
-      // chargesNetEffect: {
-      //   value: () => {
-      //     if (Object.keys(this.charges).length == 0) {
-      //       return new Decimal(0)
-      //     }
-      //     let netCharges = new Decimal(0);
-      //     for (let chargeType in this.charges) {
-      //       if (this.charges[chargeType].active && this.charges[chargeType].netAffecting) {
-      //         netCharges = netCharges.plus(this.charges[chargeType].chargeValue)
-      //       }
-      //     }
-      //     return netCharges
-      //   },
-      //   writable: false,
-      //   enumerable: false
-      // }
     })
     this.assetManagerId = assetManagerId
     this.assetBookId = assetBookId
@@ -133,42 +273,9 @@ class Transaction extends AMaaSModel {
     this.links = links
     this.parties = parties
     this.references = references
-    this.references.AMaaS = new Reference({ referenceValue: this.transactionId })
     this.postings = []
     this.asset = asset
   }
-
-  // set quantity(newQuantity=0) {
-  //   this._quantity = new Decimal(newQuantity)
-  // }
-  //
-  // get quantity() {
-  //   return this._quantity
-  // }
-  //
-  // set price(newPrice=0) {
-  //   this._price = new Decimal(newPrice)
-  // }
-  //
-  // get price() {
-  //   return this._price
-  // }
-  //
-  // set grossSettlement(newGrossSettlement=0) {
-  //   this._grossSettlement = new Decimal(newGrossSettlement)
-  // }
-  //
-  // get grossSettlement() {
-  //   return this._grossSettlement ? this._grossSettlement : this.price.times(this.quantity)
-  // }
-  //
-  // set netSettlement(newNetSettlement=0) {
-  //   this._netSettlement = new Decimal(newNetSettlement)
-  // }
-  //
-  // get netSettlement() {
-  //   return this._netSettlement ? this._netSettlement : this.grossSettlement.minus(this.chargesNetEffect)
-  // }
 
   chargesNetEffect() {
     if (Object.keys(this.charges).length == 0) {
@@ -183,45 +290,40 @@ class Transaction extends AMaaSModel {
     return netCharges
   }
 
+  upsertCode(type, code) {
+    this.codes[type] = new Code(Object.assign({}, code))
+  }
 
-  // toJSON() {
-  //   return Object.assign({}, {
-  //     quantity: this.quantity,
-  //     price: this.price,
-  //     grossSettlement: this.grossSettlement,
-  //     netSettlement: this.netSettlement
-  //   }, this)
-    // return {
-    //   asset_manager_id: this.assetManagerId,
-    //   asset_book_id: this.assetBookId,
-    //   counterparty_book_id: this.counterpartyBookId,
-    //   transaction_action: this.transactionAction,
-    //   asset_id: this.assetId,
-    //   quantity: this.quantity,
-    //   transaction_date: this.transactionDate,
-    //   settlement_date: this.settlementDate,
-    //   price: this.price,
-    //   transaction_currency: this.transactionCurrency,
-    //   settlement_currency: this.settlementCurrency,
-    //   asset: this.asset,
-    //   execution_time: this.executionTime,
-    //   transaction_type: this.transactionType,
-    //   transaction_id: this.transactionId,
-    //   transaction_status: this.transactionStatus,
-    //   charges: this.charges,
-    //   codes: this.codes,
-    //   comments: this.comments,
-    //   links: this.links,
-    //   parties: this.parties,
-    //   references: this.references,
-    //   created_by: this.createdBy,
-    //   updated_by: this.updatedBy,
-    //   created_time: this.createdTime,
-    //   updated_time: this.updatedTime,
-    //   version: this.version
-    // }
-  // }
+  upsertLinkSet(type, links) {
+    if (links) {
+      const classLinks = links.map(link => {
+        return new Link(Object.assign({}, link))
+      })
+      this.links[type] = classLinks
+    }
+  }
 
+  addLink(type, link) {
+    if (link) {
+      this.links[type].push(new Link(Object.assign({}, link)))
+    }
+  }
+
+  removeLink(type, linkedId) {
+    if (!this.links[type]) {
+      throw new Error(`Link Key Not Found: ${type}`)
+    }
+    const existingLinkCount = this.links[type].length
+    if (linkedId) {
+      const filtered = this.links[type].filter(link => {
+        return link.linkedId !== linkedId
+      })
+      if (filtered.length === existingLinkCount) {
+        throw new Error(`Linked Transaction ID Not Found: ${linkedId}`)
+      }
+      this.links[type] = filtered
+    }
+  }
 }
 
 export default Transaction
