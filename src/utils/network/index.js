@@ -42,9 +42,7 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
     default:
       throw new Error(`Invalid class type: ${AMaaSClass}`)
   }
-  if (!AMaaSClass) {
-    throw new Error('Class is required to build URL')
-  } else if (!AMId) {
+  if (!AMId) {
     return `${baseURL}/`
   } else if (!resourceId) {
     return `${baseURL}/${AMId}`

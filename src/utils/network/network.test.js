@@ -21,25 +21,23 @@ describe('buildURL function', () => {
     function tester() {
       buildURL({})
     }
-    expect(tester).toThrowError('Class is required to build URL')
+    expect(tester).toThrowError('Invalid class type: undefined')
   })
   it('should not build past class if resourceId is supplied but not AMId', () => {
     const testParams = {
-      AMaaSClass: 'testClass',
+      AMaaSClass: 'book',
       AMId: undefined,
       resourceId: 'testResource'
     }
-    // const expectedURL = `${process.env.booksURL}/`
     const expectedURL = `${ENDPOINTS.books}/books/`
     expect(buildURL(testParams)).toEqual(expectedURL)
   })
   it('should build correctly if all parameters are specified', () => {
     const testParams = {
-      AMaaSClass: 'testClass',
+      AMaaSClass: 'book',
       AMId: 'testAMId',
       resourceId: 'testResource'
     }
-    // const expectedURL = `${process.env.booksURL}/testAMId/testResource`
     const expectedURL = `${ENDPOINTS.books}/books/testAMId/testResource`
     expect(buildURL(testParams)).toEqual(expectedURL)
   })
@@ -47,14 +45,13 @@ describe('buildURL function', () => {
 
 describe('retrieveData', () => {
   const testParams = {
-    AMaaSClass: 'books',
+    AMaaSClass: 'book',
     AMId: '1234',
     token: 'testToken'
   }
   it('should hit the correct endpoint', callback => {
-    // const scope = nock(process.env.baseURL)
     const scope = nock(ENDPOINTS.books)
-      .get('/books/1234')
+      .get('/books/1234?camelcase=true')
       .reply(200, {
         param1: 'testBody'
       })
@@ -64,9 +61,8 @@ describe('retrieveData', () => {
     })
   })
   it('should receive the correct HTTP status code', callback => {
-    // const scope = nock(process.env.baseURL)
     const scope = nock(ENDPOINTS.books)
-      .get('/books/1234')
+      .get('/books/1234?camelcase=true')
       .reply(501)
     retrieveData(testParams, (error, result) => {
       expect(error.statusCode).toEqual(501)
@@ -81,23 +77,16 @@ describe('retrieveData', () => {
 
 describe('insertData', () => {
   const testParams = {
-    AMaaSClass: 'books',
+    AMaaSClass: 'book',
     AMId: '1234',
     token: 'testToken',
     data: {
       price: 20
     }
   }
-  it.skip('should throw if any arguments are omitted', () => {
-    function tester() {
-      insertData({})
-    }
-    expect(tester).toThrowError('Class, AMId and data to insert are required')
-  })
   it('should build the correct url and POST to it', callback => {
-    // const scope = nock(process.env.baseURL)
     const scope = nock(ENDPOINTS.books)
-      .post('/books/1234')
+      .post('/books/1234?camelcase=true')
       .reply(200, {
         param1: 'testResponse'
       })
