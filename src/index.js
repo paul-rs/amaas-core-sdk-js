@@ -1,39 +1,15 @@
-// Network functions
-import * as AMaaSParties from './utils/parties'
-import * as AMaaSAM from './utils/assetManagers'
-import * as AMaaSAssets from './utils/assets'
-import * as AMaaSBooks from './utils/books'
-import * as AMaaSPositions from './utils/positions'
-
-// Financial Classes
-import {
-  Party,
-  Individual,
-  Broker,
-  Exchange,
-  Fund,
-  GovernmentAgency,
-  Address,
-  Email
-} from './parties'
-
-import { Position } from './transactions'
-import AssetManager from './assetManagers/AssetManager/assetManager.js'
+import * as AssetManagers from '../exports/assetManager'
+import * as Assets from '../exports/assets'
+import * as Books from '../exports/books'
+import * as Parties from '../exports/parties'
+import * as Positions from '../exports/positions'
+import * as Transactions from '../exports/transactions'
 
 export {
-  AMaaSParties,
-  AMaaSAM,
-  AMaaSAssets,
-  AMaaSBooks,
-  AMaaSPositions,
-  Party,
-  Individual,
-  Broker,
-  Exchange,
-  Fund,
-  GovernmentAgency,
-  Address,
-  Email,
-  Position,
-  AssetManager
+  AssetManagers,
+  Assets,
+  Books,
+  Parties,
+  Positions,
+  Transactions
 }

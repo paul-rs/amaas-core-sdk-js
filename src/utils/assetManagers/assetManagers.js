@@ -119,18 +119,4 @@ export function deactivate({AMId, token}, callback) {
 
 export function _parseAM(object) {
   return new AssetManager(object)
-  // return new AssetManager({
-  //   assetManagerId: object.asset_manager_id,
-  //   assetManagerType: object.asset_manager_type,
-  //   assetManagerStatus: object.asset_manager_status,
-  //   clientId: object.client_id,
-  //   partyId: object.party_id,
-  //   defaultBookOwnerId: object.default_book_owner_id,
-  //   defaultTimezone: object.default_timezone,
-  //   defaultBookCloseTime: object.default_book_close_time,
-  //   createdBy: object.created_by,
-  //   updatedBy: object.updated_by,
-  //   createdTime: object.created_time,
-  //   updatedTime: object.updated_time
-  // })
 }
