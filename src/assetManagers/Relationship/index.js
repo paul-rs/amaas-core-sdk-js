@@ -2,6 +2,10 @@ import { AMaaSModel } from '../../core'
 import { RELATIONSHIP_TYPES } from '../enums'
 
 /**
+ * @alias module:AssetManagers
+ */
+
+/**
  * Class representing a Relationship
  * @extends AMaaSModel
  */

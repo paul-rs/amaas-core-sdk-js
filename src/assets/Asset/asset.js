@@ -3,6 +3,10 @@ import Comment from '../../children/Comment'
 import Link from '../../children/Link'
 
 /**
+ * @module Assets
+ */
+
+/**
  * Class representing an Asset
  * @extends AMaaSModel
  */
@@ -11,21 +15,27 @@ class Asset extends AMaaSModel {
    * Construct a new Asset object
    * @param {object} params - Asset creation options
    * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {bool} params.fungible - Whether this asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
    * @param {integer} params.assetId - ID of the Asset (required)
    * @param {string} params.assetClass - Class of the Asset
+   * @param {bool} params.fungible - Whether this Asset is fungible (required)
+   * @param {string} params.assetIssuerId - ID of the Asset's issuer
    * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
    * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue (if applicable)
-   * @param {date} params.maturityDate - Date of the Asset's maturity (if applicable)
-   * @param {string} params.description - Description of the asset
+   * @param {string} params.venueId - ID of Asset's venue if applicable
+   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
+   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
+   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
+   * @param {string} params.description - Description of the Asset
+   * @param {string} params.clientId - ID of the client to which the Asset belongs
+   * @param {object} params.comments - Object of Comments attached to the Asset
+   * @param {object} params.links - Object of array of Links attached to the Asset
    * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created this object (required if creating a new Link)
-   * @param {string} params.updatedBy - ID of the user that updated this object (use if amending existing Link)
-   * @param {date} params.createdTime - Time that the Link was created (required if creating new Link)
-   * @param {date} params.updatedTime - Time that the Link was updated (required if amending existing Link)
-   * @param {number} params.version - Version number of the Link
+   * @param {object} params.clientAdditional - Object of custom properties for creating a Custom Asset
+   * @param {string} params.createdBy - ID of the user that created this object
+   * @param {string} params.updatedBy - ID of the user that updated this object
+   * @param {date} params.createdTime - Time that the Asset was created
+   * @param {date} params.updatedTime - Time that the Asset was updated
+   * @param {number} params.version - Version number
   */
   constructor({
     assetManagerId,

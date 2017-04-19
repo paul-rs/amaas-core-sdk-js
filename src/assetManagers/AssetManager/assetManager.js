@@ -2,6 +2,10 @@ import { AMaaSModel } from '../../core'
 import { ASSET_MANAGER_TYPES } from '../enums'
 
 /**
+ * @alias module:AssetManagers
+ */
+
+/**
  * Class representing an Asset Manager
  * @extends AMaaSModel
  */
@@ -23,7 +27,21 @@ class AssetManager extends AMaaSModel {
    * @param {date} params.updatedTime - Time that the Asset Manager was updated (required if amending existing Asset Manager)
    * @param {number} params.version - Version number of the Asset Manager
    */
-  constructor({ assetManagerId, assetManagerType, assetManagerStatus='Active', clientId, partyId, defaultBookOwnerId, defaultTimezone='UTC', defaultBookCloseTime, createdBy, updatedBy, createdTime, updatedTime, version }) {
+  constructor({
+    assetManagerId,
+    assetManagerType,
+    assetManagerStatus='Active',
+    clientId,
+    partyId,
+    defaultBookOwnerId,
+    defaultTimezone='UTC',
+    defaultBookCloseTime,
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version
+  }) {
     super({
       createdBy,
       updatedBy,

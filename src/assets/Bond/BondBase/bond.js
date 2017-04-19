@@ -4,12 +4,16 @@ import Asset from '../../Asset/asset.js'
 import Decimal from 'decimal.js'
 
 /**
+ * @module Assets
+ */
+
+/**
  * Class representing a Base Bond
  * @extends Asset
  */
 class BondBase extends Asset {
   /**
-   * Construct new Base Bond class
+   * Construct new Bond instance
    * @param {object} params - BondBase creation options
    * @param {string} params.assetManagerId - ID of Bond's Asset Manager
    * @param {string} params.assetId - ID of asset
@@ -26,10 +30,16 @@ class BondBase extends Asset {
    * @param {string} params.clientId - ID of the client
    * @param {decimal} params.coupon - The Bond's coupon (represented as a fraction of 1 i.e. 0.05 = 5%)
    * @param {decimal} params.par - The Bond's par
-   * @param {???} payFrequency - ???
+   * @param {string} params.payFrequency - ???
+   * @param {boolean} params.defaulted - Whether the issuer has defaulted
    * @param {object} params.comments - Object of comments for the Bond. { name: string: comment: Comment }
    * @param {object} params.links - Object of links for the Bond. { name: string: link: Link[] }
    * @param {object} params.references - Object of references for the Bond
+   * @param {string} params.createdBy - ID of the user that created this object
+   * @param {string} params.updatedBy - ID of the user that updated this object
+   * @param {date} params.createdTime - Time that the Bond was created
+   * @param {date} params.updatedTime - Time that the Bond was updated
+   * @param {number} params.version - Version number of the Bond
   */
   constructor({
     assetManagerId,
