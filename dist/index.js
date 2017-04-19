@@ -3,55 +3,37 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AssetManager = exports.Position = exports.Email = exports.Address = exports.GovernmentAgency = exports.Fund = exports.Exchange = exports.Broker = exports.Individual = exports.Party = exports.AMaaSPositions = exports.AMaaSBooks = exports.AMaaSAssets = exports.AMaaSAM = exports.AMaaSParties = undefined;
+exports.Transactions = exports.Positions = exports.Parties = exports.Books = exports.Assets = exports.AssetManagers = undefined;
 
-var _parties = require('./utils/parties');
+var _assetManager = require('../exports/assetManager');
 
-var AMaaSParties = _interopRequireWildcard(_parties);
+var AssetManagers = _interopRequireWildcard(_assetManager);
 
-var _assetManagers = require('./utils/assetManagers');
+var _assets = require('../exports/assets');
 
-var AMaaSAM = _interopRequireWildcard(_assetManagers);
+var Assets = _interopRequireWildcard(_assets);
 
-var _assets = require('./utils/assets');
+var _books = require('../exports/books');
 
-var AMaaSAssets = _interopRequireWildcard(_assets);
+var Books = _interopRequireWildcard(_books);
 
-var _books = require('./utils/books');
+var _parties = require('../exports/parties');
 
-var AMaaSBooks = _interopRequireWildcard(_books);
+var Parties = _interopRequireWildcard(_parties);
 
-var _positions = require('./utils/positions');
+var _positions = require('../exports/positions');
 
-var AMaaSPositions = _interopRequireWildcard(_positions);
+var Positions = _interopRequireWildcard(_positions);
 
-var _parties2 = require('./parties');
+var _transactions = require('../exports/transactions');
 
-var _transactions = require('./transactions');
-
-var _assetManager = require('./assetManagers/AssetManager/assetManager.js');
-
-var _assetManager2 = _interopRequireDefault(_assetManager);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var Transactions = _interopRequireWildcard(_transactions);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-// Network functions
-exports.AMaaSParties = AMaaSParties;
-exports.AMaaSAM = AMaaSAM;
-exports.AMaaSAssets = AMaaSAssets;
-exports.AMaaSBooks = AMaaSBooks;
-exports.AMaaSPositions = AMaaSPositions;
-exports.Party = _parties2.Party;
-exports.Individual = _parties2.Individual;
-exports.Broker = _parties2.Broker;
-exports.Exchange = _parties2.Exchange;
-exports.Fund = _parties2.Fund;
-exports.GovernmentAgency = _parties2.GovernmentAgency;
-exports.Address = _parties2.Address;
-exports.Email = _parties2.Email;
-exports.Position = _transactions.Position;
-exports.AssetManager = _assetManager2.default;
-
-// Financial Classes
+exports.AssetManagers = AssetManagers;
+exports.Assets = Assets;
+exports.Books = Books;
+exports.Parties = Parties;
+exports.Positions = Positions;
+exports.Transactions = Transactions;

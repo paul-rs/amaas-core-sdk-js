@@ -8,42 +8,13 @@ exports.insert = insert;
 exports.amend = amend;
 exports.partialAmend = partialAmend;
 exports.deactivate = deactivate;
-exports._parseChildren = _parseChildren;
 exports._parseParty = _parseParty;
 
 var _network = require('../network');
 
-var _party = require('../../parties/Party/party.js');
+var _parties = require('../../parties');
 
-var _party2 = _interopRequireDefault(_party);
-
-var _individual = require('../../parties/Individual/individual.js');
-
-var _individual2 = _interopRequireDefault(_individual);
-
-var _organisation = require('../../parties/Organisation/organisation.js');
-
-var _organisation2 = _interopRequireDefault(_organisation);
-
-var _company = require('../../parties/Company/company.js');
-
-var _company2 = _interopRequireDefault(_company);
-
-var _broker = require('../../parties/Broker/broker.js');
-
-var _broker2 = _interopRequireDefault(_broker);
-
-var _exchange = require('../../parties/Exchange/exchange.js');
-
-var _exchange2 = _interopRequireDefault(_exchange);
-
-var _fund = require('../../parties/Fund/fund.js');
-
-var _fund2 = _interopRequireDefault(_fund);
-
-var _governmentAgency = require('../../parties/GovernmentAgency/governmentAgency.js');
-
-var _governmentAgency2 = _interopRequireDefault(_governmentAgency);
+var PartyClasses = _interopRequireWildcard(_parties);
 
 var _address = require('../../parties/Children/address.js');
 
@@ -58,6 +29,8 @@ var _Reference = require('../../core/Reference/Reference.js');
 var _Reference2 = _interopRequireDefault(_Reference);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 /**
  * Retrieve Party data for specified AMId and partyId
@@ -244,229 +217,9 @@ function deactivate(_ref5, callback) {
   });
 }
 
-function _parseChildren(type, children) {
-  var parsedChildren = {};
-  switch (type) {
-    case 'address':
-      for (var child in children) {
-        if (children.hasOwnProperty(child)) {
-          parsedChildren[child] = new _address2.default(children[child]);
-          // parsedChildren[child] = new Address({
-          //   addressPrimary: children[child].address_primary,
-          //   lineOne: children[child].line_one,
-          //   lineTwo: children[child].line_two,
-          //   city: children[child].city,
-          //   region: children[child].region,
-          //   postalCode: children[child].postal_code,
-          //   countryId: children[child].country_id,
-          //   active: children[child].active,
-          //   createdBy: children[child].created_by,
-          //   updatedBy: children[child].updated_by,
-          //   createdTime: children[child].created_time,
-          //   updatedTime: children[child].updated_time,
-          //   version: children[child].version
-          // })
-        }
-      }
-      break;
-    case 'email':
-      for (var _child in children) {
-        if (children.hasOwnProperty(_child)) {
-          parsedChildren[_child] = new _email2.default(children[_child]);
-          // parsedChildren[child] = new Email({
-          //   emailPrimary: children[child].email_primary,
-          //   email: children[child].email,
-          //   active: children[child].active,
-          //   createdBy: children[child].created_by,
-          //   updatedBy: children[child].updated_by,
-          //   createdTime: children[child].created_time,
-          //   updatedTime: children[child].updated_time,
-          //   version: children[child].version
-          // })
-        }
-      }
-      break;
-    case 'reference':
-      for (var _child2 in children) {
-        if (children.hasOwnProperty(_child2)) {
-          parsedChildren[_child2] = new _Reference2.default(children[_child2]);
-          // parsedChildren[child] = new Reference({
-          //   referenceValue: children[child].reference_value,
-          //   active: children[child].active,
-          //   createdBy: children[child].created_by,
-          //   updatedBy: children[child].updated_by,
-          //   createdTime: children[child].created_time,
-          //   updatedTime: children[child].updated_time,
-          //   version: children[child].version
-          // })
-        }
-      }
-      break;
-    default:
-      throw new Error('Child type not defined (parseChildren)');
-  }
-  return parsedChildren;
-}
-
 function _parseParty(object) {
-  var party = void 0;
-  var addresses = _parseChildren('address', object.addresses);
-  var emails = _parseChildren('email', object.emails);
-  var references = _parseChildren('reference', object.references);
-  switch (object.partyType) {
-    case 'Individual':
-      party = new _individual2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new Individual({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    case 'Broker':
-      party = new _broker2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new Broker({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    case 'Exchange':
-      party = new _exchange2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new Exchange({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    case 'Fund':
-      party = new _fund2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new Fund({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    case 'GovernmentAgency':
-      party = new _governmentAgency2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new GovernmentAgency({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    case 'Organisation':
-      party = new _organisation2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new Organisation({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    case 'Company':
-      party = new _company2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new Company({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    default:
-      party = new _party2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-    // party = new Party({
-    //   assetManagerId: object.asset_manager_id,
-    //   partyId: object.party_id,
-    //   partyStatus: object.party_status,
-    //   partyClass: object.party_class,
-    //   partyType: object.party_type,
-    //   description: object.description,
-    //   addresses,
-    //   emails,
-    //   references,
-    //   createdBy: object.created_by,
-    //   updatedBy: object.updated_by,
-    //   createdTime: object.created_time,
-    //   updatedTime: object.updated_time,
-    //   version: object.version
-    // })
+  if (!object.partyType) {
+    return new PartyClasses.Party(object);
   }
-  return party;
+  return new PartyClasses[object.partyType](object);
 }
-
-// export default getParty
