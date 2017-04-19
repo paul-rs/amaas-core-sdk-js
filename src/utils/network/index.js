@@ -10,7 +10,6 @@ require('dotenv').config()
 
  * Builds a URL for HTTP request
  * @param {object} anonymous: anonyous object with arguments:
- * @param {string} type: type of HTTP request (GET, POST, etc). Used for validation of parameters
  * @param {string} AMaaSClass: class being requested/sent (e.g. Transaction) (required)
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} resourceId: Id of the resource being requested (e.g. book_id)

@@ -23,9 +23,8 @@ export function retrieve({ AMId, resourceId, token }, callback) {
     })
     if (typeof callback === 'function') {
       callback(null, allocations)
-    } else {
-      return allocations
     }
+    return allocations
   })
   if (typeof callback !== 'function') {
     return promise
