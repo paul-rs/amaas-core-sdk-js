@@ -119,7 +119,7 @@ export function retrieveData({ AMaaSClass, AMId, resourceId, token }, callback) 
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} data: data to insert into database
 */
-export function insertData({ AMaaSClass, AMId, data, token }, callback) {
+export function insertData({ AMaaSClass, AMId, resourceId, data, token }, callback) {
   // if (!AMaaSClass || !AMId || !data) {
   //   throw new Error('Class, AMId and data to insert are required')
   // }
@@ -134,7 +134,8 @@ export function insertData({ AMaaSClass, AMId, data, token }, callback) {
   try {
     url = buildURL({
       AMaaSClass,
-      AMId
+      AMId,
+      resourceId
     })
   } catch (e) {
     if (typeof callback !== 'function') {
