@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _listedDerivative = require('../../ListedDerivative/listedDerivative');
+var _listedDerivative = require('../ListedDerivative/listedDerivative');
 
 var _listedDerivative2 = _interopRequireDefault(_listedDerivative);
 

@@ -30,7 +30,6 @@ require('dotenv').config();
 
  * Builds a URL for HTTP request
  * @param {object} anonymous: anonyous object with arguments:
- * @param {string} type: type of HTTP request (GET, POST, etc). Used for validation of parameters
  * @param {string} AMaaSClass: class being requested/sent (e.g. Transaction) (required)
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} resourceId: Id of the resource being requested (e.g. book_id)
@@ -40,14 +39,12 @@ function buildURL(_ref) {
       AMId = _ref.AMId,
       resourceId = _ref.resourceId;
 
-  var baseURL = void 0;
+  var baseURL = '';
   switch (AMaaSClass) {
     case 'book':
-      // baseURL = process.env.booksURL
       baseURL = _config2.default.books + '/books';
       break;
     case 'parties':
-      // baseURL = process.env.partiesURL
       baseURL = _config2.default.parties + '/parties';
       break;
     case 'assetManagers':
@@ -59,13 +56,16 @@ function buildURL(_ref) {
     case 'positions':
       baseURL = _config2.default.transactions + '/positions';
       break;
+    case 'allocations':
+      baseURL = _config2.default.transactions + '/allocations';
+      break;
+    case 'netting':
+      baseURL = _config2.default.transactions + '/netting';
+      break;
     default:
-      // baseURL = process.env.booksURL
-      baseURL = _config2.default.books + '/books';
+      throw new Error('Invalid class type: ' + AMaaSClass);
   }
-  if (!AMaaSClass) {
-    throw new Error('Class is required to build URL');
-  } else if (!AMId) {
+  if (!AMId) {
     return baseURL + '/';
   } else if (!resourceId) {
     return baseURL + '/' + AMId;
@@ -152,6 +152,7 @@ function retrieveData(_ref2, callback) {
 function insertData(_ref3, callback) {
   var AMaaSClass = _ref3.AMaaSClass,
       AMId = _ref3.AMId,
+      resourceId = _ref3.resourceId,
       data = _ref3.data,
       token = _ref3.token;
 
@@ -169,7 +170,8 @@ function insertData(_ref3, callback) {
   try {
     url = buildURL({
       AMaaSClass: AMaaSClass,
-      AMId: AMId
+      AMId: AMId,
+      resourceId: resourceId
     });
   } catch (e) {
     if (typeof callback !== 'function') {

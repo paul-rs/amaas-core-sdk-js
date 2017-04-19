@@ -22,13 +22,8 @@ var Position = function (_AMaaSModel) {
   _inherits(Position, _AMaaSModel);
 
   function Position(_ref) {
-    var createdBy = _ref.createdBy,
-        updatedBy = _ref.updatedBy,
-        createdTime = _ref.createdTime,
-        updatedTime = _ref.updatedTime,
-        version = _ref.version,
-        assetManagerId = _ref.assetManagerId,
-        assetBookId = _ref.assetBookId,
+    var assetManagerId = _ref.assetManagerId,
+        bookId = _ref.bookId,
         assetId = _ref.assetId,
         quantity = _ref.quantity,
         validFrom = _ref.validFrom,
@@ -36,7 +31,12 @@ var Position = function (_AMaaSModel) {
         validTo = _ref.validTo,
         clientId = _ref.clientId,
         accountingType = _ref.accountingType,
-        accountId = _ref.accountId;
+        accountId = _ref.accountId,
+        createdBy = _ref.createdBy,
+        updatedBy = _ref.updatedBy,
+        createdTime = _ref.createdTime,
+        updatedTime = _ref.updatedTime,
+        version = _ref.version;
 
     _classCallCheck(this, Position);
 
@@ -62,7 +62,7 @@ var Position = function (_AMaaSModel) {
       }
     });
     _this.assetManagerId = assetManagerId;
-    _this.assetBookId = assetBookId;
+    _this.bookId = bookId;
     _this.assetId = assetId;
     _this.quantity = quantity;
     _this.validFrom = validFrom;
@@ -73,41 +73,6 @@ var Position = function (_AMaaSModel) {
     _this.accountId = accountId;
     return _this;
   }
-
-  // set quantity(newQuantity) {
-  //   this._quantity = new Decimal(newQuantity)
-  // }
-  //
-  // get quantity() {
-  //   return this._quantity
-  // }
-
-  /*
-  toJSON() {
-    return {
-      asset_manager_id: this.assetManagerId,
-      asset_book_id: this.assetBookId,
-      asset_id: this.assetId,
-      quantity: this.quantity,
-      valid_from: this.validFrom,
-      internal_id: this.internalId,
-      valid_to: this.validTo,
-      client_id: this.clientId,
-      accounting_type: this.accountingType,
-      account_id: this.accountId,
-      created_by: this.createdBy,
-      updated_by: this.updatedBy,
-      created_time: this.createdTime,
-      updated_time: this.updatedTime
-    }
-  }
-  */
-  // toJSON() {
-  //   return Object.assign({}, {
-  //     quantity: this.quantity
-  //   }, this)
-  // }
-
 
   return Position;
 }(_core.AMaaSModel);

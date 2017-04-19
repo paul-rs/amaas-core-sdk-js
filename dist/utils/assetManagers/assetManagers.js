@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.retrieve = retrieve;
 exports.insert = insert;
-exports.amendAM = amendAM;
+exports.amend = amend;
 exports.deactivate = deactivate;
 exports._parseAM = _parseAM;
 
@@ -82,7 +82,7 @@ function insert(_ref2, callback) {
   });
 }
 
-function amendAM(_ref3, callback) {
+function amend(_ref3, callback) {
   var assetManager = _ref3.assetManager,
       AMId = _ref3.AMId,
       token = _ref3.token;

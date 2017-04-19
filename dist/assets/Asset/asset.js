@@ -149,9 +149,14 @@ var Asset = function (_AMaaSModel) {
             var linksClass = {};
             for (var name in newLinks) {
               if (newLinks.hasOwnProperty(name)) {
-                linksClass[name] = newLinks[name].map(function (link) {
-                  return new _Link2.default(link);
-                });
+                // TODO: Remove this when the API returns Arrays for all Links
+                if (newLinks[name] instanceof Array) {
+                  linksClass[name] = newLinks[name].map(function (link) {
+                    return new _Link2.default(link);
+                  });
+                } else {
+                  console.log('All Links should be Arrays: if you are seeing this message then a non-Array link has been encountered and it will be skipped for now');
+                }
               }
             }
             _this._links = linksClass;
