@@ -1,7 +1,12 @@
 import { retrieveData, insertData } from '../network'
+import { Link } from '../../children'
 
-import Transaction from '../../transactions/Transaction/transaction'
-
+/**
+ * Retrieve Allocations for a specific Transaction
+ * @param {number} AMId - Asset Manager ID of Transaction
+ * @param {string} resourceId - Transaction ID
+ * @param {string} token - Authorization token
+ */
 export function retrieve({ AMId, resourceId, token }, callback) {
   if (!AMId || !resourceId) {
     throw new Error('Asset Manager ID and Transaction ID are required for allocations')
@@ -13,7 +18,9 @@ export function retrieve({ AMId, resourceId, token }, callback) {
     token
   }
   let promise = retrieveData(params).then(result => {
-    const allocations = result
+    const allocations = result.map(link => {
+      return new Link(link)
+    })
     if (typeof callback === 'function') {
       callback(null, allocations)
     } else {
@@ -26,6 +33,14 @@ export function retrieve({ AMId, resourceId, token }, callback) {
   promise.catch(error => callback(error))
 }
 
+/**
+ * Send Allocations for a specific Transaction
+ * @param {number} AMId - Asset Manager ID of Transaction
+ * @param {string} resourceId - Transaction ID
+ * @param {object} data - Allocation data for the Transaction of the form [ { book_id: '123', quantity: '50', transaction_id: 'XYZ' }, { book_id: '456', quantity: '50', transaction_id: 'ABC' } ]
+   If transaction_id is given, the new Transaction that is created will have this as ID.
+ * @param {string} token - Authorization token
+ */
 export function send({ AMId, resourceId, data, token }, callback) {
   if (!AMId || !resourceId) {
     throw new Error('Asset Manager ID and Transaction ID are required for allocations')
