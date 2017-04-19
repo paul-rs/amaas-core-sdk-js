@@ -1,5 +1,5 @@
 import { _parseAM, getAssetManager } from './assetManagers.js'
-import { retrieve, insert, amendAM, deactivate } from './assetManagers.js'
+import { retrieve, insert, amend, deactivate } from './assetManagers.js'
 import AssetManager from '../../assetManagers/AssetManager/assetManager.js'
 
 let token = process.env.API_TOKEN
@@ -52,9 +52,9 @@ describe('utils/assetManagers', () => {
     })
   })
 
-  describe('amendAM', () => {
+  describe('amend', () => {
     test('with promise', () => {
-      let promise = amendAM({
+      let promise = amend({
         token, AMaaSClass: 'assetManagers', AMId: 1
       }).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)

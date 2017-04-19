@@ -224,10 +224,13 @@ class Transaction extends AMaaSModel {
           if (newLinks) {
             let links = {}
             for (let ref in newLinks) {
-              if (newLinks.hasOwnProperty(ref)) {
-                links[ref] = newLinks[ref].map(link => {
-                  return new Link(Object.assign({}, link))
+              // TODO: Remove this when the API returns Arrays for all Links
+              if (newLinks[name] instanceof Array) {
+                linksClass[name] = newLinks[name].map(link => {
+                  return new Link(link)
                 })
+              } else {
+                console.warn('All Links should be Arrays: if you are seeing this message then a non-Array link has been encountered and it will be skipped for now')
               }
             }
             this._links = links
