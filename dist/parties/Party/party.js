@@ -182,9 +182,14 @@ var Party = function (_AMaaSModel) {
             var _links = {};
             for (var ref in newLinks) {
               if (newLinks.hasOwnProperty(ref)) {
-                _links[ref] = newLinks[ref].map(function (link) {
-                  return new _children.Link(Object.assign({}, link));
-                });
+                // TODO: Remove this when the API returns Arrays for all Links
+                if (newLinks[name] instanceof Array) {
+                  linksClass[name] = newLinks[name].map(function (link) {
+                    return new _children.Link(link);
+                  });
+                } else {
+                  console.warn('All Links should be Arrays: if you are seeing this message then a non-Array link has been encountered and it will be skipped for now');
+                }
               }
             }
             _this._links = _links;

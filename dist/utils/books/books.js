@@ -27,7 +27,7 @@ function retrieve(_ref, callback) {
       token = _ref.token;
 
   var params = {
-    AMaaSClass: 'books',
+    AMaaSClass: 'book',
     AMId: AMId,
     resourceId: resourceId,
     token: token
@@ -61,7 +61,7 @@ function search(_ref2, callback) {
       token = _ref2.token;
 
   var params = {
-    AMaaSClass: 'books',
+    AMaaSClass: 'book',
     queryKey: queryKey,
     queryValue: queryValue,
     token: token

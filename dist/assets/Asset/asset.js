@@ -155,7 +155,7 @@ var Asset = function (_AMaaSModel) {
                     return new _Link2.default(link);
                   });
                 } else {
-                  console.log('All Links should be Arrays: if you are seeing this message then a non-Array link has been encountered and it will be skipped for now');
+                  console.warn('All Links should be Arrays: if you are seeing this message then a non-Array link has been encountered and it will be skipped for now');
                 }
               }
             }
