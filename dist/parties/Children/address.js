@@ -110,6 +110,7 @@ var Address = function (_AMaaSModel) {
               throw new Error('Invalid Country ID: ' + newCountryId);
             }
           }
+          _this._countryId = newCountryId;
         },
         enumerable: true
       }

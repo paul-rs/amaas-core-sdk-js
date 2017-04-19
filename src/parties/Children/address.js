@@ -72,6 +72,7 @@ class Address extends AMaaSModel {
               throw new Error(`Invalid Country ID: ${newCountryId}`)
             }
           }
+          this._countryId = newCountryId
         },
         enumerable: true
       }
