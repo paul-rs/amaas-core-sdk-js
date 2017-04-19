@@ -4,13 +4,8 @@ import { AMaaSModel } from '../../core'
 class Position extends AMaaSModel {
 
   constructor({
-    createdBy,
-    updatedBy,
-    createdTime,
-    updatedTime,
-    version,
     assetManagerId,
-    assetBookId,
+    bookId,
     assetId,
     quantity,
     validFrom,
@@ -18,7 +13,12 @@ class Position extends AMaaSModel {
     validTo,
     clientId,
     accountingType,
-    accountId
+    accountId,
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version,
   }) {
     super({
       createdBy,
@@ -37,7 +37,7 @@ class Position extends AMaaSModel {
       }
     })
     this.assetManagerId = assetManagerId
-    this.assetBookId = assetBookId
+    this.bookId = bookId
     this.assetId = assetId
     this.quantity = quantity
     this.validFrom = validFrom
@@ -47,40 +47,6 @@ class Position extends AMaaSModel {
     this.accountingType = accountingType
     this.accountId = accountId
   }
-
-  // set quantity(newQuantity) {
-  //   this._quantity = new Decimal(newQuantity)
-  // }
-  //
-  // get quantity() {
-  //   return this._quantity
-  // }
-
-  /*
-  toJSON() {
-    return {
-      asset_manager_id: this.assetManagerId,
-      asset_book_id: this.assetBookId,
-      asset_id: this.assetId,
-      quantity: this.quantity,
-      valid_from: this.validFrom,
-      internal_id: this.internalId,
-      valid_to: this.validTo,
-      client_id: this.clientId,
-      accounting_type: this.accountingType,
-      account_id: this.accountId,
-      created_by: this.createdBy,
-      updated_by: this.updatedBy,
-      created_time: this.createdTime,
-      updated_time: this.updatedTime
-    }
-  }
-  */
-  // toJSON() {
-  //   return Object.assign({}, {
-  //     quantity: this.quantity
-  //   }, this)
-  // }
 }
 
 export default Position
