@@ -1,4 +1,4 @@
-import ListedDerivative from '../../ListedDerivative/listedDerivative'
+import ListedDerivative from '../ListedDerivative/listedDerivative'
 
 class ListedContractForDifference extends ListedDerivative {
   constructor({
