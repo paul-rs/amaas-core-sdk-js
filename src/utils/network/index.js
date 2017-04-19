@@ -16,14 +16,12 @@ require('dotenv').config()
  * @param {string} resourceId: Id of the resource being requested (e.g. book_id)
 */
 export function buildURL({ AMaaSClass, AMId, resourceId }) {
-  let baseURL;
+  let baseURL = ''
   switch (AMaaSClass) {
     case 'book':
-      // baseURL = process.env.booksURL
       baseURL = `${ENDPOINTS.books}/books`
       break
     case 'parties':
-      // baseURL = process.env.partiesURL
       baseURL = `${ENDPOINTS.parties}/parties`
       break
     case 'assetManagers':
@@ -35,9 +33,14 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
     case 'positions':
       baseURL = `${ENDPOINTS.transactions}/positions`
       break
+    case 'allocations':
+      baseURL = `${ENDPOINTS.transactions}/allocations`
+      break
+    case 'netting':
+      baseURL = `${ENDPOINTS.transactions}/netting`
+      break
     default:
-      // baseURL = process.env.booksURL
-      baseURL = `${ENDPOINTS.books}/books`
+      throw new Error(`Invalid class type: ${AMaaSClass}`)
   }
   if (!AMaaSClass) {
     throw new Error('Class is required to build URL')
