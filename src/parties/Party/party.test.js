@@ -1,5 +1,7 @@
+import { Reference } from '../../core'
 import Party from './party.js'
 import { Address, Email } from '../Children'
+import { Comment, Link } from '../../children'
 
 describe('Party', () => {
   describe('serialization', () => {
@@ -24,15 +26,54 @@ describe('Party', () => {
       expect(testParty.addresses).toEqual({})
     })
 
+    it('should set references correctly', () => {
+      const party = new Party({})
+      party.references = {
+        INT: { referenceValue: 'Internal1' },
+        EXT: new Reference({ referenceValue: 'External1' })
+      }
+      expect(party.references.INT).toBeDefined()
+      expect(party.references.INT).toBeInstanceOf(Reference)
+      expect(party.references.INT.referenceValue).toEqual('Internal1')
+      expect(party.references.EXT).toBeDefined()
+      expect(party.references.EXT.referenceValue).toEqual('External1')
+    })
+
+    it('should set comments correctly', () => {
+      const party = new Party({})
+      party.comments = {
+        TRADER: { commentValue: 'Strategy1' },
+        BACKOFFICE: new Comment({ commentValue: 'Reconciled' })
+      }
+      expect(party.comments.TRADER).toBeDefined()
+      expect(party.comments.TRADER).toBeInstanceOf(Comment)
+      expect(party.comments.TRADER.commentValue).toEqual('Strategy1')
+      expect(party.comments.BACKOFFICE).toBeDefined()
+      expect(party.comments.BACKOFFICE.commentValue).toEqual('Reconciled')
+    })
+
+    it('should set links correctly', () => {
+      const party = new Party({})
+      party.links = {
+        SINGLE1: [{ linkedId: 'ID-S1-1' }],
+        SINGLE2: [new Link({ linkedId: 'ID-S2-1' })],
+        MULTI1: [
+          { linkedId: 'ID-M1-1' },
+          new Link({ linkedId: 'ID-M1-2' })
+        ]
+      }
+      expect(party.links.SINGLE1[0]).toBeDefined()
+      expect(party.links.SINGLE1[0].linkedId).toEqual('ID-S1-1')
+      expect(party.links.SINGLE2[0]).toBeDefined()
+      expect(party.links.SINGLE2[0].linkedId).toEqual('ID-S2-1')
+      expect(party.links.MULTI1[0]).toBeDefined()
+      expect(party.links.MULTI1[0].linkedId).toEqual('ID-M1-1')
+      expect(party.links.MULTI1[1]).toBeDefined()
+      expect(party.links.MULTI1[1].linkedId).toEqual('ID-M1-2')
+    })
+
   })
   describe('addresses', () => {
-    it('should throw if called with an object that has a non-Address as a value', () => {
-      const testParty = new Party({})
-      function tester() {
-        testParty.addresses = { address: 'notAnAddress' }
-      }
-      expect(tester).toThrowError('Found address with wrong class')
-    })
     it('should set addressPrimary of existing addresses to false when supplying new primary address', () => {
       const primaryOne = new Address({ addressPrimary: true })
       const primaryTwo = new Address({ addressPrimary: true })
@@ -64,13 +105,6 @@ describe('Party', () => {
     it('should set emails to empty object if class is instantiated without emails', () => {
       const testParty = new Party({})
       expect(testParty.emails).toEqual({})
-    })
-    it('should throw if called with an array containing a non-Email class instance', () => {
-      const testParty = new Party({})
-      function tester() {
-        testParty.emails = { email: 'notanEmail' }
-      }
-      expect(tester).toThrowError('Found email with wrong class')
     })
     it('should throw if Email contains invalid email', () => {
       const testParty = new Party({})

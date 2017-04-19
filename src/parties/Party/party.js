@@ -1,5 +1,6 @@
-import { AMaaSModel } from '../../core'
+import { AMaaSModel, Reference } from '../../core'
 import { Address, Email } from '../Children'
+import { Comment, Link } from '../../children'
 import { PARTY_STATUSES, PARTY_TYPES } from '../enums'
 
 /**
@@ -56,10 +57,11 @@ class Party extends AMaaSModel {
         get: () => this._emails,
         set: (newEmails) => {
           if (Object.keys(newEmails).length > 0) {
+            let emails = {}
             let primaryEmail = 0
             for (let type in newEmails) {
               if (newEmails.hasOwnProperty(type)) {
-                this._checkTypes('email', newEmails[type], Email)
+                emails[type] = new Email(Object.assign({}, newEmails[type]))
                 this._checkEmail(newEmails[type].email)
                 if (newEmails[type].emailPrimary) {
                   primaryEmail++
@@ -69,7 +71,7 @@ class Party extends AMaaSModel {
             if (primaryEmail == 0) {
               throw new Error('At least 1 primary email must be supplied')
             }
-            this._emails = newEmails
+            this._emails = emails
           } else {
             this._emails = {}
           }
@@ -80,11 +82,12 @@ class Party extends AMaaSModel {
       addresses: {
         get: () => this._addresses,
         set: (newAddresses) => {
-          if (Object.keys(newAddresses).length > 0) {
+          if (newAddresses && Object.keys(newAddresses).length > 0) {
+            let addresses = {}
             let primaryAdd = 0
             for (let type in newAddresses) {
               if (newAddresses.hasOwnProperty(type)) {
-                this._checkTypes('address', newAddresses[type], Address)
+                addresses[type] = new Address(Object.assign({}, newAddresses[type]))
                 if (newAddresses[type].addressPrimary) {
                   primaryAdd++
                 }
@@ -93,11 +96,61 @@ class Party extends AMaaSModel {
             if (primaryAdd == 0) {
               throw new Error('At least 1 primary address must be supplied')
             }
-            this._addresses = newAddresses
+            this._addresses = addresses
           } else {
             this._addresses = {}
           }
         }, enumerable: true
+      },
+      _references: { writable: true, enumerable: false },
+      references: {
+        get: () => this._references,
+        set: (newReferences) => {
+          if (newReferences) {
+            let references = {}
+            for (let ref in newReferences) {
+              if (newReferences.hasOwnProperty(ref)) {
+                references[ref] = new Reference(Object.assign({}, newReferences[ref]))
+              }
+            }
+            this._references = references
+          }
+        },
+        enumerable: true
+      },
+      _comments: { writable: true, enumerable: false },
+      comments: {
+        get: () => this._comments,
+        set: (newComments) => {
+          if (newComments) {
+            let comments = {}
+            for (let ref in newComments) {
+              if (newComments.hasOwnProperty(ref)) {
+                comments[ref] = new Comment(Object.assign({}, newComments[ref]))
+              }
+            }
+            this._comments = comments
+          }
+        },
+        enumerable: true
+      },
+      _links: { writable: true, enumerable: false },
+      links: {
+        get: () => this._links,
+        set: (newLinks) => {
+          if (newLinks) {
+            let links = {}
+            for (let ref in newLinks) {
+              if (newLinks.hasOwnProperty(ref)) {
+                links[ref] = newLinks[ref].map(link => {
+                  return new Link(Object.assign({}, link))
+                })
+              }
+            }
+            this._links = links
+          }
+        },
+        enumerable: true
       },
       _partyStatus: { writable: true, enumerable: false },
       partyStatus: {
@@ -161,13 +214,6 @@ class Party extends AMaaSModel {
     }
     emails[type] = email
     this.emails = emails
-  }
-
-  // Check that the object has the correct type
-  _checkTypes(type, contact, classType) {
-    if (!(contact instanceof classType)) {
-      throw new Error(`Found ${type} with wrong class`)
-    }
   }
 
   // Check if input is a valid email string
