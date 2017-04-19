@@ -9,7 +9,7 @@ import {
 import {
   retrieve,
   insert,
-  amendAM,
+  amend,
   deactivate
 } from '../utils/assetManagers'
 
@@ -19,6 +19,6 @@ export {
   Relationship,
   retrieve,
   insert,
-  amendAM,
+  amend,
   deactivate
 }

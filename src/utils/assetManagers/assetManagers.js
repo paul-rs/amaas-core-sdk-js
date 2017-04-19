@@ -55,7 +55,7 @@ export function insert({assetManager, token}, callback) {
   promise.catch(error => callback(error))
 }
 
-export function amendAM({assetManager, AMId, token}, callback) {
+export function amend({assetManager, AMId, token}, callback) {
   let stringified, data
   if (assetManager) {
     stringified = JSON.stringify(assetManager)
