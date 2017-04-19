@@ -48,7 +48,7 @@ export function send({ AMId, resourceId, data, token }, callback) {
     AMaaSClass: 'allocations',
     AMId,
     resourceId,
-    data
+    data,
     token
   }
   let promise = insertData(params).then(result => {
