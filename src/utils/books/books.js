@@ -9,7 +9,7 @@ import Book from './../../books/Book/book'
  */
 export function retrieve({AMId, resourceId, token}, callback) {
   const params = {
-    AMaaSClass: 'books',
+    AMaaSClass: 'book',
     AMId,
     resourceId,
     token
@@ -37,7 +37,7 @@ export function retrieve({AMId, resourceId, token}, callback) {
 
 export function search({queryKey, queryValue, token}, callback) {
   const params = {
-    AMaaSClass: 'books',
+    AMaaSClass: 'book',
     queryKey,
     queryValue,
     token
