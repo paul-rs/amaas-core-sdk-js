@@ -5,13 +5,9 @@
  */
 
 // CRUD methods
-import {
-  retrieve,
-  send
-} from '../utils/allocations'
+import * as api from '../utils/allocations'
 
 // Exports
 export {
-  retrieve,
-  send
+  api
 }

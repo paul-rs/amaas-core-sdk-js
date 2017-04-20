@@ -48,33 +48,15 @@ These classes cannot be instantiated from the SDK, they are included for referen
 <dt><a href="#module_Books">Books</a></dt>
 <dd><p>Classes and API methods for the Books Service</p>
 </dd>
+<dt><a href="#module_Netting">Netting</a></dt>
+<dd><p>API methods to send and retrieve Transaction Netting.
+(Not ready yet)</p>
+</dd>
 <dt><a href="#module_Parties">Parties</a></dt>
 <dd><p>Classes and API methods for the Parties service</p>
 </dd>
 <dt><a href="#module_Transactions">Transactions</a></dt>
 <dd><p>Classes and API methods for the Transactions service. (Not ready yet)</p>
-</dd>
-</dl>
-
-## Classes
-
-<dl>
-<dt><a href="#PartyChild">PartyChild</a> ⇐ <code>AMaaSModel</code></dt>
-<dd><p>Class representing a Party (a Transaction children type)</p>
-</dd>
-<dt><a href="#PartyChild">PartyChild</a> ⇐ <code>AMaaSModel</code></dt>
-<dd><p>Class representing a Party (a Transaction children type)</p>
-</dd>
-</dl>
-
-## Functions
-
-<dl>
-<dt><a href="#retrieve">retrieve(AMId, resourceId, token)</a></dt>
-<dd><p>Retrieve Netting for a specific Transaction</p>
-</dd>
-<dt><a href="#send">send(AMId, data, token)</a></dt>
-<dd><p>Send Transactions to Net</p>
 </dd>
 </dl>
 
@@ -2139,6 +2121,54 @@ Search Books for specified AMId and bookId
 | params.token | <code>string</code> | Authorization token |
 | callback | <code>function</code> | Called with two arguments (error, result) on completion |
 
+<a name="module_Netting"></a>
+
+## Netting
+API methods to send and retrieve Transaction Netting.
+(Not ready yet)
+
+
+* [Netting](#module_Netting)
+    * [.api](#module_Netting.api) : <code>object</code>
+        * [.retrieve(params)](#module_Netting.api.retrieve) ⇒ <code>Promise</code> \| <code>Array</code>
+        * [.send()](#module_Netting.api.send) ⇒ <code>string</code>
+
+<a name="module_Netting.api"></a>
+
+### Netting.api : <code>object</code>
+**Kind**: static namespace of <code>[Netting](#module_Netting)</code>  
+
+* [.api](#module_Netting.api) : <code>object</code>
+    * [.retrieve(params)](#module_Netting.api.retrieve) ⇒ <code>Promise</code> \| <code>Array</code>
+    * [.send()](#module_Netting.api.send) ⇒ <code>string</code>
+
+<a name="module_Netting.api.retrieve"></a>
+
+#### api.retrieve(params) ⇒ <code>Promise</code> \| <code>Array</code>
+Retrieve Netting for a specific Transaction
+
+**Kind**: static method of <code>[api](#module_Netting.api)</code>  
+**Returns**: <code>Promise</code> \| <code>Array</code> - If callback is supplied, it is called with ???. Otherwise a promise that resolves with ??? is returned  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | object of parameters: |
+| params.AMId | <code>number</code> | Asset Manager ID of Transaction |
+| params.resourceId | <code>string</code> | Transaction ID |
+| params.token | <code>string</code> | Authorization token |
+
+<a name="module_Netting.api.send"></a>
+
+#### api.send() ⇒ <code>string</code>
+Send Transactions to Net
+
+**Kind**: static method of <code>[api](#module_Netting.api)</code>  
+**Returns**: <code>string</code> - *  
+
+| Type | Description |
+| --- | --- |
+| <code>string</code> | * |
+
 <a name="module_Parties"></a>
 
 ## Parties
@@ -2929,6 +2959,8 @@ Classes and API methods for the Transactions service. (Not ready yet)
 
 * [Transactions](#module_Transactions)
     * [.Class](#module_Transactions.Class) : <code>object</code>
+        * [.PartyChild](#module_Transactions.Class.PartyChild) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+            * [new PartyChild(params)](#new_module_Transactions.Class.PartyChild_new)
         * [.Transaction](#module_Transactions.Class.Transaction) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
             * [new Transaction(params)](#new_module_Transactions.Class.Transaction_new)
 
@@ -2938,8 +2970,34 @@ Classes and API methods for the Transactions service. (Not ready yet)
 **Kind**: static namespace of <code>[Transactions](#module_Transactions)</code>  
 
 * [.Class](#module_Transactions.Class) : <code>object</code>
+    * [.PartyChild](#module_Transactions.Class.PartyChild) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+        * [new PartyChild(params)](#new_module_Transactions.Class.PartyChild_new)
     * [.Transaction](#module_Transactions.Class.Transaction) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
         * [new Transaction(params)](#new_module_Transactions.Class.Transaction_new)
+
+<a name="module_Transactions.Class.PartyChild"></a>
+
+#### Class.PartyChild ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+Class representing a Party (a Transaction children type)
+
+**Kind**: static class of <code>[Class](#module_Transactions.Class)</code>  
+**Extends**: <code>[AMaaSModel](#module_Core.AMaaSModel)</code>, <code>AMaaSModel</code>  
+<a name="new_module_Transactions.Class.PartyChild_new"></a>
+
+##### new PartyChild(params)
+Construct a new PartyChild object
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | PartyChild creation options |
+| params.partyId | <code>string</code> | ID of the linked Party |
+| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
+| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
+| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
+| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
+| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
+| params.version | <code>number</code> | Version number of the linked Party |
 
 <a name="module_Transactions.Class.Transaction"></a>
 
@@ -2980,124 +3038,6 @@ Construct a new Transaction object
 | params.parties | <code>object</code> | Object of all parties as a Transaction child (PartyChild class) |
 | params.references | <code>object</code> | * |
 | params.postings | <code>\*</code> | * |
-
-<a name="PartyChild"></a>
-
-## PartyChild ⇐ <code>AMaaSModel</code>
-Class representing a Party (a Transaction children type)
-
-**Kind**: global class  
-**Extends**: <code>AMaaSModel</code>  
-
-* [PartyChild](#PartyChild) ⇐ <code>AMaaSModel</code>
-    * [new PartyChild(params)](#new_PartyChild_new)
-    * [new PartyChild(params)](#new_PartyChild_new)
-
-<a name="new_PartyChild_new"></a>
-
-### new PartyChild(params)
-Construct a new PartyChild object
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | PartyChild creation options |
-| params.partyId | <code>string</code> | ID of the linked Party |
-| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
-| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
-| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
-| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
-| params.version | <code>number</code> | Version number of the linked Party |
-
-<a name="new_PartyChild_new"></a>
-
-### new PartyChild(params)
-Construct a new PartyChild object
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | PartyChild creation options |
-| params.partyId | <code>string</code> | ID of the linked Party |
-| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
-| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
-| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
-| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
-| params.version | <code>number</code> | Version number of the linked Party |
-
-<a name="PartyChild"></a>
-
-## PartyChild ⇐ <code>AMaaSModel</code>
-Class representing a Party (a Transaction children type)
-
-**Kind**: global class  
-**Extends**: <code>AMaaSModel</code>  
-
-* [PartyChild](#PartyChild) ⇐ <code>AMaaSModel</code>
-    * [new PartyChild(params)](#new_PartyChild_new)
-    * [new PartyChild(params)](#new_PartyChild_new)
-
-<a name="new_PartyChild_new"></a>
-
-### new PartyChild(params)
-Construct a new PartyChild object
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | PartyChild creation options |
-| params.partyId | <code>string</code> | ID of the linked Party |
-| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
-| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
-| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
-| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
-| params.version | <code>number</code> | Version number of the linked Party |
-
-<a name="new_PartyChild_new"></a>
-
-### new PartyChild(params)
-Construct a new PartyChild object
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | PartyChild creation options |
-| params.partyId | <code>string</code> | ID of the linked Party |
-| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
-| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
-| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
-| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
-| params.version | <code>number</code> | Version number of the linked Party |
-
-<a name="retrieve"></a>
-
-## retrieve(AMId, resourceId, token)
-Retrieve Netting for a specific Transaction
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| AMId | <code>number</code> | Asset Manager ID of Transaction |
-| resourceId | <code>string</code> | Transaction ID |
-| token | <code>string</code> | Authorization token |
-
-<a name="send"></a>
-
-## send(AMId, data, token)
-Send Transactions to Net
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| AMId | <code>number</code> | Asset Manager ID of Transaction |
-| data | <code>array</code> | TBC |
-| token | <code>string</code> | Authorization token |
 
 
 ## Contribution
