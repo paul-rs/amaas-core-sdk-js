@@ -27,8 +27,7 @@ export function retrieve({AMId, resourceId, token}, callback) {
   }
   let promise = retrieveData(params).then(result => {
     if (!Array.isArray(result)) {
-      callback(null, _parseBook(result))
-      return
+      result = _parseBook(result)
     }
     const books = result.map(book => {
       return _parseBook(book)

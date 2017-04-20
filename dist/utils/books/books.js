@@ -45,8 +45,7 @@ function retrieve(_ref, callback) {
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
     if (!Array.isArray(result)) {
-      callback(null, _parseBook(result));
-      return;
+      result = _parseBook(result);
     }
     var books = result.map(function (book) {
       return _parseBook(book);
