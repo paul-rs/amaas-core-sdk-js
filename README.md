@@ -32,10 +32,12 @@ $ API_TOKEN=xxxxx npm test
 
 <dl>
 <dt><a href="#module_Core">Core</a></dt>
-<dd><p>Core classes for the AMaaS Core SDK for JavaScript</p>
+<dd><p>Core classes for the AMaaS Core SDK for JavaScript.
+These classes cannot be instantiated from the SDK, they are included for reference</p>
 </dd>
 <dt><a href="#module_Allocations">Allocations</a></dt>
-<dd><p>API methods to send and retrieve Transaction allocations</p>
+<dd><p>API methods to send and retrieve Transaction allocations.
+(Not ready yet)</p>
 </dd>
 <dt><a href="#module_AssetManagers">AssetManagers</a></dt>
 <dd><p>Classes and API methods for the AssetManagers service</p>
@@ -79,7 +81,8 @@ $ API_TOKEN=xxxxx npm test
 <a name="module_Core"></a>
 
 ## Core
-Core classes for the AMaaS Core SDK for JavaScript
+Core classes for the AMaaS Core SDK for JavaScript.
+These classes cannot be instantiated from the SDK, they are included for reference
 
 
 * [Core](#module_Core)
@@ -136,7 +139,8 @@ Construct new AMaaSModel object
 <a name="module_Allocations"></a>
 
 ## Allocations
-API methods to send and retrieve Transaction allocations
+API methods to send and retrieve Transaction allocations.
+(Not ready yet)
 
 
 * [Allocations](#module_Allocations)

@@ -1,5 +1,6 @@
 /**
- * API methods to send and retrieve Transaction allocations
+ * API methods to send and retrieve Transaction allocations.
+ * (Not ready yet)
  * @module Allocations
  */
 

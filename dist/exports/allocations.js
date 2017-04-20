@@ -10,7 +10,8 @@ var _allocations = require('../utils/allocations');
 // Exports
 exports.retrieve = _allocations.retrieve;
 exports.send = _allocations.send; /**
-                                   * API methods to send and retrieve Transaction allocations
+                                   * API methods to send and retrieve Transaction allocations.
+                                   * (Not ready yet)
                                    * @module Allocations
                                    */
 
