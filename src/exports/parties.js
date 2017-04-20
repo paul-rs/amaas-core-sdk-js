@@ -1,3 +1,7 @@
+/**
+ * @module Parties
+ */
+
 // Classes
 import {
   Individual,
