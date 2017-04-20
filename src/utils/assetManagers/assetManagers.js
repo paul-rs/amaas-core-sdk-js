@@ -15,6 +15,7 @@ import AssetManager from '../../assetManagers/AssetManager/assetManager.js'
  * @param {number} params.AMId - Asset Manager ID to retrieve
  * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise | AssetManager} If callback supplied, callback(null, AssetManager) is called. Otherwise promise is returned that resolves with AssetManager instance
  */
 export function retrieve({AMId, token}, callback) {
   const params = {
@@ -44,6 +45,7 @@ export function retrieve({AMId, token}, callback) {
  * @param {AssetManager} params.assetManager - Asset Manager instance to insert
  * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise | AssetManager} If callback supplied, callback(null, AssetManager) is called. Otherwise promise is returned that resolves with AssetManager instance
  */
 export function insert({assetManager, token}, callback) {
   let stringified, data
@@ -80,6 +82,7 @@ export function insert({assetManager, token}, callback) {
  * @param {AssetManager} params.assetManager - Asset Manager instance to insert
  * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise | AssetManager} If callback supplied, callback(null, AssetManager) is called. Otherwise promise is returned that resolves with AssetManager instance
  */
 export function amend({assetManager, AMId, token}, callback) {
   let stringified, data
@@ -128,6 +131,7 @@ export function amend({assetManager, AMId, token}, callback) {
  * @param {number} params.AMId - AMID of the Asset Manager to deactivate
  * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise | AssetManager} ???
  */
 export function deactivate({AMId, token}, callback) {
   const params = {
