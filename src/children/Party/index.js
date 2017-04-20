@@ -2,6 +2,8 @@ import { AMaaSModel } from '../../core'
 
 /**
  * Class representing a Party (a Transaction children type)
+ * @memberof module:Transactions.Class
+ * @extends module:Core.AMaaSModel
  * @extends AMaaSModel
  */
 class PartyChild extends AMaaSModel {
