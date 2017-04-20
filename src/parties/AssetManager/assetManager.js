@@ -2,7 +2,7 @@ import Company from '../Company/company'
 
 /**
  * Class representing an Asset Manager
- * @memberof module:Parties
+ * @memberof module:Parties.class
  * @extends module:Parties.Company
  */
 class AssetManager extends Company {

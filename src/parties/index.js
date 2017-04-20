@@ -1,3 +1,8 @@
+/**
+ * @namespace class
+ * @memberof module:Parties
+ */
+
 import {
   Address,
   Email

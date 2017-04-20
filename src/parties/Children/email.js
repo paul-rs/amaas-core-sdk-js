@@ -2,7 +2,7 @@ import { AMaaSModel } from '../../core'
 
 /**
  * Class representing an Email
- * @memberof module: Parties
+ * @memberof module:Parties.class
  * @extends module:Core.AMaaSModel
  */
 class Email extends AMaaSModel {
