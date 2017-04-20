@@ -1,3 +1,7 @@
+/**
+ * @module Allocations
+ */
+
 // CRUD methods
 import {
   retrieve,

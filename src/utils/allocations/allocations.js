@@ -3,9 +3,13 @@ import { Link } from '../../children'
 
 /**
  * Retrieve Allocations for a specific Transaction
- * @param {number} AMId - Asset Manager ID of Transaction
- * @param {string} resourceId - Transaction ID
- * @param {string} token - Authorization token
+ * @function retrieve
+ * @memberof module:Allocations
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID of Transaction
+ * @param {string} params.resourceId - Transaction ID
+ * @param {string} params.token - Authorization token
  */
 export function retrieve({ AMId, resourceId, token }, callback) {
   if (!AMId || !resourceId) {
@@ -34,11 +38,16 @@ export function retrieve({ AMId, resourceId, token }, callback) {
 
 /**
  * Send Allocations for a specific Transaction
- * @param {number} AMId - Asset Manager ID of Transaction
- * @param {string} resourceId - Transaction ID
- * @param {object} data - Allocation data for the Transaction of the form [ { book_id: '123', quantity: '50', transaction_id: 'XYZ' }, { book_id: '456', quantity: '50', transaction_id: 'ABC' } ]
+ * @memberof module:Allocations
+ * @function send
+ * @memberof module:Allocations
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID of Transaction
+ * @param {string} params.resourceId - Transaction ID
+ * @param {object} params.data - Allocation data for the Transaction of the form [ { book_id: '123', quantity: '50', transaction_id: 'XYZ' }, { book_id: '456', quantity: '50', transaction_id: 'ABC' } ]
    If transaction_id is given, the new Transaction that is created will have this as ID.
- * @param {string} token - Authorization token
+ * @param {string} params.token - Authorization token
  */
 export function send({ AMId, resourceId, data, token }, callback) {
   if (!AMId || !resourceId) {
