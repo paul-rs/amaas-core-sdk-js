@@ -4,7 +4,7 @@ import Link from '../../children/Link'
 
 /**
  * Class representing an Asset
- * @memberof module:Assets
+ * @memberof module:Assets.class
  * @extends module:Core.AMaaSModel
  */
 class Asset extends AMaaSModel {

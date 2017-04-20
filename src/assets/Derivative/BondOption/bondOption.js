@@ -5,7 +5,7 @@ import { OPTION_STYLES, OPTION_TYPES } from '../../enums'
 
 /**
  * Class representing an Bond Option
- * @memberof module:Assets
+ * @memberof module:Assets.class
  * @extends module:Assets.Derivative
  */
 class BondOption extends Derivative {

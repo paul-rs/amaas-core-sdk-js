@@ -2,7 +2,7 @@ import BondBase from '../BondBase/bond.js'
 
 /**
  * Class representing a Government Bond
- * @memberof module:Assets
+ * @memberof module:Assets.class
  * @extends module:Assets.BondBase
  */
 class BondGovernment extends BondBase {

@@ -2,7 +2,7 @@ import RealAsset from '../RealAsset/realAsset'
 
 /**
  * Class representing Wine
- * @memberof module:Assets
+ * @memberof module:Assets.class
  * @extends module:Assets.RealAsset
  */
 class Wine extends RealAsset {

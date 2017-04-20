@@ -2,7 +2,7 @@ import Asset from '../../Asset/asset'
 
 /**
  * Class representing a Listed Derivative
- * @memberof module:Assets
+ * @memberof module:Assets.class
  * @extends module:Assets.Asset
  */
 class ListedDerivative extends Asset {

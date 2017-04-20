@@ -2,7 +2,7 @@ import Asset from '../../Asset/asset.js'
 
 /**
  * Class representing FX (this should never be instantiated directly, use the appropriate subclass instead)
- * @memberof module:Assets
+ * @memberof module:Assets.class
  * @extends module:Assets.Asset
  */
 class FXBase extends Asset {

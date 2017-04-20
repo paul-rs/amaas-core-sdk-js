@@ -2,7 +2,7 @@ import ListedDerivative from '../ListedDerivative/listedDerivative'
 
 /**
  * Class representing a Listed CFD
- * @memberof module:Assets
+ * @memberof module:Assets.class
  * @extends module:Assets.ListedDerivative
  */
 class ListedContractForDifference extends ListedDerivative {

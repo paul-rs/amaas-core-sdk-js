@@ -2,7 +2,7 @@ import Asset from '../Asset/asset.js'
 
 /**
  * Class representing an Currency
- * @memberof module:Assets
+ * @memberof module:Assets.class
  * @extends module:Assets.Asset
  */
 class Currency extends Asset {

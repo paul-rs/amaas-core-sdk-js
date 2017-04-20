@@ -5,7 +5,7 @@ import { FUTURE_SETTLEMENT_TYPES }  from '../../enums.js'
 
 /**
  * Class representing a Future
- * @memberof module:Assets
+ * @memberof module:Assets.class
  * @extends module:Assets.ListedDerivative
  */
 class Future extends ListedDerivative {

@@ -2,7 +2,7 @@ import Synthetic from '../Synthetic/synthetic.js'
 
 /**
  * Class representing a Synthetic From Book
- * @memberof module:Assets
+ * @memberof module:Assets.class
  * @extends module:Assets.Synthetic
  */
 class SyntheticFromBook extends Synthetic {

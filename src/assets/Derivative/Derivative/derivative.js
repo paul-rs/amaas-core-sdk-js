@@ -2,7 +2,7 @@ import Asset from '../../Asset/asset.js'
 
 /**
  * Class representing an Derivative
- * @memberof module:Assets
+ * @memberof module:Assets.class
  * @extends module:Assets.Asset
  */
 class Derivative extends Asset {

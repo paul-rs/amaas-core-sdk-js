@@ -2,7 +2,7 @@ import Future from '../Future/future'
 
 /**
  * Class representing an Interest Rate Future
- * @memberof module:Assets
+ * @memberof module:Assets.class
  * @extends module:Assets.Future
  */
 class InterestRateFuture extends Future {
