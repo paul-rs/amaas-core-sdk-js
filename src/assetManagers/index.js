@@ -1,5 +1,5 @@
 /**
- * @namespace class
+ * @namespace Class
  * @memberof module:AssetManagers
  */
 

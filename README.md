@@ -178,36 +178,36 @@ Classes and API methods for the AssetManagers service
 
 
 * [AssetManagers](#module_AssetManagers)
-    * [.class](#module_AssetManagers.class) : <code>object</code>
-        * [.AssetManager](#module_AssetManagers.class.AssetManager) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-            * [new AssetManager(params)](#new_module_AssetManagers.class.AssetManager_new)
-        * [.Relationship](#module_AssetManagers.class.Relationship) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-            * [new Relationship(params)](#new_module_AssetManagers.class.Relationship_new)
+    * [.Class](#module_AssetManagers.Class) : <code>object</code>
+        * [.AssetManager](#module_AssetManagers.Class.AssetManager) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+            * [new AssetManager(params)](#new_module_AssetManagers.Class.AssetManager_new)
+        * [.Relationship](#module_AssetManagers.Class.Relationship) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+            * [new Relationship(params)](#new_module_AssetManagers.Class.Relationship_new)
     * [.api](#module_AssetManagers.api) : <code>object</code>
         * [.retrieve(params, callback)](#module_AssetManagers.api.retrieve) ⇒ <code>Promise</code> \| <code>AssetManager</code>
         * [.insert(params, callback)](#module_AssetManagers.api.insert) ⇒ <code>Promise</code> \| <code>AssetManager</code>
         * [.amend(params, callback)](#module_AssetManagers.api.amend) ⇒ <code>Promise</code> \| <code>AssetManager</code>
         * [.deactivate(params, callback)](#module_AssetManagers.api.deactivate) ⇒ <code>Promise</code> \| <code>AssetManager</code>
 
-<a name="module_AssetManagers.class"></a>
+<a name="module_AssetManagers.Class"></a>
 
-### AssetManagers.class : <code>object</code>
+### AssetManagers.Class : <code>object</code>
 **Kind**: static namespace of <code>[AssetManagers](#module_AssetManagers)</code>  
 
-* [.class](#module_AssetManagers.class) : <code>object</code>
-    * [.AssetManager](#module_AssetManagers.class.AssetManager) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-        * [new AssetManager(params)](#new_module_AssetManagers.class.AssetManager_new)
-    * [.Relationship](#module_AssetManagers.class.Relationship) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-        * [new Relationship(params)](#new_module_AssetManagers.class.Relationship_new)
+* [.Class](#module_AssetManagers.Class) : <code>object</code>
+    * [.AssetManager](#module_AssetManagers.Class.AssetManager) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+        * [new AssetManager(params)](#new_module_AssetManagers.Class.AssetManager_new)
+    * [.Relationship](#module_AssetManagers.Class.Relationship) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+        * [new Relationship(params)](#new_module_AssetManagers.Class.Relationship_new)
 
-<a name="module_AssetManagers.class.AssetManager"></a>
+<a name="module_AssetManagers.Class.AssetManager"></a>
 
-#### class.AssetManager ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+#### Class.AssetManager ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
 Class representing an Asset Manager
 
-**Kind**: static class of <code>[class](#module_AssetManagers.class)</code>  
+**Kind**: static class of <code>[Class](#module_AssetManagers.Class)</code>  
 **Extends**: <code>[AMaaSModel](#module_Core.AMaaSModel)</code>  
-<a name="new_module_AssetManagers.class.AssetManager_new"></a>
+<a name="new_module_AssetManagers.Class.AssetManager_new"></a>
 
 ##### new AssetManager(params)
 Construct a new Asset Manager Model
@@ -230,14 +230,14 @@ Construct a new Asset Manager Model
 | params.updatedTime | <code>date</code> | Time that the Asset Manager was updated |
 | params.version | <code>number</code> | Version number of the Asset Manager |
 
-<a name="module_AssetManagers.class.Relationship"></a>
+<a name="module_AssetManagers.Class.Relationship"></a>
 
-#### class.Relationship ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+#### Class.Relationship ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
 Class representing a Relationship
 
-**Kind**: static class of <code>[class](#module_AssetManagers.class)</code>  
+**Kind**: static class of <code>[Class](#module_AssetManagers.Class)</code>  
 **Extends**: <code>[AMaaSModel](#module_Core.AMaaSModel)</code>  
-<a name="new_module_AssetManagers.class.Relationship_new"></a>
+<a name="new_module_AssetManagers.Class.Relationship_new"></a>
 
 ##### new Relationship(params)
 Construct a new Relationship instance

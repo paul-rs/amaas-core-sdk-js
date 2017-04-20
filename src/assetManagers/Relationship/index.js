@@ -3,7 +3,7 @@ import { RELATIONSHIP_TYPES } from '../enums'
 
 /**
  * Class representing a Relationship
- * @memberof module:AssetManagers.class
+ * @memberof module:AssetManagers.Class
  * @extends module:Core.AMaaSModel
  */
 class Relationship extends AMaaSModel {
