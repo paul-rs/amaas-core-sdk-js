@@ -44,12 +44,14 @@ function retrieve(_ref, callback) {
     token: token
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
+    var books = void 0;
     if (!Array.isArray(result)) {
-      result = _parseBook(result);
+      books = _parseBook(result);
+    } else {
+      books = result.map(function (book) {
+        return _parseBook(book);
+      });
     }
-    var books = result.map(function (book) {
-      return _parseBook(book);
-    });
     if (typeof callback === 'function') {
       callback(null, books);
     } else {
