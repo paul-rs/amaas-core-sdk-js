@@ -2030,30 +2030,30 @@ Classes and API methods for the Books Service
 
 
 * [Books](#module_Books)
-    * [.class](#module_Books.class) : <code>object</code>
-        * [.Book](#module_Books.class.Book) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-            * [new Book(params)](#new_module_Books.class.Book_new)
+    * [.Class](#module_Books.Class) : <code>object</code>
+        * [.Book](#module_Books.Class.Book) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+            * [new Book(params)](#new_module_Books.Class.Book_new)
     * [.api](#module_Books.api) : <code>object</code>
         * [.retrieve(params, callback)](#module_Books.api.retrieve) ⇒ <code>Promise</code> \| <code>Array</code> \| <code>Book</code>
         * [.search(params, callback)](#module_Books.api.search) ⇒ <code>Promise</code> \| <code>Array</code>
 
-<a name="module_Books.class"></a>
+<a name="module_Books.Class"></a>
 
-### Books.class : <code>object</code>
+### Books.Class : <code>object</code>
 **Kind**: static namespace of <code>[Books](#module_Books)</code>  
 
-* [.class](#module_Books.class) : <code>object</code>
-    * [.Book](#module_Books.class.Book) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-        * [new Book(params)](#new_module_Books.class.Book_new)
+* [.Class](#module_Books.Class) : <code>object</code>
+    * [.Book](#module_Books.Class.Book) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+        * [new Book(params)](#new_module_Books.Class.Book_new)
 
-<a name="module_Books.class.Book"></a>
+<a name="module_Books.Class.Book"></a>
 
-#### class.Book ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+#### Class.Book ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
 Class representing a Book
 
-**Kind**: static class of <code>[class](#module_Books.class)</code>  
+**Kind**: static class of <code>[Class](#module_Books.Class)</code>  
 **Extends**: <code>[AMaaSModel](#module_Core.AMaaSModel)</code>  
-<a name="new_module_Books.class.Book_new"></a>
+<a name="new_module_Books.Class.Book_new"></a>
 
 ##### new Book(params)
 Construct a new Book object
@@ -2176,45 +2176,47 @@ Classes and API methods for the Parties service
 
 
 * [Parties](#module_Parties)
-    * [.class](#module_Parties.class) : <code>object</code>
-        * [.AssetManager](#module_Parties.class.AssetManager) ⇐ <code>module:Parties.Company</code>
-            * [new AssetManager(params, (object))](#new_module_Parties.class.AssetManager_new)
-        * [.Broker](#module_Parties.class.Broker) ⇐ <code>[Company](#module_Parties.class.Company)</code>
-            * [new Broker(params, (object))](#new_module_Parties.class.Broker_new)
-            * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-            * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-        * [.Address](#module_Parties.class.Address) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-            * [new Address(params)](#new_module_Parties.class.Address_new)
-        * [.Email](#module_Parties.class.Email) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-            * [new Email(params)](#new_module_Parties.class.Email_new)
-        * [.Company](#module_Parties.class.Company) ⇐ <code>[Organisation](#module_Parties.class.Organisation)</code>
-            * [new Company(params, (object))](#new_module_Parties.class.Company_new)
-            * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-            * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-        * [.Exchange](#module_Parties.class.Exchange) ⇐ <code>[Company](#module_Parties.class.Company)</code>
-            * [new Exchange(params, (object))](#new_module_Parties.class.Exchange_new)
-            * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-            * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-        * [.Fund](#module_Parties.class.Fund) ⇐ <code>[Company](#module_Parties.class.Company)</code>
-            * [new Fund(params, (object))](#new_module_Parties.class.Fund_new)
-            * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-            * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-        * [.GovernmentAgency](#module_Parties.class.GovernmentAgency) ⇐ <code>[Organisation](#module_Parties.class.Organisation)</code>
-            * [new GovernmentAgency(params, (object))](#new_module_Parties.class.GovernmentAgency_new)
-            * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-            * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-        * [.Individual](#module_Parties.class.Individual) ⇐ <code>[Party](#module_Parties.class.Party)</code>
-            * [new Individual(params, (object))](#new_module_Parties.class.Individual_new)
-            * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-            * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-        * [.Organisation](#module_Parties.class.Organisation) ⇐ <code>[Party](#module_Parties.class.Party)</code>
-            * [new Organisation(params, (object))](#new_module_Parties.class.Organisation_new)
-            * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-            * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-        * [.Party](#module_Parties.class.Party) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-            * [new Party(params, (object))](#new_module_Parties.class.Party_new)
-            * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-            * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
+    * [.Class](#module_Parties.Class) : <code>object</code>
+        * [.AssetManager](#module_Parties.Class.AssetManager) ⇐ <code>[Company](#module_Parties.Class.Company)</code>
+            * [new AssetManager(params, (object))](#new_module_Parties.Class.AssetManager_new)
+            * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+            * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+        * [.Broker](#module_Parties.Class.Broker) ⇐ <code>[Company](#module_Parties.Class.Company)</code>
+            * [new Broker(params, (object))](#new_module_Parties.Class.Broker_new)
+            * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+            * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+        * [.Address](#module_Parties.Class.Address) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+            * [new Address(params)](#new_module_Parties.Class.Address_new)
+        * [.Email](#module_Parties.Class.Email) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+            * [new Email(params)](#new_module_Parties.Class.Email_new)
+        * [.Company](#module_Parties.Class.Company) ⇐ <code>[Organisation](#module_Parties.Class.Organisation)</code>
+            * [new Company(params, (object))](#new_module_Parties.Class.Company_new)
+            * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+            * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+        * [.Exchange](#module_Parties.Class.Exchange) ⇐ <code>[Company](#module_Parties.Class.Company)</code>
+            * [new Exchange(params, (object))](#new_module_Parties.Class.Exchange_new)
+            * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+            * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+        * [.Fund](#module_Parties.Class.Fund) ⇐ <code>[Company](#module_Parties.Class.Company)</code>
+            * [new Fund(params, (object))](#new_module_Parties.Class.Fund_new)
+            * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+            * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+        * [.GovernmentAgency](#module_Parties.Class.GovernmentAgency) ⇐ <code>[Organisation](#module_Parties.Class.Organisation)</code>
+            * [new GovernmentAgency(params, (object))](#new_module_Parties.Class.GovernmentAgency_new)
+            * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+            * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+        * [.Individual](#module_Parties.Class.Individual) ⇐ <code>[Party](#module_Parties.Class.Party)</code>
+            * [new Individual(params, (object))](#new_module_Parties.Class.Individual_new)
+            * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+            * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+        * [.Organisation](#module_Parties.Class.Organisation) ⇐ <code>[Party](#module_Parties.Class.Party)</code>
+            * [new Organisation(params, (object))](#new_module_Parties.Class.Organisation_new)
+            * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+            * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+        * [.Party](#module_Parties.Class.Party) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+            * [new Party(params, (object))](#new_module_Parties.Class.Party_new)
+            * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+            * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
     * [.api](#module_Parties.api) : <code>object</code>
         * [.retrieve(params, callback)](#module_Parties.api.retrieve) ⇒ <code>Promise</code> \| <code>Array</code> \| <code>Party</code>
         * [.insert(params, callback)](#module_Parties.api.insert) ⇒ <code>Promise</code> \| <code>Party</code>
@@ -2222,59 +2224,67 @@ Classes and API methods for the Parties service
         * [.partialAmend(params, callback)](#module_Parties.api.partialAmend) ⇒ <code>Promise</code> \| <code>Party</code>
         * [.deactivate(params, callback)](#module_Parties.api.deactivate)
 
-<a name="module_Parties.class"></a>
+<a name="module_Parties.Class"></a>
 
-### Parties.class : <code>object</code>
+### Parties.Class : <code>object</code>
 **Kind**: static namespace of <code>[Parties](#module_Parties)</code>  
 
-* [.class](#module_Parties.class) : <code>object</code>
-    * [.AssetManager](#module_Parties.class.AssetManager) ⇐ <code>module:Parties.Company</code>
-        * [new AssetManager(params, (object))](#new_module_Parties.class.AssetManager_new)
-    * [.Broker](#module_Parties.class.Broker) ⇐ <code>[Company](#module_Parties.class.Company)</code>
-        * [new Broker(params, (object))](#new_module_Parties.class.Broker_new)
-        * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-        * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-    * [.Address](#module_Parties.class.Address) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-        * [new Address(params)](#new_module_Parties.class.Address_new)
-    * [.Email](#module_Parties.class.Email) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-        * [new Email(params)](#new_module_Parties.class.Email_new)
-    * [.Company](#module_Parties.class.Company) ⇐ <code>[Organisation](#module_Parties.class.Organisation)</code>
-        * [new Company(params, (object))](#new_module_Parties.class.Company_new)
-        * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-        * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-    * [.Exchange](#module_Parties.class.Exchange) ⇐ <code>[Company](#module_Parties.class.Company)</code>
-        * [new Exchange(params, (object))](#new_module_Parties.class.Exchange_new)
-        * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-        * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-    * [.Fund](#module_Parties.class.Fund) ⇐ <code>[Company](#module_Parties.class.Company)</code>
-        * [new Fund(params, (object))](#new_module_Parties.class.Fund_new)
-        * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-        * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-    * [.GovernmentAgency](#module_Parties.class.GovernmentAgency) ⇐ <code>[Organisation](#module_Parties.class.Organisation)</code>
-        * [new GovernmentAgency(params, (object))](#new_module_Parties.class.GovernmentAgency_new)
-        * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-        * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-    * [.Individual](#module_Parties.class.Individual) ⇐ <code>[Party](#module_Parties.class.Party)</code>
-        * [new Individual(params, (object))](#new_module_Parties.class.Individual_new)
-        * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-        * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-    * [.Organisation](#module_Parties.class.Organisation) ⇐ <code>[Party](#module_Parties.class.Party)</code>
-        * [new Organisation(params, (object))](#new_module_Parties.class.Organisation_new)
-        * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-        * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
-    * [.Party](#module_Parties.class.Party) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-        * [new Party(params, (object))](#new_module_Parties.class.Party_new)
-        * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-        * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
+* [.Class](#module_Parties.Class) : <code>object</code>
+    * [.AssetManager](#module_Parties.Class.AssetManager) ⇐ <code>[Company](#module_Parties.Class.Company)</code>
+        * [new AssetManager(params, (object))](#new_module_Parties.Class.AssetManager_new)
+        * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+        * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+    * [.Broker](#module_Parties.Class.Broker) ⇐ <code>[Company](#module_Parties.Class.Company)</code>
+        * [new Broker(params, (object))](#new_module_Parties.Class.Broker_new)
+        * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+        * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+    * [.Address](#module_Parties.Class.Address) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+        * [new Address(params)](#new_module_Parties.Class.Address_new)
+    * [.Email](#module_Parties.Class.Email) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+        * [new Email(params)](#new_module_Parties.Class.Email_new)
+    * [.Company](#module_Parties.Class.Company) ⇐ <code>[Organisation](#module_Parties.Class.Organisation)</code>
+        * [new Company(params, (object))](#new_module_Parties.Class.Company_new)
+        * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+        * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+    * [.Exchange](#module_Parties.Class.Exchange) ⇐ <code>[Company](#module_Parties.Class.Company)</code>
+        * [new Exchange(params, (object))](#new_module_Parties.Class.Exchange_new)
+        * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+        * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+    * [.Fund](#module_Parties.Class.Fund) ⇐ <code>[Company](#module_Parties.Class.Company)</code>
+        * [new Fund(params, (object))](#new_module_Parties.Class.Fund_new)
+        * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+        * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+    * [.GovernmentAgency](#module_Parties.Class.GovernmentAgency) ⇐ <code>[Organisation](#module_Parties.Class.Organisation)</code>
+        * [new GovernmentAgency(params, (object))](#new_module_Parties.Class.GovernmentAgency_new)
+        * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+        * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+    * [.Individual](#module_Parties.Class.Individual) ⇐ <code>[Party](#module_Parties.Class.Party)</code>
+        * [new Individual(params, (object))](#new_module_Parties.Class.Individual_new)
+        * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+        * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+    * [.Organisation](#module_Parties.Class.Organisation) ⇐ <code>[Party](#module_Parties.Class.Party)</code>
+        * [new Organisation(params, (object))](#new_module_Parties.Class.Organisation_new)
+        * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+        * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+    * [.Party](#module_Parties.Class.Party) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+        * [new Party(params, (object))](#new_module_Parties.Class.Party_new)
+        * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+        * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
 
-<a name="module_Parties.class.AssetManager"></a>
+<a name="module_Parties.Class.AssetManager"></a>
 
-#### class.AssetManager ⇐ <code>module:Parties.Company</code>
+#### Class.AssetManager ⇐ <code>[Company](#module_Parties.Class.Company)</code>
 Class representing an Asset Manager
 
-**Kind**: static class of <code>[class](#module_Parties.class)</code>  
-**Extends**: <code>module:Parties.Company</code>  
-<a name="new_module_Parties.class.AssetManager_new"></a>
+**Kind**: static class of <code>[Class](#module_Parties.Class)</code>  
+**Extends**: <code>[Company](#module_Parties.Class.Company)</code>  
+
+* [.AssetManager](#module_Parties.Class.AssetManager) ⇐ <code>[Company](#module_Parties.Class.Company)</code>
+    * [new AssetManager(params, (object))](#new_module_Parties.Class.AssetManager_new)
+    * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+    * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
+
+<a name="new_module_Parties.Class.AssetManager_new"></a>
 
 ##### new AssetManager(params, (object))
 Construct a new Asset Manager instance
@@ -2299,20 +2309,44 @@ Construct a new Asset Manager instance
 | params.updatedTime | <code>date</code> |  | Time that the Asset Manager was updated |
 | params.version | <code>number</code> |  | Version number of the Asset Manager |
 
-<a name="module_Parties.class.Broker"></a>
+<a name="module_Parties.Class.Party+upsertAddress"></a>
 
-#### class.Broker ⇐ <code>[Company](#module_Parties.class.Company)</code>
+##### assetManager.upsertAddress(type, address)
+Upsert an Address
+
+**Kind**: instance method of <code>[AssetManager](#module_Parties.Class.AssetManager)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| type | <code>string</code> | Type of Address (e.g. 'Registered', 'Legal') |
+| address | <code>Address</code> | new Address. Note that the new Address cannot be primary if a primary Address already exists. Use this.addresses setter to replace primary Addresses (??) |
+
+<a name="module_Parties.Class.Party+upsertEmail"></a>
+
+##### assetManager.upsertEmail(type, email)
+Upsert an Email
+
+**Kind**: instance method of <code>[AssetManager](#module_Parties.Class.AssetManager)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| type | <code>string</code> | Type of Email (e.g. 'Work', 'Support') |
+| email | <code>Emails</code> | new Email. Note that the new Email cannot be primary if a primary Email already exists. Use this.emails setter to replace primary Emails (??) |
+
+<a name="module_Parties.Class.Broker"></a>
+
+#### Class.Broker ⇐ <code>[Company](#module_Parties.Class.Company)</code>
 Class representing a Broker
 
-**Kind**: static class of <code>[class](#module_Parties.class)</code>  
-**Extends**: <code>[Company](#module_Parties.class.Company)</code>  
+**Kind**: static class of <code>[Class](#module_Parties.Class)</code>  
+**Extends**: <code>[Company](#module_Parties.Class.Company)</code>  
 
-* [.Broker](#module_Parties.class.Broker) ⇐ <code>[Company](#module_Parties.class.Company)</code>
-    * [new Broker(params, (object))](#new_module_Parties.class.Broker_new)
-    * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-    * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
+* [.Broker](#module_Parties.Class.Broker) ⇐ <code>[Company](#module_Parties.Class.Company)</code>
+    * [new Broker(params, (object))](#new_module_Parties.Class.Broker_new)
+    * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+    * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
 
-<a name="new_module_Parties.class.Broker_new"></a>
+<a name="new_module_Parties.Class.Broker_new"></a>
 
 ##### new Broker(params, (object))
 Construct a new Broker instance
@@ -2337,38 +2371,38 @@ Construct a new Broker instance
 | params.updatedTime | <code>date</code> |  | Time that the Broker was updated |
 | params.version | <code>number</code> |  | Version number of the Broker |
 
-<a name="module_Parties.class.Party+upsertAddress"></a>
+<a name="module_Parties.Class.Party+upsertAddress"></a>
 
 ##### broker.upsertAddress(type, address)
 Upsert an Address
 
-**Kind**: instance method of <code>[Broker](#module_Parties.class.Broker)</code>  
+**Kind**: instance method of <code>[Broker](#module_Parties.Class.Broker)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Address (e.g. 'Registered', 'Legal') |
 | address | <code>Address</code> | new Address. Note that the new Address cannot be primary if a primary Address already exists. Use this.addresses setter to replace primary Addresses (??) |
 
-<a name="module_Parties.class.Party+upsertEmail"></a>
+<a name="module_Parties.Class.Party+upsertEmail"></a>
 
 ##### broker.upsertEmail(type, email)
 Upsert an Email
 
-**Kind**: instance method of <code>[Broker](#module_Parties.class.Broker)</code>  
+**Kind**: instance method of <code>[Broker](#module_Parties.Class.Broker)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Email (e.g. 'Work', 'Support') |
 | email | <code>Emails</code> | new Email. Note that the new Email cannot be primary if a primary Email already exists. Use this.emails setter to replace primary Emails (??) |
 
-<a name="module_Parties.class.Address"></a>
+<a name="module_Parties.Class.Address"></a>
 
-#### class.Address ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+#### Class.Address ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
 Class representing an Address
 
-**Kind**: static class of <code>[class](#module_Parties.class)</code>  
+**Kind**: static class of <code>[Class](#module_Parties.Class)</code>  
 **Extends**: <code>[AMaaSModel](#module_Core.AMaaSModel)</code>  
-<a name="new_module_Parties.class.Address_new"></a>
+<a name="new_module_Parties.Class.Address_new"></a>
 
 ##### new Address(params)
 Construct a new Address instance
@@ -2391,14 +2425,14 @@ Construct a new Address instance
 | params.updatedTime | <code>date</code> | Time that the Address was updated |
 | params.version | <code>number</code> | Version number of the Address |
 
-<a name="module_Parties.class.Email"></a>
+<a name="module_Parties.Class.Email"></a>
 
-#### class.Email ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+#### Class.Email ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
 Class representing an Email
 
-**Kind**: static class of <code>[class](#module_Parties.class)</code>  
+**Kind**: static class of <code>[Class](#module_Parties.Class)</code>  
 **Extends**: <code>[AMaaSModel](#module_Core.AMaaSModel)</code>  
-<a name="new_module_Parties.class.Email_new"></a>
+<a name="new_module_Parties.Class.Email_new"></a>
 
 ##### new Email(params)
 Construct a new Email object
@@ -2416,20 +2450,20 @@ Construct a new Email object
 | params.updatedTime | <code>date</code> | Time that the Email was updated (required if amending existing Email) |
 | params.version | <code>number</code> | Version number of the Email |
 
-<a name="module_Parties.class.Company"></a>
+<a name="module_Parties.Class.Company"></a>
 
-#### class.Company ⇐ <code>[Organisation](#module_Parties.class.Organisation)</code>
+#### Class.Company ⇐ <code>[Organisation](#module_Parties.Class.Organisation)</code>
 Class representing a Company
 
-**Kind**: static class of <code>[class](#module_Parties.class)</code>  
-**Extends**: <code>[Organisation](#module_Parties.class.Organisation)</code>  
+**Kind**: static class of <code>[Class](#module_Parties.Class)</code>  
+**Extends**: <code>[Organisation](#module_Parties.Class.Organisation)</code>  
 
-* [.Company](#module_Parties.class.Company) ⇐ <code>[Organisation](#module_Parties.class.Organisation)</code>
-    * [new Company(params, (object))](#new_module_Parties.class.Company_new)
-    * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-    * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
+* [.Company](#module_Parties.Class.Company) ⇐ <code>[Organisation](#module_Parties.Class.Organisation)</code>
+    * [new Company(params, (object))](#new_module_Parties.Class.Company_new)
+    * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+    * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
 
-<a name="new_module_Parties.class.Company_new"></a>
+<a name="new_module_Parties.Class.Company_new"></a>
 
 ##### new Company(params, (object))
 Construct a new Company instance
@@ -2455,44 +2489,44 @@ Construct a new Company instance
 | params.updatedTime | <code>date</code> |  | Time that the Company was updated |
 | params.version | <code>number</code> |  | Version number of the Company |
 
-<a name="module_Parties.class.Party+upsertAddress"></a>
+<a name="module_Parties.Class.Party+upsertAddress"></a>
 
 ##### company.upsertAddress(type, address)
 Upsert an Address
 
-**Kind**: instance method of <code>[Company](#module_Parties.class.Company)</code>  
+**Kind**: instance method of <code>[Company](#module_Parties.Class.Company)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Address (e.g. 'Registered', 'Legal') |
 | address | <code>Address</code> | new Address. Note that the new Address cannot be primary if a primary Address already exists. Use this.addresses setter to replace primary Addresses (??) |
 
-<a name="module_Parties.class.Party+upsertEmail"></a>
+<a name="module_Parties.Class.Party+upsertEmail"></a>
 
 ##### company.upsertEmail(type, email)
 Upsert an Email
 
-**Kind**: instance method of <code>[Company](#module_Parties.class.Company)</code>  
+**Kind**: instance method of <code>[Company](#module_Parties.Class.Company)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Email (e.g. 'Work', 'Support') |
 | email | <code>Emails</code> | new Email. Note that the new Email cannot be primary if a primary Email already exists. Use this.emails setter to replace primary Emails (??) |
 
-<a name="module_Parties.class.Exchange"></a>
+<a name="module_Parties.Class.Exchange"></a>
 
-#### class.Exchange ⇐ <code>[Company](#module_Parties.class.Company)</code>
+#### Class.Exchange ⇐ <code>[Company](#module_Parties.Class.Company)</code>
 Class representing an Exchange
 
-**Kind**: static class of <code>[class](#module_Parties.class)</code>  
-**Extends**: <code>[Company](#module_Parties.class.Company)</code>  
+**Kind**: static class of <code>[Class](#module_Parties.Class)</code>  
+**Extends**: <code>[Company](#module_Parties.Class.Company)</code>  
 
-* [.Exchange](#module_Parties.class.Exchange) ⇐ <code>[Company](#module_Parties.class.Company)</code>
-    * [new Exchange(params, (object))](#new_module_Parties.class.Exchange_new)
-    * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-    * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
+* [.Exchange](#module_Parties.Class.Exchange) ⇐ <code>[Company](#module_Parties.Class.Company)</code>
+    * [new Exchange(params, (object))](#new_module_Parties.Class.Exchange_new)
+    * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+    * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
 
-<a name="new_module_Parties.class.Exchange_new"></a>
+<a name="new_module_Parties.Class.Exchange_new"></a>
 
 ##### new Exchange(params, (object))
 Construct a new Exchange instance
@@ -2517,44 +2551,44 @@ Construct a new Exchange instance
 | params.updatedTime | <code>date</code> |  | Time that the Exchange was updated |
 | params.version | <code>number</code> |  | Version number of the Exchange |
 
-<a name="module_Parties.class.Party+upsertAddress"></a>
+<a name="module_Parties.Class.Party+upsertAddress"></a>
 
 ##### exchange.upsertAddress(type, address)
 Upsert an Address
 
-**Kind**: instance method of <code>[Exchange](#module_Parties.class.Exchange)</code>  
+**Kind**: instance method of <code>[Exchange](#module_Parties.Class.Exchange)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Address (e.g. 'Registered', 'Legal') |
 | address | <code>Address</code> | new Address. Note that the new Address cannot be primary if a primary Address already exists. Use this.addresses setter to replace primary Addresses (??) |
 
-<a name="module_Parties.class.Party+upsertEmail"></a>
+<a name="module_Parties.Class.Party+upsertEmail"></a>
 
 ##### exchange.upsertEmail(type, email)
 Upsert an Email
 
-**Kind**: instance method of <code>[Exchange](#module_Parties.class.Exchange)</code>  
+**Kind**: instance method of <code>[Exchange](#module_Parties.Class.Exchange)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Email (e.g. 'Work', 'Support') |
 | email | <code>Emails</code> | new Email. Note that the new Email cannot be primary if a primary Email already exists. Use this.emails setter to replace primary Emails (??) |
 
-<a name="module_Parties.class.Fund"></a>
+<a name="module_Parties.Class.Fund"></a>
 
-#### class.Fund ⇐ <code>[Company](#module_Parties.class.Company)</code>
+#### Class.Fund ⇐ <code>[Company](#module_Parties.Class.Company)</code>
 Class representing a Fund
 
-**Kind**: static class of <code>[class](#module_Parties.class)</code>  
-**Extends**: <code>[Company](#module_Parties.class.Company)</code>  
+**Kind**: static class of <code>[Class](#module_Parties.Class)</code>  
+**Extends**: <code>[Company](#module_Parties.Class.Company)</code>  
 
-* [.Fund](#module_Parties.class.Fund) ⇐ <code>[Company](#module_Parties.class.Company)</code>
-    * [new Fund(params, (object))](#new_module_Parties.class.Fund_new)
-    * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-    * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
+* [.Fund](#module_Parties.Class.Fund) ⇐ <code>[Company](#module_Parties.Class.Company)</code>
+    * [new Fund(params, (object))](#new_module_Parties.Class.Fund_new)
+    * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+    * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
 
-<a name="new_module_Parties.class.Fund_new"></a>
+<a name="new_module_Parties.Class.Fund_new"></a>
 
 ##### new Fund(params, (object))
 Construct a new Fund instance
@@ -2579,44 +2613,44 @@ Construct a new Fund instance
 | params.updatedTime | <code>date</code> |  | Time that the Fund was updated |
 | params.version | <code>number</code> |  | Version number of the Fund |
 
-<a name="module_Parties.class.Party+upsertAddress"></a>
+<a name="module_Parties.Class.Party+upsertAddress"></a>
 
 ##### fund.upsertAddress(type, address)
 Upsert an Address
 
-**Kind**: instance method of <code>[Fund](#module_Parties.class.Fund)</code>  
+**Kind**: instance method of <code>[Fund](#module_Parties.Class.Fund)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Address (e.g. 'Registered', 'Legal') |
 | address | <code>Address</code> | new Address. Note that the new Address cannot be primary if a primary Address already exists. Use this.addresses setter to replace primary Addresses (??) |
 
-<a name="module_Parties.class.Party+upsertEmail"></a>
+<a name="module_Parties.Class.Party+upsertEmail"></a>
 
 ##### fund.upsertEmail(type, email)
 Upsert an Email
 
-**Kind**: instance method of <code>[Fund](#module_Parties.class.Fund)</code>  
+**Kind**: instance method of <code>[Fund](#module_Parties.Class.Fund)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Email (e.g. 'Work', 'Support') |
 | email | <code>Emails</code> | new Email. Note that the new Email cannot be primary if a primary Email already exists. Use this.emails setter to replace primary Emails (??) |
 
-<a name="module_Parties.class.GovernmentAgency"></a>
+<a name="module_Parties.Class.GovernmentAgency"></a>
 
-#### class.GovernmentAgency ⇐ <code>[Organisation](#module_Parties.class.Organisation)</code>
+#### Class.GovernmentAgency ⇐ <code>[Organisation](#module_Parties.Class.Organisation)</code>
 Class representing a Government Agency
 
-**Kind**: static class of <code>[class](#module_Parties.class)</code>  
-**Extends**: <code>[Organisation](#module_Parties.class.Organisation)</code>  
+**Kind**: static class of <code>[Class](#module_Parties.Class)</code>  
+**Extends**: <code>[Organisation](#module_Parties.Class.Organisation)</code>  
 
-* [.GovernmentAgency](#module_Parties.class.GovernmentAgency) ⇐ <code>[Organisation](#module_Parties.class.Organisation)</code>
-    * [new GovernmentAgency(params, (object))](#new_module_Parties.class.GovernmentAgency_new)
-    * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-    * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
+* [.GovernmentAgency](#module_Parties.Class.GovernmentAgency) ⇐ <code>[Organisation](#module_Parties.Class.Organisation)</code>
+    * [new GovernmentAgency(params, (object))](#new_module_Parties.Class.GovernmentAgency_new)
+    * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+    * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
 
-<a name="new_module_Parties.class.GovernmentAgency_new"></a>
+<a name="new_module_Parties.Class.GovernmentAgency_new"></a>
 
 ##### new GovernmentAgency(params, (object))
 Construct a new Government Agency instance
@@ -2642,44 +2676,44 @@ Construct a new Government Agency instance
 | params.updatedTime | <code>date</code> |  | Time that the Government Agency was updated |
 | params.version | <code>number</code> |  | Version number of the Government Agency |
 
-<a name="module_Parties.class.Party+upsertAddress"></a>
+<a name="module_Parties.Class.Party+upsertAddress"></a>
 
 ##### governmentAgency.upsertAddress(type, address)
 Upsert an Address
 
-**Kind**: instance method of <code>[GovernmentAgency](#module_Parties.class.GovernmentAgency)</code>  
+**Kind**: instance method of <code>[GovernmentAgency](#module_Parties.Class.GovernmentAgency)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Address (e.g. 'Registered', 'Legal') |
 | address | <code>Address</code> | new Address. Note that the new Address cannot be primary if a primary Address already exists. Use this.addresses setter to replace primary Addresses (??) |
 
-<a name="module_Parties.class.Party+upsertEmail"></a>
+<a name="module_Parties.Class.Party+upsertEmail"></a>
 
 ##### governmentAgency.upsertEmail(type, email)
 Upsert an Email
 
-**Kind**: instance method of <code>[GovernmentAgency](#module_Parties.class.GovernmentAgency)</code>  
+**Kind**: instance method of <code>[GovernmentAgency](#module_Parties.Class.GovernmentAgency)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Email (e.g. 'Work', 'Support') |
 | email | <code>Emails</code> | new Email. Note that the new Email cannot be primary if a primary Email already exists. Use this.emails setter to replace primary Emails (??) |
 
-<a name="module_Parties.class.Individual"></a>
+<a name="module_Parties.Class.Individual"></a>
 
-#### class.Individual ⇐ <code>[Party](#module_Parties.class.Party)</code>
+#### Class.Individual ⇐ <code>[Party](#module_Parties.Class.Party)</code>
 Class representing an Individual
 
-**Kind**: static class of <code>[class](#module_Parties.class)</code>  
-**Extends**: <code>[Party](#module_Parties.class.Party)</code>  
+**Kind**: static class of <code>[Class](#module_Parties.Class)</code>  
+**Extends**: <code>[Party](#module_Parties.Class.Party)</code>  
 
-* [.Individual](#module_Parties.class.Individual) ⇐ <code>[Party](#module_Parties.class.Party)</code>
-    * [new Individual(params, (object))](#new_module_Parties.class.Individual_new)
-    * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-    * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
+* [.Individual](#module_Parties.Class.Individual) ⇐ <code>[Party](#module_Parties.Class.Party)</code>
+    * [new Individual(params, (object))](#new_module_Parties.Class.Individual_new)
+    * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+    * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
 
-<a name="new_module_Parties.class.Individual_new"></a>
+<a name="new_module_Parties.Class.Individual_new"></a>
 
 ##### new Individual(params, (object))
 Construct a new Individual instance
@@ -2708,44 +2742,44 @@ Construct a new Individual instance
 | params.updatedTime | <code>date</code> |  | Time that the Individual was updated |
 | params.version | <code>number</code> |  | Version number of the Individual |
 
-<a name="module_Parties.class.Party+upsertAddress"></a>
+<a name="module_Parties.Class.Party+upsertAddress"></a>
 
 ##### individual.upsertAddress(type, address)
 Upsert an Address
 
-**Kind**: instance method of <code>[Individual](#module_Parties.class.Individual)</code>  
+**Kind**: instance method of <code>[Individual](#module_Parties.Class.Individual)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Address (e.g. 'Registered', 'Legal') |
 | address | <code>Address</code> | new Address. Note that the new Address cannot be primary if a primary Address already exists. Use this.addresses setter to replace primary Addresses (??) |
 
-<a name="module_Parties.class.Party+upsertEmail"></a>
+<a name="module_Parties.Class.Party+upsertEmail"></a>
 
 ##### individual.upsertEmail(type, email)
 Upsert an Email
 
-**Kind**: instance method of <code>[Individual](#module_Parties.class.Individual)</code>  
+**Kind**: instance method of <code>[Individual](#module_Parties.Class.Individual)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Email (e.g. 'Work', 'Support') |
 | email | <code>Emails</code> | new Email. Note that the new Email cannot be primary if a primary Email already exists. Use this.emails setter to replace primary Emails (??) |
 
-<a name="module_Parties.class.Organisation"></a>
+<a name="module_Parties.Class.Organisation"></a>
 
-#### class.Organisation ⇐ <code>[Party](#module_Parties.class.Party)</code>
+#### Class.Organisation ⇐ <code>[Party](#module_Parties.Class.Party)</code>
 Class representing an Organisation
 
-**Kind**: static class of <code>[class](#module_Parties.class)</code>  
-**Extends**: <code>[Party](#module_Parties.class.Party)</code>  
+**Kind**: static class of <code>[Class](#module_Parties.Class)</code>  
+**Extends**: <code>[Party](#module_Parties.Class.Party)</code>  
 
-* [.Organisation](#module_Parties.class.Organisation) ⇐ <code>[Party](#module_Parties.class.Party)</code>
-    * [new Organisation(params, (object))](#new_module_Parties.class.Organisation_new)
-    * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-    * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
+* [.Organisation](#module_Parties.Class.Organisation) ⇐ <code>[Party](#module_Parties.Class.Party)</code>
+    * [new Organisation(params, (object))](#new_module_Parties.Class.Organisation_new)
+    * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+    * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
 
-<a name="new_module_Parties.class.Organisation_new"></a>
+<a name="new_module_Parties.Class.Organisation_new"></a>
 
 ##### new Organisation(params, (object))
 Construct a new Organisation instance
@@ -2771,44 +2805,44 @@ Construct a new Organisation instance
 | params.updatedTime | <code>date</code> |  | Time that the Organisation was updated |
 | params.version | <code>number</code> |  | Version number of the Organisation |
 
-<a name="module_Parties.class.Party+upsertAddress"></a>
+<a name="module_Parties.Class.Party+upsertAddress"></a>
 
 ##### organisation.upsertAddress(type, address)
 Upsert an Address
 
-**Kind**: instance method of <code>[Organisation](#module_Parties.class.Organisation)</code>  
+**Kind**: instance method of <code>[Organisation](#module_Parties.Class.Organisation)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Address (e.g. 'Registered', 'Legal') |
 | address | <code>Address</code> | new Address. Note that the new Address cannot be primary if a primary Address already exists. Use this.addresses setter to replace primary Addresses (??) |
 
-<a name="module_Parties.class.Party+upsertEmail"></a>
+<a name="module_Parties.Class.Party+upsertEmail"></a>
 
 ##### organisation.upsertEmail(type, email)
 Upsert an Email
 
-**Kind**: instance method of <code>[Organisation](#module_Parties.class.Organisation)</code>  
+**Kind**: instance method of <code>[Organisation](#module_Parties.Class.Organisation)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Email (e.g. 'Work', 'Support') |
 | email | <code>Emails</code> | new Email. Note that the new Email cannot be primary if a primary Email already exists. Use this.emails setter to replace primary Emails (??) |
 
-<a name="module_Parties.class.Party"></a>
+<a name="module_Parties.Class.Party"></a>
 
-#### class.Party ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+#### Class.Party ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
 Class representing a Party
 
-**Kind**: static class of <code>[class](#module_Parties.class)</code>  
+**Kind**: static class of <code>[Class](#module_Parties.Class)</code>  
 **Extends**: <code>[AMaaSModel](#module_Core.AMaaSModel)</code>  
 
-* [.Party](#module_Parties.class.Party) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-    * [new Party(params, (object))](#new_module_Parties.class.Party_new)
-    * [.upsertAddress(type, address)](#module_Parties.class.Party+upsertAddress)
-    * [.upsertEmail(type, email)](#module_Parties.class.Party+upsertEmail)
+* [.Party](#module_Parties.Class.Party) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+    * [new Party(params, (object))](#new_module_Parties.Class.Party_new)
+    * [.upsertAddress(type, address)](#module_Parties.Class.Party+upsertAddress)
+    * [.upsertEmail(type, email)](#module_Parties.Class.Party+upsertEmail)
 
-<a name="new_module_Parties.class.Party_new"></a>
+<a name="new_module_Parties.Class.Party_new"></a>
 
 ##### new Party(params, (object))
 Construct a new Party instance
@@ -2834,24 +2868,24 @@ Construct a new Party instance
 | params.updatedTime | <code>date</code> |  | Time that the Party was updated |
 | params.version | <code>number</code> |  | Version number of the Party |
 
-<a name="module_Parties.class.Party+upsertAddress"></a>
+<a name="module_Parties.Class.Party+upsertAddress"></a>
 
 ##### party.upsertAddress(type, address)
 Upsert an Address
 
-**Kind**: instance method of <code>[Party](#module_Parties.class.Party)</code>  
+**Kind**: instance method of <code>[Party](#module_Parties.Class.Party)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>string</code> | Type of Address (e.g. 'Registered', 'Legal') |
 | address | <code>Address</code> | new Address. Note that the new Address cannot be primary if a primary Address already exists. Use this.addresses setter to replace primary Addresses (??) |
 
-<a name="module_Parties.class.Party+upsertEmail"></a>
+<a name="module_Parties.Class.Party+upsertEmail"></a>
 
 ##### party.upsertEmail(type, email)
 Upsert an Email
 
-**Kind**: instance method of <code>[Party](#module_Parties.class.Party)</code>  
+**Kind**: instance method of <code>[Party](#module_Parties.Class.Party)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -22,7 +22,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing a Party
- * @memberof module:Parties.class
+ * @memberof module:Parties.Class
  * @extends module:Core.AMaaSModel
  */
 var Party = function (_AMaaSModel) {
