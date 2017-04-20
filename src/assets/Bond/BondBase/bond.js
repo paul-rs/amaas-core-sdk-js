@@ -1,4 +1,4 @@
-import { AMaaSModel, Reference } from '../../../core'
+import { AMaaSModel } from '../../../core'
 import Asset from '../../Asset/asset.js'
 
 import Decimal from 'decimal.js'
