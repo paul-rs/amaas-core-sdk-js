@@ -3,7 +3,7 @@ import { ASSET_MANAGER_TYPES } from '../enums'
 
 /**
  * Class representing an Asset Manager
- * @memberof module:AssetManagers
+ * @memberof module:AssetManagers.class
  * @extends module:Core.AMaaSModel
  */
 class AssetManager extends AMaaSModel {

@@ -2,8 +2,18 @@ import { retrieveData, insertData, putData, patchData, deleteData } from '../net
 import AssetManager from '../../assetManagers/AssetManager/assetManager.js'
 
 /**
+ * @namespace api
+ * @memberof module:AssetManagers
+ */
+
+/**
  * Retrieve Asset Manager data for specified Asset Manager ID
- * @param {number} AMId - Asset Manager ID to retrieve
+ * @function retrieve
+ * @memberof module:AssetManagers.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID to retrieve
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function retrieve({AMId, token}, callback) {
@@ -27,7 +37,12 @@ export function retrieve({AMId, token}, callback) {
 
 /**
  * Insert a new Asset Manager into the database
- * @param {AssetManager} assetManager - Asset Manager instance to insert
+ * @function insert
+ * @memberof module:AssetManagers.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {AssetManager} params.assetManager - Asset Manager instance to insert
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function insert({assetManager, token}, callback) {
@@ -55,6 +70,17 @@ export function insert({assetManager, token}, callback) {
   promise.catch(error => callback(error))
 }
 
+/**
+ * Amend an Asset Manager (Replaces current Asset Manager with what is passed in)
+ * @function amend
+ * @memberof module:AssetManagers.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - AMID of the Asset Manager to amend
+ * @param {AssetManager} params.assetManager - Asset Manager instance to insert
+ * @param {string} params.token - Authorization token
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ */
 export function amend({assetManager, AMId, token}, callback) {
   let stringified, data
   if (assetManager) {
@@ -94,8 +120,13 @@ export function amend({assetManager, AMId, token}, callback) {
 // }
 
 /**
- * Deactive an existing Asset Manager (AM)
- * @param {string} AMId - AM ID of the AM to deactive
+ * Deactivate an Asset Manager
+ * @function deactivate
+ * @memberof module:AssetManagers.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - AMID of the Asset Manager to deactivate
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function deactivate({AMId, token}, callback) {
