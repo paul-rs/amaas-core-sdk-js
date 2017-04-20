@@ -1,7 +1,7 @@
 import Asset from './asset.js'
 import Comment from '../../children/Comment'
 import Link from '../../children/Link'
-import { Reference } from '../../core'
+import { Reference } from '../../children'
 
 describe('Asset', () => {
   describe('constructor', () => {
