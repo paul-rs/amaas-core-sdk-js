@@ -51,6 +51,9 @@ These classes cannot be instantiated from the SDK, they are included for referen
 <dt><a href="#module_Parties">Parties</a></dt>
 <dd><p>Classes and API methods for the Parties service</p>
 </dd>
+<dt><a href="#module_Transactions">Transactions</a></dt>
+<dd><p>Classes and API methods for the Transactions service. (Not ready yet)</p>
+</dd>
 </dl>
 
 ## Classes
@@ -61,9 +64,6 @@ These classes cannot be instantiated from the SDK, they are included for referen
 </dd>
 <dt><a href="#PartyChild">PartyChild</a> ⇐ <code>AMaaSModel</code></dt>
 <dd><p>Class representing a Party (a Transaction children type)</p>
-</dd>
-<dt><a href="#Transaction">Transaction</a> ⇐ <code>AMaaSModel</code></dt>
-<dd><p>Class representing a Transaction</p>
 </dd>
 </dl>
 
@@ -2921,108 +2921,36 @@ Deactivate an exising Party. This will set the Party status to 'Inactive'
 | params.token | <code>string</code> | Authorization token |
 | callback | <code>function</code> | Called with two arguments (error, result) on completion |
 
-<a name="PartyChild"></a>
+<a name="module_Transactions"></a>
 
-## PartyChild ⇐ <code>AMaaSModel</code>
-Class representing a Party (a Transaction children type)
-
-**Kind**: global class  
-**Extends**: <code>AMaaSModel</code>  
-
-* [PartyChild](#PartyChild) ⇐ <code>AMaaSModel</code>
-    * [new PartyChild(params)](#new_PartyChild_new)
-    * [new PartyChild(params)](#new_PartyChild_new)
-
-<a name="new_PartyChild_new"></a>
-
-### new PartyChild(params)
-Construct a new PartyChild object
+## Transactions
+Classes and API methods for the Transactions service. (Not ready yet)
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | PartyChild creation options |
-| params.partyId | <code>string</code> | ID of the linked Party |
-| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
-| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
-| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
-| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
-| params.version | <code>number</code> | Version number of the linked Party |
+* [Transactions](#module_Transactions)
+    * [.Class](#module_Transactions.Class) : <code>object</code>
+        * [.Transaction](#module_Transactions.Class.Transaction) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+            * [new Transaction(params)](#new_module_Transactions.Class.Transaction_new)
 
-<a name="new_PartyChild_new"></a>
+<a name="module_Transactions.Class"></a>
 
-### new PartyChild(params)
-Construct a new PartyChild object
+### Transactions.Class : <code>object</code>
+**Kind**: static namespace of <code>[Transactions](#module_Transactions)</code>  
 
+* [.Class](#module_Transactions.Class) : <code>object</code>
+    * [.Transaction](#module_Transactions.Class.Transaction) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+        * [new Transaction(params)](#new_module_Transactions.Class.Transaction_new)
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | PartyChild creation options |
-| params.partyId | <code>string</code> | ID of the linked Party |
-| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
-| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
-| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
-| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
-| params.version | <code>number</code> | Version number of the linked Party |
+<a name="module_Transactions.Class.Transaction"></a>
 
-<a name="PartyChild"></a>
-
-## PartyChild ⇐ <code>AMaaSModel</code>
-Class representing a Party (a Transaction children type)
-
-**Kind**: global class  
-**Extends**: <code>AMaaSModel</code>  
-
-* [PartyChild](#PartyChild) ⇐ <code>AMaaSModel</code>
-    * [new PartyChild(params)](#new_PartyChild_new)
-    * [new PartyChild(params)](#new_PartyChild_new)
-
-<a name="new_PartyChild_new"></a>
-
-### new PartyChild(params)
-Construct a new PartyChild object
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | PartyChild creation options |
-| params.partyId | <code>string</code> | ID of the linked Party |
-| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
-| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
-| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
-| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
-| params.version | <code>number</code> | Version number of the linked Party |
-
-<a name="new_PartyChild_new"></a>
-
-### new PartyChild(params)
-Construct a new PartyChild object
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | PartyChild creation options |
-| params.partyId | <code>string</code> | ID of the linked Party |
-| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
-| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
-| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
-| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
-| params.version | <code>number</code> | Version number of the linked Party |
-
-<a name="Transaction"></a>
-
-## Transaction ⇐ <code>AMaaSModel</code>
+#### Class.Transaction ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
 Class representing a Transaction
 
-**Kind**: global class  
-**Extends**: <code>AMaaSModel</code>  
-<a name="new_Transaction_new"></a>
+**Kind**: static class of <code>[Class](#module_Transactions.Class)</code>  
+**Extends**: <code>[AMaaSModel](#module_Core.AMaaSModel)</code>  
+<a name="new_module_Transactions.Class.Transaction_new"></a>
 
-### new Transaction(params)
+##### new Transaction(params)
 Construct a new Transaction object
 
 
@@ -3052,6 +2980,98 @@ Construct a new Transaction object
 | params.parties | <code>object</code> | Object of all parties as a Transaction child (PartyChild class) |
 | params.references | <code>object</code> | * |
 | params.postings | <code>\*</code> | * |
+
+<a name="PartyChild"></a>
+
+## PartyChild ⇐ <code>AMaaSModel</code>
+Class representing a Party (a Transaction children type)
+
+**Kind**: global class  
+**Extends**: <code>AMaaSModel</code>  
+
+* [PartyChild](#PartyChild) ⇐ <code>AMaaSModel</code>
+    * [new PartyChild(params)](#new_PartyChild_new)
+    * [new PartyChild(params)](#new_PartyChild_new)
+
+<a name="new_PartyChild_new"></a>
+
+### new PartyChild(params)
+Construct a new PartyChild object
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | PartyChild creation options |
+| params.partyId | <code>string</code> | ID of the linked Party |
+| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
+| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
+| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
+| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
+| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
+| params.version | <code>number</code> | Version number of the linked Party |
+
+<a name="new_PartyChild_new"></a>
+
+### new PartyChild(params)
+Construct a new PartyChild object
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | PartyChild creation options |
+| params.partyId | <code>string</code> | ID of the linked Party |
+| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
+| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
+| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
+| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
+| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
+| params.version | <code>number</code> | Version number of the linked Party |
+
+<a name="PartyChild"></a>
+
+## PartyChild ⇐ <code>AMaaSModel</code>
+Class representing a Party (a Transaction children type)
+
+**Kind**: global class  
+**Extends**: <code>AMaaSModel</code>  
+
+* [PartyChild](#PartyChild) ⇐ <code>AMaaSModel</code>
+    * [new PartyChild(params)](#new_PartyChild_new)
+    * [new PartyChild(params)](#new_PartyChild_new)
+
+<a name="new_PartyChild_new"></a>
+
+### new PartyChild(params)
+Construct a new PartyChild object
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | PartyChild creation options |
+| params.partyId | <code>string</code> | ID of the linked Party |
+| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
+| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
+| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
+| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
+| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
+| params.version | <code>number</code> | Version number of the linked Party |
+
+<a name="new_PartyChild_new"></a>
+
+### new PartyChild(params)
+Construct a new PartyChild object
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | PartyChild creation options |
+| params.partyId | <code>string</code> | ID of the linked Party |
+| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
+| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
+| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
+| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
+| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
+| params.version | <code>number</code> | Version number of the linked Party |
 
 <a name="retrieve"></a>
 

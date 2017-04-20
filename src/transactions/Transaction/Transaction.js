@@ -12,8 +12,14 @@ import {
 import * as types from '../enums'
 
 /**
+ * @namespace Class
+ * @memberof module:Transactions
+ */
+
+/**
  * Class representing a Transaction
- * @extends AMaaSModel
+ * @memberof module:Transactions.Class
+ * @extends module:Core.AMaaSModel
  */
 class Transaction extends AMaaSModel {
   /**
