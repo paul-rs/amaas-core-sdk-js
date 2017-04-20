@@ -4,12 +4,9 @@ import Asset from '../Asset/asset'
 import { OPTION_STYLES, OPTION_TYPES } from '../enums.js'
 
 /**
- * @module Assets
- */
-
-/**
  * Class representing an FX Option
- * @extends Asset
+ * @memberof module:Assets
+ * @extends module:Assets.Asset
  */
 class ForeignExchangeOption extends Asset {
   /**
@@ -35,11 +32,10 @@ class ForeignExchangeOption extends Asset {
    * @param {object} params.comments - Object of Comments attached to the Asset
    * @param {object} params.links - Object of array of Links attached to the Asset
    * @param {object} params.references - Object of References associated with this Asset
-   * @param {object} params.clientAdditional - Object of custom properties for creating a Custom Asset
-   * @param {string} params.createdBy - ID of the user that created this object
-   * @param {string} params.updatedBy - ID of the user that updated this object
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
+   * @param {string} params.createdBy - ID of the user that created the FX Option
+   * @param {string} params.updatedBy - ID of the user that updated the FX Option
+   * @param {date} params.createdTime - Time that the FX Option was created
+   * @param {date} params.updatedTime - Time that the FX Option was updated
    * @param {number} params.version - Version number
   */
   constructor({

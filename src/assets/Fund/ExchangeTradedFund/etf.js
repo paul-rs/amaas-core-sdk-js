@@ -1,16 +1,13 @@
 import Fund from '../Fund/fund'
 
 /**
- * @module Assets
- */
-
-/**
  * Class representing an ETF
- * @extends Fund
+ * @memberof module:Assets
+ * @extends module:Assets.Fund
  */
 class ExchangeTradedFund extends Fund {
   /**
-   * Construct a new Asset object
+   * Construct a new ETF instance
    * @param {object} params - Asset creation options
    * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
    * @param {integer} params.assetId - ID of the Asset (required)
@@ -33,9 +30,8 @@ class ExchangeTradedFund extends Fund {
    * @param {object} params.comments - Object of Comments attached to the Asset
    * @param {object} params.links - Object of array of Links attached to the Asset
    * @param {object} params.references - Object of References associated with this Asset
-   * @param {object} params.clientAdditional - Object of custom properties for creating a Custom Asset
-   * @param {string} params.createdBy - ID of the user that created this object
-   * @param {string} params.updatedBy - ID of the user that updated this object
+   * @param {string} params.createdBy - ID of the user that created the ETF
+   * @param {string} params.updatedBy - ID of the user that updated the ETF
    * @param {date} params.createdTime - Time that the Asset was created
    * @param {date} params.updatedTime - Time that the Asset was updated
    * @param {number} params.version - Version number

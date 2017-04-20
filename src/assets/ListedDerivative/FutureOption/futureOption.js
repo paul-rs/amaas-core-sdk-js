@@ -4,16 +4,13 @@ import Future from '../Future/future'
 import { OPTION_STYLES, OPTION_TYPES } from '../../enums.js'
 
 /**
- * @module Assets
- */
-
-/**
  * Class representing a Future Option
- * @extends Future
+ * @memberof module:Assets
+ * @extends module:Assets.Future
  */
 class FutureOption extends Future {
   /**
-   * Construct a new Asset object
+   * Construct a new Future Option instance
    * @param {object} params - Asset creation options
    * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
    * @param {integer} params.assetId - ID of the Asset (required)
@@ -41,9 +38,8 @@ class FutureOption extends Future {
    * @param {object} params.comments - Object of Comments attached to the Asset
    * @param {object} params.links - Object of array of Links attached to the Asset
    * @param {object} params.references - Object of References associated with this Asset
-   * @param {object} params.clientAdditional - Object of custom properties for creating a Custom Asset
-   * @param {string} params.createdBy - ID of the user that created this object
-   * @param {string} params.updatedBy - ID of the user that updated this object
+   * @param {string} params.createdBy - ID of the user that created the Asset
+   * @param {string} params.updatedBy - ID of the user that updated the Asset
    * @param {date} params.createdTime - Time that the Asset was created
    * @param {date} params.updatedTime - Time that the Asset was updated
    * @param {number} params.version - Version number

@@ -1,12 +1,9 @@
 import Asset from '../Asset/asset'
 
 /**
- * @module Assets
- */
-
-/**
  * Class representing an Custom Asset
- * @extends Asset
+ * @memberof module:Assets
+ * @extends module:Assets.Asset
  */
 class CustomAsset extends Asset {
   /**
@@ -28,12 +25,12 @@ class CustomAsset extends Asset {
    * @param {object} params.comments - Object of Comments attached to the Asset
    * @param {object} params.links - Object of array of Links attached to the Asset
    * @param {object} params.references - Object of References associated with this Asset
-   * @param {object} params.clientAdditional - Object of custom properties for creating a Custom Asset (set in the Custom Asset class)
+   * @param {object} params.clientAdditional - Object of custom properties for creating a Custom Asset (e.g. { size: 'Large', Flavour: 'Lime' })
    * @param {string} params.createdBy - ID of the user that created this object
    * @param {string} params.updatedBy - ID of the user that updated this object
    * @param {date} params.createdTime - Time that the Asset was created
    * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {number} params.version - Version number of the Asset
   */
   constructor({
     assetManagerId,

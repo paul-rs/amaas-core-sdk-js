@@ -3,16 +3,13 @@ import Comment from '../../children/Comment'
 import Link from '../../children/Link'
 
 /**
- * @module Assets
- */
-
-/**
  * Class representing an Asset
- * @extends AMaaSModel
+ * @memberof module:Assets
+ * @extends Core.AMaaSModel
  */
 class Asset extends AMaaSModel {
   /**
-   * Construct a new Asset object
+   * Construct a new Asset instance
    * @param {object} params - Asset creation options
    * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
    * @param {integer} params.assetId - ID of the Asset (required)
@@ -30,9 +27,9 @@ class Asset extends AMaaSModel {
    * @param {object} params.comments - Object of Comments attached to the Asset
    * @param {object} params.links - Object of array of Links attached to the Asset
    * @param {object} params.references - Object of References associated with this Asset
-   * @param {object} params.clientAdditional - Object of custom properties for creating a Custom Asset
-   * @param {string} params.createdBy - ID of the user that created this object
-   * @param {string} params.updatedBy - ID of the user that updated this object
+   * @param {object} params.clientAdditional - Object of custom properties for creating a Custom Asset (set in the Custom Asset class)
+   * @param {string} params.createdBy - ID of the user that created the Asset
+   * @param {string} params.updatedBy - ID of the user that updated the Asset
    * @param {date} params.createdTime - Time that the Asset was created
    * @param {date} params.updatedTime - Time that the Asset was updated
    * @param {number} params.version - Version number

@@ -1,12 +1,9 @@
 import Derivative from '../Derivative/derivative'
 
 /**
- * @module Assets
- */
-
-/**
  * Class representing a CFD
- * @extends Derivative
+ * @memberof module:Assets
+ * @extends module:Assets.Derivative
  */
 class CFD extends Derivative {
   /**
@@ -29,11 +26,11 @@ class CFD extends Derivative {
    * @param {object} params.comments - Object of Comments attached to the Asset
    * @param {object} params.links - Object of array of Links attached to the Asset
    * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created this object
-   * @param {string} params.updatedBy - ID of the user that updated this object
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {string} params.createdBy - ID of the user that created the CFD
+   * @param {string} params.updatedBy - ID of the user that updated the CFD
+   * @param {date} params.createdTime - Time that the CFD was created
+   * @param {date} params.updatedTime - Time that the CFD was updated
+   * @param {number} params.version - Version number of the CFD
   */
   constructor({
     assetManagerId,

@@ -1,17 +1,14 @@
 import Asset from '../../Asset/asset.js'
 
 /**
- * @module Assets
- */
-
-/**
  * Class representing an Derivative
- * @extends Asset
+ * @memberof module:Assets
+ * @extends module:Assets.Asset
  */
 class Derivative extends Asset {
   /**
-   * Construct a new Derivative object
-   * @param {object} params - Asset creation options
+   * Construct a new Derivative instance
+   * @param {object} params - Derivative creation options
    * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
    * @param {integer} params.assetId - ID of the Asset (required)
    * @param {string} params.assetClass - Class of the Asset
@@ -29,11 +26,11 @@ class Derivative extends Asset {
    * @param {object} params.comments - Object of Comments attached to the Asset
    * @param {object} params.links - Object of array of Links attached to the Asset
    * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created this object
-   * @param {string} params.updatedBy - ID of the user that updated this object
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {string} params.createdBy - ID of the user that created the Derivative
+   * @param {string} params.updatedBy - ID of the user that updated the Derivative
+   * @param {date} params.createdTime - Time that the Derivative was created
+   * @param {date} params.updatedTime - Time that the Derivative was updated
+   * @param {number} params.version - Version number of the Derivative
   */
   constructor({
     assetManagerId,

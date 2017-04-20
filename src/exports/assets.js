@@ -1,3 +1,7 @@
+/**
+ * @module Assets
+ */
+
 // Classes
 import {
   Asset,

@@ -1,12 +1,9 @@
 import Asset from '../Asset/asset.js'
 
 /**
- * @module Assets
- */
-
-/**
  * Class representing an Currency
- * @extends Asset
+ * @memberof module:Assets
+ * @extends module:Assets.Asset
  */
 class Currency extends Asset {
   /**
@@ -30,11 +27,11 @@ class Currency extends Asset {
    * @param {object} params.comments - Object of Comments attached to the Currency
    * @param {object} params.links - Object of array of Links attached to the Currency
    * @param {object} params.references - Object of References associated with this Currency
-   * @param {string} params.createdBy - ID of the user that created this object
-   * @param {string} params.updatedBy - ID of the user that updated this object
+   * @param {string} params.createdBy - ID of the user that created the Asset
+   * @param {string} params.updatedBy - ID of the user that updated the Asset
    * @param {date} params.createdTime - Time that the Asset was created
    * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {number} params.version - Version number of the Asset
   */
   constructor({
     assetManagerId,

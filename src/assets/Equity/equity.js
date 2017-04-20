@@ -1,12 +1,9 @@
 import Asset from '../Asset/asset.js'
 
 /**
- * @module Assets
- */
-
-/**
  * Class representing an Equity
- * @extends Asset
+ * @memberof module:Assets
+ * @extends module:Assets.Asset
  */
 class Equity extends Asset {
   /**
@@ -29,12 +26,11 @@ class Equity extends Asset {
    * @param {object} params.comments - Object of Comments attached to the Asset
    * @param {object} params.links - Object of array of Links attached to the Asset
    * @param {object} params.references - Object of References associated with this Asset
-   * @param {object} params.clientAdditional - Object of custom properties for creating a Custom Asset
-   * @param {string} params.createdBy - ID of the user that created this object
-   * @param {string} params.updatedBy - ID of the user that updated this object
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {string} params.createdBy - ID of the user that created the Equity
+   * @param {string} params.updatedBy - ID of the user that updated the Equity
+   * @param {date} params.createdTime - Time that the Equity was created
+   * @param {date} params.updatedTime - Time that the Equity was updated
+   * @param {number} params.version - Version number of the Equity
   */
   constructor({
     assetManagerId,

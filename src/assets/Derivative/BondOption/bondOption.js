@@ -4,12 +4,9 @@ import Derivative from '../Derivative/derivative.js'
 import { OPTION_STYLES, OPTION_TYPES } from '../../enums'
 
 /**
- * @module Assets
- */
-
-/**
  * Class representing an Bond Option
- * @extends Derivative
+ * @memberof module:Assets
+ * @extends module:Assets.Derivative
  */
 class BondOption extends Derivative {
   /**
@@ -36,11 +33,11 @@ class BondOption extends Derivative {
    * @param {object} params.comments - Object of Comments attached to the Asset
    * @param {object} params.links - Object of array of Links attached to the Asset
    * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created this object
-   * @param {string} params.updatedBy - ID of the user that updated this object
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {string} params.createdBy - ID of the user that created the Bond Option
+   * @param {string} params.updatedBy - ID of the user that updated the Bond Option
+   * @param {date} params.createdTime - Time that the Bond Option was created
+   * @param {date} params.updatedTime - Time that the Bond Option was updated
+   * @param {number} params.version - Version number of the Bond Option
   */
   constructor({
     assetManagerId,

@@ -1,16 +1,13 @@
 import Future from '../Future/future'
 
 /**
- * @module Assets
- */
-
-/**
  * Class representing an Interest Rate Future
- * @extends Future
+ * @memberof module:Assets
+ * @extends module:Assets.Future
  */
 class InterestRateFuture extends Future {
   /**
-   * Construct a new Asset object
+   * Construct a new Interest Rate Future instance
    * @param {object} params - Asset creation options
    * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
    * @param {integer} params.assetId - ID of the Asset (required)
@@ -35,9 +32,8 @@ class InterestRateFuture extends Future {
    * @param {object} params.comments - Object of Comments attached to the Asset
    * @param {object} params.links - Object of array of Links attached to the Asset
    * @param {object} params.references - Object of References associated with this Asset
-   * @param {object} params.clientAdditional - Object of custom properties for creating a Custom Asset
-   * @param {string} params.createdBy - ID of the user that created this object
-   * @param {string} params.updatedBy - ID of the user that updated this object
+   * @param {string} params.createdBy - ID of the user that created the Asset
+   * @param {string} params.updatedBy - ID of the user that updated the Asset
    * @param {date} params.createdTime - Time that the Asset was created
    * @param {date} params.updatedTime - Time that the Asset was updated
    * @param {number} params.version - Version number
