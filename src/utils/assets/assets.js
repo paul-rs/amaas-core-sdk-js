@@ -8,8 +8,13 @@ import { _parseChildren } from '../parties/parties.js'
 
 /**
  * Retrieve Asset data for specified AMId and partyId
- * @param {number} AMId - Asset Manager ID of the Asset
- * @param {string} [partyId] - Party ID of the Asset. Omitting this will return all Assets associated with that AMId
+ * @function retrieve
+ * @memberof module:Assets
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID of the Asset
+ * @param {string} [params.resourceId] - Party ID of the Asset. Omitting this will return all Assets associated with that AMId
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function retrieve({AMId, resourceId, token}, callback) {
@@ -39,7 +44,12 @@ export function retrieve({AMId, resourceId, token}, callback) {
 
 /**
  * Insert a new Asset into the database
- * @param {Asset} asset - Asset instance to insert
+ * @function insert
+ * @memberof module:Assets
+ * @static
+ * @param {object} - object of parameters:
+ * @param {Asset} params.asset - Asset instance to insert
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function insert({asset, token}, callback) {
@@ -69,9 +79,14 @@ export function insert({asset, token}, callback) {
 
 /**
  * Amend an existing Asset. WARNING: This makes a HTTP PUT request and will replace the existing Asset with the one passed in
- * @param {Asset} asset - Amended Asset instance to PUT
- * @param {number} AMId - AMId of the Party to amend
- * @param {string} resourceId - Asset ID of the Party to amend
+ * @function insert
+ * @memberof module:Assets
+ * @static
+ * @param {object} - object of parameters:
+ * @param {Asset} params.asset - Amended Asset instance to PUT
+ * @param {number} params.AMId - AMId of the Party to amend
+ * @param {string} params.resourceId - Asset ID of the Party to amend
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function amend({asset, AMId, resourceId, token}, callback) {
@@ -103,9 +118,14 @@ export function amend({asset, AMId, resourceId, token}, callback) {
 
 /**
  * Partially amend an existing Asset.
- * @param {object} changes - Object of changes to the Asset.
- * @param {string} AMId - AMId of the Asset to be partially amended
- * @param {string} resourceId - Asset ID of the Asset to be partially amended
+ * @function insert
+ * @memberof module:Assets
+ * @static
+ * @param {object} - object of parameters:
+ * @param {object} params.changes - Object of changes to the Asset.
+ * @param {string} params.AMId - AMId of the Asset to be partially amended
+ * @param {string} params.resourceId - Asset ID of the Asset to be partially amended
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function partialAmend({changes, AMId, resourceId, token}, callback) {
@@ -132,8 +152,13 @@ export function partialAmend({changes, AMId, resourceId, token}, callback) {
 
 /**
  * Delete an exising Asset. This will set the Asset status to 'Inactive'.
- * @param {string} AMId - AMId of the Asset to be deleted
- * @param {string} resourceId - Asset ID of the Asset to be deleted
+ * @function insert
+ * @memberof module:Assets
+ * @static
+ * @param {object} - object of parameters:
+ * @param {string} params.AMId - AMId of the Asset to be deleted
+ * @param {string} params.resourceId - Asset ID of the Asset to be deleted
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function deactivate({AMId, resourceId, token}, callback) {
