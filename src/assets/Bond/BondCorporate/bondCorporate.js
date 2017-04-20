@@ -3,7 +3,7 @@ import BondBase from '../BondBase/bond.js'
 /**
  * Class representing a Corporate Bond
  * @memberof module:Assets.class
- * @extends module:Assets.BondBase
+ * @extends module:Assets.class.BondBase
  */
 class BondCorporate extends BondBase {
   /**

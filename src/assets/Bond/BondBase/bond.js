@@ -6,7 +6,7 @@ import Decimal from 'decimal.js'
 /**
  * Class representing a Base Bond
  * @memberof module:Assets.class
- * @extends module:Assets.Asset
+ * @extends module:Assets.class.Asset
  */
 class BondBase extends Asset {
   /**

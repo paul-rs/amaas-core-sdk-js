@@ -3,7 +3,7 @@ import Fund from '../Fund/fund'
 /**
  * Class representing an ETF
  * @memberof module:Assets.class
- * @extends module:Assets.Fund
+ * @extends module:Assets.class.Fund
  */
 class ExchangeTradedFund extends Fund {
   /**

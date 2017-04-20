@@ -3,7 +3,7 @@ import Future from '../Future/future'
 /**
  * Class representing an Energy Future
  * @memberof module:Assets.class
- * @extends module:Assets.Future
+ * @extends module:Assets.class.Future
  */
 class EnergyFuture extends Future {
   /**

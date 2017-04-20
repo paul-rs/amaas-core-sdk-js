@@ -6,7 +6,7 @@ import { FUND_TYPES } from '../../enums.js'
 /**
  * Class representing a Fund
  * @memberof module:Assets.class
- * @extends module:Assets.Asset
+ * @extends module:Assets.class.Asset
  */
 class Fund extends Asset {
   /**

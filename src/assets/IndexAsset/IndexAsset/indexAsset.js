@@ -3,7 +3,7 @@ import Asset from '../../Asset/asset'
 /**
  * Class representing an Index
  * @memberof module:Assets.class
- * @extends module:Assets.Asset
+ * @extends module:Assets.class.Asset
  */
 class Index extends Asset {
   /**

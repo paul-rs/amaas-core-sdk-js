@@ -3,7 +3,7 @@ import Asset from '../../Asset/asset'
 /**
  * Class representing a Synthetic
  * @memberof module:Assets.class
- * @extends module:Assets.Asset
+ * @extends module:Assets.class.Asset
  */
 class Synthetic extends Asset {
   /**
