@@ -1,3 +1,8 @@
+/**
+ * Classes and API methods for the Books Service
+ * @module Books
+ */
+
 // Classes
 import { Book } from '../books'
 
