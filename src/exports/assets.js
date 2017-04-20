@@ -1,4 +1,5 @@
 /**
+ * Classes and API methods for the Assets service
  * @module Assets
  */
 
