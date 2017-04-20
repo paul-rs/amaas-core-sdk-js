@@ -1,4 +1,4 @@
-import Reference from './Reference'
+import Reference from './'
 
 describe('Reference', () => {
   describe('serialization', () => {

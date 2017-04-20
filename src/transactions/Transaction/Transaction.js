@@ -1,11 +1,12 @@
 import { Decimal } from 'decimal.js'
 
-import { AMaaSModel, Reference } from '../../core'
+import { AMaaSModel } from '../../core'
 import {
   Charge,
   Code,
   Comment,
   Link,
+  Reference,
   Party
 } from '../../children'
 import * as types from '../enums'
@@ -223,10 +224,10 @@ class Transaction extends AMaaSModel {
         set: (newLinks) => {
           if (newLinks) {
             let links = {}
-            for (let ref in newLinks) {
+            for (let name in newLinks) {
               // TODO: Remove this when the API returns Arrays for all Links
               if (newLinks[name] instanceof Array) {
-                linksClass[name] = newLinks[name].map(link => {
+                links[name] = newLinks[name].map(link => {
                   return new Link(link)
                 })
               } else {

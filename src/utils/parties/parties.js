@@ -3,7 +3,6 @@ import * as PartyClasses from '../../parties'
 
 import Address from '../../parties/Children/address.js'
 import Email from '../../parties/Children/email.js'
-import Reference from '../../core/Reference/Reference.js'
 
 /**
  * @namespace api
