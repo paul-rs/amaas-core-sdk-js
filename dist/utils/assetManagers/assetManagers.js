@@ -18,9 +18,20 @@ var _assetManager2 = _interopRequireDefault(_assetManager);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
+ * @namespace api
+ * @memberof module:AssetManagers
+ */
+
+/**
  * Retrieve Asset Manager data for specified Asset Manager ID
- * @param {number} AMId - Asset Manager ID to retrieve
+ * @function retrieve
+ * @memberof module:AssetManagers.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID to retrieve
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise | AssetManager} If callback supplied, callback(null, AssetManager) is called. Otherwise promise is returned that resolves with AssetManager instance
  */
 function retrieve(_ref, callback) {
   var AMId = _ref.AMId,
@@ -48,8 +59,14 @@ function retrieve(_ref, callback) {
 
 /**
  * Insert a new Asset Manager into the database
- * @param {AssetManager} assetManager - Asset Manager instance to insert
+ * @function insert
+ * @memberof module:AssetManagers.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {AssetManager} params.assetManager - Asset Manager instance to insert
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise | AssetManager} If callback supplied, callback(null, AssetManager) is called. Otherwise promise is returned that resolves with AssetManager instance
  */
 function insert(_ref2, callback) {
   var assetManager = _ref2.assetManager,
@@ -82,6 +99,18 @@ function insert(_ref2, callback) {
   });
 }
 
+/**
+ * Amend an Asset Manager (Replaces current Asset Manager with what is passed in)
+ * @function amend
+ * @memberof module:AssetManagers.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - AMID of the Asset Manager to amend
+ * @param {AssetManager} params.assetManager - Asset Manager instance to insert
+ * @param {string} params.token - Authorization token
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise | AssetManager} If callback supplied, callback(null, AssetManager) is called. Otherwise promise is returned that resolves with AssetManager instance
+ */
 function amend(_ref3, callback) {
   var assetManager = _ref3.assetManager,
       AMId = _ref3.AMId,
@@ -128,9 +157,15 @@ function amend(_ref3, callback) {
 // }
 
 /**
- * Deactive an existing Asset Manager (AM)
- * @param {string} AMId - AM ID of the AM to deactive
+ * Deactivate an Asset Manager
+ * @function deactivate
+ * @memberof module:AssetManagers.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - AMID of the Asset Manager to deactivate
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise | AssetManager} ???
  */
 function deactivate(_ref4, callback) {
   var AMId = _ref4.AMId,

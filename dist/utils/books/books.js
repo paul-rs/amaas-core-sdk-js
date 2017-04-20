@@ -16,10 +16,21 @@ var _book2 = _interopRequireDefault(_book);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
+ * @namespace api
+ * @memberof module:Books
+ */
+
+/**
  * Retrieve Book data for specified AMId and bookId
- * @param {number} AMId - Asset Manager ID of the Asset
- * @param {string} [bookId] - ID of the Book
+ * @function retrieve
+ * @memberof module:Books.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID of the Asset
+ * @param {string} [params.resourceId] - ID of the Book
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise|Array|Book} If callback supplied, it is called and the function returns either an array of Books or a single Book instance. Otherwise promise is returned that resolves with either an array of Books or a single Book instance
  */
 function retrieve(_ref, callback) {
   var AMId = _ref.AMId,
@@ -55,6 +66,18 @@ function retrieve(_ref, callback) {
   });
 }
 
+/**
+ * Search Books for specified AMId and bookId
+ * @function search
+ * @memberof module:Books.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {string} params.queryKey - Key of the category over which to search (e.g. bookIds)
+ * @param {string} params.queryValue - Value of the key for the search (e.g. 123 where 123 is a Book ID and queryKey = bookIds)
+ * @param {string} params.token - Authorization token
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise|Array} If callback supplied, it is called and the function returns an array of Books. Otherwise promise is returned that resolves with an array of Books
+ */
 function search(_ref2, callback) {
   var queryKey = _ref2.queryKey,
       queryValue = _ref2.queryValue,

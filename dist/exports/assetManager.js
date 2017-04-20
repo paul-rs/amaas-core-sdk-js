@@ -10,6 +10,10 @@ var _assetManagers = require('../assetManagers');
 var _assetManagers2 = require('../utils/assetManagers');
 
 // Exports
+/**
+ * Classes and API methods for the AssetManagers service
+ * @module AssetManagers
+ */
 
 // Classes
 exports.AssetManager = _assetManagers.AssetManager;

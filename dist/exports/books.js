@@ -10,6 +10,11 @@ var _books = require('../books');
 var _books2 = require('../utils/books');
 
 // Export
+/**
+ * Classes and API methods for the Books Service
+ * @module Books
+ */
+
 // Classes
 exports.Book = _books.Book;
 exports.retrieve = _books2.retrieve;

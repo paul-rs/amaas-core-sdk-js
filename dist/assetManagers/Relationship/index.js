@@ -16,7 +16,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing a Relationship
- * @extends AMaaSModel
+ * @memberof module:AssetManagers.class
+ * @extends module:Core.AMaaSModel
  */
 var Relationship = function (_AMaaSModel) {
   _inherits(Relationship, _AMaaSModel);
@@ -24,15 +25,15 @@ var Relationship = function (_AMaaSModel) {
   /**
    * Construct a new Relationship instance
    * @param {object} params - Relationship creation options
-   * @param {number} assetManagerId - ID of the Asset Manager who owns this Relationship
-   * @param {number} relationId - ID of the Asset Manager to whom this Relationship connects
-   * @param {string} relationshipType - The type of Relationship between these Asset Managers
-   * @param {string} clientId - The client ID that owns this Relationship
-   * @param {relationshipStatus} - The status of the Relationship
-   * @param {string} params.createdBy - ID of the user that created the Relationship (required if creating a new Relationship)
-   * @param {string} params.updatedBy - ID of the user that updated the Relationship (use if amending existing Relationship)
-   * @param {date} params.createdTime - Time that the Relationship was created (required if creating new Relationship)
-   * @param {date} params.updatedTime - Time that the Relationship was updated (required if amending existing Relationship)
+   * @param {number} params.assetManagerId - ID of the Asset Manager who owns this Relationship
+   * @param {number} params.relationId - ID of the Asset Manager to whom this Relationship connects
+   * @param {string} params.relationshipType - The type of Relationship between these Asset Managers
+   * @param {string} params.clientId - The client ID that owns this Relationship
+   * @param {string} params.relationshipStatus - The status of the Relationship
+   * @param {string} params.createdBy - ID of the user that created the Relationship
+   * @param {string} params.updatedBy - ID of the user that updated the Relationship
+   * @param {date} params.createdTime - Time that the Relationship was created
+   * @param {date} params.updatedTime - Time that the Relationship was updated
    * @param {number} params.version - Version number of the Relationship
    */
   function Relationship(_ref) {

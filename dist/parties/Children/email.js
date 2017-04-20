@@ -14,7 +14,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing an Email
- * @extends AMaaSModel
+ * @memberof module:Parties.class
+ * @extends module:Core.AMaaSModel
  */
 var Email = function (_AMaaSModel) {
   _inherits(Email, _AMaaSModel);

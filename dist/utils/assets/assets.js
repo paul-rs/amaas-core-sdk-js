@@ -16,20 +16,22 @@ var _assets = require('../../assets');
 
 var AssetClasses = _interopRequireWildcard(_assets);
 
-var _Reference = require('../../core/Reference/Reference.js');
-
-var _Reference2 = _interopRequireDefault(_Reference);
-
-var _parties = require('../parties/parties.js');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 /**
+ * @namespace api
+ * @memberof module:Assets
+ */
+
+/**
  * Retrieve Asset data for specified AMId and partyId
- * @param {number} AMId - Asset Manager ID of the Asset
- * @param {string} [partyId] - Party ID of the Asset. Omitting this will return all Assets associated with that AMId
+ * @function retrieve
+ * @memberof module:Assets.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID of the Asset
+ * @param {string} [params.resourceId] - Party ID of the Asset. Omitting this will return all Assets associated with that AMId
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 function retrieve(_ref, callback) {
@@ -67,7 +69,12 @@ function retrieve(_ref, callback) {
 
 /**
  * Insert a new Asset into the database
- * @param {Asset} asset - Asset instance to insert
+ * @function insert
+ * @memberof module:Assets.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {Asset} params.asset - Asset instance to insert
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 function insert(_ref2, callback) {
@@ -103,9 +110,14 @@ function insert(_ref2, callback) {
 
 /**
  * Amend an existing Asset. WARNING: This makes a HTTP PUT request and will replace the existing Asset with the one passed in
- * @param {Asset} asset - Amended Asset instance to PUT
- * @param {number} AMId - AMId of the Party to amend
- * @param {string} resourceId - Asset ID of the Party to amend
+ * @function amend
+ * @memberof module:Assets.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {Asset} params.asset - Amended Asset instance to PUT
+ * @param {number} params.AMId - AMId of the Party to amend
+ * @param {string} params.resourceId - Asset ID of the Party to amend
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 function amend(_ref3, callback) {
@@ -145,9 +157,14 @@ function amend(_ref3, callback) {
 
 /**
  * Partially amend an existing Asset.
- * @param {object} changes - Object of changes to the Asset.
- * @param {string} AMId - AMId of the Asset to be partially amended
- * @param {string} resourceId - Asset ID of the Asset to be partially amended
+ * @function partialAmend
+ * @memberof module:Assets.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {object} params.changes - Object of changes to the Asset.
+ * @param {string} params.AMId - AMId of the Asset to be partially amended
+ * @param {string} params.resourceId - Asset ID of the Asset to be partially amended
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 function partialAmend(_ref4, callback) {
@@ -181,8 +198,13 @@ function partialAmend(_ref4, callback) {
 
 /**
  * Delete an exising Asset. This will set the Asset status to 'Inactive'.
- * @param {string} AMId - AMId of the Asset to be deleted
- * @param {string} resourceId - Asset ID of the Asset to be deleted
+ * @function deactivate
+ * @memberof module:Assets.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {string} params.AMId - AMId of the Asset to be deleted
+ * @param {string} params.resourceId - Asset ID of the Asset to be deleted
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 function deactivate(_ref5, callback) {

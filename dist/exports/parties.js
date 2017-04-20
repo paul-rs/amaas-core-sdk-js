@@ -10,6 +10,11 @@ var _parties = require('../parties');
 var _parties2 = require('../utils/parties');
 
 // Exports
+/**
+ * Classes and API methods for the Parties service
+ * @module Parties
+ */
+
 // Classes
 exports.Individual = _parties.Individual;
 exports.Organisation = _parties.Organisation;

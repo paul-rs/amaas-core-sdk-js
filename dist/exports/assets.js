@@ -10,6 +10,11 @@ var _assets = require('../assets');
 var _assets2 = require('../utils/assets');
 
 // Exports
+/**
+ * Classes and API methods for the Assets service
+ * @module Assets
+ */
+
 // Classes
 exports.Asset = _assets.Asset;
 exports.BondBase = _assets.BondBase;

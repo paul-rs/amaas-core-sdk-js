@@ -18,27 +18,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing a Government Agency
- * @extends Organisation
+ * @memberof module:Parties.class
+ * @extends module:Parties.class.Organisation
  */
 var GovernmentAgency = function (_Organisation) {
   _inherits(GovernmentAgency, _Organisation);
 
   /**
-   * Construct a new GovernmentAgency object
-   * @param {object} params - GovernmentAgency creation options
+   * Construct a new Government Agency instance
+   * @param {object} params - Government Agency creation options
    * @param {number} params.assetManagerId - Asset Manager ID of the Government Agency
    * @param {string} params.partyId - Party ID of the Government Agency
    * @param {string} params.partyStatus=Active - Status of the Government Agency (e.g. 'Active')
    * @param {string} params.partyClass=Organisation - Class of the Government Agency
-   * @param {string} params.partyType=GovernmentAgency - Type of the Government Agency
+   * @param {string} params.baseCurrency - Base Currency of the Government Agency (e.g. SGD, USD)
    * @param {string} params.description - Description of the Government Agency
    * @param {object} params.addresses - Object of Addresses associated with this Government Agency
    * @param (object) params.emails - Object of Emails associated with this Government Agency
    * @param {object} params.references - Object of References associated with this Government Agency
-   * @param {string} params.createdBy - ID of the user that created the Government Agency (required if creating a new Government Agency)
-   * @param {string} params.updatedBy - ID of the user that updated the Government Agency (use if amending existing Government Agency)
-   * @param {date} params.createdTime - Time that the Government Agency was created (required if creating new Government Agency)
-   * @param {date} params.updatedTime - Time that the Government Agency was updated (required if amending existing Government Agency)
+   * @param {object} params.comments - Object of Comments associated with the Government Agency
+   * @param {object} params.links - Object of Links associated with the Government Agency
+   * @param {string} params.createdBy - ID of the user that created the Government Agency
+   * @param {string} params.updatedBy - ID of the user that updated the Government Agency
+   * @param {date} params.createdTime - Time that the Government Agency was created
+   * @param {date} params.updatedTime - Time that the Government Agency was updated
    * @param {number} params.version - Version number of the Government Agency
    */
   function GovernmentAgency(_ref) {
@@ -46,6 +49,8 @@ var GovernmentAgency = function (_Organisation) {
         partyId = _ref.partyId,
         _ref$partyStatus = _ref.partyStatus,
         partyStatus = _ref$partyStatus === undefined ? 'Active' : _ref$partyStatus,
+        _ref$partyClass = _ref.partyClass,
+        partyClass = _ref$partyClass === undefined ? 'Organisation' : _ref$partyClass,
         baseCurrency = _ref.baseCurrency,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
