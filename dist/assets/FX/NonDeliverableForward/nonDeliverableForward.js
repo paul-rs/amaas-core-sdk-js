@@ -18,8 +18,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing FX (this should never be instantiated directly, use the appropriate subclass instead)
- * @memberof module:Assets.class
- * @extends module:Assets.class.Asset
+ * @memberof module:Assets.Class
+ * @extends module:Assets.Class.Asset
  */
 var NonDeliverableForward = function (_FXBase) {
   _inherits(NonDeliverableForward, _FXBase);

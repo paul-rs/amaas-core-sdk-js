@@ -18,8 +18,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing a Multi-Leg Synthetic
- * @memberof module:Assets.class
- * @extends module:Assets.class.Synthetic
+ * @memberof module:Assets.Class
+ * @extends module:Assets.Class.Synthetic
  */
 var SyntheticMultiLeg = function (_Synthetic) {
   _inherits(SyntheticMultiLeg, _Synthetic);

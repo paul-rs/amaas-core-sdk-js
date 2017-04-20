@@ -18,7 +18,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing an Asset
- * @memberof module:Assets.class
+ * @memberof module:Assets.Class
  * @extends module:Core.AMaaSModel
  */
 var Asset = function (_AMaaSModel) {

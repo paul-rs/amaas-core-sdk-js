@@ -4,8 +4,8 @@ import Future from '../Future/future'
 
 /**
  * Class representing a Bond Future
- * @memberof module:Assets.class
- * @extends module:Assets.class.Future
+ * @memberof module:Assets.Class
+ * @extends module:Assets.Class.Future
  */
 class BondFuture extends Future {
   /**

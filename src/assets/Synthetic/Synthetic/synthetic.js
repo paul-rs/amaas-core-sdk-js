@@ -2,8 +2,8 @@ import Asset from '../../Asset/asset'
 
 /**
  * Class representing a Synthetic
- * @memberof module:Assets.class
- * @extends module:Assets.class.Asset
+ * @memberof module:Assets.Class
+ * @extends module:Assets.Class.Asset
  */
 class Synthetic extends Asset {
   /**

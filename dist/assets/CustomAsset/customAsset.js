@@ -20,8 +20,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing an Custom Asset
- * @memberof module:Assets.class
- * @extends module:Assets.class.Asset
+ * @memberof module:Assets.Class
+ * @extends module:Assets.Class.Asset
  */
 var CustomAsset = function (_Asset) {
   _inherits(CustomAsset, _Asset);

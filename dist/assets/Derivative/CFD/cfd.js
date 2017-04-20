@@ -18,8 +18,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing a CFD
- * @memberof module:Assets.class
- * @extends module:Assets.class.Derivative
+ * @memberof module:Assets.Class
+ * @extends module:Assets.Class.Derivative
  */
 var CFD = function (_Derivative) {
   _inherits(CFD, _Derivative);

@@ -2,8 +2,8 @@ import Synthetic from '../Synthetic/synthetic.js'
 
 /**
  * Class representing a Multi-Leg Synthetic
- * @memberof module:Assets.class
- * @extends module:Assets.class.Synthetic
+ * @memberof module:Assets.Class
+ * @extends module:Assets.Class.Synthetic
  */
 class SyntheticMultiLeg extends Synthetic {
   /**

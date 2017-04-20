@@ -336,77 +336,77 @@ Classes and API methods for the Assets service
 
 
 * [Assets](#module_Assets)
-    * [.class](#module_Assets.class) : <code>object</code>
-        * [.Asset](#module_Assets.class.Asset) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-            * [new Asset(params)](#new_module_Assets.class.Asset_new)
-        * [.BondBase](#module_Assets.class.BondBase) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new BondBase(params)](#new_module_Assets.class.BondBase_new)
-        * [.BondCorporate](#module_Assets.class.BondCorporate) ⇐ <code>[BondBase](#module_Assets.class.BondBase)</code>
-            * [new BondCorporate(params)](#new_module_Assets.class.BondCorporate_new)
-        * [.BondGovernment](#module_Assets.class.BondGovernment) ⇐ <code>[BondBase](#module_Assets.class.BondBase)</code>
-            * [new BondGovernment(params)](#new_module_Assets.class.BondGovernment_new)
-        * [.BondMortgage](#module_Assets.class.BondMortgage) ⇐ <code>[BondBase](#module_Assets.class.BondBase)</code>
-            * [new BondMortgage(params)](#new_module_Assets.class.BondMortgage_new)
-        * [.Currency](#module_Assets.class.Currency) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new Currency(params)](#new_module_Assets.class.Currency_new)
-        * [.CustomAsset](#module_Assets.class.CustomAsset) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new CustomAsset(params)](#new_module_Assets.class.CustomAsset_new)
-        * [.BondOption](#module_Assets.class.BondOption) ⇐ <code>[Derivative](#module_Assets.class.Derivative)</code>
-            * [new BondOption(params)](#new_module_Assets.class.BondOption_new)
-        * [.CFD](#module_Assets.class.CFD) ⇐ <code>[Derivative](#module_Assets.class.Derivative)</code>
-            * [new CFD(params)](#new_module_Assets.class.CFD_new)
-        * [.Derivative](#module_Assets.class.Derivative) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new Derivative(params)](#new_module_Assets.class.Derivative_new)
-        * [.Equity](#module_Assets.class.Equity) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new Equity(params)](#new_module_Assets.class.Equity_new)
-        * [.ForeignExchangeOption](#module_Assets.class.ForeignExchangeOption) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new ForeignExchangeOption(params)](#new_module_Assets.class.ForeignExchangeOption_new)
-        * [.ExchangeTradedFund](#module_Assets.class.ExchangeTradedFund) ⇐ <code>[Fund](#module_Assets.class.Fund)</code>
-            * [new ExchangeTradedFund(params)](#new_module_Assets.class.ExchangeTradedFund_new)
-        * [.Fund](#module_Assets.class.Fund) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new Fund(params)](#new_module_Assets.class.Fund_new)
-        * [.ForeignExchange](#module_Assets.class.ForeignExchange) ⇐ <code>[FXBase](#module_Assets.class.FXBase)</code>
-            * [new ForeignExchange(params)](#new_module_Assets.class.ForeignExchange_new)
-        * [.FXBase](#module_Assets.class.FXBase) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new FXBase(params)](#new_module_Assets.class.FXBase_new)
-        * [.NonDeliverableForward](#module_Assets.class.NonDeliverableForward) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new NonDeliverableForward(params)](#new_module_Assets.class.NonDeliverableForward_new)
-        * [.Index](#module_Assets.class.Index) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new Index(params)](#new_module_Assets.class.Index_new)
-        * [.BondFuture](#module_Assets.class.BondFuture) ⇐ <code>[Future](#module_Assets.class.Future)</code>
-            * [new BondFuture(params)](#new_module_Assets.class.BondFuture_new)
-        * [.BondFutureOption](#module_Assets.class.BondFutureOption) ⇐ <code>[Future](#module_Assets.class.Future)</code>
-            * [new BondFutureOption(params)](#new_module_Assets.class.BondFutureOption_new)
-        * [.EnergyFuture](#module_Assets.class.EnergyFuture) ⇐ <code>[Future](#module_Assets.class.Future)</code>
-            * [new EnergyFuture(params)](#new_module_Assets.class.EnergyFuture_new)
-        * [.EquityFuture](#module_Assets.class.EquityFuture) ⇐ <code>[ListedDerivative](#module_Assets.class.ListedDerivative)</code>
-            * [new EquityFuture(params)](#new_module_Assets.class.EquityFuture_new)
-        * [.Future](#module_Assets.class.Future) ⇐ <code>[ListedDerivative](#module_Assets.class.ListedDerivative)</code>
-            * [new Future(params)](#new_module_Assets.class.Future_new)
-        * [.FutureOption](#module_Assets.class.FutureOption) ⇐ <code>[Future](#module_Assets.class.Future)</code>
-            * [new FutureOption(params)](#new_module_Assets.class.FutureOption_new)
-        * [.IndexFuture](#module_Assets.class.IndexFuture) ⇐ <code>[Future](#module_Assets.class.Future)</code>
-            * [new IndexFuture(params)](#new_module_Assets.class.IndexFuture_new)
-        * [.InterestRateFuture](#module_Assets.class.InterestRateFuture) ⇐ <code>[Future](#module_Assets.class.Future)</code>
-            * [new InterestRateFuture(params)](#new_module_Assets.class.InterestRateFuture_new)
-        * [.ListedContractForDifference](#module_Assets.class.ListedContractForDifference) ⇐ <code>[ListedDerivative](#module_Assets.class.ListedDerivative)</code>
-            * [new ListedContractForDifference(params)](#new_module_Assets.class.ListedContractForDifference_new)
-        * [.ListedDerivative](#module_Assets.class.ListedDerivative) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new ListedDerivative(params)](#new_module_Assets.class.ListedDerivative_new)
-        * [.RealAsset](#module_Assets.class.RealAsset) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new RealAsset(params)](#new_module_Assets.class.RealAsset_new)
-        * [.RealEstate](#module_Assets.class.RealEstate) ⇐ <code>[RealAsset](#module_Assets.class.RealAsset)</code>
-            * [new RealEstate(params)](#new_module_Assets.class.RealEstate_new)
-        * [.Wine](#module_Assets.class.Wine) ⇐ <code>[RealAsset](#module_Assets.class.RealAsset)</code>
-            * [new Wine(params)](#new_module_Assets.class.Wine_new)
-        * [.Sukuk](#module_Assets.class.Sukuk) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new Sukuk(params)](#new_module_Assets.class.Sukuk_new)
-        * [.Synthetic](#module_Assets.class.Synthetic) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-            * [new Synthetic(params)](#new_module_Assets.class.Synthetic_new)
-        * [.SyntheticFromBook](#module_Assets.class.SyntheticFromBook) ⇐ <code>[Synthetic](#module_Assets.class.Synthetic)</code>
-            * [new SyntheticFromBook(params)](#new_module_Assets.class.SyntheticFromBook_new)
-        * [.SyntheticMultiLeg](#module_Assets.class.SyntheticMultiLeg) ⇐ <code>[Synthetic](#module_Assets.class.Synthetic)</code>
-            * [new SyntheticMultiLeg(params)](#new_module_Assets.class.SyntheticMultiLeg_new)
+    * [.Class](#module_Assets.Class) : <code>object</code>
+        * [.Asset](#module_Assets.Class.Asset) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+            * [new Asset(params)](#new_module_Assets.Class.Asset_new)
+        * [.BondBase](#module_Assets.Class.BondBase) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new BondBase(params)](#new_module_Assets.Class.BondBase_new)
+        * [.BondCorporate](#module_Assets.Class.BondCorporate) ⇐ <code>[BondBase](#module_Assets.Class.BondBase)</code>
+            * [new BondCorporate(params)](#new_module_Assets.Class.BondCorporate_new)
+        * [.BondGovernment](#module_Assets.Class.BondGovernment) ⇐ <code>[BondBase](#module_Assets.Class.BondBase)</code>
+            * [new BondGovernment(params)](#new_module_Assets.Class.BondGovernment_new)
+        * [.BondMortgage](#module_Assets.Class.BondMortgage) ⇐ <code>[BondBase](#module_Assets.Class.BondBase)</code>
+            * [new BondMortgage(params)](#new_module_Assets.Class.BondMortgage_new)
+        * [.Currency](#module_Assets.Class.Currency) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new Currency(params)](#new_module_Assets.Class.Currency_new)
+        * [.CustomAsset](#module_Assets.Class.CustomAsset) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new CustomAsset(params)](#new_module_Assets.Class.CustomAsset_new)
+        * [.BondOption](#module_Assets.Class.BondOption) ⇐ <code>[Derivative](#module_Assets.Class.Derivative)</code>
+            * [new BondOption(params)](#new_module_Assets.Class.BondOption_new)
+        * [.CFD](#module_Assets.Class.CFD) ⇐ <code>[Derivative](#module_Assets.Class.Derivative)</code>
+            * [new CFD(params)](#new_module_Assets.Class.CFD_new)
+        * [.Derivative](#module_Assets.Class.Derivative) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new Derivative(params)](#new_module_Assets.Class.Derivative_new)
+        * [.Equity](#module_Assets.Class.Equity) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new Equity(params)](#new_module_Assets.Class.Equity_new)
+        * [.ForeignExchangeOption](#module_Assets.Class.ForeignExchangeOption) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new ForeignExchangeOption(params)](#new_module_Assets.Class.ForeignExchangeOption_new)
+        * [.ExchangeTradedFund](#module_Assets.Class.ExchangeTradedFund) ⇐ <code>[Fund](#module_Assets.Class.Fund)</code>
+            * [new ExchangeTradedFund(params)](#new_module_Assets.Class.ExchangeTradedFund_new)
+        * [.Fund](#module_Assets.Class.Fund) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new Fund(params)](#new_module_Assets.Class.Fund_new)
+        * [.ForeignExchange](#module_Assets.Class.ForeignExchange) ⇐ <code>[FXBase](#module_Assets.Class.FXBase)</code>
+            * [new ForeignExchange(params)](#new_module_Assets.Class.ForeignExchange_new)
+        * [.FXBase](#module_Assets.Class.FXBase) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new FXBase(params)](#new_module_Assets.Class.FXBase_new)
+        * [.NonDeliverableForward](#module_Assets.Class.NonDeliverableForward) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new NonDeliverableForward(params)](#new_module_Assets.Class.NonDeliverableForward_new)
+        * [.Index](#module_Assets.Class.Index) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new Index(params)](#new_module_Assets.Class.Index_new)
+        * [.BondFuture](#module_Assets.Class.BondFuture) ⇐ <code>[Future](#module_Assets.Class.Future)</code>
+            * [new BondFuture(params)](#new_module_Assets.Class.BondFuture_new)
+        * [.BondFutureOption](#module_Assets.Class.BondFutureOption) ⇐ <code>[Future](#module_Assets.Class.Future)</code>
+            * [new BondFutureOption(params)](#new_module_Assets.Class.BondFutureOption_new)
+        * [.EnergyFuture](#module_Assets.Class.EnergyFuture) ⇐ <code>[Future](#module_Assets.Class.Future)</code>
+            * [new EnergyFuture(params)](#new_module_Assets.Class.EnergyFuture_new)
+        * [.EquityFuture](#module_Assets.Class.EquityFuture) ⇐ <code>[ListedDerivative](#module_Assets.Class.ListedDerivative)</code>
+            * [new EquityFuture(params)](#new_module_Assets.Class.EquityFuture_new)
+        * [.Future](#module_Assets.Class.Future) ⇐ <code>[ListedDerivative](#module_Assets.Class.ListedDerivative)</code>
+            * [new Future(params)](#new_module_Assets.Class.Future_new)
+        * [.FutureOption](#module_Assets.Class.FutureOption) ⇐ <code>[Future](#module_Assets.Class.Future)</code>
+            * [new FutureOption(params)](#new_module_Assets.Class.FutureOption_new)
+        * [.IndexFuture](#module_Assets.Class.IndexFuture) ⇐ <code>[Future](#module_Assets.Class.Future)</code>
+            * [new IndexFuture(params)](#new_module_Assets.Class.IndexFuture_new)
+        * [.InterestRateFuture](#module_Assets.Class.InterestRateFuture) ⇐ <code>[Future](#module_Assets.Class.Future)</code>
+            * [new InterestRateFuture(params)](#new_module_Assets.Class.InterestRateFuture_new)
+        * [.ListedContractForDifference](#module_Assets.Class.ListedContractForDifference) ⇐ <code>[ListedDerivative](#module_Assets.Class.ListedDerivative)</code>
+            * [new ListedContractForDifference(params)](#new_module_Assets.Class.ListedContractForDifference_new)
+        * [.ListedDerivative](#module_Assets.Class.ListedDerivative) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new ListedDerivative(params)](#new_module_Assets.Class.ListedDerivative_new)
+        * [.RealAsset](#module_Assets.Class.RealAsset) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new RealAsset(params)](#new_module_Assets.Class.RealAsset_new)
+        * [.RealEstate](#module_Assets.Class.RealEstate) ⇐ <code>[RealAsset](#module_Assets.Class.RealAsset)</code>
+            * [new RealEstate(params)](#new_module_Assets.Class.RealEstate_new)
+        * [.Wine](#module_Assets.Class.Wine) ⇐ <code>[RealAsset](#module_Assets.Class.RealAsset)</code>
+            * [new Wine(params)](#new_module_Assets.Class.Wine_new)
+        * [.Sukuk](#module_Assets.Class.Sukuk) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new Sukuk(params)](#new_module_Assets.Class.Sukuk_new)
+        * [.Synthetic](#module_Assets.Class.Synthetic) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+            * [new Synthetic(params)](#new_module_Assets.Class.Synthetic_new)
+        * [.SyntheticFromBook](#module_Assets.Class.SyntheticFromBook) ⇐ <code>[Synthetic](#module_Assets.Class.Synthetic)</code>
+            * [new SyntheticFromBook(params)](#new_module_Assets.Class.SyntheticFromBook_new)
+        * [.SyntheticMultiLeg](#module_Assets.Class.SyntheticMultiLeg) ⇐ <code>[Synthetic](#module_Assets.Class.Synthetic)</code>
+            * [new SyntheticMultiLeg(params)](#new_module_Assets.Class.SyntheticMultiLeg_new)
     * [.api](#module_Assets.api) : <code>object</code>
         * [.retrieve(params, callback)](#module_Assets.api.retrieve)
         * [.insert(params, callback)](#module_Assets.api.insert)
@@ -414,91 +414,91 @@ Classes and API methods for the Assets service
         * [.partialAmend(params, callback)](#module_Assets.api.partialAmend)
         * [.deactivate(params, callback)](#module_Assets.api.deactivate)
 
-<a name="module_Assets.class"></a>
+<a name="module_Assets.Class"></a>
 
-### Assets.class : <code>object</code>
+### Assets.Class : <code>object</code>
 **Kind**: static namespace of <code>[Assets](#module_Assets)</code>  
 
-* [.class](#module_Assets.class) : <code>object</code>
-    * [.Asset](#module_Assets.class.Asset) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
-        * [new Asset(params)](#new_module_Assets.class.Asset_new)
-    * [.BondBase](#module_Assets.class.BondBase) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new BondBase(params)](#new_module_Assets.class.BondBase_new)
-    * [.BondCorporate](#module_Assets.class.BondCorporate) ⇐ <code>[BondBase](#module_Assets.class.BondBase)</code>
-        * [new BondCorporate(params)](#new_module_Assets.class.BondCorporate_new)
-    * [.BondGovernment](#module_Assets.class.BondGovernment) ⇐ <code>[BondBase](#module_Assets.class.BondBase)</code>
-        * [new BondGovernment(params)](#new_module_Assets.class.BondGovernment_new)
-    * [.BondMortgage](#module_Assets.class.BondMortgage) ⇐ <code>[BondBase](#module_Assets.class.BondBase)</code>
-        * [new BondMortgage(params)](#new_module_Assets.class.BondMortgage_new)
-    * [.Currency](#module_Assets.class.Currency) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new Currency(params)](#new_module_Assets.class.Currency_new)
-    * [.CustomAsset](#module_Assets.class.CustomAsset) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new CustomAsset(params)](#new_module_Assets.class.CustomAsset_new)
-    * [.BondOption](#module_Assets.class.BondOption) ⇐ <code>[Derivative](#module_Assets.class.Derivative)</code>
-        * [new BondOption(params)](#new_module_Assets.class.BondOption_new)
-    * [.CFD](#module_Assets.class.CFD) ⇐ <code>[Derivative](#module_Assets.class.Derivative)</code>
-        * [new CFD(params)](#new_module_Assets.class.CFD_new)
-    * [.Derivative](#module_Assets.class.Derivative) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new Derivative(params)](#new_module_Assets.class.Derivative_new)
-    * [.Equity](#module_Assets.class.Equity) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new Equity(params)](#new_module_Assets.class.Equity_new)
-    * [.ForeignExchangeOption](#module_Assets.class.ForeignExchangeOption) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new ForeignExchangeOption(params)](#new_module_Assets.class.ForeignExchangeOption_new)
-    * [.ExchangeTradedFund](#module_Assets.class.ExchangeTradedFund) ⇐ <code>[Fund](#module_Assets.class.Fund)</code>
-        * [new ExchangeTradedFund(params)](#new_module_Assets.class.ExchangeTradedFund_new)
-    * [.Fund](#module_Assets.class.Fund) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new Fund(params)](#new_module_Assets.class.Fund_new)
-    * [.ForeignExchange](#module_Assets.class.ForeignExchange) ⇐ <code>[FXBase](#module_Assets.class.FXBase)</code>
-        * [new ForeignExchange(params)](#new_module_Assets.class.ForeignExchange_new)
-    * [.FXBase](#module_Assets.class.FXBase) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new FXBase(params)](#new_module_Assets.class.FXBase_new)
-    * [.NonDeliverableForward](#module_Assets.class.NonDeliverableForward) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new NonDeliverableForward(params)](#new_module_Assets.class.NonDeliverableForward_new)
-    * [.Index](#module_Assets.class.Index) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new Index(params)](#new_module_Assets.class.Index_new)
-    * [.BondFuture](#module_Assets.class.BondFuture) ⇐ <code>[Future](#module_Assets.class.Future)</code>
-        * [new BondFuture(params)](#new_module_Assets.class.BondFuture_new)
-    * [.BondFutureOption](#module_Assets.class.BondFutureOption) ⇐ <code>[Future](#module_Assets.class.Future)</code>
-        * [new BondFutureOption(params)](#new_module_Assets.class.BondFutureOption_new)
-    * [.EnergyFuture](#module_Assets.class.EnergyFuture) ⇐ <code>[Future](#module_Assets.class.Future)</code>
-        * [new EnergyFuture(params)](#new_module_Assets.class.EnergyFuture_new)
-    * [.EquityFuture](#module_Assets.class.EquityFuture) ⇐ <code>[ListedDerivative](#module_Assets.class.ListedDerivative)</code>
-        * [new EquityFuture(params)](#new_module_Assets.class.EquityFuture_new)
-    * [.Future](#module_Assets.class.Future) ⇐ <code>[ListedDerivative](#module_Assets.class.ListedDerivative)</code>
-        * [new Future(params)](#new_module_Assets.class.Future_new)
-    * [.FutureOption](#module_Assets.class.FutureOption) ⇐ <code>[Future](#module_Assets.class.Future)</code>
-        * [new FutureOption(params)](#new_module_Assets.class.FutureOption_new)
-    * [.IndexFuture](#module_Assets.class.IndexFuture) ⇐ <code>[Future](#module_Assets.class.Future)</code>
-        * [new IndexFuture(params)](#new_module_Assets.class.IndexFuture_new)
-    * [.InterestRateFuture](#module_Assets.class.InterestRateFuture) ⇐ <code>[Future](#module_Assets.class.Future)</code>
-        * [new InterestRateFuture(params)](#new_module_Assets.class.InterestRateFuture_new)
-    * [.ListedContractForDifference](#module_Assets.class.ListedContractForDifference) ⇐ <code>[ListedDerivative](#module_Assets.class.ListedDerivative)</code>
-        * [new ListedContractForDifference(params)](#new_module_Assets.class.ListedContractForDifference_new)
-    * [.ListedDerivative](#module_Assets.class.ListedDerivative) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new ListedDerivative(params)](#new_module_Assets.class.ListedDerivative_new)
-    * [.RealAsset](#module_Assets.class.RealAsset) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new RealAsset(params)](#new_module_Assets.class.RealAsset_new)
-    * [.RealEstate](#module_Assets.class.RealEstate) ⇐ <code>[RealAsset](#module_Assets.class.RealAsset)</code>
-        * [new RealEstate(params)](#new_module_Assets.class.RealEstate_new)
-    * [.Wine](#module_Assets.class.Wine) ⇐ <code>[RealAsset](#module_Assets.class.RealAsset)</code>
-        * [new Wine(params)](#new_module_Assets.class.Wine_new)
-    * [.Sukuk](#module_Assets.class.Sukuk) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new Sukuk(params)](#new_module_Assets.class.Sukuk_new)
-    * [.Synthetic](#module_Assets.class.Synthetic) ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
-        * [new Synthetic(params)](#new_module_Assets.class.Synthetic_new)
-    * [.SyntheticFromBook](#module_Assets.class.SyntheticFromBook) ⇐ <code>[Synthetic](#module_Assets.class.Synthetic)</code>
-        * [new SyntheticFromBook(params)](#new_module_Assets.class.SyntheticFromBook_new)
-    * [.SyntheticMultiLeg](#module_Assets.class.SyntheticMultiLeg) ⇐ <code>[Synthetic](#module_Assets.class.Synthetic)</code>
-        * [new SyntheticMultiLeg(params)](#new_module_Assets.class.SyntheticMultiLeg_new)
+* [.Class](#module_Assets.Class) : <code>object</code>
+    * [.Asset](#module_Assets.Class.Asset) ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+        * [new Asset(params)](#new_module_Assets.Class.Asset_new)
+    * [.BondBase](#module_Assets.Class.BondBase) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new BondBase(params)](#new_module_Assets.Class.BondBase_new)
+    * [.BondCorporate](#module_Assets.Class.BondCorporate) ⇐ <code>[BondBase](#module_Assets.Class.BondBase)</code>
+        * [new BondCorporate(params)](#new_module_Assets.Class.BondCorporate_new)
+    * [.BondGovernment](#module_Assets.Class.BondGovernment) ⇐ <code>[BondBase](#module_Assets.Class.BondBase)</code>
+        * [new BondGovernment(params)](#new_module_Assets.Class.BondGovernment_new)
+    * [.BondMortgage](#module_Assets.Class.BondMortgage) ⇐ <code>[BondBase](#module_Assets.Class.BondBase)</code>
+        * [new BondMortgage(params)](#new_module_Assets.Class.BondMortgage_new)
+    * [.Currency](#module_Assets.Class.Currency) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new Currency(params)](#new_module_Assets.Class.Currency_new)
+    * [.CustomAsset](#module_Assets.Class.CustomAsset) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new CustomAsset(params)](#new_module_Assets.Class.CustomAsset_new)
+    * [.BondOption](#module_Assets.Class.BondOption) ⇐ <code>[Derivative](#module_Assets.Class.Derivative)</code>
+        * [new BondOption(params)](#new_module_Assets.Class.BondOption_new)
+    * [.CFD](#module_Assets.Class.CFD) ⇐ <code>[Derivative](#module_Assets.Class.Derivative)</code>
+        * [new CFD(params)](#new_module_Assets.Class.CFD_new)
+    * [.Derivative](#module_Assets.Class.Derivative) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new Derivative(params)](#new_module_Assets.Class.Derivative_new)
+    * [.Equity](#module_Assets.Class.Equity) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new Equity(params)](#new_module_Assets.Class.Equity_new)
+    * [.ForeignExchangeOption](#module_Assets.Class.ForeignExchangeOption) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new ForeignExchangeOption(params)](#new_module_Assets.Class.ForeignExchangeOption_new)
+    * [.ExchangeTradedFund](#module_Assets.Class.ExchangeTradedFund) ⇐ <code>[Fund](#module_Assets.Class.Fund)</code>
+        * [new ExchangeTradedFund(params)](#new_module_Assets.Class.ExchangeTradedFund_new)
+    * [.Fund](#module_Assets.Class.Fund) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new Fund(params)](#new_module_Assets.Class.Fund_new)
+    * [.ForeignExchange](#module_Assets.Class.ForeignExchange) ⇐ <code>[FXBase](#module_Assets.Class.FXBase)</code>
+        * [new ForeignExchange(params)](#new_module_Assets.Class.ForeignExchange_new)
+    * [.FXBase](#module_Assets.Class.FXBase) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new FXBase(params)](#new_module_Assets.Class.FXBase_new)
+    * [.NonDeliverableForward](#module_Assets.Class.NonDeliverableForward) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new NonDeliverableForward(params)](#new_module_Assets.Class.NonDeliverableForward_new)
+    * [.Index](#module_Assets.Class.Index) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new Index(params)](#new_module_Assets.Class.Index_new)
+    * [.BondFuture](#module_Assets.Class.BondFuture) ⇐ <code>[Future](#module_Assets.Class.Future)</code>
+        * [new BondFuture(params)](#new_module_Assets.Class.BondFuture_new)
+    * [.BondFutureOption](#module_Assets.Class.BondFutureOption) ⇐ <code>[Future](#module_Assets.Class.Future)</code>
+        * [new BondFutureOption(params)](#new_module_Assets.Class.BondFutureOption_new)
+    * [.EnergyFuture](#module_Assets.Class.EnergyFuture) ⇐ <code>[Future](#module_Assets.Class.Future)</code>
+        * [new EnergyFuture(params)](#new_module_Assets.Class.EnergyFuture_new)
+    * [.EquityFuture](#module_Assets.Class.EquityFuture) ⇐ <code>[ListedDerivative](#module_Assets.Class.ListedDerivative)</code>
+        * [new EquityFuture(params)](#new_module_Assets.Class.EquityFuture_new)
+    * [.Future](#module_Assets.Class.Future) ⇐ <code>[ListedDerivative](#module_Assets.Class.ListedDerivative)</code>
+        * [new Future(params)](#new_module_Assets.Class.Future_new)
+    * [.FutureOption](#module_Assets.Class.FutureOption) ⇐ <code>[Future](#module_Assets.Class.Future)</code>
+        * [new FutureOption(params)](#new_module_Assets.Class.FutureOption_new)
+    * [.IndexFuture](#module_Assets.Class.IndexFuture) ⇐ <code>[Future](#module_Assets.Class.Future)</code>
+        * [new IndexFuture(params)](#new_module_Assets.Class.IndexFuture_new)
+    * [.InterestRateFuture](#module_Assets.Class.InterestRateFuture) ⇐ <code>[Future](#module_Assets.Class.Future)</code>
+        * [new InterestRateFuture(params)](#new_module_Assets.Class.InterestRateFuture_new)
+    * [.ListedContractForDifference](#module_Assets.Class.ListedContractForDifference) ⇐ <code>[ListedDerivative](#module_Assets.Class.ListedDerivative)</code>
+        * [new ListedContractForDifference(params)](#new_module_Assets.Class.ListedContractForDifference_new)
+    * [.ListedDerivative](#module_Assets.Class.ListedDerivative) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new ListedDerivative(params)](#new_module_Assets.Class.ListedDerivative_new)
+    * [.RealAsset](#module_Assets.Class.RealAsset) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new RealAsset(params)](#new_module_Assets.Class.RealAsset_new)
+    * [.RealEstate](#module_Assets.Class.RealEstate) ⇐ <code>[RealAsset](#module_Assets.Class.RealAsset)</code>
+        * [new RealEstate(params)](#new_module_Assets.Class.RealEstate_new)
+    * [.Wine](#module_Assets.Class.Wine) ⇐ <code>[RealAsset](#module_Assets.Class.RealAsset)</code>
+        * [new Wine(params)](#new_module_Assets.Class.Wine_new)
+    * [.Sukuk](#module_Assets.Class.Sukuk) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new Sukuk(params)](#new_module_Assets.Class.Sukuk_new)
+    * [.Synthetic](#module_Assets.Class.Synthetic) ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
+        * [new Synthetic(params)](#new_module_Assets.Class.Synthetic_new)
+    * [.SyntheticFromBook](#module_Assets.Class.SyntheticFromBook) ⇐ <code>[Synthetic](#module_Assets.Class.Synthetic)</code>
+        * [new SyntheticFromBook(params)](#new_module_Assets.Class.SyntheticFromBook_new)
+    * [.SyntheticMultiLeg](#module_Assets.Class.SyntheticMultiLeg) ⇐ <code>[Synthetic](#module_Assets.Class.Synthetic)</code>
+        * [new SyntheticMultiLeg(params)](#new_module_Assets.Class.SyntheticMultiLeg_new)
 
-<a name="module_Assets.class.Asset"></a>
+<a name="module_Assets.Class.Asset"></a>
 
-#### class.Asset ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
+#### Class.Asset ⇐ <code>[AMaaSModel](#module_Core.AMaaSModel)</code>
 Class representing an Asset
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
 **Extends**: <code>[AMaaSModel](#module_Core.AMaaSModel)</code>  
-<a name="new_module_Assets.class.Asset_new"></a>
+<a name="new_module_Assets.Class.Asset_new"></a>
 
 ##### new Asset(params)
 Construct a new Asset instance
@@ -530,14 +530,14 @@ Construct a new Asset instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.BondBase"></a>
+<a name="module_Assets.Class.BondBase"></a>
 
-#### class.BondBase ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.BondBase ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing a Base Bond
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.BondBase_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.BondBase_new"></a>
 
 ##### new BondBase(params)
 Construct new Bond instance
@@ -572,14 +572,14 @@ Construct new Bond instance
 | params.updatedTime | <code>date</code> | Time that the Bond was updated |
 | params.version | <code>number</code> | Version number of the Bond |
 
-<a name="module_Assets.class.BondCorporate"></a>
+<a name="module_Assets.Class.BondCorporate"></a>
 
-#### class.BondCorporate ⇐ <code>[BondBase](#module_Assets.class.BondBase)</code>
+#### Class.BondCorporate ⇐ <code>[BondBase](#module_Assets.Class.BondBase)</code>
 Class representing a Corporate Bond
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[BondBase](#module_Assets.class.BondBase)</code>  
-<a name="new_module_Assets.class.BondCorporate_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[BondBase](#module_Assets.Class.BondBase)</code>  
+<a name="new_module_Assets.Class.BondCorporate_new"></a>
 
 ##### new BondCorporate(params)
 Construct new Corporate Bond instance
@@ -614,14 +614,14 @@ Construct new Corporate Bond instance
 | params.updatedTime | <code>date</code> | Time that the Bond was updated |
 | params.version | <code>number</code> | Version number of the Bond |
 
-<a name="module_Assets.class.BondGovernment"></a>
+<a name="module_Assets.Class.BondGovernment"></a>
 
-#### class.BondGovernment ⇐ <code>[BondBase](#module_Assets.class.BondBase)</code>
+#### Class.BondGovernment ⇐ <code>[BondBase](#module_Assets.Class.BondBase)</code>
 Class representing a Government Bond
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[BondBase](#module_Assets.class.BondBase)</code>  
-<a name="new_module_Assets.class.BondGovernment_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[BondBase](#module_Assets.Class.BondBase)</code>  
+<a name="new_module_Assets.Class.BondGovernment_new"></a>
 
 ##### new BondGovernment(params)
 Construct new Government Bond instance
@@ -656,14 +656,14 @@ Construct new Government Bond instance
 | params.updatedTime | <code>date</code> | Time that the Bond was updated |
 | params.version | <code>number</code> | Version number of the Bond |
 
-<a name="module_Assets.class.BondMortgage"></a>
+<a name="module_Assets.Class.BondMortgage"></a>
 
-#### class.BondMortgage ⇐ <code>[BondBase](#module_Assets.class.BondBase)</code>
+#### Class.BondMortgage ⇐ <code>[BondBase](#module_Assets.Class.BondBase)</code>
 Class representing a Mortgage Bond
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[BondBase](#module_Assets.class.BondBase)</code>  
-<a name="new_module_Assets.class.BondMortgage_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[BondBase](#module_Assets.Class.BondBase)</code>  
+<a name="new_module_Assets.Class.BondMortgage_new"></a>
 
 ##### new BondMortgage(params)
 Construct new Mortgage Bond instance
@@ -698,14 +698,14 @@ Construct new Mortgage Bond instance
 | params.updatedTime | <code>date</code> | Time that the Bond was updated |
 | params.version | <code>number</code> | Version number of the Bond |
 
-<a name="module_Assets.class.Currency"></a>
+<a name="module_Assets.Class.Currency"></a>
 
-#### class.Currency ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.Currency ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing an Currency
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.Currency_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.Currency_new"></a>
 
 ##### new Currency(params)
 Construct a new Currency instance
@@ -738,14 +738,14 @@ Construct a new Currency instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number of the Asset |
 
-<a name="module_Assets.class.CustomAsset"></a>
+<a name="module_Assets.Class.CustomAsset"></a>
 
-#### class.CustomAsset ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.CustomAsset ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing an Custom Asset
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.CustomAsset_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.CustomAsset_new"></a>
 
 ##### new CustomAsset(params)
 Construct a new Custom Asset instance
@@ -777,14 +777,14 @@ Construct a new Custom Asset instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number of the Asset |
 
-<a name="module_Assets.class.BondOption"></a>
+<a name="module_Assets.Class.BondOption"></a>
 
-#### class.BondOption ⇐ <code>[Derivative](#module_Assets.class.Derivative)</code>
+#### Class.BondOption ⇐ <code>[Derivative](#module_Assets.Class.Derivative)</code>
 Class representing an Bond Option
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Derivative](#module_Assets.class.Derivative)</code>  
-<a name="new_module_Assets.class.BondOption_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Derivative](#module_Assets.Class.Derivative)</code>  
+<a name="new_module_Assets.Class.BondOption_new"></a>
 
 ##### new BondOption(params)
 Construct a new Bond Option instance
@@ -820,14 +820,14 @@ Construct a new Bond Option instance
 | params.updatedTime | <code>date</code> | Time that the Bond Option was updated |
 | params.version | <code>number</code> | Version number of the Bond Option |
 
-<a name="module_Assets.class.CFD"></a>
+<a name="module_Assets.Class.CFD"></a>
 
-#### class.CFD ⇐ <code>[Derivative](#module_Assets.class.Derivative)</code>
+#### Class.CFD ⇐ <code>[Derivative](#module_Assets.Class.Derivative)</code>
 Class representing a CFD
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Derivative](#module_Assets.class.Derivative)</code>  
-<a name="new_module_Assets.class.CFD_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Derivative](#module_Assets.Class.Derivative)</code>  
+<a name="new_module_Assets.Class.CFD_new"></a>
 
 ##### new CFD(params)
 Construct a new CFD instance
@@ -859,14 +859,14 @@ Construct a new CFD instance
 | params.updatedTime | <code>date</code> | Time that the CFD was updated |
 | params.version | <code>number</code> | Version number of the CFD |
 
-<a name="module_Assets.class.Derivative"></a>
+<a name="module_Assets.Class.Derivative"></a>
 
-#### class.Derivative ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.Derivative ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing an Derivative
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.Derivative_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.Derivative_new"></a>
 
 ##### new Derivative(params)
 Construct a new Derivative instance
@@ -898,14 +898,14 @@ Construct a new Derivative instance
 | params.updatedTime | <code>date</code> | Time that the Derivative was updated |
 | params.version | <code>number</code> | Version number of the Derivative |
 
-<a name="module_Assets.class.Equity"></a>
+<a name="module_Assets.Class.Equity"></a>
 
-#### class.Equity ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.Equity ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing an Equity
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.Equity_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.Equity_new"></a>
 
 ##### new Equity(params)
 Construct a new Equity instance
@@ -937,14 +937,14 @@ Construct a new Equity instance
 | params.updatedTime | <code>date</code> | Time that the Equity was updated |
 | params.version | <code>number</code> | Version number of the Equity |
 
-<a name="module_Assets.class.ForeignExchangeOption"></a>
+<a name="module_Assets.Class.ForeignExchangeOption"></a>
 
-#### class.ForeignExchangeOption ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.ForeignExchangeOption ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing an FX Option
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.ForeignExchangeOption_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.ForeignExchangeOption_new"></a>
 
 ##### new ForeignExchangeOption(params)
 Construct a new FX Option instance
@@ -979,14 +979,14 @@ Construct a new FX Option instance
 | params.updatedTime | <code>date</code> | Time that the FX Option was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.ExchangeTradedFund"></a>
+<a name="module_Assets.Class.ExchangeTradedFund"></a>
 
-#### class.ExchangeTradedFund ⇐ <code>[Fund](#module_Assets.class.Fund)</code>
+#### Class.ExchangeTradedFund ⇐ <code>[Fund](#module_Assets.Class.Fund)</code>
 Class representing an ETF
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Fund](#module_Assets.class.Fund)</code>  
-<a name="new_module_Assets.class.ExchangeTradedFund_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Fund](#module_Assets.Class.Fund)</code>  
+<a name="new_module_Assets.Class.ExchangeTradedFund_new"></a>
 
 ##### new ExchangeTradedFund(params)
 Construct a new ETF instance
@@ -1022,14 +1022,14 @@ Construct a new ETF instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.Fund"></a>
+<a name="module_Assets.Class.Fund"></a>
 
-#### class.Fund ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.Fund ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing a Fund
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.Fund_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.Fund_new"></a>
 
 ##### new Fund(params)
 Construct a new Fund instance
@@ -1065,14 +1065,14 @@ Construct a new Fund instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.ForeignExchange"></a>
+<a name="module_Assets.Class.ForeignExchange"></a>
 
-#### class.ForeignExchange ⇐ <code>[FXBase](#module_Assets.class.FXBase)</code>
+#### Class.ForeignExchange ⇐ <code>[FXBase](#module_Assets.Class.FXBase)</code>
 Class representing FX
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[FXBase](#module_Assets.class.FXBase)</code>  
-<a name="new_module_Assets.class.ForeignExchange_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[FXBase](#module_Assets.Class.FXBase)</code>  
+<a name="new_module_Assets.Class.ForeignExchange_new"></a>
 
 ##### new ForeignExchange(params)
 Construct a new Foreign Exchange instance
@@ -1103,14 +1103,14 @@ Construct a new Foreign Exchange instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.FXBase"></a>
+<a name="module_Assets.Class.FXBase"></a>
 
-#### class.FXBase ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.FXBase ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing FX (this should never be instantiated directly, use the appropriate subclass instead)
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.FXBase_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.FXBase_new"></a>
 
 ##### new FXBase(params)
 Construct a new FXBase instance
@@ -1141,14 +1141,14 @@ Construct a new FXBase instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.NonDeliverableForward"></a>
+<a name="module_Assets.Class.NonDeliverableForward"></a>
 
-#### class.NonDeliverableForward ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.NonDeliverableForward ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing FX (this should never be instantiated directly, use the appropriate subclass instead)
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.NonDeliverableForward_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.NonDeliverableForward_new"></a>
 
 ##### new NonDeliverableForward(params)
 Construct a new Non Deliverable Forward instance
@@ -1179,14 +1179,14 @@ Construct a new Non Deliverable Forward instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.Index"></a>
+<a name="module_Assets.Class.Index"></a>
 
-#### class.Index ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.Index ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing an Index
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.Index_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.Index_new"></a>
 
 ##### new Index(params)
 Construct a new Index instance
@@ -1217,14 +1217,14 @@ Construct a new Index instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.BondFuture"></a>
+<a name="module_Assets.Class.BondFuture"></a>
 
-#### class.BondFuture ⇐ <code>[Future](#module_Assets.class.Future)</code>
+#### Class.BondFuture ⇐ <code>[Future](#module_Assets.Class.Future)</code>
 Class representing a Bond Future
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Future](#module_Assets.class.Future)</code>  
-<a name="new_module_Assets.class.BondFuture_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Future](#module_Assets.Class.Future)</code>  
+<a name="new_module_Assets.Class.BondFuture_new"></a>
 
 ##### new BondFuture(params)
 Construct a new Bond Future instance
@@ -1265,14 +1265,14 @@ Construct a new Bond Future instance
 | params.updatedTime | <code>date</code> | Time that the Bond Future was updated |
 | params.version | <code>number</code> | Version number of the Bond Future |
 
-<a name="module_Assets.class.BondFutureOption"></a>
+<a name="module_Assets.Class.BondFutureOption"></a>
 
-#### class.BondFutureOption ⇐ <code>[Future](#module_Assets.class.Future)</code>
+#### Class.BondFutureOption ⇐ <code>[Future](#module_Assets.Class.Future)</code>
 Class representing a Bond Future Option
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Future](#module_Assets.class.Future)</code>  
-<a name="new_module_Assets.class.BondFutureOption_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Future](#module_Assets.Class.Future)</code>  
+<a name="new_module_Assets.Class.BondFutureOption_new"></a>
 
 ##### new BondFutureOption(params)
 Construct a new Bond Future Option instance
@@ -1313,14 +1313,14 @@ Construct a new Bond Future Option instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.EnergyFuture"></a>
+<a name="module_Assets.Class.EnergyFuture"></a>
 
-#### class.EnergyFuture ⇐ <code>[Future](#module_Assets.class.Future)</code>
+#### Class.EnergyFuture ⇐ <code>[Future](#module_Assets.Class.Future)</code>
 Class representing an Energy Future
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Future](#module_Assets.class.Future)</code>  
-<a name="new_module_Assets.class.EnergyFuture_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Future](#module_Assets.Class.Future)</code>  
+<a name="new_module_Assets.Class.EnergyFuture_new"></a>
 
 ##### new EnergyFuture(params)
 Construct a new Energy Future instance
@@ -1358,14 +1358,14 @@ Construct a new Energy Future instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.EquityFuture"></a>
+<a name="module_Assets.Class.EquityFuture"></a>
 
-#### class.EquityFuture ⇐ <code>[ListedDerivative](#module_Assets.class.ListedDerivative)</code>
+#### Class.EquityFuture ⇐ <code>[ListedDerivative](#module_Assets.Class.ListedDerivative)</code>
 Class representing a Future
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[ListedDerivative](#module_Assets.class.ListedDerivative)</code>  
-<a name="new_module_Assets.class.EquityFuture_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[ListedDerivative](#module_Assets.Class.ListedDerivative)</code>  
+<a name="new_module_Assets.Class.EquityFuture_new"></a>
 
 ##### new EquityFuture(params)
 Construct a new Asset object
@@ -1403,14 +1403,14 @@ Construct a new Asset object
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.Future"></a>
+<a name="module_Assets.Class.Future"></a>
 
-#### class.Future ⇐ <code>[ListedDerivative](#module_Assets.class.ListedDerivative)</code>
+#### Class.Future ⇐ <code>[ListedDerivative](#module_Assets.Class.ListedDerivative)</code>
 Class representing a Future
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[ListedDerivative](#module_Assets.class.ListedDerivative)</code>  
-<a name="new_module_Assets.class.Future_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[ListedDerivative](#module_Assets.Class.ListedDerivative)</code>  
+<a name="new_module_Assets.Class.Future_new"></a>
 
 ##### new Future(params)
 Construct a new Future instance
@@ -1448,14 +1448,14 @@ Construct a new Future instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.FutureOption"></a>
+<a name="module_Assets.Class.FutureOption"></a>
 
-#### class.FutureOption ⇐ <code>[Future](#module_Assets.class.Future)</code>
+#### Class.FutureOption ⇐ <code>[Future](#module_Assets.Class.Future)</code>
 Class representing a Future Option
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Future](#module_Assets.class.Future)</code>  
-<a name="new_module_Assets.class.FutureOption_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Future](#module_Assets.Class.Future)</code>  
+<a name="new_module_Assets.Class.FutureOption_new"></a>
 
 ##### new FutureOption(params)
 Construct a new Future Option instance
@@ -1496,14 +1496,14 @@ Construct a new Future Option instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.IndexFuture"></a>
+<a name="module_Assets.Class.IndexFuture"></a>
 
-#### class.IndexFuture ⇐ <code>[Future](#module_Assets.class.Future)</code>
+#### Class.IndexFuture ⇐ <code>[Future](#module_Assets.Class.Future)</code>
 Class representing an Index Future
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Future](#module_Assets.class.Future)</code>  
-<a name="new_module_Assets.class.IndexFuture_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Future](#module_Assets.Class.Future)</code>  
+<a name="new_module_Assets.Class.IndexFuture_new"></a>
 
 ##### new IndexFuture(params)
 Construct a new Index Future instance
@@ -1541,14 +1541,14 @@ Construct a new Index Future instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.InterestRateFuture"></a>
+<a name="module_Assets.Class.InterestRateFuture"></a>
 
-#### class.InterestRateFuture ⇐ <code>[Future](#module_Assets.class.Future)</code>
+#### Class.InterestRateFuture ⇐ <code>[Future](#module_Assets.Class.Future)</code>
 Class representing an Interest Rate Future
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Future](#module_Assets.class.Future)</code>  
-<a name="new_module_Assets.class.InterestRateFuture_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Future](#module_Assets.Class.Future)</code>  
+<a name="new_module_Assets.Class.InterestRateFuture_new"></a>
 
 ##### new InterestRateFuture(params)
 Construct a new Interest Rate Future instance
@@ -1586,14 +1586,14 @@ Construct a new Interest Rate Future instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.ListedContractForDifference"></a>
+<a name="module_Assets.Class.ListedContractForDifference"></a>
 
-#### class.ListedContractForDifference ⇐ <code>[ListedDerivative](#module_Assets.class.ListedDerivative)</code>
+#### Class.ListedContractForDifference ⇐ <code>[ListedDerivative](#module_Assets.Class.ListedDerivative)</code>
 Class representing a Listed CFD
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[ListedDerivative](#module_Assets.class.ListedDerivative)</code>  
-<a name="new_module_Assets.class.ListedContractForDifference_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[ListedDerivative](#module_Assets.Class.ListedDerivative)</code>  
+<a name="new_module_Assets.Class.ListedContractForDifference_new"></a>
 
 ##### new ListedContractForDifference(params)
 Construct a new Listed CFD instance
@@ -1624,14 +1624,14 @@ Construct a new Listed CFD instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.ListedDerivative"></a>
+<a name="module_Assets.Class.ListedDerivative"></a>
 
-#### class.ListedDerivative ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.ListedDerivative ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing a Listed Derivative
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.ListedDerivative_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.ListedDerivative_new"></a>
 
 ##### new ListedDerivative(params)
 Construct a new Listed Derivative instance
@@ -1662,14 +1662,14 @@ Construct a new Listed Derivative instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.RealAsset"></a>
+<a name="module_Assets.Class.RealAsset"></a>
 
-#### class.RealAsset ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.RealAsset ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing a Real Asset
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.RealAsset_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.RealAsset_new"></a>
 
 ##### new RealAsset(params)
 Construct a new Real Asset instance
@@ -1700,14 +1700,14 @@ Construct a new Real Asset instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.RealEstate"></a>
+<a name="module_Assets.Class.RealEstate"></a>
 
-#### class.RealEstate ⇐ <code>[RealAsset](#module_Assets.class.RealAsset)</code>
+#### Class.RealEstate ⇐ <code>[RealAsset](#module_Assets.Class.RealAsset)</code>
 Class representing Real Estate
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[RealAsset](#module_Assets.class.RealAsset)</code>  
-<a name="new_module_Assets.class.RealEstate_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[RealAsset](#module_Assets.Class.RealAsset)</code>  
+<a name="new_module_Assets.Class.RealEstate_new"></a>
 
 ##### new RealEstate(params)
 Construct a new Real Estate instance
@@ -1739,14 +1739,14 @@ Construct a new Real Estate instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.Wine"></a>
+<a name="module_Assets.Class.Wine"></a>
 
-#### class.Wine ⇐ <code>[RealAsset](#module_Assets.class.RealAsset)</code>
+#### Class.Wine ⇐ <code>[RealAsset](#module_Assets.Class.RealAsset)</code>
 Class representing Wine
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[RealAsset](#module_Assets.class.RealAsset)</code>  
-<a name="new_module_Assets.class.Wine_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[RealAsset](#module_Assets.Class.RealAsset)</code>  
+<a name="new_module_Assets.Class.Wine_new"></a>
 
 ##### new Wine(params)
 Construct a new Wine instance
@@ -1778,14 +1778,14 @@ Construct a new Wine instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.Sukuk"></a>
+<a name="module_Assets.Class.Sukuk"></a>
 
-#### class.Sukuk ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.Sukuk ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing a Sukuk
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.Sukuk_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.Sukuk_new"></a>
 
 ##### new Sukuk(params)
 Construct a new Sukuk instance
@@ -1817,14 +1817,14 @@ Construct a new Sukuk instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.Synthetic"></a>
+<a name="module_Assets.Class.Synthetic"></a>
 
-#### class.Synthetic ⇐ <code>[Asset](#module_Assets.class.Asset)</code>
+#### Class.Synthetic ⇐ <code>[Asset](#module_Assets.Class.Asset)</code>
 Class representing a Synthetic
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Asset](#module_Assets.class.Asset)</code>  
-<a name="new_module_Assets.class.Synthetic_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Asset](#module_Assets.Class.Asset)</code>  
+<a name="new_module_Assets.Class.Synthetic_new"></a>
 
 ##### new Synthetic(params)
 Construct a new Synthetic instance
@@ -1856,14 +1856,14 @@ Construct a new Synthetic instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.SyntheticFromBook"></a>
+<a name="module_Assets.Class.SyntheticFromBook"></a>
 
-#### class.SyntheticFromBook ⇐ <code>[Synthetic](#module_Assets.class.Synthetic)</code>
+#### Class.SyntheticFromBook ⇐ <code>[Synthetic](#module_Assets.Class.Synthetic)</code>
 Class representing a Synthetic From Book
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Synthetic](#module_Assets.class.Synthetic)</code>  
-<a name="new_module_Assets.class.SyntheticFromBook_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Synthetic](#module_Assets.Class.Synthetic)</code>  
+<a name="new_module_Assets.Class.SyntheticFromBook_new"></a>
 
 ##### new SyntheticFromBook(params)
 Construct a new Synthetic From Book instance
@@ -1895,14 +1895,14 @@ Construct a new Synthetic From Book instance
 | params.updatedTime | <code>date</code> | Time that the Asset was updated |
 | params.version | <code>number</code> | Version number |
 
-<a name="module_Assets.class.SyntheticMultiLeg"></a>
+<a name="module_Assets.Class.SyntheticMultiLeg"></a>
 
-#### class.SyntheticMultiLeg ⇐ <code>[Synthetic](#module_Assets.class.Synthetic)</code>
+#### Class.SyntheticMultiLeg ⇐ <code>[Synthetic](#module_Assets.Class.Synthetic)</code>
 Class representing a Multi-Leg Synthetic
 
-**Kind**: static class of <code>[class](#module_Assets.class)</code>  
-**Extends**: <code>[Synthetic](#module_Assets.class.Synthetic)</code>  
-<a name="new_module_Assets.class.SyntheticMultiLeg_new"></a>
+**Kind**: static class of <code>[Class](#module_Assets.Class)</code>  
+**Extends**: <code>[Synthetic](#module_Assets.Class.Synthetic)</code>  
+<a name="new_module_Assets.Class.SyntheticMultiLeg_new"></a>
 
 ##### new SyntheticMultiLeg(params)
 Construct a new Multi-Leg Synthetic instance

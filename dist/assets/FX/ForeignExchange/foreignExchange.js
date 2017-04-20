@@ -18,8 +18,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing FX
- * @memberof module:Assets.class
- * @extends module:Assets.class.FXBase
+ * @memberof module:Assets.Class
+ * @extends module:Assets.Class.FXBase
  */
 var ForeignExchange = function (_FXBase) {
   _inherits(ForeignExchange, _FXBase);

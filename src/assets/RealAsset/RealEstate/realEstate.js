@@ -2,8 +2,8 @@ import RealAsset from '../RealAsset/realAsset'
 
 /**
  * Class representing Real Estate
- * @memberof module:Assets.class
- * @extends module:Assets.class.RealAsset
+ * @memberof module:Assets.Class
+ * @extends module:Assets.Class.RealAsset
  */
 class RealEstate extends RealAsset {
   /**

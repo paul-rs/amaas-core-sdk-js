@@ -18,8 +18,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing Real Estate
- * @memberof module:Assets.class
- * @extends module:Assets.class.RealAsset
+ * @memberof module:Assets.Class
+ * @extends module:Assets.Class.RealAsset
  */
 var RealEstate = function (_RealAsset) {
   _inherits(RealEstate, _RealAsset);
