@@ -1,3 +1,6 @@
+/**
+ * @module AssetManagers
+ */
 
 // Classes
 import {

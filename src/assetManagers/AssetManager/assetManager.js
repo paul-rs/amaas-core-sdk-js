@@ -2,11 +2,8 @@ import { AMaaSModel } from '../../core'
 import { ASSET_MANAGER_TYPES } from '../enums'
 
 /**
- * @alias module:AssetManagers
- */
-
-/**
  * Class representing an Asset Manager
+ * @memberof module:AssetManagers
  * @extends AMaaSModel
  */
 class AssetManager extends AMaaSModel {
@@ -21,10 +18,10 @@ class AssetManager extends AMaaSModel {
    * @param {string} params.defaultBookOwnerId - ID of the default owner for any books owned by this Asset Manager
    * @param {date} params.defaultTimezone - Default timezone for any books owned by this Asset Manager
    * @param {date} params.defaultBookCloseTime - Default book close time for any books owned by this Asset Manager
-   * @param {string} params.createdBy - ID of the user that created the Asset Manager (required if creating a new Asset Manager)
-   * @param {string} params.updatedBy - ID of the user that updated the Asset Manager (use if amending existing Asset Manager)
-   * @param {date} params.createdTime - Time that the Asset Manager was created (required if creating new Asset Manager)
-   * @param {date} params.updatedTime - Time that the Asset Manager was updated (required if amending existing Asset Manager)
+   * @param {string} params.createdBy - ID of the user that created the Asset Manager
+   * @param {string} params.updatedBy - ID of the user that updated the Asset Manager
+   * @param {date} params.createdTime - Time that the Asset Manager was created
+   * @param {date} params.updatedTime - Time that the Asset Manager was updated
    * @param {number} params.version - Version number of the Asset Manager
    */
   constructor({
