@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deactivate = exports.partialAmend = exports.amend = exports.insert = exports.retrieve = undefined;
+exports.reactivate = exports.deactivate = exports.partialAmend = exports.amend = exports.insert = exports.retrieve = undefined;
 
 var _parties = require('./parties.js');
 
@@ -12,3 +12,4 @@ exports.insert = _parties.insert;
 exports.amend = _parties.amend;
 exports.partialAmend = _parties.partialAmend;
 exports.deactivate = _parties.deactivate;
+exports.reactivate = _parties.reactivate;

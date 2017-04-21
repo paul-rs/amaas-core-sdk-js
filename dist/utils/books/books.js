@@ -179,11 +179,11 @@ function amend(_ref4, callback) {
   var params = {
     AMaaSClass: 'book',
     AMId: AMId,
-    resrouceId: resrouceId,
+    resourceId: resourceId,
     data: data,
     token: token
   };
-  var promise = putData(params).then(function (result) {
+  var promise = (0, _network.putData)(params).then(function (result) {
     result = _parseBook(result);
     if (typeof callback === 'function') {
       callback(null, result);

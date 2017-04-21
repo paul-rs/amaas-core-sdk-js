@@ -62,6 +62,9 @@ function buildURL(_ref) {
     case 'netting':
       baseURL = _config2.default.transactions + '/netting';
       break;
+    case 'relationships':
+      baseURL = _config2.default.assetManagers + '/asset-manager-relationships';
+      break;
     default:
       throw new Error('Invalid class type: ' + AMaaSClass);
   }
@@ -334,10 +337,19 @@ function deleteData(_ref6, callback) {
   });
 }
 
+/*
+ * query is an array of objects: { key: <string>, values: <array> }
+ * key is the key to search over (depends on the specific service)
+ * and values are all the values to search over. E.g.
+ *   const queries = [
+ *     { key: 'assetIds', values: [1, 2, 44, 'asf'] },
+ *     { key: 'assetClasses', values: ['Currency', 'Bond', 'Equity']},
+ *     { key: 'assetTypes', values: ['GovernmentBond, ForeignExchange']}
+ *   ]
+ */
 function searchData(_ref7, callback) {
   var AMaaSClass = _ref7.AMaaSClass,
-      queryKey = _ref7.queryKey,
-      queryValue = _ref7.queryValue,
+      query = _ref7.query,
       token = _ref7.token;
 
   if (!token) {
@@ -359,19 +371,15 @@ function searchData(_ref7, callback) {
     callback(e);
     return;
   }
-  var qString = {};
-  var qValueString = queryValue.join();
-  qString[queryKey] = qValueString;
-  qString.camelcase = true;
-  var params = {
-    url: url,
-    qs: qString
-  };
-  var promise = _superagent2.default.get(url).set('Authorization', token).query(qString);
+  var queryString = { camelcase: true };
+  for (var i = 0; i < query.length; i++) {
+    queryString[query[i].key] = query[i].values.join();
+  }
+  var promise = _superagent2.default.get(url).set('Authorization', token).query(queryString);
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
-      return response.body;
+      return response;
     });
   }
   promise.end(function (error, response) {

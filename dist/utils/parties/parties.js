@@ -274,10 +274,10 @@ function reactivate(_ref6, callback) {
     AMaaSClass: 'parties',
     AMId: AMId,
     resourceId: resourceId,
-    data: { assetStatus: 'Active' },
+    data: { partyStatus: 'Active' },
     token: token
   };
-  var promise = (0, _network.deleteData)(params).then(function (result) {
+  var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseParty(result);
     if (typeof callback === 'function') {
       callback(null, result);
