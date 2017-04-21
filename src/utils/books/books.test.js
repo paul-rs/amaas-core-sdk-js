@@ -1,4 +1,6 @@
-import { retrieve, search, insert, retire, reactivate } from './books'
+import uuid from 'uuid'
+
+import { retrieve, search, insert, amend, retire, reactivate } from './books'
 import Book from '../../books/Book/book'
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
@@ -27,7 +29,7 @@ describe('utils/books', () => {
   })
 
   describe('insert', () => {
-    test('should insert', () => {
+    test.skip('should insert', () => {
       const data = {
         description: "RRN4WVXI1F3YA1IGMKZF",
         bookType: "Trading",
@@ -73,6 +75,33 @@ describe('utils/books', () => {
         })
         .catch(err => {
           console.log(err.message)
+          expect(err).toBeUndefined()
+          done()
+        })
+    })
+  })
+
+  describe('amend', () => {
+    test.only('amends', done => {
+      const bU = uuid().substring(0, 10)
+      retrieve({ AMId: 1, resourceId: 'L9O3IWHCHP', token })
+        .then(res => {
+          if (res.bookStatus === 'Retired') {
+            return reactivate({ AMId: res.assetManagerId, resourceId: res.bookId, token })
+          } else {
+            return Promise.resolve(res)
+          }
+        })
+        .then(res => {
+          res.businessUnit = bU
+          return amend({ book: res, AMId: res.assetManagerId, resourceId: res.bookId, token })
+        })
+        .then(res => {
+          expect(res.businessUnit).toEqual(bU)
+          done()
+        })
+        .catch(err => {
+          console.error(err)
           expect(err).toBeUndefined()
           done()
         })

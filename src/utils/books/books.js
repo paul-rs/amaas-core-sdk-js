@@ -1,4 +1,4 @@
-import { retrieveData, searchData, patchData, insertData } from '../network'
+import { retrieveData, searchData, putData, patchData, insertData } from '../network'
 import Book from './../../books/Book/book'
 
 /**
@@ -138,7 +138,7 @@ export function amend({ book, AMId, resourceId, token }, callback) {
   const params = {
     AMaaSClass: 'book',
     AMId,
-    resrouceId,
+    resourceId,
     data,
     token
   }
