@@ -64,6 +64,7 @@ class AssetManager extends AMaaSModel {
     this.assetManagerId = assetManagerId
     this.assetManagerType = assetManagerType
     this.assetManagerStatus = assetManagerStatus
+    this.clientId = clientId
     this.partyId = partyId
     this.defaultBookOwnerId = defaultBookOwnerId
     this.defaultTimezone = defaultTimezone

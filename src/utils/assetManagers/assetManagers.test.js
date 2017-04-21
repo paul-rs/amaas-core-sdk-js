@@ -34,21 +34,30 @@ describe('utils/assetManagers', () => {
     })
   })
 
-  describe('retrieve', () => {
-    test('with promise', () => {
-      let promise = retrieve({
-        token, AMaaSClass: 'assetManagers', AMId: 1
-      }).catch(error => {})
-      expect(promise).toBeInstanceOf(Promise)
-    })
-  })
-
   describe('insert', () => {
     test('with promise', () => {
       let promise = insert({
         token, AMaaSClass: 'assetManagers', AMId: 1
       }).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
+    })
+
+    test('should insert', () => {
+      const data = {
+        defaultBookCloseTime: "17:30:00",
+        defaultTimezone: "UTC",
+        assetManagerType: "Accredited Investor",
+        clientId: 1,
+        assetManagerStatus: "Active",
+        defaultBookOwnerId: 2
+      }
+      insert({ assetManager: data, token })
+        .then(res => {
+          expect({ ...res }).toEqual(expect.objectContaining(data))
+        })
+        .catch(err => {
+          expect(err).toBeUndefined()
+        })
     })
   })
 
