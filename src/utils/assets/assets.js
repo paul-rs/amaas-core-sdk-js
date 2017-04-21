@@ -167,9 +167,44 @@ export function deactivate({AMId, resourceId, token}, callback) {
     AMaaSClass: 'assets',
     AMId,
     resourceId,
+    data: { assetStatus: 'Inactive' },
     token
   }
-  let promise = deleteData(params).then(result => {
+  let promise = patchData(params).then(result => {
+    result = _parseAsset(result)
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
+  })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
+}
+
+/**
+ * Reactivate a deactivated Asset. This will set the Asset status to 'Active'.
+ * @function reactivate
+ * @memberof module:Assets.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {string} params.AMId - AMId of the Asset to be deleted
+ * @param {string} params.resourceId - Asset ID of the Asset to be deleted
+ * @param {string} params.token - Authorization token
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ */
+export function reactivate({AMId, resourceId, token}, callback) {
+  const params = {
+    AMaaSClass: 'assets',
+    AMId,
+    resourceId,
+    data: { assetStatus: 'Active' },
+    token
+  }
+  let promise = patchData(params).then(result => {
+    result = _parseAsset(result)
     if (typeof callback === 'function') {
       callback(null, result)
     }

@@ -1,4 +1,4 @@
-import { retrieve, insert, amend, partialAmend, deactivate } from './assets.js'
+import { retrieve, insert, amend, partialAmend, deactivate, reactivate } from './assets.js'
 import Asset from '../../assets/Asset/asset.js'
 
 let token = process.env.API_TOKEN
@@ -41,6 +41,25 @@ describe('utils/assets', () => {
     test('with promise', () => {
       let promise = deactivate({token}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
+    })
+
+    test('deactivates an active Asset', () => {
+      retrieve({ AMId: 1, resourceId: '4JZ8P7AU8E', token })
+        .then(res => {
+          if (res.assetStatus === 'Inactive') {
+            return reactivate({ AMId: 1, resourceId: '4JZ8P7AU8E', token })
+          }
+        })
+        .then(res => {
+          expect(res.assetStatus).toEqual('Active')
+          return deactivate({ AMId: 1, resourceId: '4JZ8P7AU8E', token })
+        })
+        .then(res => {
+          expect(res.assetStatus).toEqual('Inactive')
+        })
+        .catch((err) => {
+          expect(err).toBeUndefined()
+        })
     })
   })
 })
