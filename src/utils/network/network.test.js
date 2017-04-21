@@ -102,29 +102,15 @@ describe('insertData', () => {
 })
 
 describe('searchData', () => {
-  const testParams = {
-    AMaaSClass: 'positions',
-    queryKey: 'asset_manager_book_id',
-    queryValue: [7, 532, 841],
-    token: 'testToken'
-  }
-  const expectedResult = {
-    asset_book_id: '1,2,3,abc'
-  }
+  const queries = [
+    { key: 'assetIds', values: [1, 2, 44, 'asf'] },
+    { key: 'assetClasses', values: ['Currency', 'Bond', 'Equity']},
+    { key: 'assetTypes', values: ['GovernmentBond, ForeignExchange']}
+  ]
   it('should return a promise if callback is not provided', () => {
     let promise = searchData(testParams).catch(error => {})
     expect(promise).toBeInstanceOf(Promise)
   })
-  // searchData(testParams, (error, result) => {
-  //   if (error) {
-  //     console.log(error)
-  //   } else {
-  //     console.log(result)
-  //   }
-  // })
-  // searchData(testParams, (error, result) => {
-  //   expect(result).toEqual(expectedResult)
-  // })
 })
 
 describe('putData', () => {
