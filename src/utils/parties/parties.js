@@ -21,11 +21,11 @@ import Email from '../../parties/Children/email.js'
  * @param {function} callback - Called with two arguments (error, result) on completion
  * @returns {Promise|Array|Party} - If callback supplied, it is called and function returns either a Party instance of array of Party instances. Otherwise promise that resolves with Party instance or array of Party instances is returned
  */
-export function retrieve({AMId, partyId, token}, callback) {
+export function retrieve({AMId, resourceId, token}, callback) {
   const params = {
     AMaaSClass: 'parties',
     AMId,
-    resourceId: partyId,
+    resourceId,
     token
   }
   let promise = retrieveData(params).then(result => {

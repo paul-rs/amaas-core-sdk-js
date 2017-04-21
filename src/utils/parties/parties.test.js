@@ -62,7 +62,7 @@ describe('parties util functions', () => {
       nock(ENDPOINTS.parties)
         .get('/parties/1/party?camelcase=true')
         .reply(400)
-      retrieve({AMId: 1, partyId: 'party', token: 'testToken'}, (error, result) => {
+      retrieve({AMId: 1, resourceId: 'party', token: 'testToken'}, (error, result) => {
         expect(result).toBeUndefined()
         expect(error.status).toBe(400)
         callback()
@@ -72,7 +72,7 @@ describe('parties util functions', () => {
       nock(ENDPOINTS.parties)
         .get('/parties/1/party?camelcase=true')
         .reply(200, '{"Message": "Success"}')
-      retrieve({AMId: 1, partyId: 'party', token: 'testToken'}, (error, result) => {
+      retrieve({AMId: 1, resourceId: 'party', token: 'testToken'}, (error, result) => {
         expect(error).toBeNull()
         expect(result).toEqual(new Party({}))
         callback()
