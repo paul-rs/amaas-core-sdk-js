@@ -1,6 +1,6 @@
 import uuid from 'uuid'
 import ENDPOINTS from '../../config.js'
-import { retrieve, _parseParty, insert, partialAmend, amend, deactivate } from './parties.js'
+import { retrieve, _parseParty, insert, partialAmend, amend, deactivate, reactivate } from './parties.js'
 import Party from '../../parties/Party/party.js'
 import Individual from '../../parties/Individual/individual'
 import Broker from '../../parties/Broker/broker.js'
@@ -80,6 +80,13 @@ describe('parties util functions', () => {
       let bC
       retrieve({ AMId: 516, resourceId: 'fa337e08-1363-47a8-95ba-6ebb55', token })
         .then(res => {
+          if (res.partyStatus === 'Inactive') {
+            return reactivate({ AMId: res.assetManagerId, resourceId: res.partyId, token })
+          } else {
+            return Promise.resolve(res)
+          }
+        })
+        .then(res => {
           let changes = {}
           if (res.baseCurrency === 'SGD') {
             bC = 'SGD'
@@ -94,6 +101,7 @@ describe('parties util functions', () => {
           done()
         })
         .catch(err => {
+          console.error(err)
           expect(err).toBeUndefined()
           done()
         })
@@ -101,13 +109,24 @@ describe('parties util functions', () => {
   })
 
   describe('deactivate', () => {
+    const testAMId = 516
+    const testId = 'fa337e08-1363-47a8-95ba-6ebb55'
+
+    afterAll(() => {
+      reactivate({ AMId: testAMId, resourceId: testId, token })
+        .then()
+        .catch(err => {
+          console.error(`Error in cleanup: Reactivating partyId ${testId} for Asset Manager ${testAMId}`)
+        })
+    })
+
     test('with promise', () => {
       let promise = deactivate({token}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
     test('deactivate/reactivate', done => {
       let status
-      retrieve({ AMId: 516, resourceId: 'fa337e08-1363-47a8-95ba-6ebb55', token })
+      retrieve({ AMId: testAMId, resourceId: testId, token })
         .then(res => {
           if (res.partyStatus === 'Active') {
             status = 'Active'

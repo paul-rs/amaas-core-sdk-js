@@ -209,10 +209,10 @@ export function reactivate({AMId, resourceId, token}, callback) {
     AMaaSClass: 'parties',
     AMId,
     resourceId,
-    data: { assetStatus: 'Active' },
+    data: { partyStatus: 'Active' },
     token
   }
-  let promise = deleteData(params).then(result => {
+  let promise = patchData(params).then(result => {
     result = _parseParty(result)
     if (typeof callback === 'function') {
       callback(null, result)
