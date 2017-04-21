@@ -86,6 +86,7 @@ var AssetManager = function (_AMaaSModel) {
     _this.assetManagerId = assetManagerId;
     _this.assetManagerType = assetManagerType;
     _this.assetManagerStatus = assetManagerStatus;
+    _this.clientId = clientId;
     _this.partyId = partyId;
     _this.defaultBookOwnerId = defaultBookOwnerId;
     _this.defaultTimezone = defaultTimezone;

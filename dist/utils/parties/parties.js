@@ -8,6 +8,7 @@ exports.insert = insert;
 exports.amend = amend;
 exports.partialAmend = partialAmend;
 exports.deactivate = deactivate;
+exports.reactivate = reactivate;
 exports._parseParty = _parseParty;
 
 var _network = require('../network');
@@ -47,13 +48,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  */
 function retrieve(_ref, callback) {
   var AMId = _ref.AMId,
-      partyId = _ref.partyId,
+      resourceId = _ref.resourceId,
       token = _ref.token;
 
   var params = {
     AMaaSClass: 'parties',
     AMId: AMId,
-    resourceId: partyId,
+    resourceId: resourceId,
     token: token
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
@@ -90,7 +91,8 @@ function retrieve(_ref, callback) {
  * @returns {Promise|Party} If callback is supplied, it is called and function returns the inserted Party instance. Otherwise promise that resolves with inserted Party instance is returned
  */
 function insert(_ref2, callback) {
-  var party = _ref2.party,
+  var AMId = _ref2.AMId,
+      party = _ref2.party,
       token = _ref2.token;
 
   var stringified = void 0,
@@ -101,6 +103,7 @@ function insert(_ref2, callback) {
   }
   var params = {
     AMaaSClass: 'parties',
+    AMId: AMId,
     data: data,
     token: token
   };
@@ -231,9 +234,51 @@ function deactivate(_ref5, callback) {
     AMaaSClass: 'parties',
     AMId: AMId,
     resourceId: resourceId,
+    data: { partyStatus: 'Inactive' },
+    token: token
+  };
+  var promise = (0, _network.patchData)(params).then(function (result) {
+    result = _parseParty(result);
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
+  });
+}
+
+/**
+ * Reactivate a Party. This will set the Party status to 'Active'
+ * @function reactivate
+ * @memberof module:Parties.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {string} params.AMId - AMId of the Party to be reactivated
+ * @param {string} params.resourceId - Party ID of the Party to be reactivated
+ * @param {string} params.token - Authorization token
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ * @erturns {Promise|string} If callback is supplied, it is called and the function returns ???. Otherwise a promise that resolves with ??? is returned
+ */
+function reactivate(_ref6, callback) {
+  var AMId = _ref6.AMId,
+      resourceId = _ref6.resourceId,
+      token = _ref6.token;
+
+  var params = {
+    AMaaSClass: 'parties',
+    AMId: AMId,
+    resourceId: resourceId,
+    data: { assetStatus: 'Active' },
     token: token
   };
   var promise = (0, _network.deleteData)(params).then(function (result) {
+    result = _parseParty(result);
     if (typeof callback === 'function') {
       callback(null, result);
     }

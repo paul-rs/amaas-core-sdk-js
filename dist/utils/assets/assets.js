@@ -8,6 +8,7 @@ exports.insert = insert;
 exports.amend = amend;
 exports.partialAmend = partialAmend;
 exports.deactivate = deactivate;
+exports.reactivate = reactivate;
 exports._parseAsset = _parseAsset;
 
 var _network = require('../network');
@@ -78,7 +79,8 @@ function retrieve(_ref, callback) {
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 function insert(_ref2, callback) {
-  var asset = _ref2.asset,
+  var AMId = _ref2.AMId,
+      asset = _ref2.asset,
       token = _ref2.token;
 
   var stringified = void 0,
@@ -89,6 +91,7 @@ function insert(_ref2, callback) {
   }
   var params = {
     AMaaSClass: 'assets',
+    AMId: AMId,
     data: data,
     token: token
   };
@@ -216,9 +219,50 @@ function deactivate(_ref5, callback) {
     AMaaSClass: 'assets',
     AMId: AMId,
     resourceId: resourceId,
+    data: { assetStatus: 'Inactive' },
     token: token
   };
-  var promise = (0, _network.deleteData)(params).then(function (result) {
+  var promise = (0, _network.patchData)(params).then(function (result) {
+    result = _parseAsset(result);
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
+  });
+}
+
+/**
+ * Reactivate a deactivated Asset. This will set the Asset status to 'Active'.
+ * @function reactivate
+ * @memberof module:Assets.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {string} params.AMId - AMId of the Asset to be deleted
+ * @param {string} params.resourceId - Asset ID of the Asset to be deleted
+ * @param {string} params.token - Authorization token
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ */
+function reactivate(_ref6, callback) {
+  var AMId = _ref6.AMId,
+      resourceId = _ref6.resourceId,
+      token = _ref6.token;
+
+  var params = {
+    AMaaSClass: 'assets',
+    AMId: AMId,
+    resourceId: resourceId,
+    data: { assetStatus: 'Active' },
+    token: token
+  };
+  var promise = (0, _network.patchData)(params).then(function (result) {
+    result = _parseAsset(result);
     if (typeof callback === 'function') {
       callback(null, result);
     }

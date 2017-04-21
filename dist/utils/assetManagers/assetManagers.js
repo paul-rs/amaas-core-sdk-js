@@ -7,6 +7,7 @@ exports.retrieve = retrieve;
 exports.insert = insert;
 exports.amend = amend;
 exports.deactivate = deactivate;
+exports.reactivate = reactivate;
 exports._parseAM = _parseAM;
 
 var _network = require('../network');
@@ -174,9 +175,48 @@ function deactivate(_ref4, callback) {
   var params = {
     AMaaSClass: 'assetManagers',
     AMId: AMId,
+    data: { assetManagerStatus: 'Inactive' },
     token: token
   };
-  var promise = (0, _network.deleteData)(params).then(function (result) {
+  var promise = (0, _network.patchData)(params).then(function (result) {
+    result = _parseAM(result);
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
+  });
+}
+
+/**
+ * Reactivate an Asset Manager
+ * @function reactivate
+ * @memberof module:AssetManagers.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - AMID of the Asset Manager to deactivate
+ * @param {string} params.token - Authorization token
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise | AssetManager} ???
+ */
+function reactivate(_ref5, callback) {
+  var AMId = _ref5.AMId,
+      token = _ref5.token;
+
+  var params = {
+    AMaaSClass: 'assetManagers',
+    AMId: AMId,
+    data: { assetManagerStatus: 'Active' },
+    token: token
+  };
+  var promise = (0, _network.patchData)(params).then(function (result) {
+    result = _parseAM(result);
     if (typeof callback === 'function') {
       callback(null, result);
     }
