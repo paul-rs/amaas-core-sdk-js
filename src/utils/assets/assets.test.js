@@ -1,3 +1,5 @@
+import uuid from 'uuid'
+
 import { retrieve, insert, amend, partialAmend, deactivate, reactivate } from './assets.js'
 import Asset from '../../assets/Asset/asset.js'
 
@@ -79,6 +81,18 @@ describe('utils/assets', () => {
     test('with promise', () => {
       let promise = partialAmend({token}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
+    })
+    test('partial amends', done => {
+      const desc = uuid().substring(0, 20)
+      partialAmend({ changes: { description: desc }, AMId: 1, resourceId: '121JBDQM5Z', token })
+        .then(res => {
+          expect(res.description).toEqual(desc)
+          done()
+        })
+        .catch(err => {
+          expect(err).toBeUndefined()
+          done()
+        })
     })
   })
 
