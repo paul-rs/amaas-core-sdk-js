@@ -1,5 +1,5 @@
 import { _parseAM, getAssetManager } from './assetManagers.js'
-import { retrieve, insert, amend, deactivate } from './assetManagers.js'
+import { retrieve, insert, amend, deactivate, reactivate } from './assetManagers.js'
 import AssetManager from '../../assetManagers/AssetManager/assetManager.js'
 
 let token = process.env.API_TOKEN
@@ -67,6 +67,29 @@ describe('utils/assetManagers', () => {
         token, AMaaSClass: 'assetManagers', AMId: 1
       }).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
+    })
+  })
+
+  describe('reactivate and deactivate', () => {
+    // Get an Asset Manager. If it is inactive, reactivate, check then deactivate and check
+    it('reactivates an inactive AM and deactivates an active AM', () => {
+      retrieve({ AMId: 2, token })
+        .then(res => {
+          if (res.assetManagerStatus === 'Inactive') {
+            return reactivate({ AMId: 2, token })
+          }
+          return Promise.resolve(res)
+        })
+        .then(res => {
+          expect(res.assetManagerStatus).toEqual('Active')
+          return deactivate({ AMId: 2, token })
+        })
+        .then(res => {
+          expect(res.assetManagerStatus).toEqual('Inactive')
+        })
+        .catch(err => {
+          expect(err).toBeUndefined()
+        })
     })
   })
 })

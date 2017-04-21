@@ -137,9 +137,43 @@ export function deactivate({AMId, token}, callback) {
   const params = {
     AMaaSClass: 'assetManagers',
     AMId,
+    data: { assetManagerStatus: 'Inactive' },
     token
   }
-  let promise = deleteData(params).then(result => {
+  let promise = patchData(params).then(result => {
+    result = _parseAM(result)
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
+  })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
+}
+
+/**
+ * Reactivate an Asset Manager
+ * @function reactivate
+ * @memberof module:AssetManagers.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - AMID of the Asset Manager to deactivate
+ * @param {string} params.token - Authorization token
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise | AssetManager} ???
+ */
+export function reactivate({AMId, token}, callback) {
+  const params = {
+    AMaaSClass: 'assetManagers',
+    AMId,
+    data: { assetManagerStatus: 'Active' },
+    token
+  }
+  let promise = patchData(params).then(result => {
+    result = _parseAM(result)
     if (typeof callback === 'function') {
       callback(null, result)
     }
