@@ -42,7 +42,7 @@ describe('utils/assetManagers', () => {
       expect(promise).toBeInstanceOf(Promise)
     })
 
-    test('should insert', () => {
+    test.skip('should insert', () => {
       const data = {
         defaultBookCloseTime: "17:30:00",
         defaultTimezone: "UTC",
@@ -67,6 +67,22 @@ describe('utils/assetManagers', () => {
         token, AMaaSClass: 'assetManagers', AMId: 1
       }).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
+    })
+    test('amends', done => {
+      let dboi
+      retrieve({ AMId: 4, token })
+        .then(res => {
+          dboi = res.defaultBookOwnerId
+          res.defaultBookOwnerId++
+          return amend({ assetManager: res, AMId: res.assetManagerId, token })
+        })
+        .then(res => {
+          expect(res.defaultBookOwnerId).toEqual(dboi+1)
+          done()
+        })
+        .catch(err => {
+          expect(err).toBeUndefined()
+        })
     })
   })
 
