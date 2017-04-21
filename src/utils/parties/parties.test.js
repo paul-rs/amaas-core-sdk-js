@@ -137,7 +137,14 @@ describe('parties util functions', () => {
           }
         })
         .then(res => {
-          expect(res.partyStatus).toEqual(status === 'Active' ? 'Inactive' : 'Active')
+          if (res.partyStatus === 'Active') {
+            return deactivate({ AMId: res.assetManagerId, resourceId: res.partyId, token })
+          } else {
+            return reactivate({ AMId: res.assetManagerId, resourceId: res.partyId, token })
+          }
+        })
+        .then(res => {
+          expect(res.partyStatus).toEqual(status)
           done()
         })
         .catch(err => {
