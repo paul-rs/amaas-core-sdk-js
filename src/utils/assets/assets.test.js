@@ -49,6 +49,30 @@ describe('utils/assets', () => {
       let promise = amend({token}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
+    test('amends', done => {
+      let f
+      retrieve({ AMId: 1, resourceId: '121JBDQM5Z', token })
+        .then(res => {
+          if (res.assetStatus === 'Inactive') {
+            return reactivate({ AMId: res.assetManagerId, resourceId: res.assetId, token })
+          } else {
+            return Promise.resolve(res)
+          }
+        })
+        .then(res => {
+          f = res.fungible
+          res.fungible = !f
+          return amend({ asset: res, AMId: res.assetManagerId, resourceId: res.assetId, token })
+        })
+        .then(res => {
+          expect(res.fungible).toEqual(!f)
+          done()
+        })
+        .catch(err => {
+          console.error(err)
+          done()
+        })
+    })
   })
 
   describe('partialAmend', () => {
@@ -59,27 +83,48 @@ describe('utils/assets', () => {
   })
 
   describe('deactivate', () => {
+    const testAMId = 1
+    const testId = '4JZ8P7AU8E'
+
+    afterAll(() => {
+      reactivate({ AMId: testAMId, resourceId: testId, token })
+        .then()
+        .catch(err => {
+          console.error(`Error in cleanup: Reactivating Asset ${testId} for Asset Manager ${testAMId}`)
+        })
+    })
+
     test('with promise', () => {
       let promise = deactivate({token}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
 
-    test('deactivates an active Asset', () => {
-      retrieve({ AMId: 1, resourceId: '4JZ8P7AU8E', token })
+    test('deactivates an active Asset', done => {
+      let status
+      retrieve({ AMId: testAMId, resourceId: testId, token })
         .then(res => {
           if (res.assetStatus === 'Inactive') {
-            return reactivate({ AMId: 1, resourceId: '4JZ8P7AU8E', token })
+            status = 'Inactive'
+            return reactivate({ AMId: res.assetManagerId, resourceId: res.assetId, token })
+          } else {
+            status = 'Active'
+            return deactivate({ AMId: res.assetManagerId, resourceId: res.assetId, token })
           }
         })
         .then(res => {
-          expect(res.assetStatus).toEqual('Active')
-          return deactivate({ AMId: 1, resourceId: '4JZ8P7AU8E', token })
+          if (res.assetStatus === 'Inactive') {
+            return reactivate({ AMId: res.assetManagerId, resourceId: res.assetId, token })
+          } else {
+            return deactivate({ AMId: res.assetManagerId, resourceId: res.assetId, token })
+          }
         })
         .then(res => {
-          expect(res.assetStatus).toEqual('Inactive')
+          expect(res.assetStatus).toEqual(status)
+          done()
         })
         .catch((err) => {
           expect(err).toBeUndefined()
+          done()
         })
     })
   })
