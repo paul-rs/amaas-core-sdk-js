@@ -57,7 +57,7 @@ export function retrieve({AMId, resourceId, token}, callback) {
  * @param {function} callback - Called with two arguments (error, result) on completion
  * @returns {Promise|Party} If callback is supplied, it is called and function returns the inserted Party instance. Otherwise promise that resolves with inserted Party instance is returned
  */
-export function insert({party, token}, callback) {
+export function insert({AMId, party, token}, callback) {
   let stringified, data
   if (party) {
     stringified = JSON.stringify(party)
@@ -65,6 +65,7 @@ export function insert({party, token}, callback) {
   }
   const params = {
     AMaaSClass: 'parties',
+    AMId,
     data,
     token
   }
@@ -174,9 +175,45 @@ export function deactivate({AMId, resourceId, token}, callback) {
     AMaaSClass: 'parties',
     AMId,
     resourceId,
+    data: { partyStatus: 'Inactive' },
+    token
+  }
+  let promise = patchData(params).then(result => {
+    result = _parseParty(result)
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
+  })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
+}
+
+/**
+ * Reactivate a Party. This will set the Party status to 'Active'
+ * @function reactivate
+ * @memberof module:Parties.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {string} params.AMId - AMId of the Party to be reactivated
+ * @param {string} params.resourceId - Party ID of the Party to be reactivated
+ * @param {string} params.token - Authorization token
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ * @erturns {Promise|string} If callback is supplied, it is called and the function returns ???. Otherwise a promise that resolves with ??? is returned
+ */
+export function reactivate({AMId, resourceId, token}, callback) {
+  const params = {
+    AMaaSClass: 'parties',
+    AMId,
+    resourceId,
+    data: { assetStatus: 'Active' },
     token
   }
   let promise = deleteData(params).then(result => {
+    result = _parseParty(result)
     if (typeof callback === 'function') {
       callback(null, result)
     }

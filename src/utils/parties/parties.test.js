@@ -1,4 +1,4 @@
-import nock from 'nock'
+import uuid from 'uuid'
 import ENDPOINTS from '../../config.js'
 import { retrieve, _parseParty, insert, partialAmend, amend, deactivate } from './parties.js'
 import Party from '../../parties/Party/party.js'
@@ -10,74 +10,31 @@ let token = process.env.API_TOKEN
 
 describe('parties util functions', () => {
   describe('insert function', () => {
-    it.skip('should stringify party correctly', () => {
-      const address = new Address({
-        addressPrimary: true,
-        lineOne: "VCF5H1W9KLAAN8DIJ0R4",
-        lineTwo: null,
-        city: "NODC740NZO",
-        region: "SX3JEVA03B",
-        postalCode: "YUIJDP",
-        countryId: "O21",
-        active: true,
-        createdBy: "TEMP",
-        updatedBy: "TEMP",
-        createdTime: "2017-01-27T00:31:02",
-        updatedTime: "2017-01-27T00:31:02",
-        version: 1,
-      })
-      const address2 = new Address({
-        addressPrimary: false,
-        lineOne: "VCF5H1W9KLAAN8DIJ0R4",
-        lineTwo: null,
-        city: "NODC740NZO",
-        region: "SX3JEVA03B",
-        postalCode: "YUIJDP",
-        countryId: "O21",
-        active: true,
-        createdBy: "TEMP",
-        updatedBy: "TEMP",
-        createdTime: "2017-01-27T00:31:02",
-        updatedTime: "2017-01-27T00:31:02",
-        version: 1,
-      })
-      const party = new Party({ assetManagerId: '1234', partyId: 'AMID1234', addresses: { Registered: address, Legal: address2 }, createdBy: 'TEMP' })
-      // retrieve('646', '30', (error, result) => {
-      //   if (result) {
-      //     console.log(result)
-      //   }
-      // })
-      // insert(party, () => {
-      //   // no-op
-      // })
-    })
     test('with promise', () => {
       let promise = insert({token}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
+    test.skip('should insert', done => {
+      const party = {
+        description: "testParty",
+        partyType: "Broker",
+        assetManagerId: 516,
+        partyId: uuid().substring(0, 30)
+      }
+      insert({ party, AMId: 1, token })
+        .then(res => {
+          expect(res).toEqual(expect.objectContaining(party))
+          done()
+        })
+        .catch(err => {
+          console.log(err)
+          expect(err).toBeUndefined()
+          done()
+        })
+    })
   })
 
   describe('retrieve function', () => {
-    it('should call callback with error if retrieveData fails', callback => {
-      nock(ENDPOINTS.parties)
-        .get('/parties/1/party?camelcase=true')
-        .reply(400)
-      retrieve({AMId: 1, resourceId: 'party', token: 'testToken'}, (error, result) => {
-        expect(result).toBeUndefined()
-        expect(error.status).toBe(400)
-        callback()
-      })
-    })
-    it('should call callback with success if retrieveData succeeds', callback => {
-      nock(ENDPOINTS.parties)
-        .get('/parties/1/party?camelcase=true')
-        .reply(200, '{"Message": "Success"}')
-      retrieve({AMId: 1, resourceId: 'party', token: 'testToken'}, (error, result) => {
-        expect(error).toBeNull()
-        expect(result).toEqual(new Party({}))
-        callback()
-      })
-    })
     test('with promise', () => {
       let promise = retrieve({
         AMId: 1, partyId: 'party', token
@@ -91,6 +48,27 @@ describe('parties util functions', () => {
       let promise = amend({token}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
+    test('should amend', done => {
+      let d
+      retrieve({ AMId: 516, resourceId: '39da5cef-08af-40f8-9c9a-b13856', token })
+        .then(res => {
+          if (res.description === 'description') {
+            d = 'description'
+            res.description = 'Amended Description'
+          } else {
+            res.description = 'description'
+          }
+          return amend({ party: res, AMId: res.assetManagerId, resourceId: res.partyId, token })
+        })
+        .then(res => {
+          expect(res.description).toEqual(d === 'description' ? 'Amended Description' : 'description')
+          done()
+        })
+        .catch(err => {
+          expect(err).toBeUndefined()
+          done()
+        })
+    })
   })
 
   describe('partialAmend', () => {
@@ -98,12 +76,55 @@ describe('parties util functions', () => {
       let promise = partialAmend({token}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
+    test('should partial amend', done => {
+      let bC
+      retrieve({ AMId: 516, resourceId: 'fa337e08-1363-47a8-95ba-6ebb55', token })
+        .then(res => {
+          let changes = {}
+          if (res.baseCurrency === 'SGD') {
+            bC = 'SGD'
+            changes.baseCurrency = 'USD'
+          } else {
+            changes.baseCurrency = 'SGD'
+          }
+          return partialAmend({ changes, AMId: res.assetManagerId, resourceId: res.partyId, token })
+        })
+        .then(res => {
+          expect(res.baseCurrency).toEqual(bC === 'SGD' ? 'USD' : 'SGD')
+          done()
+        })
+        .catch(err => {
+          expect(err).toBeUndefined()
+          done()
+        })
+      })
   })
 
   describe('deactivate', () => {
     test('with promise', () => {
       let promise = deactivate({token}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
+    })
+    test('deactivate/reactivate', done => {
+      let status
+      retrieve({ AMId: 516, resourceId: 'fa337e08-1363-47a8-95ba-6ebb55', token })
+        .then(res => {
+          if (res.partyStatus === 'Active') {
+            status = 'Active'
+            return deactivate({ AMId: res.assetManagerId, resourceId: res.partyId, token })
+          } else {
+            status = 'Inactive'
+            return reactivate({ AMId: res.assetManagerId, resourceId: res.partyId, token })
+          }
+        })
+        .then(res => {
+          expect(res.partyStatus).toEqual(status === 'Active' ? 'Inactive' : 'Active')
+          done()
+        })
+        .catch(err => {
+          expect(err).toBeUndefined()
+          done()
+        })
     })
   })
 
