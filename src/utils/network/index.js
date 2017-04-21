@@ -38,6 +38,9 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
     case 'netting':
       baseURL = `${ENDPOINTS.transactions}/netting`
       break
+    case 'relationships':
+      baseURL = `${ENDPOINTS.assetManagers}/asset-manager-relationships`
+      break
     default:
       throw new Error(`Invalid class type: ${AMaaSClass}`)
   }
