@@ -21,6 +21,27 @@ describe('utils/assets', () => {
       let promise = insert({token}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
+
+    // This will fail if you keep running the test with the same assetId.
+    // TODO: Change assetId to uuid?
+    it.skip('should insert', done => {
+      const asset = {
+        description: 'testAsset',
+        assetType: 'Equity',
+        assetManagerId: 1,
+        assetId: 'uu'
+      }
+      insert({ AMId: 1, asset, token })
+        .then(res => {
+          expect(res).toEqual(expect.objectContaining(asset))
+          done()
+        })
+        .catch(err => {
+          console.log(err)
+          expect(err).toBeUndefined()
+          done()
+        })
+    })
   })
 
   describe('amend', () => {

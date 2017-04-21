@@ -53,7 +53,7 @@ export function retrieve({AMId, resourceId, token}, callback) {
  * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function insert({asset, token}, callback) {
+export function insert({AMId, asset, token}, callback) {
   let stringified, data
   if (asset) {
     stringified = JSON.stringify(asset)
@@ -61,6 +61,7 @@ export function insert({asset, token}, callback) {
   }
   const params = {
     AMaaSClass: 'assets',
+    AMId,
     data,
     token
   }
