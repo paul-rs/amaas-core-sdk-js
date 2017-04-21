@@ -65,6 +65,9 @@ function buildURL(_ref) {
     case 'relationships':
       baseURL = _config2.default.assetManagers + '/asset-manager-relationships';
       break;
+    case 'transactions':
+      baseURL = _config2.default.transactions + '/transactions';
+      break;
     default:
       throw new Error('Invalid class type: ' + AMaaSClass);
   }
