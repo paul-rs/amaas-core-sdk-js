@@ -1,4 +1,4 @@
-import Reference from './Reference.js'
+import Reference from './'
 
 describe('Reference', () => {
   describe('serialization', () => {

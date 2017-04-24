@@ -4,9 +4,9 @@ import Position from './position.js'
 describe('Position class', () => {
   describe('serialization', () => {
     it('should serialize properly', () => {
-      const test = new Position({ quantity: 12, assetBookId: 'test' })
-      expect(JSON.parse(JSON.stringify(test)).assetBookId).toBeDefined()
-      expect(JSON.parse(JSON.stringify(test)).assetBookId).toEqual('test')
+      const test = new Position({ quantity: 12, bookId: 'test' })
+      expect(JSON.parse(JSON.stringify(test)).bookId).toBeDefined()
+      expect(JSON.parse(JSON.stringify(test)).bookId).toEqual('test')
     })
   })
   describe('constructor', () => {

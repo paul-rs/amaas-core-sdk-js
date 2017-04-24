@@ -11,10 +11,3 @@ export const ASSET_MANAGER_TYPES = [
   'Retail',
   'Venture Capital'
 ]
-
-export const RELATIONSHIP_TYPES = [
-  'Administrator',
-  'External',
-  'Front Office',
-  'Employee'
-]

@@ -1,3 +1,3 @@
-import { retrieve, insert, amend, deactivate } from './assetManagers.js'
+import { retrieve, insert, amend, deactivate, reactivate } from './assetManagers.js'
 
-export { retrieve, insert, amend, deactivate }
+export { retrieve, insert, amend, deactivate, reactivate }

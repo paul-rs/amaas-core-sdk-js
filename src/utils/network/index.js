@@ -38,6 +38,12 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
     case 'netting':
       baseURL = `${ENDPOINTS.transactions}/netting`
       break
+    case 'relationships':
+      baseURL = `${ENDPOINTS.assetManagers}/asset-manager-relationships`
+      break
+    case 'transactions':
+      baseURL = `${ENDPOINTS.transactions}/transactions`
+      break
     default:
       throw new Error(`Invalid class type: ${AMaaSClass}`)
   }
@@ -272,7 +278,17 @@ export function deleteData({ AMaaSClass, AMId, resourceId, token }, callback) {
   })
 }
 
-export function searchData({ AMaaSClass, queryKey, queryValue, token }, callback) {
+/*
+ * query is an array of objects: { key: <string>, values: <array> }
+ * key is the key to search over (depends on the specific service)
+ * and values are all the values to search over. E.g.
+ *   const queries = [
+ *     { key: 'assetIds', values: [1, 2, 44, 'asf'] },
+ *     { key: 'assetClasses', values: ['Currency', 'Bond', 'Equity']},
+ *     { key: 'assetTypes', values: ['GovernmentBond, ForeignExchange']}
+ *   ]
+ */
+export function searchData({ AMaaSClass, query, token }, callback) {
   if (!token) {
     if (typeof callback !== 'function') {
       return Promise.reject('Missing Authorization')
@@ -292,18 +308,14 @@ export function searchData({ AMaaSClass, queryKey, queryValue, token }, callback
     callback(e)
     return
   }
-  let qString = {}
-  const qValueString = queryValue.join()
-  qString[queryKey] = qValueString
-  qString.camelcase = true
-  const params = {
-    url,
-    qs: qString
+  let queryString = { camelcase: true }
+  for (let i = 0; i < query.length; i++) {
+    queryString[query[i].key] = query[i].values.join()
   }
-  let promise = request.get(url).set('Authorization', token).query(qString)
+  let promise = request.get(url).set('Authorization', token).query(queryString)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
-    return promise.then(response => response.body)
+    return promise.then(response => response)
   }
   promise.end((error, response) => {
     let body

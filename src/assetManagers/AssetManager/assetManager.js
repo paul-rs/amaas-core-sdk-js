@@ -3,7 +3,8 @@ import { ASSET_MANAGER_TYPES } from '../enums'
 
 /**
  * Class representing an Asset Manager
- * @extends AMaaSModel
+ * @memberof module:AssetManagers.Class
+ * @extends module:Core.AMaaSModel
  */
 class AssetManager extends AMaaSModel {
   /**
@@ -17,13 +18,27 @@ class AssetManager extends AMaaSModel {
    * @param {string} params.defaultBookOwnerId - ID of the default owner for any books owned by this Asset Manager
    * @param {date} params.defaultTimezone - Default timezone for any books owned by this Asset Manager
    * @param {date} params.defaultBookCloseTime - Default book close time for any books owned by this Asset Manager
-   * @param {string} params.createdBy - ID of the user that created the Asset Manager (required if creating a new Asset Manager)
-   * @param {string} params.updatedBy - ID of the user that updated the Asset Manager (use if amending existing Asset Manager)
-   * @param {date} params.createdTime - Time that the Asset Manager was created (required if creating new Asset Manager)
-   * @param {date} params.updatedTime - Time that the Asset Manager was updated (required if amending existing Asset Manager)
+   * @param {string} params.createdBy - ID of the user that created the Asset Manager
+   * @param {string} params.updatedBy - ID of the user that updated the Asset Manager
+   * @param {date} params.createdTime - Time that the Asset Manager was created
+   * @param {date} params.updatedTime - Time that the Asset Manager was updated
    * @param {number} params.version - Version number of the Asset Manager
    */
-  constructor({ assetManagerId, assetManagerType, assetManagerStatus='Active', clientId, partyId, defaultBookOwnerId, defaultTimezone='UTC', defaultBookCloseTime, createdBy, updatedBy, createdTime, updatedTime, version }) {
+  constructor({
+    assetManagerId,
+    assetManagerType,
+    assetManagerStatus='Active',
+    clientId,
+    partyId,
+    defaultBookOwnerId,
+    defaultTimezone='UTC',
+    defaultBookCloseTime,
+    createdBy,
+    updatedBy,
+    createdTime,
+    updatedTime,
+    version
+  }) {
     super({
       createdBy,
       updatedBy,
@@ -49,6 +64,7 @@ class AssetManager extends AMaaSModel {
     this.assetManagerId = assetManagerId
     this.assetManagerType = assetManagerType
     this.assetManagerStatus = assetManagerStatus
+    this.clientId = clientId
     this.partyId = partyId
     this.defaultBookOwnerId = defaultBookOwnerId
     this.defaultTimezone = defaultTimezone

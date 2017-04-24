@@ -8,42 +8,14 @@ exports.insert = insert;
 exports.amend = amend;
 exports.partialAmend = partialAmend;
 exports.deactivate = deactivate;
-exports._parseChildren = _parseChildren;
+exports.reactivate = reactivate;
 exports._parseParty = _parseParty;
 
 var _network = require('../network');
 
-var _party = require('../../parties/Party/party.js');
+var _parties = require('../../parties');
 
-var _party2 = _interopRequireDefault(_party);
-
-var _individual = require('../../parties/Individual/individual.js');
-
-var _individual2 = _interopRequireDefault(_individual);
-
-var _organisation = require('../../parties/Organisation/organisation.js');
-
-var _organisation2 = _interopRequireDefault(_organisation);
-
-var _company = require('../../parties/Company/company.js');
-
-var _company2 = _interopRequireDefault(_company);
-
-var _broker = require('../../parties/Broker/broker.js');
-
-var _broker2 = _interopRequireDefault(_broker);
-
-var _exchange = require('../../parties/Exchange/exchange.js');
-
-var _exchange2 = _interopRequireDefault(_exchange);
-
-var _fund = require('../../parties/Fund/fund.js');
-
-var _fund2 = _interopRequireDefault(_fund);
-
-var _governmentAgency = require('../../parties/GovernmentAgency/governmentAgency.js');
-
-var _governmentAgency2 = _interopRequireDefault(_governmentAgency);
+var PartyClasses = _interopRequireWildcard(_parties);
 
 var _address = require('../../parties/Children/address.js');
 
@@ -53,27 +25,36 @@ var _email = require('../../parties/Children/email.js');
 
 var _email2 = _interopRequireDefault(_email);
 
-var _Reference = require('../../core/Reference/Reference.js');
-
-var _Reference2 = _interopRequireDefault(_Reference);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * @namespace api
+  * @memberof module:Parties
+ */
 
 /**
  * Retrieve Party data for specified AMId and partyId
- * @param {number} AMId - Asset Manager ID of the Party
- * @param {string} [partyId] - Party ID of the Party. Omitting this will return all Parties associated with that AMId
+ * @function retrieve
+ * @memberof module:Parties.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID of the Party
+ * @param {string} [params.partyId] - Party ID of the Party. Omitting this will return all Parties associated with that AMId
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise|Array|Party} - If callback supplied, it is called and function returns either a Party instance of array of Party instances. Otherwise promise that resolves with Party instance or array of Party instances is returned
  */
 function retrieve(_ref, callback) {
   var AMId = _ref.AMId,
-      partyId = _ref.partyId,
+      resourceId = _ref.resourceId,
       token = _ref.token;
 
   var params = {
     AMaaSClass: 'parties',
     AMId: AMId,
-    resourceId: partyId,
+    resourceId: resourceId,
     token: token
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
@@ -100,11 +81,18 @@ function retrieve(_ref, callback) {
 
 /**
  * Insert a new Party into the database
- * @param {Party} party - Party instance to insert
+ * @function insert
+ * @memberof module:Parties.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {Party} params.party - Party instance to insert
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise|Party} If callback is supplied, it is called and function returns the inserted Party instance. Otherwise promise that resolves with inserted Party instance is returned
  */
 function insert(_ref2, callback) {
-  var party = _ref2.party,
+  var AMId = _ref2.AMId,
+      party = _ref2.party,
       token = _ref2.token;
 
   var stringified = void 0,
@@ -115,6 +103,7 @@ function insert(_ref2, callback) {
   }
   var params = {
     AMaaSClass: 'parties',
+    AMId: AMId,
     data: data,
     token: token
   };
@@ -136,10 +125,16 @@ function insert(_ref2, callback) {
 
 /**
  * Amend an existing Party. WARNING: This makes a HTTP PUT request and will replace the existing Party with the one passed in
- * @param {Party} party - Amended Party instance to PUT
- * @param {number} AMId - AMId of the Party to amend
- * @param {string} resourceId - Party ID of the Party to amend
+ * @function amend
+ * @memberof module:Parties.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {Party} params.party - Amended Party instance to PUT
+ * @param {number} params.AMId - AMId of the Party to amend
+ * @param {string} params.resourceId - Party ID of the Party to amend
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise|Party} If callback is supplied, it is called and function returns the amended Party instance. Otherwise promise that resolves with amended Party instance is returned
  */
 function amend(_ref3, callback) {
   var party = _ref3.party,
@@ -178,10 +173,16 @@ function amend(_ref3, callback) {
 
 /**
  * Partially amend an existing Party.
- * @param {object} changes - Object of changes to the Party.
- * @param {string} AMId - AMId of the Party to be partially amended
- * @param {string} resourceId - Party ID of the Party to be partially amended
+ * @function partialAmend
+ * @memberof module:Parties.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {object} params.changes - Object of changes to the Party.
+ * @param {string} params.AMId - AMId of the Party to be partially amended
+ * @param {string} params.resourceId - Party ID of the Party to be partially amended
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise|Party} If callback is supplied, it is called and function returns the amended Party instance. Otherwise a promise that resolves with the amended Party instance is returned
  */
 function partialAmend(_ref4, callback) {
   var changes = _ref4.changes,
@@ -213,10 +214,16 @@ function partialAmend(_ref4, callback) {
 }
 
 /**
- * Delete an exising Party. This will set the Party status to 'Inactive'.
- * @param {string} AMId - AMId of the Party to be deleted
- * @param {string} resourceId - Party ID of the Party to be deleted
+ * Deactivate an exising Party. This will set the Party status to 'Inactive'
+ * @function deactivate
+ * @memberof module:Parties.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {string} params.AMId - AMId of the Party to be deleted
+ * @param {string} params.resourceId - Party ID of the Party to be deleted
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @erturns {PRomise|string} If callback is supplied, it is called and the function returns ???. Otherwise a promise that resolves with ??? is returned
  */
 function deactivate(_ref5, callback) {
   var AMId = _ref5.AMId,
@@ -227,9 +234,11 @@ function deactivate(_ref5, callback) {
     AMaaSClass: 'parties',
     AMId: AMId,
     resourceId: resourceId,
+    data: { partyStatus: 'Inactive' },
     token: token
   };
-  var promise = (0, _network.deleteData)(params).then(function (result) {
+  var promise = (0, _network.patchData)(params).then(function (result) {
+    result = _parseParty(result);
     if (typeof callback === 'function') {
       callback(null, result);
     }
@@ -244,229 +253,49 @@ function deactivate(_ref5, callback) {
   });
 }
 
-function _parseChildren(type, children) {
-  var parsedChildren = {};
-  switch (type) {
-    case 'address':
-      for (var child in children) {
-        if (children.hasOwnProperty(child)) {
-          parsedChildren[child] = new _address2.default(children[child]);
-          // parsedChildren[child] = new Address({
-          //   addressPrimary: children[child].address_primary,
-          //   lineOne: children[child].line_one,
-          //   lineTwo: children[child].line_two,
-          //   city: children[child].city,
-          //   region: children[child].region,
-          //   postalCode: children[child].postal_code,
-          //   countryId: children[child].country_id,
-          //   active: children[child].active,
-          //   createdBy: children[child].created_by,
-          //   updatedBy: children[child].updated_by,
-          //   createdTime: children[child].created_time,
-          //   updatedTime: children[child].updated_time,
-          //   version: children[child].version
-          // })
-        }
-      }
-      break;
-    case 'email':
-      for (var _child in children) {
-        if (children.hasOwnProperty(_child)) {
-          parsedChildren[_child] = new _email2.default(children[_child]);
-          // parsedChildren[child] = new Email({
-          //   emailPrimary: children[child].email_primary,
-          //   email: children[child].email,
-          //   active: children[child].active,
-          //   createdBy: children[child].created_by,
-          //   updatedBy: children[child].updated_by,
-          //   createdTime: children[child].created_time,
-          //   updatedTime: children[child].updated_time,
-          //   version: children[child].version
-          // })
-        }
-      }
-      break;
-    case 'reference':
-      for (var _child2 in children) {
-        if (children.hasOwnProperty(_child2)) {
-          parsedChildren[_child2] = new _Reference2.default(children[_child2]);
-          // parsedChildren[child] = new Reference({
-          //   referenceValue: children[child].reference_value,
-          //   active: children[child].active,
-          //   createdBy: children[child].created_by,
-          //   updatedBy: children[child].updated_by,
-          //   createdTime: children[child].created_time,
-          //   updatedTime: children[child].updated_time,
-          //   version: children[child].version
-          // })
-        }
-      }
-      break;
-    default:
-      throw new Error('Child type not defined (parseChildren)');
+/**
+ * Reactivate a Party. This will set the Party status to 'Active'
+ * @function reactivate
+ * @memberof module:Parties.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {string} params.AMId - AMId of the Party to be reactivated
+ * @param {string} params.resourceId - Party ID of the Party to be reactivated
+ * @param {string} params.token - Authorization token
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ * @erturns {Promise|string} If callback is supplied, it is called and the function returns ???. Otherwise a promise that resolves with ??? is returned
+ */
+function reactivate(_ref6, callback) {
+  var AMId = _ref6.AMId,
+      resourceId = _ref6.resourceId,
+      token = _ref6.token;
+
+  var params = {
+    AMaaSClass: 'parties',
+    AMId: AMId,
+    resourceId: resourceId,
+    data: { partyStatus: 'Active' },
+    token: token
+  };
+  var promise = (0, _network.patchData)(params).then(function (result) {
+    result = _parseParty(result);
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise;
   }
-  return parsedChildren;
+  promise.catch(function (error) {
+    return callback(error);
+  });
 }
 
 function _parseParty(object) {
-  var party = void 0;
-  var addresses = _parseChildren('address', object.addresses);
-  var emails = _parseChildren('email', object.emails);
-  var references = _parseChildren('reference', object.references);
-  switch (object.partyType) {
-    case 'Individual':
-      party = new _individual2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new Individual({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    case 'Broker':
-      party = new _broker2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new Broker({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    case 'Exchange':
-      party = new _exchange2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new Exchange({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    case 'Fund':
-      party = new _fund2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new Fund({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    case 'GovernmentAgency':
-      party = new _governmentAgency2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new GovernmentAgency({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    case 'Organisation':
-      party = new _organisation2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new Organisation({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    case 'Company':
-      party = new _company2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-      // party = new Company({
-      //   assetManagerId: object.asset_manager_id,
-      //   partyId: object.party_id,
-      //   partyStatus: object.party_status,
-      //   partyClass: object.party_class,
-      //   partyType: object.party_type,
-      //   description: object.description,
-      //   addresses,
-      //   emails,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break;
-    default:
-      party = new _party2.default(Object.assign(object, { addresses: addresses, emails: emails, references: references }));
-    // party = new Party({
-    //   assetManagerId: object.asset_manager_id,
-    //   partyId: object.party_id,
-    //   partyStatus: object.party_status,
-    //   partyClass: object.party_class,
-    //   partyType: object.party_type,
-    //   description: object.description,
-    //   addresses,
-    //   emails,
-    //   references,
-    //   createdBy: object.created_by,
-    //   updatedBy: object.updated_by,
-    //   createdTime: object.created_time,
-    //   updatedTime: object.updated_time,
-    //   version: object.version
-    // })
+  if (!object.partyType) {
+    return new PartyClasses.Party(object);
   }
-  return party;
+  return new PartyClasses[object.partyType](object);
 }
-
-// export default getParty

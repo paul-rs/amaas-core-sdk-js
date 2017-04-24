@@ -2,25 +2,28 @@ import Organisation from '../Organisation/organisation.js'
 
 /**
  * Class representing a Company
- * @extends Organisation
+ * @memberof module:Parties.Class
+ * @extends module:Parties.Class.Organisation
  */
 class Company extends Organisation {
   /**
-   * Construct a new Company object
+   * Construct a new Company instance
    * @param {object} params - Company creation options
    * @param {number} params.assetManagerId - Asset Manager ID of the Company
    * @param {string} params.partyId - Party ID of the Company
-   * @param {string} params.partyStatus - Status of the Company (e.g. 'Active')
+   * @param {string} params.partyStatus=Active - Status of the Company (e.g. 'Active')
    * @param {string} params.partyClass=Company - Class of the Company
-   * @param {string} params.partyType=Company - Type of the Company
+   * @param {string} params.baseCurrency - Base Currency of the Company (e.g. SGD, USD)
    * @param {string} params.description - Description of the Company
    * @param {object} params.addresses - Object of Addresses associated with this Company
    * @param (object) params.emails - Object of Emails associated with this Company
    * @param {object} params.references - Object of References associated with this Company
-   * @param {string} params.createdBy - ID of the user that created the Company (required if creating a new Company)
-   * @param {string} params.updatedBy - ID of the user that updated the Company (use if amending existing Company)
-   * @param {date} params.createdTime - Time that the Company was created (required if creating new Company)
-   * @param {date} params.updatedTime - Time that the Company was updated (required if amending existing Company)
+   * @param {object} params.comments - Object of Comments associated with the Company
+   * @param {object} params.links - Object of Links associated with the Company
+   * @param {string} params.createdBy - ID of the user that created the Company
+   * @param {string} params.updatedBy - ID of the user that updated the Company
+   * @param {date} params.createdTime - Time that the Company was created
+   * @param {date} params.updatedTime - Time that the Company was updated
    * @param {number} params.version - Version number of the Company
    */
   constructor({

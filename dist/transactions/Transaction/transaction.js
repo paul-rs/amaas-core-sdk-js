@@ -27,8 +27,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
+ * @namespace Class
+ * @memberof module:Transactions
+ */
+
+/**
  * Class representing a Transaction
- * @extends AMaaSModel
+ * @memberof module:Transactions.Class
+ * @extends module:Core.AMaaSModel
  */
 var Transaction = function (_AMaaSModel) {
   _inherits(Transaction, _AMaaSModel);
@@ -203,18 +209,18 @@ var Transaction = function (_AMaaSModel) {
           return _this._references;
         },
         set: function set(newReferences) {
-          var AMaaSRef = { AMaaS: new _core.Reference({ referenceValue: _this.transactionId }) };
+          var AMaaSRef = { AMaaS: new _children.Reference({ referenceValue: _this.transactionId }) };
           if (!newReferences) {
             _this._references = AMaaSRef;
           } else {
             var newRefs = {};
             for (var ref in newReferences) {
               if (newReferences.hasOwnProperty(ref)) {
-                newRefs[ref] = new _core.Reference(Object.assign({}, newReferences[ref]));
+                newRefs[ref] = new _children.Reference(Object.assign({}, newReferences[ref]));
               }
             }
             _this._references = _extends({
-              AMaaS: new _core.Reference({ referenceValue: _this.transactionId })
+              AMaaS: new _children.Reference({ referenceValue: _this.transactionId })
             }, newRefs);
           }
         },
@@ -282,10 +288,10 @@ var Transaction = function (_AMaaSModel) {
         set: function set(newLinks) {
           if (newLinks) {
             var _links = {};
-            for (var ref in newLinks) {
+            for (var name in newLinks) {
               // TODO: Remove this when the API returns Arrays for all Links
               if (newLinks[name] instanceof Array) {
-                linksClass[name] = newLinks[name].map(function (link) {
+                _links[name] = newLinks[name].map(function (link) {
                   return new _children.Link(link);
                 });
               } else {

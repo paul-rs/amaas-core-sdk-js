@@ -9,15 +9,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /**
  * Class representing a AMaaSModel.
  * This is the Base Class for almost every other class
+ * @memberof module:Core
  */
 var AMaaSModel =
 /**
  * Construct new AMaaSModel object
- * @param {object} params - AMaaSModelparams. creation options
- * @param {string} params.createdBy - ID of the user that created this object (required if creating a new AMaaSModel)
- * @param {string} params.updatedBy - ID of the user that updated this object (use if amending existing AMaaSModel)
- * @param {date} params.createdTime - Time that the AMaaSModel was created (required if creating new AMaaSModel)
- * @param {date} params.updatedTime - Time that the AMaaSModel was updated (required if amending existing AMaaSModel)
+ * @param {object} params - AMaaSModel creation options:
+ * @param {string} params.createdBy - ID of the user that created this object
+ * @param {string} params.updatedBy - ID of the user that updated this object
+ * @param {date} params.createdTime - Time that the AMaaSModel was created
+ * @param {date} params.updatedTime - Time that the AMaaSModel was updated
  * @param {number} params.version - Version number of the AMaaSModel
 */
 function AMaaSModel() {

@@ -1,27 +1,21 @@
 import { retrieveData, insertData, patchData, putData, deleteData } from '../network'
 
-import {
-  Asset,
-  BondBase,
-  BondCorporate,
-  BondGovernment,
-  BondMortgage,
-  Currency,
-  Derivative,
-  BondOption,
-  Equity,
-  ForeignExchange,
-  NonDeliverableForward
-} from '../../assets'
+import * as AssetClasses from '../../assets'
 
-import Reference from '../../core/Reference/Reference.js'
-
-import { _parseChildren } from '../parties/parties.js'
+/**
+ * @namespace api
+ * @memberof module:Assets
+ */
 
 /**
  * Retrieve Asset data for specified AMId and partyId
- * @param {number} AMId - Asset Manager ID of the Asset
- * @param {string} [partyId] - Party ID of the Asset. Omitting this will return all Assets associated with that AMId
+ * @function retrieve
+ * @memberof module:Assets.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID of the Asset
+ * @param {string} [params.resourceId] - Party ID of the Asset. Omitting this will return all Assets associated with that AMId
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function retrieve({AMId, resourceId, token}, callback) {
@@ -51,10 +45,15 @@ export function retrieve({AMId, resourceId, token}, callback) {
 
 /**
  * Insert a new Asset into the database
- * @param {Asset} asset - Asset instance to insert
+ * @function insert
+ * @memberof module:Assets.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {Asset} params.asset - Asset instance to insert
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
-export function insert({asset, token}, callback) {
+export function insert({AMId, asset, token}, callback) {
   let stringified, data
   if (asset) {
     stringified = JSON.stringify(asset)
@@ -62,6 +61,7 @@ export function insert({asset, token}, callback) {
   }
   const params = {
     AMaaSClass: 'assets',
+    AMId,
     data,
     token
   }
@@ -81,9 +81,14 @@ export function insert({asset, token}, callback) {
 
 /**
  * Amend an existing Asset. WARNING: This makes a HTTP PUT request and will replace the existing Asset with the one passed in
- * @param {Asset} asset - Amended Asset instance to PUT
- * @param {number} AMId - AMId of the Party to amend
- * @param {string} resourceId - Asset ID of the Party to amend
+ * @function amend
+ * @memberof module:Assets.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {Asset} params.asset - Amended Asset instance to PUT
+ * @param {number} params.AMId - AMId of the Party to amend
+ * @param {string} params.resourceId - Asset ID of the Party to amend
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function amend({asset, AMId, resourceId, token}, callback) {
@@ -115,9 +120,14 @@ export function amend({asset, AMId, resourceId, token}, callback) {
 
 /**
  * Partially amend an existing Asset.
- * @param {object} changes - Object of changes to the Asset.
- * @param {string} AMId - AMId of the Asset to be partially amended
- * @param {string} resourceId - Asset ID of the Asset to be partially amended
+ * @function partialAmend
+ * @memberof module:Assets.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {object} params.changes - Object of changes to the Asset.
+ * @param {string} params.AMId - AMId of the Asset to be partially amended
+ * @param {string} params.resourceId - Asset ID of the Asset to be partially amended
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function partialAmend({changes, AMId, resourceId, token}, callback) {
@@ -144,8 +154,13 @@ export function partialAmend({changes, AMId, resourceId, token}, callback) {
 
 /**
  * Delete an exising Asset. This will set the Asset status to 'Inactive'.
- * @param {string} AMId - AMId of the Asset to be deleted
- * @param {string} resourceId - Asset ID of the Asset to be deleted
+ * @function deactivate
+ * @memberof module:Assets.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {string} params.AMId - AMId of the Asset to be deleted
+ * @param {string} params.resourceId - Asset ID of the Asset to be deleted
+ * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
  */
 export function deactivate({AMId, resourceId, token}, callback) {
@@ -153,9 +168,44 @@ export function deactivate({AMId, resourceId, token}, callback) {
     AMaaSClass: 'assets',
     AMId,
     resourceId,
+    data: { assetStatus: 'Inactive' },
     token
   }
-  let promise = deleteData(params).then(result => {
+  let promise = patchData(params).then(result => {
+    result = _parseAsset(result)
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
+  })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
+}
+
+/**
+ * Reactivate a deactivated Asset. This will set the Asset status to 'Active'.
+ * @function reactivate
+ * @memberof module:Assets.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {string} params.AMId - AMId of the Asset to be deleted
+ * @param {string} params.resourceId - Asset ID of the Asset to be deleted
+ * @param {string} params.token - Authorization token
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ */
+export function reactivate({AMId, resourceId, token}, callback) {
+  const params = {
+    AMaaSClass: 'assets',
+    AMId,
+    resourceId,
+    data: { assetStatus: 'Active' },
+    token
+  }
+  let promise = patchData(params).then(result => {
+    result = _parseAsset(result)
     if (typeof callback === 'function') {
       callback(null, result)
     }
@@ -169,302 +219,8 @@ export function deactivate({AMId, resourceId, token}, callback) {
 }
 
 export function _parseAsset(object) {
-  let asset
-  const references = _parseChildren('reference', object.references)
-  switch (object.asset_type) {
-    case 'Asset':
-      asset = new Asset(Object.assign(object, { references }))
-      // asset = new Asset({
-      //   assetManagerId: object.asset_manager_id,
-      //   fungible: object.fungible,
-      //   assetIssuerId: object.asset_issuer_id,
-      //   assetId: object.asset_id,
-      //   assetClass: object.asset_class,
-      //   assetType: object.asset_type,
-      //   assetStatus: object.asset_status,
-      //   countryId: object.country_id,
-      //   venueId: object.venue_id,
-      //   maturityDate: object.maturity_date,
-      //   description: object.description,
-      //   clientId: object.client_id,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break
-    case 'Bond':
-      asset = new BondBase(Object.assign(object, { references }))
-      // asset = new BondBase({
-      //   assetManagerId: object.asset_manager_id,
-      //   fungible: object.fungible,
-      //   assetIssuerId: object.asset_issuer_id,
-      //   assetId: object.asset_id,
-      //   assetClass: object.asset_class,
-      //   assetType: object.asset_type,
-      //   assetStatus: object.asset_status,
-      //   countryId: object.country_id,
-      //   venueId: object.venue_id,
-      //   maturityDate: object.maturity_date,
-      //   description: object.description,
-      //   clientId: object.client_id,
-      //   issueDate: object.issue_date,
-      //   coupon: object.coupon,
-      //   par: object.par,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break
-    case 'BondCorporate':
-      asset = new BondCorporate(Object.assign(object, { references }))
-      // asset = new BondCorporate({
-      //   assetManagerId: object.asset_manager_id,
-      //   fungible: object.fungible,
-      //   assetIssuerId: object.asset_issuer_id,
-      //   assetId: object.asset_id,
-      //   assetClass: object.asset_class,
-      //   assetType: object.asset_type,
-      //   assetStatus: object.asset_status,
-      //   countryId: object.country_id,
-      //   venueId: object.venue_id,
-      //   maturityDate: object.maturity_date,
-      //   description: object.description,
-      //   clientId: object.client_id,
-      //   issueDate: object.issue_date,
-      //   coupon: object.coupon,
-      //   par: object.par,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break
-    case 'BondGovernment':
-      asset = new BondGovernment(Object.assign(object, { references }))
-      // asset = new BondGovernment({
-      //   assetManagerId: object.asset_manager_id,
-      //   fungible: object.fungible,
-      //   assetIssuerId: object.asset_issuer_id,
-      //   assetId: object.asset_id,
-      //   assetClass: object.asset_class,
-      //   assetType: object.asset_type,
-      //   assetStatus: object.asset_status,
-      //   countryId: object.country_id,
-      //   venueId: object.venue_id,
-      //   maturityDate: object.maturity_date,
-      //   description: object.description,
-      //   clientId: object.client_id,
-      //   issueDate: object.issue_date,
-      //   coupon: object.coupon,
-      //   par: object.par,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break
-    case 'BondMortgage':
-      asset = new BondMortgage(Object.assign(object, { references }))
-      // asset = new BondMortgage({
-      //   assetManagerId: object.asset_manager_id,
-      //   fungible: object.fungible,
-      //   assetIssuerId: object.asset_issuer_id,
-      //   assetId: object.asset_id,
-      //   assetClass: object.asset_class,
-      //   assetType: object.asset_type,
-      //   assetStatus: object.asset_status,
-      //   countryId: object.country_id,
-      //   venueId: object.venue_id,
-      //   maturityDate: object.maturity_date,
-      //   description: object.description,
-      //   clientId: object.client_id,
-      //   issueDate: object.issue_date,
-      //   coupon: object.coupon,
-      //   par: object.par,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break
-    case 'Currency':
-      asset = new Currency(Object.assign(object, { references }))
-      // asset = new Currency({
-      //   assetManagerId: object.asset_manager_id,
-      //   fungible: object.fungible,
-      //   assetIssuerId: object.asset_issuer_id,
-      //   assetId: object.asset_id,
-      //   assetClass: object.asset_class,
-      //   assetType: object.asset_type,
-      //   assetStatus: object.asset_status,
-      //   countryId: object.country_id,
-      //   venueId: object.venue_id,
-      //   maturityDate: object.maturity_date,
-      //   description: object.description,
-      //   clientId: object.client_id,
-      //   deliverable: object.deliverable,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break
-    case 'Derivative':
-      asset = new Derivative(Object.assign(object, { references }))
-      // asset = new Derivative({
-      //   assetManagerId: object.asset_manager_id,
-      //   fungible: object.fungible,
-      //   assetIssuerId: object.asset_issuer_id,
-      //   assetId: object.asset_id,
-      //   assetClass: object.asset_class,
-      //   assetType: object.asset_type,
-      //   assetStatus: object.asset_status,
-      //   countryId: object.country_id,
-      //   venueId: object.venue_id,
-      //   maturityDate: object.maturity_date,
-      //   description: object.description,
-      //   clientId: object.client_id,
-      //   isseuDate: object.issue_date,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break
-    case 'BondOption':
-      asset = new BondOption(Object.assign(object, { references }))
-      // asset = new BondOption({
-      //   assetManagerId: object.asset_manager_id,
-      //   fungible: object.fungible,
-      //   assetIssuerId: object.asset_issuer_id,
-      //   assetId: object.asset_id,
-      //   assetClass: object.asset_class,
-      //   assetType: object.asset_type,
-      //   assetStatus: object.asset_status,
-      //   countryId: object.country_id,
-      //   venueId: object.venue_id,
-      //   maturityDate: object.maturity_date,
-      //   description: object.description,
-      //   clientId: object.client_id,
-      //   isseuDate: object.issue_date,
-      //   putCall: object.put_call,
-      //   strike: object.strike,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break
-    case 'Equity':
-      asset = new Equity(Object.assign(object, { references }))
-      // asset = new Equity({
-      //   assetManagerId: object.asset_manager_id,
-      //   fungible: object.fungible,
-      //   assetIssuerId: object.asset_issuer_id,
-      //   assetId: object.asset_id,
-      //   assetClass: object.asset_class,
-      //   assetType: object.asset_type,
-      //   assetStatus: object.asset_status,
-      //   countryId: object.country_id,
-      //   venueId: object.venue_id,
-      //   maturityDate: object.maturity_date,
-      //   description: object.description,
-      //   clientId: object.client_id,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break
-    case 'ForeignExchange':
-      asset = new ForeignExchange(Object.assign(object, { references }))
-      // asset = new ForeignExchange({
-      //   assetManagerId: object.asset_manager_id,
-      //   fungible: object.fungible,
-      //   assetIssuerId: object.asset_issuer_id,
-      //   assetId: object.asset_id,
-      //   assetClass: object.asset_class,
-      //   assetType: object.asset_type,
-      //   assetStatus: object.asset_status,
-      //   countryId: object.country_id,
-      //   venueId: object.venue_id,
-      //   maturityDate: object.maturity_date,
-      //   description: object.description,
-      //   clientId: object.client_id,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break
-    case 'NonDeliverableForward':
-      asset = new NonDeliverableForward(Object.assign(object, { references }))
-      // asset = new NonDeliverableForward({
-      //   assetManagerId: object.asset_manager_id,
-      //   fungible: object.fungible,
-      //   assetIssuerId: object.asset_issuer_id,
-      //   assetId: object.asset_id,
-      //   assetClass: object.asset_class,
-      //   assetType: object.asset_type,
-      //   assetStatus: object.asset_status,
-      //   countryId: object.country_id,
-      //   venueId: object.venue_id,
-      //   maturityDate: object.maturity_date,
-      //   description: object.description,
-      //   clientId: object.client_id,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
-      break
-    default:
-      asset = new Asset(Object.assign(object, { references }))
-      // asset = new Asset({
-      //   assetManagerId: object.asset_manager_id,
-      //   fungible: object.fungible,
-      //   assetIssuerId: object.asset_issuer_id,
-      //   assetId: object.asset_id,
-      //   assetClass: object.asset_class,
-      //   assetType: object.asset_type,
-      //   assetStatus: object.asset_status,
-      //   countryId: object.country_id,
-      //   venueId: object.venue_id,
-      //   maturityDate: object.maturity_date,
-      //   description: object.description,
-      //   clientId: object.client_id,
-      //   deliverable: object.deliverable,
-      //   references,
-      //   createdBy: object.created_by,
-      //   updatedBy: object.updated_by,
-      //   createdTime: object.created_time,
-      //   updatedTime: object.updated_time,
-      //   version: object.version
-      // })
+  if (!object.assetType) {
+    return new AssetClasses.Asset(object)
   }
-  return asset
+  return new AssetClasses[object.assetType](object)
 }

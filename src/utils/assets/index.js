@@ -1,3 +1,3 @@
-import { retrieve, insert, amend, partialAmend, deactivate } from './assets.js'
+import { retrieve, insert, amend, partialAmend, deactivate, reactivate } from './assets.js'
 
-export { retrieve, insert, amend, partialAmend, deactivate }
+export { retrieve, insert, amend, partialAmend, deactivate, reactivate }

@@ -1,6 +1,6 @@
 # AMaaS Core SDK for JavaScript
 
-This is the Asset Management as a Service ([AMaaS](https://amaas.com/)) Software Development Kit (SDK) for JavaScript.  
+This is the Asset Management as a Service ([AMaaS](https://amaas.com/)) Software Development Kit (SDK) for JavaScript.
 This module can be used in Node.js (version >= 4.0) and in browsers.
 
 ## What is AMaaS?
@@ -25,6 +25,10 @@ Running full tests (requires API_TOKEN)
 ```
 $ API_TOKEN=xxxxx npm test
 ```
+
+## API
+
+Coming soon
 
 ## Contribution
 

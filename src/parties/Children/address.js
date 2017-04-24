@@ -2,11 +2,12 @@ import { AMaaSModel } from '../../core'
 
 /**
  * Class representing an Address
- * @extends AMaaSModel
+ * @memberof module:Parties.Class
+ * @extends module:Core.AMaaSModel
  */
 class Address extends AMaaSModel {
   /**
-   * Construct a new Address object
+   * Construct a new Address instance
    * @param {object} params - Address creation options
    * @param {bool} params.addressPrimary - Flag for whether Address is primary for its owner
    * @param {string} params.lineOne - First line of the Address
@@ -16,10 +17,10 @@ class Address extends AMaaSModel {
    * @param {string} params.postalCode - Postal code of the Address
    * @param {string} params.countryId - Country of the Address
    * @param {bool} params.active - Whether this Address is active for its owner
-   * @param {string} params.createdBy - ID of the user that created the Address (required if creating a new Address)
-   * @param {string} params.updatedBy - ID of the user that updated the Address (use if amending existing Address)
-   * @param {date} params.createdTime - Time that the Address was created (required if creating new Address)
-   * @param {date} params.updatedTime - Time that the Address was updated (required if amending existing Address)
+   * @param {string} params.createdBy - ID of the user that created the Address
+   * @param {string} params.updatedBy - ID of the user that updated the Address
+   * @param {date} params.createdTime - Time that the Address was created
+   * @param {date} params.updatedTime - Time that the Address was updated
    * @param {number} params.version - Version number of the Address
    */
   constructor({ addressPrimary=false, lineOne, lineTwo, city, region, postalCode, countryId, active, createdBy, updatedBy, createdTime, updatedTime, version }) {

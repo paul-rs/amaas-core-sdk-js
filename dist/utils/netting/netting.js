@@ -9,10 +9,20 @@ exports.send = send;
 var _network = require('../network');
 
 /**
+ * @namespace api
+ * @memberof module:Netting
+ */
+
+/**
  * Retrieve Netting for a specific Transaction
- * @param {number} AMId - Asset Manager ID of Transaction
- * @param {string} resourceId - Transaction ID
- * @param {string} token - Authorization token
+ * @function retrieve
+ * @memberof module:Netting.api
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID of Transaction
+ * @param {string} params.resourceId - Transaction ID
+ * @param {string} params.token - Authorization token
+ * @returns {Promise|Array} If callback is supplied, it is called with ???. Otherwise a promise that resolves with ??? is returned
  */
 function retrieve(_ref, callback) {
   var AMId = _ref.AMId,
@@ -46,9 +56,11 @@ function retrieve(_ref, callback) {
 
 /**
  * Send Transactions to Net
- * @param {number} AMId - Asset Manager ID of Transaction
- * @param {array} data - TBC
- * @param {string} token - Authorization token
+ * @function send
+ * @memberof module:Netting.api
+ * @static
+ * @param {string} - *
+ * @returns {string} *
  */
 function send() {
   // TODO: Implement this once the DB testing env is stable

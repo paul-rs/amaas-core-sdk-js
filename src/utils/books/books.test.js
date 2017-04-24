@@ -1,4 +1,6 @@
-import { retrieve, search } from './books'
+import uuid from 'uuid'
+
+import { retrieve, search, insert, amend, retire, reactivate } from './books'
 import Book from '../../books/Book/book'
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
@@ -23,6 +25,86 @@ describe('utils/books', () => {
         expect(books[0]).toBeInstanceOf(Book)
         callback()
       })
+    })
+  })
+
+  describe('insert', () => {
+    test.skip('should insert', () => {
+      const data = {
+        description: "RRN4WVXI1F3YA1IGMKZF",
+        bookType: "Trading",
+        businessUnit: null,
+        partyId: "A1UNKOYGGR",
+        closeTime: "18:00:00",
+        timezone: "Asia/Tokyo",
+        assetManagerId: 1,
+        ownerId: "50SJMSPK7A",
+        baseCurrency: "USD",
+      }
+      insert({ book: data, AMId: 1, token })
+        .then(res => {
+          expect(res).toEqual(expect.objectContaining(data))
+        })
+        .catch(err => {
+          console.log(err)
+          expect(err).toBeUndefined()
+        })
+    })
+  })
+
+  describe('retire/reactivate', () => {
+    test('should retire and reactivate', done => {
+      retrieve({ AMId: 1, resourceId: 'L9O3IWHCHP', token })
+        .then(res => {
+          if (res.bookStatus === 'Active') {
+            return retire({ AMId: res.assetManagerId, resourceId: res.bookId, token })
+          }
+          return Promise.resolve(res)
+        })
+        .then(res => {
+          expect(res.bookStatus).toEqual('Retired')
+          return reactivate({ AMId: res.assetManagerId, resourceId: res.bookId, token })
+        })
+        .then(res => {
+          expect(res.bookStatus).toEqual('Active')
+          return retire(({ AMId: res.assetManagerId, resourceId: res.bookId, token }))
+        })
+        .then(res => {
+          expect(res.bookStatus).toEqual('Retired')
+          done()
+        })
+        .catch(err => {
+          console.log(err.message)
+          expect(err).toBeUndefined()
+          done()
+        })
+    })
+  })
+
+  describe('amend', () => {
+    test.only('amends', done => {
+      const bU = uuid().substring(0, 10)
+      retrieve({ AMId: 1, resourceId: 'L9O3IWHCHP', token })
+        .then(res => {
+          if (res.bookStatus === 'Retired') {
+            return reactivate({ AMId: res.assetManagerId, resourceId: res.bookId, token })
+          } else {
+            return Promise.resolve(res)
+          }
+        })
+        .then(res => {
+          res.businessUnit = bU
+          return amend({ book: res, AMId: res.assetManagerId, resourceId: res.bookId, token })
+        })
+        .then(res => {
+          expect(res.businessUnit).toEqual(bU)
+          done()
+        })
+        .catch(err => {
+          console.error(err)
+          expect(err).toBeUndefined()
+          done()
+        })
     })
   })
 

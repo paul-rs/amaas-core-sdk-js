@@ -1,6 +1,5 @@
 import Transaction from './Transaction.js'
-import { Reference } from '../../core'
-import { Charge, Code, Comment, Link, Party } from '../../children'
+import { Charge, Code, Comment, Link, Reference, Party } from '../../children'
 
 const Decimal = require('decimal.js')
 

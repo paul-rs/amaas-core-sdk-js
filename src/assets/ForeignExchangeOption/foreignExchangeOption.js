@@ -3,7 +3,41 @@ import { Decimal } from 'decimal.js'
 import Asset from '../Asset/asset'
 import { OPTION_STYLES, OPTION_TYPES } from '../enums.js'
 
+/**
+ * Class representing an FX Option
+ * @memberof module:Assets.Class
+ * @extends module:Assets.Class.Asset
+ */
 class ForeignExchangeOption extends Asset {
+  /**
+   * Construct a new FX Option instance
+   * @param {object} params - Asset creation options
+   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
+   * @param {integer} params.assetId - ID of the Asset (required)
+   * @param {string} params.assetClass - Class of the Asset
+   * @param {bool} params.fungible - Whether this Asset is fungible (required)
+   * @param {string} params.assetIssuerId - ID of the Asset's issuer
+   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
+   * @param {string} params.countryId - ID of Asset's country
+   * @param {string} params.venueId - ID of Asset's venue if applicable
+   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
+   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
+   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
+   * @param {string} params.description - Description of the Asset
+   * @param {string} params.clientId - ID of the client to which the Asset belongs
+   * @param {string} params.optionStyle - Option style (American, Bermudan, European)
+   * @param {string} params.optionType - Option type (Put, Call)
+   * @param {number} params.strike - Strike price of the Option
+   * @param {string} params.underlyingAssetId - ID of the underlying Asset
+   * @param {object} params.comments - Object of Comments attached to the Asset
+   * @param {object} params.links - Object of array of Links attached to the Asset
+   * @param {object} params.references - Object of References associated with this Asset
+   * @param {string} params.createdBy - ID of the user that created the FX Option
+   * @param {string} params.updatedBy - ID of the user that updated the FX Option
+   * @param {date} params.createdTime - Time that the FX Option was created
+   * @param {date} params.updatedTime - Time that the FX Option was updated
+   * @param {number} params.version - Version number
+  */
   constructor({
     assetManagerId,
     assetId,

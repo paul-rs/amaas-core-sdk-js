@@ -1,24 +1,15 @@
+/**
+ * Classes and API methods for the AssetManagers service
+ * @module AssetManagers
+ */
 
 // Classes
-import {
-  AssetManager,
-  Relationship
-} from '../assetManagers'
+import * as Class from '../assetManagers'
 
 // CRUD methods
-import {
-  retrieve,
-  insert,
-  amend,
-  deactivate
-} from '../utils/assetManagers'
+import * as api from '../utils/assetManagers'
 
 // Exports
 export {
-  AssetManager,
-  Relationship,
-  retrieve,
-  insert,
-  amend,
-  deactivate
+  Class, api
 }

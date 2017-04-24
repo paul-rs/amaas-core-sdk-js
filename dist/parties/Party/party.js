@@ -22,27 +22,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing a Party
- * @extends AMaaSModel
+ * @memberof module:Parties.Class
+ * @extends module:Core.AMaaSModel
  */
 var Party = function (_AMaaSModel) {
   _inherits(Party, _AMaaSModel);
 
   /**
-   * Construct a new Party object
+   * Construct a new Party instance
    * @param {object} params - Party creation options
    * @param {number} params.assetManagerId - Asset Manager ID of the Party
    * @param {string} params.partyId - Party ID of the Party
    * @param {string} params.partyStatus=Active - Status of the Party (e.g. 'Active')
    * @param {string} params.partyClass=Party - Class of the Party
-   * @param {string} params.partyType=Party - Type of the Party
+   * @param {string} params.baseCurrency - Base Currency for the Party (e.g. SGD, USD)
    * @param {string} params.description - Description of the Party
    * @param {object} params.addresses - Object of Addresses associated with this Party
    * @param (object) params.emails - Object of Emails associated with this Party
    * @param {object} params.references - Object of References associated with this Party
-   * @param {string} params.createdBy - ID of the user that created the Party (required if creating a new Party)
-   * @param {string} params.updatedBy - ID of the user that updated the Party (use if amending existing Party)
-   * @param {date} params.createdTime - Time that the Party was created (required if creating new Party)
-   * @param {date} params.updatedTime - Time that the Party was updated (required if amending existing Party)
+   * @param {object} params.comments - Object of Comments associated with this Party
+   * @param {object} params.links - Object of Links associated with this Party
+   * @param {string} params.createdBy - ID of the user that created the Party
+   * @param {string} params.updatedBy - ID of the user that updated the Party
+   * @param {date} params.createdTime - Time that the Party was created
+   * @param {date} params.updatedTime - Time that the Party was updated
    * @param {number} params.version - Version number of the Party
    */
   function Party(_ref) {
@@ -146,7 +149,7 @@ var Party = function (_AMaaSModel) {
             var _references = {};
             for (var ref in newReferences) {
               if (newReferences.hasOwnProperty(ref)) {
-                _references[ref] = new _core.Reference(Object.assign({}, newReferences[ref]));
+                _references[ref] = new _children.Reference(Object.assign({}, newReferences[ref]));
               }
             }
             _this._references = _references;
@@ -180,11 +183,11 @@ var Party = function (_AMaaSModel) {
         set: function set(newLinks) {
           if (newLinks) {
             var _links = {};
-            for (var ref in newLinks) {
-              if (newLinks.hasOwnProperty(ref)) {
+            for (var name in newLinks) {
+              if (newLinks.hasOwnProperty(name)) {
                 // TODO: Remove this when the API returns Arrays for all Links
                 if (newLinks[name] instanceof Array) {
-                  linksClass[name] = newLinks[name].map(function (link) {
+                  _links[name] = newLinks[name].map(function (link) {
                     return new _children.Link(link);
                   });
                 } else {

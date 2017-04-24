@@ -3,29 +3,26 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deactivate = exports.partialAmend = exports.amend = exports.insert = exports.retrieve = exports.Email = exports.Address = exports.Party = exports.GovernmentAgency = exports.Fund = exports.Exchange = exports.Broker = exports.AssetManager = exports.Company = exports.Organisation = exports.Individual = undefined;
+exports.api = exports.Class = undefined;
 
 var _parties = require('../parties');
 
+var Class = _interopRequireWildcard(_parties);
+
 var _parties2 = require('../utils/parties');
 
+var api = _interopRequireWildcard(_parties2);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 // Exports
+/**
+ * Classes and API methods for the Parties service
+ * @module Parties
+ */
+
 // Classes
-exports.Individual = _parties.Individual;
-exports.Organisation = _parties.Organisation;
-exports.Company = _parties.Company;
-exports.AssetManager = _parties.AssetManager;
-exports.Broker = _parties.Broker;
-exports.Exchange = _parties.Exchange;
-exports.Fund = _parties.Fund;
-exports.GovernmentAgency = _parties.GovernmentAgency;
-exports.Party = _parties.Party;
-exports.Address = _parties.Address;
-exports.Email = _parties.Email;
-exports.retrieve = _parties2.retrieve;
-exports.insert = _parties2.insert;
-exports.amend = _parties2.amend;
-exports.partialAmend = _parties2.partialAmend;
-exports.deactivate = _parties2.deactivate;
+exports.Class = Class;
+exports.api = api;
 
 // CRUD methods

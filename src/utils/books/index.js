@@ -1,3 +1,3 @@
-import { retrieve, search } from './books.js'
+import { retrieve, search, insert, amend, retire, reactivate } from './books.js'
 
-export { retrieve, search }
+export { retrieve, search, insert, amend, retire, reactivate }
