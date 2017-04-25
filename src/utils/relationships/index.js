@@ -3,6 +3,6 @@
  * @memberof module:api
  */
 
-import { retrieve, insert, amend } from '/.relationships'
+import { retrieve, insert, amend } from './relationships'
 
 export { retrieve, insert, amend }

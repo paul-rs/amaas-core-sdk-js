@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.configureStage = configureStage;
 exports.endpoint = endpoint;
 exports.buildURL = buildURL;
+exports.setAuthorization = setAuthorization;
 exports.makeRequest = makeRequest;
 exports.retrieveData = retrieveData;
 exports.insertData = insertData;
@@ -26,15 +27,38 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 require('dotenv').config();
 
-var stage = void 0;
+var stage = 'prod';
+var token = void 0;
+
 function configureStage(config) {
-  return stage = config;
+  stage = config.stage;
+  switch (config.stage) {
+    case 'staging':
+      if (!config.token) {
+        throw new Error('Missing Authorization');
+      }
+      token = config.token;
+      break;
+    case 'prod':
+      token = 'token';
+      // token = getToken()
+      break;
+    default:
+      token = 'token';
+    // token = getToken()
+  }
+  return;
 }
 function endpoint() {
-  if (!stage) {
-    return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/dev';
+  switch (stage) {
+    case 'staging':
+      return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/staging';
+    case 'prod':
+      return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/prod';
+    default:
+      console.warn('Unknown stage variable: ' + stage + '. Defaulting to /prod');
+      return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/prod';
   }
-  return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/' + stage;
 }
 
 /***
@@ -101,25 +125,38 @@ function buildURL(_ref) {
   }
 }
 
+function setAuthorization() {
+  switch (stage) {
+    case 'staging':
+      return 'x-api-key';
+    case 'prod':
+      return 'Authorization';
+    default:
+      return 'x-api-key';
+  }
+}
+
 function makeRequest(_ref2) {
   var method = _ref2.method,
       url = _ref2.url,
-      data = _ref2.data,
-      token = _ref2.token;
+      data = _ref2.data;
 
+  if (!token) {
+    throw new Error('Missing Authorization');
+  }
   switch (method) {
     case 'GET':
-      return _superagent2.default.get(url).set('x-api-key', token).query({ camelcase: true });
+      return _superagent2.default.get(url).set(setAuthorization(), token).query({ camelcase: true });
     case 'SEARCH':
-      return _superagent2.default.get(url).set('x-api-key', token).query(data);
+      return _superagent2.default.get(url).set(setAuthorization(), token).query(data);
     case 'POST':
-      return _superagent2.default.post(url).send(data).set('x-api-key', token).query({ camelcase: true });
+      return _superagent2.default.post(url).send(data).set(setAuthorization(), token).query({ camelcase: true });
     case 'PUT':
-      return _superagent2.default.put(url).send(data).set('x-api-key', token).query({ camelcase: true });
+      return _superagent2.default.put(url).send(data).set(setAuthorization(), token).query({ camelcase: true });
     case 'PATCH':
-      return _superagent2.default.patch(url).send(data).set('x-api-key', token).query({ camelcase: true });
+      return _superagent2.default.patch(url).send(data).set(setAuthorization(), token).query({ camelcase: true });
     case 'DELETE':
-      return _superagent2.default.delete(url).set('x-api-key', token).query({ camelcase: true });
+      return _superagent2.default.delete(url).set(setAuthorization(), token).query({ camelcase: true });
     default:
   }
 }
@@ -137,27 +174,15 @@ function makeRequest(_ref2) {
 function retrieveData(_ref3, callback) {
   var AMaaSClass = _ref3.AMaaSClass,
       AMId = _ref3.AMId,
-      resourceId = _ref3.resourceId,
-      token = _ref3.token;
+      resourceId = _ref3.resourceId;
 
-  // callback(err, result)
-  // Class and AMId needed to build the Url and for authorization
-  if (!AMaaSClass || !AMId) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Both class and AMId are required');
-    }
-    callback('Both class and AMId are required');
-    return;
-    // throw new Error('Both class and AMId are required')
-  }
-  if (!token) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Missing Authorization');
-    }
-    callback('Missing Authorization');
-    return;
-    // throw new Error('Missing Authorization')
-  }
+  // if (stage === 'dev' || stage === 'staging' && !token) {
+  //   if (typeof callback !== 'function') {
+  //     return Promise.reject('Missing Authorization')
+  //   }
+  //   callback('Missing Authorization')
+  //   return
+  // }
   var url = void 0;
   // If resourceId is supplied, append to url. Otherwise, return all data for AMId
   try {
@@ -169,7 +194,7 @@ function retrieveData(_ref3, callback) {
     callback(e);
     return;
   }
-  var promise = makeRequest({ method: 'GET', url: url, token: token });
+  var promise = makeRequest({ method: 'GET', url: url });
   // let promise = request.get(url).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -204,19 +229,15 @@ function insertData(_ref4, callback) {
   var AMaaSClass = _ref4.AMaaSClass,
       AMId = _ref4.AMId,
       resourceId = _ref4.resourceId,
-      data = _ref4.data,
-      token = _ref4.token;
+      data = _ref4.data;
 
-  // if (!AMaaSClass || !AMId || !data) {
-  //   throw new Error('Class, AMId and data to insert are required')
+  // if (stage === 'dev' || stage === 'staging' && !token) {
+  //   if (typeof callback !== 'function') {
+  //     return Promise.reject('Missing Authorization')
+  //   }
+  //   callback('Missing Authorization')
+  //   return
   // }
-  if (!token) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Missing Authorization');
-    }
-    callback('Missing Authorization');
-    return;
-  }
   var url = void 0;
   try {
     url = buildURL({
@@ -238,7 +259,7 @@ function insertData(_ref4, callback) {
     url: url,
     json: data
   };
-  var promise = makeRequest({ method: 'POST', url: url, data: data, token: token });
+  var promise = makeRequest({ method: 'POST', url: url, data: data });
   // let promise = request.post(url).send(data).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -257,16 +278,15 @@ function putData(_ref5, callback) {
   var AMaaSClass = _ref5.AMaaSClass,
       AMId = _ref5.AMId,
       resourceId = _ref5.resourceId,
-      data = _ref5.data,
-      token = _ref5.token;
+      data = _ref5.data;
 
-  if (!token) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Missing Authorization');
-    }
-    callback('Missing Authorization');
-    return;
-  }
+  // if (stage === 'dev' || stage === 'staging' && !token) {
+  //   if (typeof callback !== 'function') {
+  //     return Promise.reject('Missing Authorization')
+  //   }
+  //   callback('Missing Authorization')
+  //   return
+  // }
   var url = void 0;
   try {
     url = buildURL({
@@ -285,7 +305,7 @@ function putData(_ref5, callback) {
     url: url,
     json: data
   };
-  var promise = makeRequest({ method: 'PUT', url: url, data: data, token: token });
+  var promise = makeRequest({ method: 'PUT', url: url, data: data });
   // let promise = request.put(url).send(data).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -304,16 +324,15 @@ function patchData(_ref6, callback) {
   var AMaaSClass = _ref6.AMaaSClass,
       AMId = _ref6.AMId,
       resourceId = _ref6.resourceId,
-      data = _ref6.data,
-      token = _ref6.token;
+      data = _ref6.data;
 
-  if (!token) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Missing Authorization');
-    }
-    callback('Missing Authorization');
-    return;
-  }
+  // if (stage === 'dev' || stage === 'staging' && !token) {
+  //   if (typeof callback !== 'function') {
+  //     return Promise.reject('Missing Authorization')
+  //   }
+  //   callback('Missing Authorization')
+  //   return
+  // }
   var url = void 0;
   try {
     url = buildURL({
@@ -332,7 +351,7 @@ function patchData(_ref6, callback) {
     url: url,
     json: data
   };
-  var promise = makeRequest({ method: 'PATCH', url: url, data: data, token: token });
+  var promise = makeRequest({ method: 'PATCH', url: url, data: data });
   // let promise = request.patch(url).send(data).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -350,16 +369,15 @@ function patchData(_ref6, callback) {
 function deleteData(_ref7, callback) {
   var AMaaSClass = _ref7.AMaaSClass,
       AMId = _ref7.AMId,
-      resourceId = _ref7.resourceId,
-      token = _ref7.token;
+      resourceId = _ref7.resourceId;
 
-  if (!token) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Missing Authorization');
-    }
-    callback('Missing Authorization');
-    return;
-  }
+  // if (stage === 'dev' || stage === 'staging' && !token) {
+  //   if (typeof callback !== 'function') {
+  //     return Promise.reject('Missing Authorization')
+  //   }
+  //   callback('Missing Authorization')
+  //   return
+  // }
   var url = void 0;
   try {
     url = buildURL({
@@ -374,7 +392,7 @@ function deleteData(_ref7, callback) {
     callback(e);
     return;
   }
-  var promise = makeRequest({ method: 'DELETE', url: url, token: token });
+  var promise = makeRequest({ method: 'DELETE', url: url });
   // let promise = request.delete(url).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -401,16 +419,15 @@ function deleteData(_ref7, callback) {
  */
 function searchData(_ref8, callback) {
   var AMaaSClass = _ref8.AMaaSClass,
-      query = _ref8.query,
-      token = _ref8.token;
+      query = _ref8.query;
 
-  if (!token) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Missing Authorization');
-    }
-    callback('Missing Authorization');
-    return;
-  }
+  // if (stage === 'dev' || stage === 'staging' && !token) {
+  //   if (typeof callback !== 'function') {
+  //     return Promise.reject('Missing Authorization')
+  //   }
+  //   callback('Missing Authorization')
+  //   return
+  // }
   var url = void 0;
   try {
     url = buildURL({
@@ -427,7 +444,7 @@ function searchData(_ref8, callback) {
   for (var i = 0; i < query.length; i++) {
     queryString[query[i].key] = query[i].values.join();
   }
-  var promise = makeRequest({ method: 'SEARCH', url: url, token: token, data: data });
+  var promise = makeRequest({ method: 'SEARCH', url: url, data: data });
   // let promise = request.get(url).set('x-api-key', token).query(queryString)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided

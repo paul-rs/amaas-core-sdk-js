@@ -3,15 +3,38 @@ import ENDPOINTS from '../../config.js'
 import request from 'superagent'
 require('dotenv').config()
 
-let stage
+let stage = 'prod'
+let token
+
 export function configureStage(config) {
-  return stage = config
+  stage = config.stage
+  switch (config.stage) {
+    case 'staging':
+      if (!config.token) {
+        throw new Error('Missing Authorization')
+      }
+      token = config.token
+      break
+    case 'prod':
+      token = 'token'
+      // token = getToken()
+      break
+    default:
+      token = 'token'
+      // token = getToken()
+  }
+  return
 }
 export function endpoint() {
-  if (!stage) {
-    return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/dev'
+  switch (stage) {
+    case 'staging':
+      return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/staging'
+    case 'prod':
+      return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/prod'
+    default:
+      console.warn(`Unknown stage variable: ${stage}. Defaulting to /prod`)
+      return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/prod'
   }
-  return `https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/${stage}`
 }
 
 /***
@@ -74,20 +97,34 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
   }
 }
 
-export function makeRequest({ method, url, data, token }) {
+export function setAuthorization() {
+  switch (stage) {
+    case 'staging':
+      return 'x-api-key'
+    case 'prod':
+      return 'Authorization'
+    default:
+      return 'x-api-key'
+  }
+}
+
+export function makeRequest({ method, url, data }) {
+  if (!token) {
+    throw new Error('Missing Authorization')
+  }
   switch (method) {
     case 'GET':
-      return request.get(url).set('x-api-key', token).query({ camelcase: true })
+      return request.get(url).set(setAuthorization(), token).query({ camelcase: true })
     case 'SEARCH':
-      return request.get(url).set('x-api-key', token).query(data)
+      return request.get(url).set(setAuthorization(), token).query(data)
     case 'POST':
-      return request.post(url).send(data).set('x-api-key', token).query({ camelcase: true })
+      return request.post(url).send(data).set(setAuthorization(), token).query({ camelcase: true })
     case 'PUT':
-      return request.put(url).send(data).set('x-api-key', token).query({ camelcase: true })
+      return request.put(url).send(data).set(setAuthorization(), token).query({ camelcase: true })
     case 'PATCH':
-      return request.patch(url).send(data).set('x-api-key', token).query({ camelcase: true })
+      return request.patch(url).send(data).set(setAuthorization(), token).query({ camelcase: true })
     case 'DELETE':
-      return request.delete(url).set('x-api-key', token).query({ camelcase: true })
+      return request.delete(url).set(setAuthorization(), token).query({ camelcase: true })
     default:
   }
 }
@@ -102,25 +139,14 @@ export function makeRequest({ method, url, data, token }) {
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} resourceId: Id of the resource being requested (e.g. book_id)
 */
-export function retrieveData({ AMaaSClass, AMId, resourceId, token }, callback) {
-  // callback(err, result)
-  // Class and AMId needed to build the Url and for authorization
-  if (!AMaaSClass || !AMId) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Both class and AMId are required')
-    }
-    callback('Both class and AMId are required')
-    return
-    // throw new Error('Both class and AMId are required')
-  }
-  if (!token) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Missing Authorization')
-    }
-    callback('Missing Authorization')
-    return
-    // throw new Error('Missing Authorization')
-  }
+export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
+  // if (stage === 'dev' || stage === 'staging' && !token) {
+  //   if (typeof callback !== 'function') {
+  //     return Promise.reject('Missing Authorization')
+  //   }
+  //   callback('Missing Authorization')
+  //   return
+  // }
   let url
   // If resourceId is supplied, append to url. Otherwise, return all data for AMId
   try {
@@ -132,7 +158,7 @@ export function retrieveData({ AMaaSClass, AMId, resourceId, token }, callback) 
     callback(e)
     return
   }
-  let promise = makeRequest({ method: 'GET', url, token })
+  let promise = makeRequest({ method: 'GET', url })
   // let promise = request.get(url).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -161,17 +187,14 @@ export function retrieveData({ AMaaSClass, AMId, resourceId, token }, callback) 
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} data: data to insert into database
 */
-export function insertData({ AMaaSClass, AMId, resourceId, data, token }, callback) {
-  // if (!AMaaSClass || !AMId || !data) {
-  //   throw new Error('Class, AMId and data to insert are required')
+export function insertData({ AMaaSClass, AMId, resourceId, data }, callback) {
+  // if (stage === 'dev' || stage === 'staging' && !token) {
+  //   if (typeof callback !== 'function') {
+  //     return Promise.reject('Missing Authorization')
+  //   }
+  //   callback('Missing Authorization')
+  //   return
   // }
-  if (!token) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Missing Authorization')
-    }
-    callback('Missing Authorization')
-    return
-  }
   let url
   try {
     url = buildURL({
@@ -193,7 +216,7 @@ export function insertData({ AMaaSClass, AMId, resourceId, data, token }, callba
     url,
     json: data
   }
-  let promise = makeRequest({ method: 'POST', url, data, token })
+  let promise = makeRequest({ method: 'POST', url, data })
   // let promise = request.post(url).send(data).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -206,14 +229,14 @@ export function insertData({ AMaaSClass, AMId, resourceId, data, token }, callba
   })
 }
 
-export function putData({ AMaaSClass, AMId, resourceId, data, token }, callback) {
-  if (!token) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Missing Authorization')
-    }
-    callback('Missing Authorization')
-    return
-  }
+export function putData({ AMaaSClass, AMId, resourceId, data }, callback) {
+  // if (stage === 'dev' || stage === 'staging' && !token) {
+  //   if (typeof callback !== 'function') {
+  //     return Promise.reject('Missing Authorization')
+  //   }
+  //   callback('Missing Authorization')
+  //   return
+  // }
   let url
   try {
     url = buildURL({
@@ -232,7 +255,7 @@ export function putData({ AMaaSClass, AMId, resourceId, data, token }, callback)
     url,
     json: data
   }
-  let promise = makeRequest({ method: 'PUT', url, data, token })
+  let promise = makeRequest({ method: 'PUT', url, data })
   // let promise = request.put(url).send(data).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -245,14 +268,14 @@ export function putData({ AMaaSClass, AMId, resourceId, data, token }, callback)
   })
 }
 
-export function patchData({ AMaaSClass, AMId, resourceId, data, token }, callback) {
-  if (!token) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Missing Authorization')
-    }
-    callback('Missing Authorization')
-    return
-  }
+export function patchData({ AMaaSClass, AMId, resourceId, data }, callback) {
+  // if (stage === 'dev' || stage === 'staging' && !token) {
+  //   if (typeof callback !== 'function') {
+  //     return Promise.reject('Missing Authorization')
+  //   }
+  //   callback('Missing Authorization')
+  //   return
+  // }
   let url
   try {
     url = buildURL({
@@ -271,7 +294,7 @@ export function patchData({ AMaaSClass, AMId, resourceId, data, token }, callbac
     url,
     json: data
   }
-  let promise = makeRequest({ method: 'PATCH', url, data, token })
+  let promise = makeRequest({ method: 'PATCH', url, data })
   // let promise = request.patch(url).send(data).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -284,14 +307,14 @@ export function patchData({ AMaaSClass, AMId, resourceId, data, token }, callbac
   })
 }
 
-export function deleteData({ AMaaSClass, AMId, resourceId, token }, callback) {
-  if (!token) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Missing Authorization')
-    }
-    callback('Missing Authorization')
-    return
-  }
+export function deleteData({ AMaaSClass, AMId, resourceId }, callback) {
+  // if (stage === 'dev' || stage === 'staging' && !token) {
+  //   if (typeof callback !== 'function') {
+  //     return Promise.reject('Missing Authorization')
+  //   }
+  //   callback('Missing Authorization')
+  //   return
+  // }
   let url
   try {
     url = buildURL({
@@ -306,7 +329,7 @@ export function deleteData({ AMaaSClass, AMId, resourceId, token }, callback) {
     callback(e)
     return
   }
-  let promise = makeRequest({ method: 'DELETE', url, token })
+  let promise = makeRequest({ method: 'DELETE', url })
   // let promise = request.delete(url).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -329,14 +352,14 @@ export function deleteData({ AMaaSClass, AMId, resourceId, token }, callback) {
  *     { key: 'assetTypes', values: ['GovernmentBond, ForeignExchange']}
  *   ]
  */
-export function searchData({ AMaaSClass, query, token }, callback) {
-  if (!token) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Missing Authorization')
-    }
-    callback('Missing Authorization')
-    return
-  }
+export function searchData({ AMaaSClass, query }, callback) {
+  // if (stage === 'dev' || stage === 'staging' && !token) {
+  //   if (typeof callback !== 'function') {
+  //     return Promise.reject('Missing Authorization')
+  //   }
+  //   callback('Missing Authorization')
+  //   return
+  // }
   let url
   try {
     url = buildURL({
@@ -353,7 +376,7 @@ export function searchData({ AMaaSClass, query, token }, callback) {
   for (let i = 0; i < query.length; i++) {
     queryString[query[i].key] = query[i].values.join()
   }
-  let promise = makeRequest({ method: 'SEARCH', url, token, data })
+  let promise = makeRequest({ method: 'SEARCH', url, data })
   // let promise = request.get(url).set('x-api-key', token).query(queryString)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided

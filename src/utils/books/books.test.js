@@ -7,6 +7,13 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
 
 let token = process.env.API_TOKEN
 
+import * as api from '../../exports/api'
+
+api.config({
+  stage: 'staging',
+  token: process.env.API_TOKEN
+})
+
 describe('utils/books', () => {
   describe('retrieve', () => {
     test('with callback', callback => {
@@ -25,6 +32,18 @@ describe('utils/books', () => {
         expect(books[0]).toBeInstanceOf(Book)
         callback()
       })
+    })
+
+    it.only('should retrieve', done => {
+      const params = {
+        AMId: 1
+      }
+      retrieve(params)
+        .then(res => {
+          console.log(res[0])
+          done()
+        })
+        .catch(err => console.error(err))
     })
   })
 
@@ -82,7 +101,7 @@ describe('utils/books', () => {
   })
 
   describe('amend', () => {
-    test.only('amends', done => {
+    test('amends', done => {
       const bU = uuid().substring(0, 10)
       retrieve({ AMId: 1, resourceId: 'L9O3IWHCHP', token })
         .then(res => {

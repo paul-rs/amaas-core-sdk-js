@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Parties = exports.Books = exports.Assets = exports.AssetManagers = undefined;
+exports.config = exports.Parties = exports.Books = exports.Assets = exports.AssetManagers = undefined;
 
 var _allocations = require('../utils/allocations');
 
@@ -41,12 +41,25 @@ var _transactions = require('../utils/transactions');
 
 var Transactions = _interopRequireWildcard(_transactions);
 
+var _network = require('../utils/network');
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * API Methods
+ * @module api
+ */
 
 exports.AssetManagers = AssetManagers;
 exports.Assets = Assets;
 exports.Books = Books;
-exports.Parties = Parties; /**
-                            * API Methods
-                            * @module api
-                            */
+exports.Parties = Parties;
+exports.config = config;
+
+
+function config(config) {
+  var stage = config.stage,
+      token = config.token;
+
+  (0, _network.configureStage)({ stage: stage, token: token });
+}

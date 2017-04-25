@@ -13,9 +13,17 @@ import * as Positions from '../utils/positions'
 import * as Relationships from '../utils/relationships'
 import * as Transactions from '../utils/transactions'
 
+import { configureStage } from '../utils/network'
+
 export {
   AssetManagers,
   Assets,
   Books,
-  Parties
+  Parties,
+  config
+}
+
+function config(config) {
+  const { stage, token } = config
+  configureStage({ stage, token })
 }
