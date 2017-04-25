@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.configureStage = configureStage;
 exports.endpoint = endpoint;
+exports.getToken = getToken;
 exports.buildURL = buildURL;
 exports.setAuthorization = setAuthorization;
 exports.makeRequest = makeRequest;
@@ -14,10 +15,6 @@ exports.putData = putData;
 exports.patchData = patchData;
 exports.deleteData = deleteData;
 exports.searchData = searchData;
-
-var _config = require('../../config.js');
-
-var _config2 = _interopRequireDefault(_config);
 
 var _superagent = require('superagent');
 
@@ -49,6 +46,7 @@ function configureStage(config) {
   }
   return;
 }
+
 function endpoint() {
   switch (stage) {
     case 'staging':
@@ -59,6 +57,22 @@ function endpoint() {
       console.warn('Unknown stage variable: ' + stage + '. Defaulting to /prod');
       return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/prod';
   }
+}
+
+function getToken() {
+  return new Promise(function (resolve, reject) {
+    switch (stage) {
+      case 'staging':
+        resolve(token);
+        break;
+      case 'prod':
+        // TODO: Implement Cognito to get access tokens
+        resolve('token');
+        break;
+      default:
+        reject('Missing Authorization');
+    }
+  });
 }
 
 /***
@@ -79,39 +93,30 @@ function buildURL(_ref) {
   switch (AMaaSClass) {
     case 'book':
       baseURL = endpoint() + '/book/books';
-      // baseURL = `${ENDPOINTS.books}/books`
       break;
     case 'parties':
       baseURL = endpoint() + '/party/parties';
-      // baseURL = `${ENDPOINTS.parties}/parties`
       break;
     case 'assetManagers':
       baseURL = endpoint() + '/asset-manager/asset-managers';
-      // baseURL = `${ENDPOINTS.assetManagers}/asset-managers`
       break;
     case 'assets':
       baseURL = endpoint() + '/asset/assets';
-      // baseURL = `${ENDPOINTS.assets}/assets`
       break;
     case 'positions':
       baseURL = endpoint() + '/position/positions';
-      // baseURL = `${ENDPOINTS.transactions}/positions`
       break;
     case 'allocations':
       baseURL = endpoint() + '/allocation/allocations';
-      // baseURL = `${ENDPOINTS.transactions}/allocations`
       break;
     case 'netting':
       baseURL = endpoint() + '/netting/netting';
-      // baseURL = `${ENDPOINTS.transactions}/netting`
       break;
     case 'relationships':
       baseURL = endpoint() + '/asset-manager-relationship/asset-manager-relationships';
-      // baseURL = `${ENDPOINTS.assetManagers}/asset-manager-relationships`
       break;
     case 'transactions':
       baseURL = endpoint() + '/transaction/transactions';
-      // baseURL = `${ENDPOINTS.transactions}/transactions`
       break;
     default:
       throw new Error('Invalid class type: ' + AMaaSClass);
@@ -141,24 +146,25 @@ function makeRequest(_ref2) {
       url = _ref2.url,
       data = _ref2.data;
 
-  if (!token) {
-    throw new Error('Missing Authorization');
-  }
-  switch (method) {
-    case 'GET':
-      return _superagent2.default.get(url).set(setAuthorization(), token).query({ camelcase: true });
-    case 'SEARCH':
-      return _superagent2.default.get(url).set(setAuthorization(), token).query(data);
-    case 'POST':
-      return _superagent2.default.post(url).send(data).set(setAuthorization(), token).query({ camelcase: true });
-    case 'PUT':
-      return _superagent2.default.put(url).send(data).set(setAuthorization(), token).query({ camelcase: true });
-    case 'PATCH':
-      return _superagent2.default.patch(url).send(data).set(setAuthorization(), token).query({ camelcase: true });
-    case 'DELETE':
-      return _superagent2.default.delete(url).set(setAuthorization(), token).query({ camelcase: true });
-    default:
-  }
+  return getToken().then(function (res) {
+    switch (method) {
+      case 'GET':
+        return _superagent2.default.get(url).set(setAuthorization(), res).query({ camelcase: true });
+      case 'SEARCH':
+        return _superagent2.default.get(url).set(setAuthorization(), res).query(data);
+      case 'POST':
+        return _superagent2.default.post(url).send(data).set(setAuthorization(), res).query({ camelcase: true });
+      case 'PUT':
+        return _superagent2.default.put(url).send(data).set(setAuthorization(), res).query({ camelcase: true });
+      case 'PATCH':
+        return _superagent2.default.patch(url).send(data).set(setAuthorization(), res).query({ camelcase: true });
+      case 'DELETE':
+        return _superagent2.default.delete(url).set(setAuthorization(), res).query({ camelcase: true });
+      default:
+    }
+  }).catch(function (err) {
+    return Promise.reject(err);
+  });
 }
 
 /***

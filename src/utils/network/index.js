@@ -1,5 +1,3 @@
-import ENDPOINTS from '../../config.js'
-
 import request from 'superagent'
 require('dotenv').config()
 
@@ -25,6 +23,7 @@ export function configureStage(config) {
   }
   return
 }
+
 export function endpoint() {
   switch (stage) {
     case 'staging':
@@ -35,6 +34,22 @@ export function endpoint() {
       console.warn(`Unknown stage variable: ${stage}. Defaulting to /prod`)
       return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/prod'
   }
+}
+
+export function getToken() {
+  return new Promise((resolve, reject) => {
+    switch (stage) {
+      case 'staging':
+        resolve(token)
+        break
+      case 'prod':
+        // TODO: Implement Cognito to get access tokens
+        resolve('token')
+        break
+      default:
+        reject('Missing Authorization')
+    }
+  })
 }
 
 /***
@@ -51,39 +66,30 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
   switch (AMaaSClass) {
     case 'book':
       baseURL = `${endpoint()}/book/books`
-      // baseURL = `${ENDPOINTS.books}/books`
       break
     case 'parties':
       baseURL = `${endpoint()}/party/parties`
-      // baseURL = `${ENDPOINTS.parties}/parties`
       break
     case 'assetManagers':
       baseURL = `${endpoint()}/asset-manager/asset-managers`
-      // baseURL = `${ENDPOINTS.assetManagers}/asset-managers`
       break
     case 'assets':
       baseURL = `${endpoint()}/asset/assets`
-      // baseURL = `${ENDPOINTS.assets}/assets`
       break
     case 'positions':
       baseURL = `${endpoint()}/position/positions`
-      // baseURL = `${ENDPOINTS.transactions}/positions`
       break
     case 'allocations':
       baseURL = `${endpoint()}/allocation/allocations`
-      // baseURL = `${ENDPOINTS.transactions}/allocations`
       break
     case 'netting':
       baseURL = `${endpoint()}/netting/netting`
-      // baseURL = `${ENDPOINTS.transactions}/netting`
       break
     case 'relationships':
       baseURL = `${endpoint()}/asset-manager-relationship/asset-manager-relationships`
-      // baseURL = `${ENDPOINTS.assetManagers}/asset-manager-relationships`
       break
     case 'transactions':
       baseURL = `${endpoint()}/transaction/transactions`
-      // baseURL = `${ENDPOINTS.transactions}/transactions`
       break
     default:
       throw new Error(`Invalid class type: ${AMaaSClass}`)
@@ -109,24 +115,25 @@ export function setAuthorization() {
 }
 
 export function makeRequest({ method, url, data }) {
-  if (!token) {
-    throw new Error('Missing Authorization')
-  }
-  switch (method) {
-    case 'GET':
-      return request.get(url).set(setAuthorization(), token).query({ camelcase: true })
-    case 'SEARCH':
-      return request.get(url).set(setAuthorization(), token).query(data)
-    case 'POST':
-      return request.post(url).send(data).set(setAuthorization(), token).query({ camelcase: true })
-    case 'PUT':
-      return request.put(url).send(data).set(setAuthorization(), token).query({ camelcase: true })
-    case 'PATCH':
-      return request.patch(url).send(data).set(setAuthorization(), token).query({ camelcase: true })
-    case 'DELETE':
-      return request.delete(url).set(setAuthorization(), token).query({ camelcase: true })
-    default:
-  }
+  return getToken()
+    .then(res => {
+      switch (method) {
+        case 'GET':
+          return request.get(url).set(setAuthorization(), res).query({ camelcase: true })
+        case 'SEARCH':
+          return request.get(url).set(setAuthorization(), res).query(data)
+        case 'POST':
+          return request.post(url).send(data).set(setAuthorization(), res).query({ camelcase: true })
+        case 'PUT':
+          return request.put(url).send(data).set(setAuthorization(), res).query({ camelcase: true })
+        case 'PATCH':
+          return request.patch(url).send(data).set(setAuthorization(), res).query({ camelcase: true })
+        case 'DELETE':
+          return request.delete(url).set(setAuthorization(), res).query({ camelcase: true })
+        default:
+      }
+    })
+    .catch(err => Promise.reject(err))
 }
 
 /***
