@@ -22,8 +22,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing an Bond Option
- * @memberof module:Assets.Class
- * @extends module:Assets.Class.Derivative
+ * @memberof module:assets
+ * @extends module:assets.Derivative
  */
 var BondOption = function (_Derivative) {
   _inherits(BondOption, _Derivative);

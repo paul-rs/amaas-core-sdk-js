@@ -2,8 +2,8 @@ import FXBase from '../FXBase/fxBase.js'
 
 /**
  * Class representing FX
- * @memberof module:Assets.Class
- * @extends module:Assets.Class.FXBase
+ * @memberof module:assets
+ * @extends module:assets.FXBase
  */
 class ForeignExchange extends FXBase {
   /**

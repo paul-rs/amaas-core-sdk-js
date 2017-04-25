@@ -18,8 +18,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing an Index Future
- * @memberof module:Assets.Class
- * @extends module:Assets.Class.Future
+ * @memberof module:assets
+ * @extends module:assets.Future
  */
 var IndexFuture = function (_Future) {
   _inherits(IndexFuture, _Future);

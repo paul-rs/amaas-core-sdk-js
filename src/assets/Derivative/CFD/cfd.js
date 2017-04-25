@@ -2,8 +2,8 @@ import Derivative from '../Derivative/derivative'
 
 /**
  * Class representing a CFD
- * @memberof module:Assets.Class
- * @extends module:Assets.Class.Derivative
+ * @memberof module:assets
+ * @extends module:assets.Derivative
  */
 class CFD extends Derivative {
   /**

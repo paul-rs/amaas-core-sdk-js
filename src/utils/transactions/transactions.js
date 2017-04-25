@@ -2,14 +2,9 @@ import { retrieveData, insertData, patchData, putData, deleteData } from '../net
 import { Transaction } from '../../transactions'
 
 /**
- * @namespace api
- * @memberof module:Transactions
- */
-
-/**
 * Retrieve a Transaction from the database
 * @function retrieve
-* @memberof module:Transactions.api
+* @memberof module:api.Transactions
 * @static
 * @param {object} params - object of parameters:
 * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
@@ -45,7 +40,7 @@ export function retrieve({ AMId, resourceId, token}, callback) {
 /**
  * Insert a new Transaction into the database
  * @function insert
- * @memberof module:Transactions.api
+ * @memberof module:api.Transactions
  * @static
  * @param {object} params - object of parameters:
  * @param {Transaction} params.transaction - Transaction instance or object to insert
@@ -82,7 +77,7 @@ export function insert({ AMId, transaction, token }, callback) {
  /**
   * Amend a Transaction
   * @function amend
-  * @memberof module:Transactions.api
+  * @memberof module:api.Transactions
   * @static
   * @param {object} params - object of parameters:
   * @param {Transaction} params.transaction - Transaction instance or object to amend
@@ -120,7 +115,7 @@ export function amend({ transaction, AMId, resourceId, token }, callback) {
 /**
  * Partially amend a Transaction
  * @function partialAmend
- * @memberof module:Transactions.api
+ * @memberof module:api.Transactions
  * @static
  * @param {object} params - object of parameters:
  * @param {Transaction} params.changes - object of changes to apply to the Transaction

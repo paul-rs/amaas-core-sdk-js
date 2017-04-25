@@ -11,14 +11,9 @@ var _network = require('../network');
 var _children = require('../../children');
 
 /**
- * @namespace api
- * @memberof module:Allocations
- */
-
-/**
  * Retrieve Allocations for a specific Transaction
  * @function retrieve
- * @memberof module:Allocations.api
+ * @memberof module:api.Allocations
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of Transaction
@@ -61,7 +56,7 @@ function retrieve(_ref, callback) {
 /**
  * Send Allocations for a specific Transaction
  * @function send
- * @memberof module:Allocations.api
+ * @memberof module:api.Allocations
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of Transaction

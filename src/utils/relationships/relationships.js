@@ -2,14 +2,9 @@ import { retrieveData, putData, insertData } from '../network'
 import { Relationship } from '../../relationships'
 
 /**
- * @namespace api
- * @memberof module:Relationships
- */
-
-/**
  * Retrieve Relationships for specified Asset Manager
  * @function retrieve
- * @memberof module:Relationships.api
+ * @memberof module:api.Relationships
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Relationships
@@ -46,7 +41,7 @@ import { Relationship } from '../../relationships'
  /**
   * Insert a new Relationship
   * @function insert
-  * @memberof module:Relationships.api
+  * @memberof module:api.Relationships
   * @static
   * @param {object} params - object of parameters:
   * @param {Relationship} params.relationship - Relationship instance to insert
@@ -80,7 +75,7 @@ import { Relationship } from '../../relationships'
  /**
   * Amend an existing Relationship
   * @function amend
-  * @memberof module:Relationships.api
+  * @memberof module:api.Relationships
   * @static
   * @param {object} params - object of parameters:
   * @param {Relationship} params.relationship - Amended Relationship instance

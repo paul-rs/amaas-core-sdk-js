@@ -14,8 +14,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing a Reference
- * @memberof module:Core
- * @extends module:Core.AMaaSModel
+ * @memberof module:core
+ * @extends module:core.AMaaSModel
  */
 var Reference = function (_AMaaSModel) {
   _inherits(Reference, _AMaaSModel);

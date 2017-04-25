@@ -2,8 +2,8 @@ import { AMaaSModel } from '../../core'
 
 /**
  * Class representing a Reference
- * @memberof module:Core
- * @extends module:Core.AMaaSModel
+ * @memberof module:core
+ * @extends module:core.AMaaSModel
  */
 class Reference extends AMaaSModel {
   /**

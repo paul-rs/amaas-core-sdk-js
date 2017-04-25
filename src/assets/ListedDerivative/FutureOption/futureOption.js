@@ -5,8 +5,8 @@ import { OPTION_STYLES, OPTION_TYPES } from '../../enums.js'
 
 /**
  * Class representing a Future Option
- * @memberof module:Assets.Class
- * @extends module:Assets.Class.Future
+ * @memberof module:assets
+ * @extends module:assets.Future
  */
 class FutureOption extends Future {
   /**

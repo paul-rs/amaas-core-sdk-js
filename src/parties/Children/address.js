@@ -2,8 +2,8 @@ import { AMaaSModel } from '../../core'
 
 /**
  * Class representing an Address
- * @memberof module:Parties.Class
- * @extends module:Core.AMaaSModel
+ * @memberof module:parties
+ * @extends module:core.AMaaSModel
  */
 class Address extends AMaaSModel {
   /**

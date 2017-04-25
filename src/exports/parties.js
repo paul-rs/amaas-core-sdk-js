@@ -1,16 +1,10 @@
 /**
- * Classes and API methods for the Parties service
- * @module Parties
+ * Classes for the Parties service
+ * @module parties
  */
 
 // Classes
-import * as Class from '../parties'
-
-// CRUD methods
-import * as api from '../utils/parties'
+import * as parties from '../parties'
 
 // Exports
-export {
-  Class,
-  api
-}
+export { parties }

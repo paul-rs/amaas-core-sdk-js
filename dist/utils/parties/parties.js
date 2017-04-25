@@ -30,14 +30,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 /**
- * @namespace api
-  * @memberof module:Parties
- */
-
-/**
  * Retrieve Party data for specified AMId and partyId
  * @function retrieve
- * @memberof module:Parties.api
+ * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Party
@@ -82,7 +77,7 @@ function retrieve(_ref, callback) {
 /**
  * Insert a new Party into the database
  * @function insert
- * @memberof module:Parties.api
+ * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
  * @param {Party} params.party - Party instance to insert
@@ -126,7 +121,7 @@ function insert(_ref2, callback) {
 /**
  * Amend an existing Party. WARNING: This makes a HTTP PUT request and will replace the existing Party with the one passed in
  * @function amend
- * @memberof module:Parties.api
+ * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
  * @param {Party} params.party - Amended Party instance to PUT
@@ -174,7 +169,7 @@ function amend(_ref3, callback) {
 /**
  * Partially amend an existing Party.
  * @function partialAmend
- * @memberof module:Parties.api
+ * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
  * @param {object} params.changes - Object of changes to the Party.
@@ -216,7 +211,7 @@ function partialAmend(_ref4, callback) {
 /**
  * Deactivate an exising Party. This will set the Party status to 'Inactive'
  * @function deactivate
- * @memberof module:Parties.api
+ * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Party to be deleted
@@ -256,7 +251,7 @@ function deactivate(_ref5, callback) {
 /**
  * Reactivate a Party. This will set the Party status to 'Active'
  * @function reactivate
- * @memberof module:Parties.api
+ * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Party to be reactivated

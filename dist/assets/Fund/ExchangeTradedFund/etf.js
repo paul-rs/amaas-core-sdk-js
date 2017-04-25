@@ -18,8 +18,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing an ETF
- * @memberof module:Assets.Class
- * @extends module:Assets.Class.Fund
+ * @memberof module:assets
+ * @extends module:assets.Fund
  */
 var ExchangeTradedFund = function (_Fund) {
   _inherits(ExchangeTradedFund, _Fund);

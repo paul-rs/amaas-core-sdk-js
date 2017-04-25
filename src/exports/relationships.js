@@ -1,16 +1,10 @@
 /**
  * Classes and API methods for the Relationships service (not ready yet)
- * @module Relationships
+ * @module relationships
  */
 
 // Classes
-import * as Class from '../relationships'
-
-// CRUD methods
-import * as api from '../utils/relationships'
+import * as relationships from '../relationships'
 
 // Exports
-export {
-  Class,
-  api
-}
+export { relationship }

@@ -5,8 +5,8 @@ import { PARTY_STATUSES, PARTY_TYPES } from '../enums'
 
 /**
  * Class representing a Party
- * @memberof module:Parties.Class
- * @extends module:Core.AMaaSModel
+ * @memberof module:parties
+ * @extends module:core.AMaaSModel
  */
 class Party extends AMaaSModel {
   /**

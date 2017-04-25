@@ -1,16 +1,10 @@
 /**
- * Classes and API methods for the Books Service
- * @module Books
+ * Classes for the Books Service
+ * @module books
  */
 
 // Classes
-import * as Class from '../books'
-
-// CRUD methods
-import * as api from '../utils/books'
+import * as books from '../books'
 
 // Export
-export {
-  Class,
-  api
-}
+export { books }

@@ -5,7 +5,8 @@ import {
   searchData,
   putData,
   patchData,
-  deleteData
+  deleteData,
+  endpoint
 } from './'
 
 import ENDPOINTS from '../../config.js'
@@ -29,7 +30,7 @@ describe('buildURL function', () => {
       AMId: undefined,
       resourceId: 'testResource'
     }
-    const expectedURL = `${ENDPOINTS.books}/books/`
+    const expectedURL = `${endpoint()}/book/books/`
     expect(buildURL(testParams)).toEqual(expectedURL)
   })
   it('should build correctly if all parameters are specified', () => {
@@ -38,7 +39,7 @@ describe('buildURL function', () => {
       AMId: 'testAMId',
       resourceId: 'testResource'
     }
-    const expectedURL = `${ENDPOINTS.books}/books/testAMId/testResource`
+    const expectedURL = `${endpoint()}/book/books/testAMId/testResource`
     expect(buildURL(testParams)).toEqual(expectedURL)
   })
 })
@@ -50,8 +51,8 @@ describe('retrieveData', () => {
     token: 'testToken'
   }
   it('should hit the correct endpoint', callback => {
-    const scope = nock(ENDPOINTS.books)
-      .get('/books/1234?camelcase=true')
+    const scope = nock(endpoint())
+      .get('/book/books/1234?camelcase=true')
       .reply(200, {
         param1: 'testBody'
       })
@@ -61,8 +62,8 @@ describe('retrieveData', () => {
     })
   })
   it('should receive the correct HTTP status code', callback => {
-    const scope = nock(ENDPOINTS.books)
-      .get('/books/1234?camelcase=true')
+    const scope = nock(endpoint())
+      .get('/book/books/1234?camelcase=true')
       .reply(501)
     retrieveData(testParams, (error, result) => {
       expect(error.statusCode).toEqual(501)
@@ -85,8 +86,8 @@ describe('insertData', () => {
     }
   }
   it('should build the correct url and POST to it', callback => {
-    const scope = nock(ENDPOINTS.books)
-      .post('/books/1234?camelcase=true')
+    const scope = nock(endpoint())
+      .post('/book/books/1234?camelcase=true')
       .reply(200, {
         param1: 'testResponse'
       })
@@ -108,7 +109,7 @@ describe('searchData', () => {
     { key: 'assetTypes', values: ['GovernmentBond, ForeignExchange']}
   ]
   it('should return a promise if callback is not provided', () => {
-    let promise = searchData(testParams).catch(error => {})
+    let promise = searchData(queries).catch(error => {})
     expect(promise).toBeInstanceOf(Promise)
   })
 })
