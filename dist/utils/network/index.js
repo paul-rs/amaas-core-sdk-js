@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.configureStage = configureStage;
 exports.getEndpoint = getEndpoint;
+exports.authenticate = authenticate;
 exports.getToken = getToken;
 exports.buildURL = buildURL;
 exports.setAuthorization = setAuthorization;
@@ -22,13 +23,25 @@ var _superagent2 = _interopRequireDefault(_superagent);
 
 var _config = require('../../config.js');
 
-var _config2 = _interopRequireDefault(_config);
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
+
+var _amazonCognitoIdentityJs = require('amazon-cognito-identity-js');
+
+var _expandTilde = require('expand-tilde');
+
+var _expandTilde2 = _interopRequireDefault(_expandTilde);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 require('dotenv').config();
 
 
+var userPool = new _amazonCognitoIdentityJs.CognitoUserPool({
+  UserPoolId: _config.userPoolId,
+  ClientId: _config.clientAppId
+});
 var stage = 'prod';
 var token = void 0;
 
@@ -52,27 +65,98 @@ function configureStage(config) {
 function getEndpoint() {
   switch (stage) {
     case 'staging':
-      return _config2.default + '/staging';
+      return _config.endpoint.staging + '/staging';
     case 'prod':
-      return _config2.default + '/prod';
+      return _config.endpoint.prod + '/prod';
     default:
       console.warn('Unknown stage variable: ' + stage + '. Defaulting to /prod');
-      return _config2.default + '/prod';
+      return _config.endpoint.prod + '/prod';
   }
 }
 
-function getToken() {
+function isNode() {
+  try {
+    return Object.prototype.toString.call(global.process) === '[object process]';
+  } catch (e) {
+    return false;
+  }
+}
+
+function authenticate() {
+  var injectedResolve = void 0;
+  var injectedReject = void 0;
   return new Promise(function (resolve, reject) {
+    injectedResolve = resolve;
+    injectedReject = reject;
+    var path = (0, _expandTilde2.default)('~') + '/amaas.js';
+    _fs2.default.readFile(path, function (error, data) {
+      var Username = JSON.parse(data).username;
+      var Password = JSON.parse(data).password;
+      var authenticationDetails = new _amazonCognitoIdentityJs.AuthenticationDetails({
+        Username: Username,
+        Password: Password
+      });
+      var cognitoUser = new _amazonCognitoIdentityJs.CognitoUser({
+        Username: Username,
+        Pool: userPool
+      });
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: function onSuccess(res) {
+          return injectedResolve(res.getIdToken().getJwtToken());
+        },
+        onFailure: function onFailure(err) {
+          return injectedReject(err);
+        }
+      });
+    });
+  });
+}
+
+function getToken() {
+  var injectedResolve = void 0;
+  var injectedReject = void 0;
+  return new Promise(function (resolve, reject) {
+    injectedResolve = resolve;
+    injectedReject = reject;
     switch (stage) {
       case 'staging':
-        resolve(token);
+        injectedResolve(token);
         break;
       case 'prod':
-        // TODO: Implement Cognito to get access tokens
-        resolve('token');
+        var cognitoUser = userPool.getCurrentUser();
+        if (!cognitoUser) {
+          if (isNode()) {
+            console.warn('No user in storage, attempting to authenticate...');
+            authenticate().then(function (res) {
+              return injectedResolve(res);
+            }).catch(function (err) {
+              return injectedReject(err);
+            });
+          } else {
+            injectedReject('Unauthorized, please re-authenticate');
+          }
+        } else {
+          cognitoUser.getSession(function (err, session) {
+            if (session) {
+              console.log('getSession success');
+              injectedResolve(session.getIdToken().getJwtToken());
+            } else {
+              if (isNode()) {
+                console.warn('getSession failure, attempting to authenticate');
+                authenticate().then(function (res) {
+                  return injectedResolve(res);
+                }).catch(function (err) {
+                  return injectedReject(err);
+                });
+              } else {
+                injectedReject('Unauthorized, please re-authenticate');
+              }
+            }
+          });
+        }
         break;
       default:
-        reject('Missing Authorization');
+        injectedReject('Missing Authorization');
     }
   });
 }
@@ -148,6 +232,7 @@ function makeRequest(_ref2) {
       data = _ref2.data;
 
   return getToken().then(function (res) {
+    console.log(res);
     switch (method) {
       case 'GET':
         return _superagent2.default.get(url).set(setAuthorization(), res).query({ camelcase: true });

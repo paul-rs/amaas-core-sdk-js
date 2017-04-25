@@ -1,7 +1,14 @@
-import request from 'superagent'
 require('dotenv').config()
-import endpoint from '../../config.js'
+import request from 'superagent'
+import { endpoint, userPoolId, clientAppId } from '../../config.js'
+import fs from 'fs'
+import { AuthenticationDetails, CognitoUser, CognitoUserPool } from 'amazon-cognito-identity-js'
+import expandTilde from 'expand-tilde'
 
+const userPool = new CognitoUserPool({
+  UserPoolId: userPoolId,
+  ClientId: clientAppId
+})
 let stage = 'prod'
 let token
 
@@ -25,27 +32,90 @@ export function configureStage(config) {
 export function getEndpoint() {
   switch (stage) {
     case 'staging':
-      return `${endpoint}/staging`
+      return `${endpoint.staging}/staging`
     case 'prod':
-      return `${endpoint}/prod`
+      return `${endpoint.prod}/prod`
     default:
       console.warn(`Unknown stage variable: ${stage}. Defaulting to /prod`)
-      return `${endpoint}/prod`
+      return `${endpoint.prod}/prod`
   }
 }
 
-export function getToken() {
+function isNode() {
+  try {
+    return Object.prototype.toString.call(global.process) === '[object process]'
+  } catch(e) {
+    return false
+  }
+}
+
+export function authenticate() {
+  let injectedResolve
+  let injectedReject
   return new Promise((resolve, reject) => {
+    injectedResolve = resolve
+    injectedReject = reject
+    const path = `${expandTilde('~')}/amaas.js`
+    fs.readFile(path, (error, data) => {
+      const Username = JSON.parse(data).username
+      const Password = JSON.parse(data).password
+      const authenticationDetails = new AuthenticationDetails({
+        Username,
+        Password
+      })
+      const cognitoUser = new CognitoUser({
+        Username,
+        Pool: userPool
+      })
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: res => injectedResolve(res.getIdToken().getJwtToken()),
+        onFailure: err => injectedReject(err)
+      })
+    })
+  })
+}
+
+export function getToken() {
+  let injectedResolve
+  let injectedReject
+  return new Promise((resolve, reject) => {
+    injectedResolve = resolve
+    injectedReject = reject
     switch (stage) {
       case 'staging':
-        resolve(token)
+        injectedResolve(token)
         break
       case 'prod':
-        // TODO: Implement Cognito to get access tokens
-        resolve('token')
+        const cognitoUser = userPool.getCurrentUser()
+        if (!cognitoUser) {
+          if (isNode()) {
+            console.warn('No user in storage, attempting to authenticate...')
+            authenticate()
+              .then(res => injectedResolve(res))
+              .catch(err => injectedReject(err))
+          } else {
+            injectedReject('Unauthorized, please re-authenticate')
+          }
+        } else {
+          cognitoUser.getSession((err, session) => {
+            if (session) {
+              console.log('getSession success')
+              injectedResolve(session.getIdToken().getJwtToken())
+            } else {
+              if (isNode()) {
+                console.warn('getSession failure, attempting to authenticate')
+                  authenticate()
+                  .then(res => injectedResolve(res))
+                  .catch(err => injectedReject(err))
+              } else {
+                injectedReject('Unauthorized, please re-authenticate')
+              }
+            }
+          })
+        }
         break
       default:
-        reject('Missing Authorization')
+        injectedReject('Missing Authorization')
     }
   })
 }
@@ -114,6 +184,7 @@ export function setAuthorization() {
 export function makeRequest({ method, url, data }) {
   return getToken()
     .then(res => {
+      console.log(res)
       switch (method) {
         case 'GET':
           return request.get(url).set(setAuthorization(), res).query({ camelcase: true })

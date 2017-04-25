@@ -3,16 +3,16 @@ import uuid from 'uuid'
 import { retrieve, search, insert, amend, retire, reactivate } from './books'
 import Book from '../../books/Book/book'
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
 
 let token = process.env.API_TOKEN
 
 import * as api from '../../exports/api'
 
-api.config({
-  stage: 'staging',
-  apiKey: process.env.API_TOKEN
-})
+// api.config({
+//   stage: 'staging',
+//   apiKey: process.env.API_TOKEN
+// })
 
 describe('utils/books', () => {
   describe('retrieve', () => {

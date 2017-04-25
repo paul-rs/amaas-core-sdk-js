@@ -38,8 +38,10 @@
     "nock": "^9.0.2"
   },
   "dependencies": {
+    "amazon-cognito-identity-js": "^1.16.0",
     "decimal.js": "^7.1.1",
     "dotenv": "^4.0.0",
+    "expand-tilde": "^2.0.2",
     "superagent": "^3.5.0",
     "uuid": "^3.0.1"
   }
