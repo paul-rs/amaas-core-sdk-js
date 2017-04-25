@@ -1,5 +1,6 @@
 import request from 'superagent'
 require('dotenv').config()
+import endpoint from '../../config.js'
 
 let stage = 'prod'
 let token
@@ -13,26 +14,23 @@ export function configureStage(config) {
       }
       token = config.token
       break
+    // Leave it undefined for prod because we will get the token from Cognito later
     case 'prod':
-      token = 'token'
-      // token = getToken()
-      break
     default:
-      token = 'token'
-      // token = getToken()
+      null
   }
   return
 }
 
-export function endpoint() {
+export function getEndpoint() {
   switch (stage) {
     case 'staging':
-      return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/staging'
+      return `${endpoint}/staging`
     case 'prod':
-      return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/prod'
+      return `${endpoint}/prod`
     default:
       console.warn(`Unknown stage variable: ${stage}. Defaulting to /prod`)
-      return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/prod'
+      return `${endpoint}/prod`
   }
 }
 
@@ -65,31 +63,31 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
   let baseURL = ''
   switch (AMaaSClass) {
     case 'book':
-      baseURL = `${endpoint()}/book/books`
+      baseURL = `${getEndpoint()}/book/books`
       break
     case 'parties':
-      baseURL = `${endpoint()}/party/parties`
+      baseURL = `${getEndpoint()}/party/parties`
       break
     case 'assetManagers':
-      baseURL = `${endpoint()}/asset-manager/asset-managers`
+      baseURL = `${getEndpoint()}/asset-manager/asset-managers`
       break
     case 'assets':
-      baseURL = `${endpoint()}/asset/assets`
+      baseURL = `${getEndpoint()}/asset/assets`
       break
     case 'positions':
-      baseURL = `${endpoint()}/position/positions`
+      baseURL = `${getEndpoint()}/position/positions`
       break
     case 'allocations':
-      baseURL = `${endpoint()}/allocation/allocations`
+      baseURL = `${getEndpoint()}/allocation/allocations`
       break
     case 'netting':
-      baseURL = `${endpoint()}/netting/netting`
+      baseURL = `${getEndpoint()}/netting/netting`
       break
     case 'relationships':
-      baseURL = `${endpoint()}/asset-manager-relationship/asset-manager-relationships`
+      baseURL = `${getEndpoint()}/asset-manager-relationship/asset-manager-relationships`
       break
     case 'transactions':
-      baseURL = `${endpoint()}/transaction/transactions`
+      baseURL = `${getEndpoint()}/transaction/transactions`
       break
     default:
       throw new Error(`Invalid class type: ${AMaaSClass}`)
@@ -108,7 +106,6 @@ export function setAuthorization() {
     case 'staging':
       return 'x-api-key'
     case 'prod':
-      return 'Authorization'
     default:
       return 'Authorization'
   }
