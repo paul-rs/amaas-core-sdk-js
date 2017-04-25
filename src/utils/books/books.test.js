@@ -11,7 +11,7 @@ import * as api from '../../exports/api'
 
 api.config({
   stage: 'staging',
-  token: process.env.API_TOKEN
+  apiKey: process.env.API_TOKEN
 })
 
 describe('utils/books', () => {

@@ -36,10 +36,10 @@ function configureStage(config) {
   stage = config.stage;
   switch (config.stage) {
     case 'staging':
-      if (!config.token) {
+      if (!config.apiKey) {
         throw new Error('Missing Authorization');
       }
-      token = config.token;
+      token = config.apiKey;
       break;
     // Leave it undefined for prod because we will get the token from Cognito later
     case 'prod':

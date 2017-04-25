@@ -24,6 +24,6 @@ export {
 }
 
 function config(config) {
-  const { stage, token } = config
-  configureStage({ stage, token })
+  const { stage, apiKey } = config
+  configureStage({ stage, apiKey })
 }

@@ -59,7 +59,7 @@ exports.config = config;
 
 function config(config) {
   var stage = config.stage,
-      token = config.token;
+      apiKey = config.apiKey;
 
-  (0, _network.configureStage)({ stage: stage, token: token });
+  (0, _network.configureStage)({ stage: stage, apiKey: apiKey });
 }
