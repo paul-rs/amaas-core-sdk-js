@@ -137,7 +137,7 @@ function setAuthorization() {
     case 'prod':
       return 'Authorization';
     default:
-      return 'x-api-key';
+      return 'Authorization';
   }
 }
 
