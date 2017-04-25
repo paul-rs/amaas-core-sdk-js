@@ -2,8 +2,8 @@ import Company from '../Company/company.js'
 
 /**
  * Class representing a Fund
- * @memberof module:Parties.Class
- * @extends module:Parties.Class.Company
+ * @memberof module:parties
+ * @extends module:parties.Company
  */
 class Fund extends Company {
   /**

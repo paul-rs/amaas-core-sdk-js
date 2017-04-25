@@ -1,16 +1,10 @@
 /**
- * Classes and API methods for the Assets service
- * @module Assets
+ * Classes for the Assets service
+ * @module assets
  */
 
 // Classes
-import * as Class from '../assets'
-
-// CRUD methods
-import * as api from '../utils/assets'
+import * as assets from '../assets'
 
 // Exports
-export {
-  Class,
-  api
-}
+export { assets }

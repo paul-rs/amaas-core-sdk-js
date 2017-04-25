@@ -20,14 +20,9 @@ var _book2 = _interopRequireDefault(_book);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * @namespace api
- * @memberof module:Books
- */
-
-/**
  * Retrieve Book data for specified AMId and bookId
  * @function retrieve
- * @memberof module:Books.api
+ * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Asset
@@ -74,7 +69,7 @@ function retrieve(_ref, callback) {
 /**
  * Search Books for specified AMId and bookId
  * @function search
- * @memberof module:Books.api
+ * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
  * @param {string} params.queryKey - Key of the category over which to search (e.g. bookIds)
@@ -116,7 +111,7 @@ function search(_ref2, callback) {
 /**
  * Insert a new Book into the database
  * @function insert
- * @memberof module:Books.api
+ * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the AM insering the Book
@@ -157,7 +152,7 @@ function insert(_ref3, callback) {
 /**
  * Amend an existing Book. WARNING: This makes a HTTP PUT request and will replace the existing Book with the one passed in
  * @function amend
- * @memberof module:Books.api
+ * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
  * @param {Asset} params.book - Amended Book instance to PUT
@@ -201,7 +196,7 @@ function amend(_ref4, callback) {
 /**
  * Retire a Book. This will set the Book status to 'Retired'.
  * @function retire
- * @memberof module:Books.api
+ * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Books to be retired
@@ -239,7 +234,7 @@ function retire(_ref5, callback) {
 /**
  * Reactivate a Book. This will set the Book status to 'Active'.
  * @function reactivate
- * @memberof module:Books.api
+ * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Books to be reactivated

@@ -12,4 +12,7 @@ exports.search = _books.search;
 exports.insert = _books.insert;
 exports.amend = _books.amend;
 exports.retire = _books.retire;
-exports.reactivate = _books.reactivate;
+exports.reactivate = _books.reactivate; /**
+                                         * @namespace Books
+                                         * @memberof module:api
+                                         */

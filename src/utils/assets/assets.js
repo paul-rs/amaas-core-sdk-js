@@ -3,14 +3,9 @@ import { retrieveData, insertData, patchData, putData, deleteData } from '../net
 import * as AssetClasses from '../../assets'
 
 /**
- * @namespace api
- * @memberof module:Assets
- */
-
-/**
  * Retrieve Asset data for specified AMId and partyId
  * @function retrieve
- * @memberof module:Assets.api
+ * @memberof module:api.Assets
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Asset
@@ -46,7 +41,7 @@ export function retrieve({AMId, resourceId, token}, callback) {
 /**
  * Insert a new Asset into the database
  * @function insert
- * @memberof module:Assets.api
+ * @memberof module:api.Assets
  * @static
  * @param {object} params - object of parameters:
  * @param {Asset} params.asset - Asset instance to insert
@@ -82,7 +77,7 @@ export function insert({AMId, asset, token}, callback) {
 /**
  * Amend an existing Asset. WARNING: This makes a HTTP PUT request and will replace the existing Asset with the one passed in
  * @function amend
- * @memberof module:Assets.api
+ * @memberof module:api.Assets
  * @static
  * @param {object} params - object of parameters:
  * @param {Asset} params.asset - Amended Asset instance to PUT
@@ -121,7 +116,7 @@ export function amend({asset, AMId, resourceId, token}, callback) {
 /**
  * Partially amend an existing Asset.
  * @function partialAmend
- * @memberof module:Assets.api
+ * @memberof module:api.Assets
  * @static
  * @param {object} params - object of parameters:
  * @param {object} params.changes - Object of changes to the Asset.
@@ -155,7 +150,7 @@ export function partialAmend({changes, AMId, resourceId, token}, callback) {
 /**
  * Delete an exising Asset. This will set the Asset status to 'Inactive'.
  * @function deactivate
- * @memberof module:Assets.api
+ * @memberof module:api.Assets
  * @static
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Asset to be deleted
@@ -188,7 +183,7 @@ export function deactivate({AMId, resourceId, token}, callback) {
 /**
  * Reactivate a deactivated Asset. This will set the Asset status to 'Active'.
  * @function reactivate
- * @memberof module:Assets.api
+ * @memberof module:api.Assets
  * @static
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Asset to be deleted

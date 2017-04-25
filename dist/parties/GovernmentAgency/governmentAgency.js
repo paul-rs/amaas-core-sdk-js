@@ -18,8 +18,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing a Government Agency
- * @memberof module:Parties.Class
- * @extends module:Parties.Class.Organisation
+ * @memberof module:parties
+ * @extends module:parties.Organisation
  */
 var GovernmentAgency = function (_Organisation) {
   _inherits(GovernmentAgency, _Organisation);

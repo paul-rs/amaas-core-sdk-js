@@ -2,8 +2,8 @@ import Party from '../Party/party.js'
 
 /**
  * Class representing an Organisation
- * @memberof module:Parties.Class
- * @extends module:Parties.Class.Party
+ * @memberof module:parties
+ * @extends module:parties.Party
  */
 class Organisation extends Party {
   /**

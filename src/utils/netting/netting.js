@@ -1,14 +1,14 @@
 import { retrieveData, insertData } from '../network'
 
 /**
- * @namespace api
- * @memberof module:Netting
+ * @namespace Netting
+ * @memberof module:api
  */
 
 /**
  * Retrieve Netting for a specific Transaction
  * @function retrieve
- * @memberof module:Netting.api
+ * @memberof module:api.Netting
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of Transaction
@@ -43,7 +43,7 @@ export function retrieve({ AMId, resourceId, token }, callback) {
 /**
  * Send Transactions to Net
  * @function send
- * @memberof module:Netting.api
+ * @memberof module:api.Netting
  * @static
  * @param {string} - *
  * @returns {string} *

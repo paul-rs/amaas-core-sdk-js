@@ -5,8 +5,8 @@ import { OPTION_STYLES, OPTION_TYPES } from '../enums.js'
 
 /**
  * Class representing an FX Option
- * @memberof module:Assets.Class
- * @extends module:Assets.Class.Asset
+ * @memberof module:assets
+ * @extends module:assets.Asset
  */
 class ForeignExchangeOption extends Asset {
   /**

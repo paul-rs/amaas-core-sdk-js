@@ -1,6 +1,5 @@
 /**
- * @namespace Class
- * @memberof module:Relationships
+ * @module:relationships
  */
 
 export { default as Relationship } from './Relationship'

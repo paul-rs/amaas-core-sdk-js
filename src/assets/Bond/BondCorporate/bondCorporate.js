@@ -2,8 +2,8 @@ import BondBase from '../BondBase/bond.js'
 
 /**
  * Class representing a Corporate Bond
- * @memberof module:Assets.Class
- * @extends module:Assets.Class.BondBase
+ * @memberof module:assets
+ * @extends module:assets.BondBase
  */
 class BondCorporate extends BondBase {
   /**

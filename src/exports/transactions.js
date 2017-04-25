@@ -1,6 +1,6 @@
 /**
- * Classes and API methods for the Transactions service. (Not ready yet)
- * @module Transactions
+ * Classes for the Transactions service. (Not ready yet)
+ * @module transactions
  */
 
 // Classes

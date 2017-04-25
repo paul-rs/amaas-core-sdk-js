@@ -10,4 +10,7 @@ var _transactions = require('./transactions');
 exports.retrieve = _transactions.retrieve;
 exports.insert = _transactions.insert;
 exports.amend = _transactions.amend;
-exports.partialAMend = _transactions.partialAMend;
+exports.partialAMend = _transactions.partialAMend; /**
+                                                    * @namespace Transactions
+                                                    * @memberof module:api
+                                                    */

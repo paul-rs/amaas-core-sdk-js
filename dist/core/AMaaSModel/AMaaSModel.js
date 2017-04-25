@@ -9,7 +9,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /**
  * Class representing a AMaaSModel.
  * This is the Base Class for almost every other class
- * @memberof module:Core
+ * @memberof module:core
  */
 var AMaaSModel =
 /**

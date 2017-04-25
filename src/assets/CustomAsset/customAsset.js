@@ -2,8 +2,8 @@ import Asset from '../Asset/asset'
 
 /**
  * Class representing an Custom Asset
- * @memberof module:Assets.Class
- * @extends module:Assets.Class.Asset
+ * @memberof module:assets
+ * @extends module:assets.Asset
  */
 class CustomAsset extends Asset {
   /**

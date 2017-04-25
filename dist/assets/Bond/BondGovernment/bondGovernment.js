@@ -18,8 +18,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing a Government Bond
- * @memberof module:Assets.Class
- * @extends module:Assets.Class.BondBase
+ * @memberof module:assets
+ * @extends module:assets.BondBase
  */
 var BondGovernment = function (_BondBase) {
   _inherits(BondGovernment, _BondBase);

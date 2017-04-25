@@ -11,4 +11,7 @@ exports.retrieve = _assetManagers.retrieve;
 exports.insert = _assetManagers.insert;
 exports.amend = _assetManagers.amend;
 exports.deactivate = _assetManagers.deactivate;
-exports.reactivate = _assetManagers.reactivate;
+exports.reactivate = _assetManagers.reactivate; /**
+                                                 * @namespace AssetManagers
+                                                 * @memberof module:api
+                                                 */

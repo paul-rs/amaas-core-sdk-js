@@ -12,4 +12,7 @@ exports.insert = _parties.insert;
 exports.amend = _parties.amend;
 exports.partialAmend = _parties.partialAmend;
 exports.deactivate = _parties.deactivate;
-exports.reactivate = _parties.reactivate;
+exports.reactivate = _parties.reactivate; /**
+                                           * @namespace Parties
+                                           * @memberof module:api
+                                           */

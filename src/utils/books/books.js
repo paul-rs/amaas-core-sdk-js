@@ -2,14 +2,9 @@ import { retrieveData, searchData, putData, patchData, insertData } from '../net
 import Book from './../../books/Book/book'
 
 /**
- * @namespace api
- * @memberof module:Books
- */
-
-/**
  * Retrieve Book data for specified AMId and bookId
  * @function retrieve
- * @memberof module:Books.api
+ * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Asset
@@ -50,7 +45,7 @@ export function retrieve({AMId, resourceId, token}, callback) {
 /**
  * Search Books for specified AMId and bookId
  * @function search
- * @memberof module:Books.api
+ * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
  * @param {string} params.queryKey - Key of the category over which to search (e.g. bookIds)
@@ -86,7 +81,7 @@ export function search({queryKey, queryValue, token}, callback) {
 /**
  * Insert a new Book into the database
  * @function insert
- * @memberof module:Books.api
+ * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the AM insering the Book
@@ -121,7 +116,7 @@ export function insert({ AMId, book, token }, callback) {
 /**
  * Amend an existing Book. WARNING: This makes a HTTP PUT request and will replace the existing Book with the one passed in
  * @function amend
- * @memberof module:Books.api
+ * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
  * @param {Asset} params.book - Amended Book instance to PUT
@@ -158,7 +153,7 @@ export function amend({ book, AMId, resourceId, token }, callback) {
 /**
  * Retire a Book. This will set the Book status to 'Retired'.
  * @function retire
- * @memberof module:Books.api
+ * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Books to be retired
@@ -190,7 +185,7 @@ export function retire({ AMId, resourceId, token }, callback) {
 /**
  * Reactivate a Book. This will set the Book status to 'Active'.
  * @function reactivate
- * @memberof module:Books.api
+ * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Books to be reactivated

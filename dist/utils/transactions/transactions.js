@@ -13,14 +13,9 @@ var _network = require('../network');
 var _transactions = require('../../transactions');
 
 /**
- * @namespace api
- * @memberof module:Transactions
- */
-
-/**
 * Retrieve a Transaction from the database
 * @function retrieve
-* @memberof module:Transactions.api
+* @memberof module:api.Transactions
 * @static
 * @param {object} params - object of parameters:
 * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
@@ -64,7 +59,7 @@ function retrieve(_ref, callback) {
 /**
  * Insert a new Transaction into the database
  * @function insert
- * @memberof module:Transactions.api
+ * @memberof module:api.Transactions
  * @static
  * @param {object} params - object of parameters:
  * @param {Transaction} params.transaction - Transaction instance or object to insert
@@ -107,7 +102,7 @@ function insert(_ref2, callback) {
 /**
  * Amend a Transaction
  * @function amend
- * @memberof module:Transactions.api
+ * @memberof module:api.Transactions
  * @static
  * @param {object} params - object of parameters:
  * @param {Transaction} params.transaction - Transaction instance or object to amend
@@ -152,7 +147,7 @@ function amend(_ref3, callback) {
 /**
  * Partially amend a Transaction
  * @function partialAmend
- * @memberof module:Transactions.api
+ * @memberof module:api.Transactions
  * @static
  * @param {object} params - object of parameters:
  * @param {Transaction} params.changes - object of changes to apply to the Transaction

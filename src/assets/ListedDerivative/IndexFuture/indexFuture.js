@@ -2,8 +2,8 @@ import Future from '../Future/future'
 
 /**
  * Class representing an Index Future
- * @memberof module:Assets.Class
- * @extends module:Assets.Class.Future
+ * @memberof module:assets
+ * @extends module:assets.Future
  */
 class IndexFuture extends Future {
   /**

@@ -2,8 +2,8 @@ import FXBase from '../FXBase/fxBase.js'
 
 /**
  * Class representing FX (this should never be instantiated directly, use the appropriate subclass instead)
- * @memberof module:Assets.Class
- * @extends module:Assets.Class.Asset
+ * @memberof module:assets
+ * @extends module:assets.Asset
  */
 class NonDeliverableForward extends FXBase {
   /**

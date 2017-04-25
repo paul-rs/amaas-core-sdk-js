@@ -5,8 +5,8 @@ import { BOOK_TYPES } from './enums'
 
 /**
  * Class representing a Book
- * @memberof module:Books.Class
- * @extends module:Core.AMaaSModel
+ * @memberof module:books
+ * @extends module:core.AMaaSModel
  */
 class Book extends AMaaSModel {
   /**

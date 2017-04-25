@@ -2,8 +2,8 @@ import Fund from '../Fund/fund'
 
 /**
  * Class representing an ETF
- * @memberof module:Assets.Class
- * @extends module:Assets.Class.Fund
+ * @memberof module:assets
+ * @extends module:assets.Fund
  */
 class ExchangeTradedFund extends Fund {
   /**

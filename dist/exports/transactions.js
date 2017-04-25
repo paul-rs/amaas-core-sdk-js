@@ -12,8 +12,8 @@ var _transactions = require('../transactions');
 // Exports
 exports.Transaction = _transactions.Transaction;
 exports.Position = _transactions.Position; /**
-                                            * Classes and API methods for the Transactions service. (Not ready yet)
-                                            * @module Transactions
+                                            * Classes for the Transactions service. (Not ready yet)
+                                            * @module transactions
                                             */
 
 // Classes

@@ -1,8 +1,3 @@
-/**
- * @namespace Class
- * @memberof module:Assets
- */
-
 export { default as Asset } from './Asset/asset'
 export { default as BondBase } from './Bond/BondBase/bond'
 export { default as BondCorporate } from './Bond/BondCorporate/bondCorporate'

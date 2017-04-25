@@ -2,8 +2,8 @@ import Company from '../Company/company'
 
 /**
  * Class representing a Broker
- * @memberof module:Parties.Class
- * @extends module:Parties.Class.Company
+ * @memberof module:parties
+ * @extends module:parties.Company
  */
 class Broker extends Company {
   /**

@@ -2,14 +2,9 @@ import { retrieveData, insertData } from '../network'
 import { Link } from '../../children'
 
 /**
- * @namespace api
- * @memberof module:Allocations
- */
-
-/**
  * Retrieve Allocations for a specific Transaction
  * @function retrieve
- * @memberof module:Allocations.api
+ * @memberof module:api.Allocations
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of Transaction
@@ -46,7 +41,7 @@ export function retrieve({ AMId, resourceId, token }, callback) {
 /**
  * Send Allocations for a specific Transaction
  * @function send
- * @memberof module:Allocations.api
+ * @memberof module:api.Allocations
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of Transaction

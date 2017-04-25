@@ -5,14 +5,9 @@ import Address from '../../parties/Children/address.js'
 import Email from '../../parties/Children/email.js'
 
 /**
- * @namespace api
-  * @memberof module:Parties
- */
-
-/**
  * Retrieve Party data for specified AMId and partyId
  * @function retrieve
- * @memberof module:Parties.api
+ * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Party
@@ -49,7 +44,7 @@ export function retrieve({AMId, resourceId, token}, callback) {
 /**
  * Insert a new Party into the database
  * @function insert
- * @memberof module:Parties.api
+ * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
  * @param {Party} params.party - Party instance to insert
@@ -86,7 +81,7 @@ export function insert({AMId, party, token}, callback) {
 /**
  * Amend an existing Party. WARNING: This makes a HTTP PUT request and will replace the existing Party with the one passed in
  * @function amend
- * @memberof module:Parties.api
+ * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
  * @param {Party} params.party - Amended Party instance to PUT
@@ -126,7 +121,7 @@ export function amend({party, AMId, resourceId, token}, callback) {
 /**
  * Partially amend an existing Party.
  * @function partialAmend
- * @memberof module:Parties.api
+ * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
  * @param {object} params.changes - Object of changes to the Party.
@@ -161,7 +156,7 @@ export function partialAmend({changes, AMId, resourceId, token}, callback) {
 /**
  * Deactivate an exising Party. This will set the Party status to 'Inactive'
  * @function deactivate
- * @memberof module:Parties.api
+ * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Party to be deleted
@@ -195,7 +190,7 @@ export function deactivate({AMId, resourceId, token}, callback) {
 /**
  * Reactivate a Party. This will set the Party status to 'Active'
  * @function reactivate
- * @memberof module:Parties.api
+ * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Party to be reactivated

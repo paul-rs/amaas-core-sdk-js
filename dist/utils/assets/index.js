@@ -12,4 +12,7 @@ exports.insert = _assets.insert;
 exports.amend = _assets.amend;
 exports.partialAmend = _assets.partialAmend;
 exports.deactivate = _assets.deactivate;
-exports.reactivate = _assets.reactivate;
+exports.reactivate = _assets.reactivate; /**
+                                          * @namespace Assets
+                                          * @memberof module:api
+                                          */

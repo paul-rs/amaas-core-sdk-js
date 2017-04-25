@@ -2,14 +2,9 @@ import { retrieveData, insertData, putData, patchData, deleteData } from '../net
 import AssetManager from '../../assetManagers/AssetManager/assetManager.js'
 
 /**
- * @namespace api
- * @memberof module:AssetManagers
- */
-
-/**
  * Retrieve Asset Manager data for specified Asset Manager ID
  * @function retrieve
- * @memberof module:AssetManagers.api
+ * @memberof module:api.AssetManagers
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID to retrieve
@@ -39,7 +34,7 @@ export function retrieve({AMId, token}, callback) {
 /**
  * Insert a new Asset Manager into the database
  * @function insert
- * @memberof module:AssetManagers.api
+ * @memberof module:api.AssetManagers
  * @static
  * @param {object} params - object of parameters:
  * @param {AssetManager} params.assetManager - Asset Manager instance to insert
@@ -75,7 +70,7 @@ export function insert({assetManager, token}, callback) {
 /**
  * Amend an Asset Manager (Replaces current Asset Manager with what is passed in)
  * @function amend
- * @memberof module:AssetManagers.api
+ * @memberof module:api.AssetManagers
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - AMID of the Asset Manager to amend
@@ -125,7 +120,7 @@ export function amend({assetManager, AMId, token}, callback) {
 /**
  * Deactivate an Asset Manager
  * @function deactivate
- * @memberof module:AssetManagers.api
+ * @memberof module:api.AssetManagers
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - AMID of the Asset Manager to deactivate
@@ -157,7 +152,7 @@ export function deactivate({AMId, token}, callback) {
 /**
  * Reactivate an Asset Manager
  * @function reactivate
- * @memberof module:AssetManagers.api
+ * @memberof module:api.AssetManagers
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - AMID of the Asset Manager to deactivate

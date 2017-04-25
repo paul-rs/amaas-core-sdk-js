@@ -1,15 +1,10 @@
 /**
- * Classes and API methods for the AssetManagers service
- * @module AssetManagers
+ * Classes for the AssetManagers service
+ * @module assetManagers
  */
 
 // Classes
-import * as Class from '../assetManagers'
-
-// CRUD methods
-import * as api from '../utils/assetManagers'
+import * as assetManagers from '../assetManagers'
 
 // Exports
-export {
-  Class, api
-}
+export { assetManagers }

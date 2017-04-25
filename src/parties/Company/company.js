@@ -2,8 +2,8 @@ import Organisation from '../Organisation/organisation.js'
 
 /**
  * Class representing a Company
- * @memberof module:Parties.Class
- * @extends module:Parties.Class.Organisation
+ * @memberof module:parties
+ * @extends module:parties.Organisation
  */
 class Company extends Organisation {
   /**

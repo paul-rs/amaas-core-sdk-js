@@ -3,8 +3,8 @@ import { Comment, Link, Reference } from '../../children'
 
 /**
  * Class representing an Asset
- * @memberof module:Assets.Class
- * @extends module:Core.AMaaSModel
+ * @memberof module:assets
+ * @extends module:core.AMaaSModel
  */
 class Asset extends AMaaSModel {
   /**

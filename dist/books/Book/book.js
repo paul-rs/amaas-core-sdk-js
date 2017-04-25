@@ -24,8 +24,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing a Book
- * @memberof module:Books.Class
- * @extends module:Core.AMaaSModel
+ * @memberof module:books
+ * @extends module:core.AMaaSModel
  */
 var Book = function (_AMaaSModel) {
   _inherits(Book, _AMaaSModel);

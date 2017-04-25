@@ -19,14 +19,9 @@ var _assetManager2 = _interopRequireDefault(_assetManager);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * @namespace api
- * @memberof module:AssetManagers
- */
-
-/**
  * Retrieve Asset Manager data for specified Asset Manager ID
  * @function retrieve
- * @memberof module:AssetManagers.api
+ * @memberof module:api.AssetManagers
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID to retrieve
@@ -61,7 +56,7 @@ function retrieve(_ref, callback) {
 /**
  * Insert a new Asset Manager into the database
  * @function insert
- * @memberof module:AssetManagers.api
+ * @memberof module:api.AssetManagers
  * @static
  * @param {object} params - object of parameters:
  * @param {AssetManager} params.assetManager - Asset Manager instance to insert
@@ -103,7 +98,7 @@ function insert(_ref2, callback) {
 /**
  * Amend an Asset Manager (Replaces current Asset Manager with what is passed in)
  * @function amend
- * @memberof module:AssetManagers.api
+ * @memberof module:api.AssetManagers
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - AMID of the Asset Manager to amend
@@ -160,7 +155,7 @@ function amend(_ref3, callback) {
 /**
  * Deactivate an Asset Manager
  * @function deactivate
- * @memberof module:AssetManagers.api
+ * @memberof module:api.AssetManagers
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - AMID of the Asset Manager to deactivate
@@ -197,7 +192,7 @@ function deactivate(_ref4, callback) {
 /**
  * Reactivate an Asset Manager
  * @function reactivate
- * @memberof module:AssetManagers.api
+ * @memberof module:api.AssetManagers
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - AMID of the Asset Manager to deactivate
