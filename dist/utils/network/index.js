@@ -3,7 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.configureStage = configureStage;
+exports.endpoint = endpoint;
 exports.buildURL = buildURL;
+exports.makeRequest = makeRequest;
 exports.retrieveData = retrieveData;
 exports.insertData = insertData;
 exports.putData = putData;
@@ -21,9 +24,18 @@ var _superagent2 = _interopRequireDefault(_superagent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import { baseURL } from './constants.js'
-// import * as types from '../../core/types.js'
 require('dotenv').config();
+
+var stage = void 0;
+function configureStage(config) {
+  return stage = config;
+}
+function endpoint() {
+  if (!stage) {
+    return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/dev';
+  }
+  return 'https://iwe48ph25i.execute-api.ap-southeast-1.amazonaws.com/' + stage;
+}
 
 /***
  * !This is an internal function that should not be called by the end user!
@@ -42,31 +54,40 @@ function buildURL(_ref) {
   var baseURL = '';
   switch (AMaaSClass) {
     case 'book':
-      baseURL = _config2.default.books + '/books';
+      baseURL = endpoint() + '/book/books';
+      // baseURL = `${ENDPOINTS.books}/books`
       break;
     case 'parties':
-      baseURL = _config2.default.parties + '/parties';
+      baseURL = endpoint() + '/party/parties';
+      // baseURL = `${ENDPOINTS.parties}/parties`
       break;
     case 'assetManagers':
-      baseURL = _config2.default.assetManagers + '/asset-managers';
+      baseURL = endpoint() + '/asset-manager/asset-managers';
+      // baseURL = `${ENDPOINTS.assetManagers}/asset-managers`
       break;
     case 'assets':
-      baseURL = _config2.default.assets + '/assets';
+      baseURL = endpoint() + '/asset/assets';
+      // baseURL = `${ENDPOINTS.assets}/assets`
       break;
     case 'positions':
-      baseURL = _config2.default.transactions + '/positions';
+      baseURL = endpoint() + '/position/positions';
+      // baseURL = `${ENDPOINTS.transactions}/positions`
       break;
     case 'allocations':
-      baseURL = _config2.default.transactions + '/allocations';
+      baseURL = endpoint() + '/allocation/allocations';
+      // baseURL = `${ENDPOINTS.transactions}/allocations`
       break;
     case 'netting':
-      baseURL = _config2.default.transactions + '/netting';
+      baseURL = endpoint() + '/netting/netting';
+      // baseURL = `${ENDPOINTS.transactions}/netting`
       break;
     case 'relationships':
-      baseURL = _config2.default.assetManagers + '/asset-manager-relationships';
+      baseURL = endpoint() + '/asset-manager-relationship/asset-manager-relationships';
+      // baseURL = `${ENDPOINTS.assetManagers}/asset-manager-relationships`
       break;
     case 'transactions':
-      baseURL = _config2.default.transactions + '/transactions';
+      baseURL = endpoint() + '/transaction/transactions';
+      // baseURL = `${ENDPOINTS.transactions}/transactions`
       break;
     default:
       throw new Error('Invalid class type: ' + AMaaSClass);
@@ -80,6 +101,29 @@ function buildURL(_ref) {
   }
 }
 
+function makeRequest(_ref2) {
+  var method = _ref2.method,
+      url = _ref2.url,
+      data = _ref2.data,
+      token = _ref2.token;
+
+  switch (method) {
+    case 'GET':
+      return _superagent2.default.get(url).set('x-api-key', token).query({ camelcase: true });
+    case 'SEARCH':
+      return _superagent2.default.get(url).set('x-api-key', token).query(data);
+    case 'POST':
+      return _superagent2.default.post(url).send(data).set('x-api-key', token).query({ camelcase: true });
+    case 'PUT':
+      return _superagent2.default.put(url).send(data).set('x-api-key', token).query({ camelcase: true });
+    case 'PATCH':
+      return _superagent2.default.patch(url).send(data).set('x-api-key', token).query({ camelcase: true });
+    case 'DELETE':
+      return _superagent2.default.delete(url).set('x-api-key', token).query({ camelcase: true });
+    default:
+  }
+}
+
 /***
  * !This is an internal function that should not be called by the end user!
  * !Wrapper functions are exposed for the individual asset classes for consumption!
@@ -90,11 +134,11 @@ function buildURL(_ref) {
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} resourceId: Id of the resource being requested (e.g. book_id)
 */
-function retrieveData(_ref2, callback) {
-  var AMaaSClass = _ref2.AMaaSClass,
-      AMId = _ref2.AMId,
-      resourceId = _ref2.resourceId,
-      token = _ref2.token;
+function retrieveData(_ref3, callback) {
+  var AMaaSClass = _ref3.AMaaSClass,
+      AMId = _ref3.AMId,
+      resourceId = _ref3.resourceId,
+      token = _ref3.token;
 
   // callback(err, result)
   // Class and AMId needed to build the Url and for authorization
@@ -125,7 +169,8 @@ function retrieveData(_ref2, callback) {
     callback(e);
     return;
   }
-  var promise = _superagent2.default.get(url).set('Authorization', token).query({ camelcase: true });
+  var promise = makeRequest({ method: 'GET', url: url, token: token });
+  // let promise = request.get(url).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
@@ -155,12 +200,12 @@ function retrieveData(_ref2, callback) {
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} data: data to insert into database
 */
-function insertData(_ref3, callback) {
-  var AMaaSClass = _ref3.AMaaSClass,
-      AMId = _ref3.AMId,
-      resourceId = _ref3.resourceId,
-      data = _ref3.data,
-      token = _ref3.token;
+function insertData(_ref4, callback) {
+  var AMaaSClass = _ref4.AMaaSClass,
+      AMId = _ref4.AMId,
+      resourceId = _ref4.resourceId,
+      data = _ref4.data,
+      token = _ref4.token;
 
   // if (!AMaaSClass || !AMId || !data) {
   //   throw new Error('Class, AMId and data to insert are required')
@@ -193,7 +238,8 @@ function insertData(_ref3, callback) {
     url: url,
     json: data
   };
-  var promise = _superagent2.default.post(url).send(data).set('Authorization', token).query({ camelcase: true });
+  var promise = makeRequest({ method: 'POST', url: url, data: data, token: token });
+  // let promise = request.post(url).send(data).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
@@ -207,53 +253,7 @@ function insertData(_ref3, callback) {
   });
 }
 
-function putData(_ref4, callback) {
-  var AMaaSClass = _ref4.AMaaSClass,
-      AMId = _ref4.AMId,
-      resourceId = _ref4.resourceId,
-      data = _ref4.data,
-      token = _ref4.token;
-
-  if (!token) {
-    if (typeof callback !== 'function') {
-      return Promise.reject('Missing Authorization');
-    }
-    callback('Missing Authorization');
-    return;
-  }
-  var url = void 0;
-  try {
-    url = buildURL({
-      AMaaSClass: AMaaSClass,
-      AMId: AMId,
-      resourceId: resourceId
-    });
-  } catch (e) {
-    if (typeof callback !== 'function') {
-      return Promise.reject(e);
-    }
-    callback(e);
-    return;
-  }
-  var params = {
-    url: url,
-    json: data
-  };
-  var promise = _superagent2.default.put(url).send(data).set('Authorization', token).query({ camelcase: true });
-  if (typeof callback !== 'function') {
-    // return promise if callback is not provided
-    return promise.then(function (response) {
-      return response.body;
-    });
-  }
-  promise.end(function (error, response) {
-    var body = void 0;
-    if (response) body = response.body;
-    _networkCallback(error, response, body, callback);
-  });
-}
-
-function patchData(_ref5, callback) {
+function putData(_ref5, callback) {
   var AMaaSClass = _ref5.AMaaSClass,
       AMId = _ref5.AMId,
       resourceId = _ref5.resourceId,
@@ -285,7 +285,8 @@ function patchData(_ref5, callback) {
     url: url,
     json: data
   };
-  var promise = _superagent2.default.patch(url).send(data).set('Authorization', token).query({ camelcase: true });
+  var promise = makeRequest({ method: 'PUT', url: url, data: data, token: token });
+  // let promise = request.put(url).send(data).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
@@ -299,10 +300,11 @@ function patchData(_ref5, callback) {
   });
 }
 
-function deleteData(_ref6, callback) {
+function patchData(_ref6, callback) {
   var AMaaSClass = _ref6.AMaaSClass,
       AMId = _ref6.AMId,
       resourceId = _ref6.resourceId,
+      data = _ref6.data,
       token = _ref6.token;
 
   if (!token) {
@@ -326,7 +328,54 @@ function deleteData(_ref6, callback) {
     callback(e);
     return;
   }
-  var promise = _superagent2.default.delete(url).set('Authorization', token).query({ camelcase: true });
+  var params = {
+    url: url,
+    json: data
+  };
+  var promise = makeRequest({ method: 'PATCH', url: url, data: data, token: token });
+  // let promise = request.patch(url).send(data).set('x-api-key', token).query({ camelcase: true })
+  if (typeof callback !== 'function') {
+    // return promise if callback is not provided
+    return promise.then(function (response) {
+      return response.body;
+    });
+  }
+  promise.end(function (error, response) {
+    var body = void 0;
+    if (response) body = response.body;
+    _networkCallback(error, response, body, callback);
+  });
+}
+
+function deleteData(_ref7, callback) {
+  var AMaaSClass = _ref7.AMaaSClass,
+      AMId = _ref7.AMId,
+      resourceId = _ref7.resourceId,
+      token = _ref7.token;
+
+  if (!token) {
+    if (typeof callback !== 'function') {
+      return Promise.reject('Missing Authorization');
+    }
+    callback('Missing Authorization');
+    return;
+  }
+  var url = void 0;
+  try {
+    url = buildURL({
+      AMaaSClass: AMaaSClass,
+      AMId: AMId,
+      resourceId: resourceId
+    });
+  } catch (e) {
+    if (typeof callback !== 'function') {
+      return Promise.reject(e);
+    }
+    callback(e);
+    return;
+  }
+  var promise = makeRequest({ method: 'DELETE', url: url, token: token });
+  // let promise = request.delete(url).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
@@ -350,10 +399,10 @@ function deleteData(_ref6, callback) {
  *     { key: 'assetTypes', values: ['GovernmentBond, ForeignExchange']}
  *   ]
  */
-function searchData(_ref7, callback) {
-  var AMaaSClass = _ref7.AMaaSClass,
-      query = _ref7.query,
-      token = _ref7.token;
+function searchData(_ref8, callback) {
+  var AMaaSClass = _ref8.AMaaSClass,
+      query = _ref8.query,
+      token = _ref8.token;
 
   if (!token) {
     if (typeof callback !== 'function') {
@@ -374,11 +423,12 @@ function searchData(_ref7, callback) {
     callback(e);
     return;
   }
-  var queryString = { camelcase: true };
+  var data = { camelcase: true };
   for (var i = 0; i < query.length; i++) {
     queryString[query[i].key] = query[i].values.join();
   }
-  var promise = _superagent2.default.get(url).set('Authorization', token).query(queryString);
+  var promise = makeRequest({ method: 'SEARCH', url: url, token: token, data: data });
+  // let promise = request.get(url).set('x-api-key', token).query(queryString)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
