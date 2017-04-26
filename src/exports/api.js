@@ -16,6 +16,7 @@ import * as Transactions from '../utils/transactions'
 import { configureStage } from '../utils/network'
 
 export {
+  Allocations,
   AssetManagers,
   Assets,
   Books,

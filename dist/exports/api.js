@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.config = exports.Transactions = exports.Positions = exports.Parties = exports.Books = exports.Assets = exports.AssetManagers = undefined;
+exports.config = exports.Transactions = exports.Positions = exports.Parties = exports.Books = exports.Assets = exports.AssetManagers = exports.Allocations = undefined;
 
 var _allocations = require('../utils/allocations');
 
@@ -50,6 +50,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * @module api
  */
 
+exports.Allocations = Allocations;
 exports.AssetManagers = AssetManagers;
 exports.Assets = Assets;
 exports.Books = Books;
