@@ -9,15 +9,14 @@ import { Transaction } from '../../transactions'
 * @param {object} params - object of parameters:
 * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
 * @param {string} params.resourceId - Transaction ID
-* @param {string} params.token - Authorization token
 * @param {function} callback - Called with two arguments (error, result) on completion
+* @returns {Promise|null} If no callback supplied, returns Promise that resolves with an Array of Transactions or a single Transaction
 */
-export function retrieve({ AMId, resourceId, token}, callback) {
+export function retrieve({ AMId, resourceId }, callback) {
   const params = {
     AMaaSClass: 'transactions',
     AMId,
-    resourceId,
-    token
+    resourceId
   }
   let promise = retrieveData(params).then(result => {
     if (Array.isArray(result)) {
@@ -45,11 +44,10 @@ export function retrieve({ AMId, resourceId, token}, callback) {
  * @param {object} params - object of parameters:
  * @param {Transaction} params.transaction - Transaction instance or object to insert
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
- * @param {string} params.resourceId - Transaction ID
- * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise|null} If no callback supplied, returns Promise that resolves the inserted Transaction instance
  */
-export function insert({ AMId, transaction, token }, callback) {
+export function insert({ AMId, transaction }, callback) {
  let data
  if (transaction) {
    data = JSON.parse(JSON.stringify(transaction))
@@ -57,8 +55,7 @@ export function insert({ AMId, transaction, token }, callback) {
  const params = {
    AMaaSClass: 'transactions',
    AMId,
-   data,
-   token
+   data
  }
  let promise = insertData(params).then(result => {
    result = _parseTransaction(result)
@@ -80,13 +77,13 @@ export function insert({ AMId, transaction, token }, callback) {
   * @memberof module:api.Transactions
   * @static
   * @param {object} params - object of parameters:
-  * @param {Transaction} params.transaction - Transaction instance or object to amend
+  * @param {Transaction} params.transaction - The amended Transaction instance
   * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
   * @param {string} params.resourceId - Transaction ID
-  * @param {string} params.token - Authorization token
   * @param {function} callback - Called with two arguments (error, result) on completion
+  * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the amended Transaction instance
   */
-export function amend({ transaction, AMId, resourceId, token }, callback) {
+export function amend({ transaction, AMId, resourceId }, callback) {
   let data
   if (transaction) {
     data = JSON.parse(JSON.stringify(transaction))
@@ -95,8 +92,7 @@ export function amend({ transaction, AMId, resourceId, token }, callback) {
     AMaaSClass: 'transactions',
     AMId,
     resourceId,
-    data,
-    token
+    data
   }
   let promise = putData(params).then(result => {
     result = _parseTransaction(result)
@@ -121,16 +117,15 @@ export function amend({ transaction, AMId, resourceId, token }, callback) {
  * @param {Transaction} params.changes - object of changes to apply to the Transaction
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
  * @param {string} params.resourceId - Transaction ID
- * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the amended Transaction instance
  */
-export function partialAmend({ changes, AMId, resourceId, token }, callback) {
+export function partialAmend({ changes, AMId, resourceId }, callback) {
   const params = {
     AMaaSClass: 'transactions',
     AMId,
     resourceId,
-    data: changes,
-    token
+    data: changes
   }
   let promise = patchData(params).then(result => {
     result = _parseTransaction(result)
@@ -155,6 +150,7 @@ export function partialAmend({ changes, AMId, resourceId, token }, callback) {
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
  * @param {string} params.resourceId - Transaction ID
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the cancelled Transaction instance. Note that this is the only time the API returns a Transaction instance where transactionStatus === 'Cancelled'
  */
  export function cancel({ AMId, resourceId }, callback) {
    const params = {

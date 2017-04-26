@@ -21,19 +21,17 @@ var _transactions = require('../../transactions');
 * @param {object} params - object of parameters:
 * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
 * @param {string} params.resourceId - Transaction ID
-* @param {string} params.token - Authorization token
 * @param {function} callback - Called with two arguments (error, result) on completion
+* @returns {Promise|null} If no callback supplied, returns Promise that resolves with an Array of Transactions or a single Transaction
 */
 function retrieve(_ref, callback) {
   var AMId = _ref.AMId,
-      resourceId = _ref.resourceId,
-      token = _ref.token;
+      resourceId = _ref.resourceId;
 
   var params = {
     AMaaSClass: 'transactions',
     AMId: AMId,
-    resourceId: resourceId,
-    token: token
+    resourceId: resourceId
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
     if (Array.isArray(result)) {
@@ -65,14 +63,12 @@ function retrieve(_ref, callback) {
  * @param {object} params - object of parameters:
  * @param {Transaction} params.transaction - Transaction instance or object to insert
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
- * @param {string} params.resourceId - Transaction ID
- * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise|null} If no callback supplied, returns Promise that resolves the inserted Transaction instance
  */
 function insert(_ref2, callback) {
   var AMId = _ref2.AMId,
-      transaction = _ref2.transaction,
-      token = _ref2.token;
+      transaction = _ref2.transaction;
 
   var data = void 0;
   if (transaction) {
@@ -81,8 +77,7 @@ function insert(_ref2, callback) {
   var params = {
     AMaaSClass: 'transactions',
     AMId: AMId,
-    data: data,
-    token: token
+    data: data
   };
   var promise = (0, _network.insertData)(params).then(function (result) {
     result = _parseTransaction(result);
@@ -106,17 +101,16 @@ function insert(_ref2, callback) {
  * @memberof module:api.Transactions
  * @static
  * @param {object} params - object of parameters:
- * @param {Transaction} params.transaction - Transaction instance or object to amend
+ * @param {Transaction} params.transaction - The amended Transaction instance
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
  * @param {string} params.resourceId - Transaction ID
- * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the amended Transaction instance
  */
 function amend(_ref3, callback) {
   var transaction = _ref3.transaction,
       AMId = _ref3.AMId,
-      resourceId = _ref3.resourceId,
-      token = _ref3.token;
+      resourceId = _ref3.resourceId;
 
   var data = void 0;
   if (transaction) {
@@ -126,8 +120,7 @@ function amend(_ref3, callback) {
     AMaaSClass: 'transactions',
     AMId: AMId,
     resourceId: resourceId,
-    data: data,
-    token: token
+    data: data
   };
   var promise = (0, _network.putData)(params).then(function (result) {
     result = _parseTransaction(result);
@@ -154,21 +147,19 @@ function amend(_ref3, callback) {
  * @param {Transaction} params.changes - object of changes to apply to the Transaction
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
  * @param {string} params.resourceId - Transaction ID
- * @param {string} params.token - Authorization token
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the amended Transaction instance
  */
 function partialAmend(_ref4, callback) {
   var changes = _ref4.changes,
       AMId = _ref4.AMId,
-      resourceId = _ref4.resourceId,
-      token = _ref4.token;
+      resourceId = _ref4.resourceId;
 
   var params = {
     AMaaSClass: 'transactions',
     AMId: AMId,
     resourceId: resourceId,
-    data: changes,
-    token: token
+    data: changes
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseTransaction(result);
@@ -195,6 +186,7 @@ function partialAmend(_ref4, callback) {
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
  * @param {string} params.resourceId - Transaction ID
  * @param {function} callback - Called with two arguments (error, result) on completion
+ * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the cancelled Transaction instance. Note that this is the only time the API returns a Transaction instance where transactionStatus === 'Cancelled'
  */
 function cancel(_ref5, callback) {
   var AMId = _ref5.AMId,
