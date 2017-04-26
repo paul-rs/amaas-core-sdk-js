@@ -8,17 +8,15 @@ import Book from './../../books/Book/book'
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Asset
- * @param {string} [params.resourceId] - ID of the Book
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|Array|Book} If callback supplied, it is called and the function returns either an array of Books or a single Book instance. Otherwise promise is returned that resolves with either an array of Books or a single Book instance
+ * @param {string} [params.resourceId] - ID of the Book. Omit to return all Books for the supplied AMId
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Books or a single Book instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Books or a single Book instance
  */
-export function retrieve({AMId, resourceId, token}, callback) {
+export function retrieve({ AMId, resourceId }, callback) {
   const params = {
     AMaaSClass: 'book',
     AMId,
-    resourceId,
-    token
+    resourceId
   }
   let promise = retrieveData(params).then(result => {
     let books
@@ -47,18 +45,16 @@ export function retrieve({AMId, resourceId, token}, callback) {
  * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
- * @param {string} params.queryKey - Key of the category over which to search (e.g. bookIds)
- * @param {string} params.queryValue - Value of the key for the search (e.g. 123 where 123 is a Book ID and queryKey = bookIds)
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|Array} If callback supplied, it is called and the function returns an array of Books. Otherwise promise is returned that resolves with an array of Books
+ * @param {number} params.AMId - Asset Manager ID of the user calling the API
+ * @param {array} params.query - Array of query parameters of the form: [{ key: <string>, values: <array> }]. e.g. [{ key: book_ids, values: [1, 2, 3]}]
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Books or a single Book instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Books or a single Book instance
  */
-export function search({queryKey, queryValue, token}, callback) {
+export function search({ AMId, query }, callback) {
   const params = {
     AMaaSClass: 'book',
-    queryKey,
-    queryValue,
-    token
+    AMId,
+    query
   }
   let promise = searchData(params).then(result => {
     const books = result.map((book) => {
@@ -84,10 +80,10 @@ export function search({queryKey, queryValue, token}, callback) {
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the AM insering the Book
  * @param {Asset} params.book - Book instance to insert
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the inserted Book instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the inserted Book instance
  */
-export function insert({ AMId, book, token }, callback) {
+export function insert({ AMId, book }, callback) {
   let data
   if (book) {
     data = JSON.parse(JSON.stringify(book))
@@ -95,8 +91,7 @@ export function insert({ AMId, book, token }, callback) {
   const params = {
     AMaaSClass: 'book',
     AMId,
-    data,
-    token
+    data
   }
   let promise = insertData(params).then(result => {
     result = _parseBook(result)
@@ -117,13 +112,13 @@ export function insert({ AMId, book, token }, callback) {
  * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
- * @param {Asset} params.book - Amended Book instance to PUT
  * @param {number} params.AMId - AMId of the Book to amend
+ * @param {Asset} params.book - Amended Book instance to PUT
  * @param {string} params.resourceId - Book ID of the Book to amend
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Book instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the amended Book instance
  */
-export function amend({ book, AMId, resourceId, token }, callback) {
+export function amend({ AMId, book, resourceId }, callback) {
   let data
   if (book) {
     data = JSON.parse(JSON.stringify(book))
@@ -132,8 +127,7 @@ export function amend({ book, AMId, resourceId, token }, callback) {
     AMaaSClass: 'book',
     AMId,
     resourceId,
-    data,
-    token
+    data
   }
   let promise = putData(params).then(result => {
     result = _parseBook(result)
@@ -156,16 +150,15 @@ export function amend({ book, AMId, resourceId, token }, callback) {
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Books to be retired
  * @param {string} params.resourceId - Book ID of the Book to be retired
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the retired Book instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the retired Book instance
  */
-export function retire({ AMId, resourceId, token }, callback) {
+export function retire({ AMId, resourceId }, callback) {
   const params = {
     AMaaSClass: 'book',
     AMId,
     resourceId,
-    data: { bookStatus: 'Retired' },
-    token
+    data: { bookStatus: 'Retired' }
   }
   let promise = patchData(params).then(result => {
     result = _parseBook(result)
@@ -188,16 +181,15 @@ export function retire({ AMId, resourceId, token }, callback) {
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Books to be reactivated
  * @param {string} params.resourceId - Book ID of the Book to be reactivated
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the reactivated Book instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the reactivated Book instance
  */
-export function reactivate({ AMId, resourceId, token }, callback) {
+export function reactivate({ AMId, resourceId }, callback) {
   const params = {
     AMaaSClass: 'book',
     AMId,
     resourceId,
-    data: { bookStatus: 'Active' },
-    token
+    data: { bookStatus: 'Active' }
   }
   let promise = patchData(params).then(result => {
     result = _parseBook(result)
@@ -214,12 +206,4 @@ export function reactivate({ AMId, resourceId, token }, callback) {
 
 export function _parseBook(object) {
   return new Book(object)
-}
-
-function _handleCallback(error, result, callback) {
-  if (error) {
-    callback(error)
-  } else {
-    callback(null, result)
-  }
 }

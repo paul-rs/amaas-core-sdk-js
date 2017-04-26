@@ -8,15 +8,13 @@ import { Relationship } from '../../relationships'
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Relationships
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise} Returns a promise that resolves with Relationship instance or Array of Relationships if callback is not supplied
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Relationships or a Relationship instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a promise that resolves with an array of Relationships or a Relationship instance
  */
- export function retrieve({ AMId, token }, callback) {
+ export function retrieve({ AMId }, callback) {
    const params = {
      AMaaSClass: 'relationships',
-     AMId,
-     token
+     AMId
    }
    let promise = retrieveData(params).then(result => {
      let relationships
@@ -44,20 +42,19 @@ import { Relationship } from '../../relationships'
   * @memberof module:api.Relationships
   * @static
   * @param {object} params - object of parameters:
+  * @param {number} params.AMId - Asset Manager for whom the Relationship will belong
   * @param {Relationship} params.relationship - Relationship instance to insert
-  * @param {string} params.token - Authorization token
-  * @param {function} callback - Called with two arguments (error, result) on completion
-  * @returns {Promise} Returns ???
+  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the inserted Relationship instance. Omit to return Promise
+  * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the inserted Relationship instance
   */
- export function insert({ relationship, token }, callback) {
+ export function insert({ AMId, relationship }, callback) {
    let data
    if (relationship) {
      data = JSON.parse(JSON.stringify(relationship))
    }
    const params = {
      AMaaSClass: 'relationships',
-     data,
-     token
+     data
    }
    let promise = insertData(params).then(result => {
      result = _parseRelationship(result)
@@ -78,13 +75,12 @@ import { Relationship } from '../../relationships'
   * @memberof module:api.Relationships
   * @static
   * @param {object} params - object of parameters:
-  * @param {Relationship} params.relationship - Amended Relationship instance
   * @param {number} params.AMId - Asset Manager ID who owns the Relationship to amend
-  * @param {string} params.token - Authorization token
-  * @param {function} callback - Called with two arguments (error, result) on completion
-  * @returns {Promise} Returns ???
+  * @param {Relationship} params.relationship - Amended Relationship instance
+  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Relationship instance. Omit to return Promise
+  * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the amended Relationship instance
   */
- export function amend({ relationship, AMId, token }, callback) {
+ export function amend({ AMId, relationship }, callback) {
    let data
    if (relationship) {
      data = JSON.parse(JSON.stringify(relationship))
@@ -92,8 +88,7 @@ import { Relationship } from '../../relationships'
    const params = {
      AMaaSClass: 'relationships',
      AMId,
-     data,
-     token
+     data
    }
    let promise = putData(params).then(result => {
      result = _parseRelationship(result)

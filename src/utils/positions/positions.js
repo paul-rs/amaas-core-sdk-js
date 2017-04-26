@@ -9,8 +9,8 @@ import Position from '../../transactions/Positions/position.js'
  * @static
  * @param {object} params - object of parameters
  * @param {number} params.AMId - Asset Manager ID of the the Positions
- * @param {function} callback - Called with two arugments (error, result) on completion
- * @returns {Promise|null} f no callback is supplied, returns promise that resolves with array of Positions.
+ * @param {function} [callback] - Called with two arugments (error, result) on completion. `result` is an array of Positions. Omit to return Promise
+ * @returns {Promise|null} If no callback is supplied, returns promise that resolves with an array of Positions
  */
 export function retrieve({ AMId }, callback) {
   const params = {
@@ -45,8 +45,8 @@ export function retrieve({ AMId }, callback) {
  * @static
  * @param {object} params - object of parameters
  * @param {array} params.query - array of query objects: { key: string, values: array }. e.g. [{ key: 'book_ids', values: [1, 2, 3] }]
- * @param {function} [callback] - Called with two arguments (error, result) on completion
- * @returns {Promise|null} If no callback is supplied, returns promise that resolves with array of Positions.
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. Omit to return Promise
+ * @returns {Promise|null} If no callback is supplied, returns promise that resolves with array of Positions
  */
 export function search({ AMId, query }, callback) {
   const params = {

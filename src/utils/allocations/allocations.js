@@ -8,20 +8,18 @@ import { Link } from '../../children'
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of Transaction
- * @param {string} params.resourceId - Transaction ID
- * @param {string} params.token - Authorization token
- * @param {function} [callback] - Function of form (error, result) called on completion
- * @returns {Promise|Array} If callback given, callback is called with array of Allocations. Otherwise returns promise which resolves with array of Allocations
+ * @param {string} [params.resourceId] - Transaction ID. Omit to return all Allocations for the supplied AMId
+ * @param {function} [callback] - Function of form (error, result) called on completion. `result` is an array of Link instances or a single Link instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an Array of Link instances or a single Link instance (an Allocation is an instance of the Link class)
  */
-export function retrieve({ AMId, resourceId, token }, callback) {
+export function retrieve({ AMId, resourceId }, callback) {
   if (!AMId || !resourceId) {
     throw new Error('Asset Manager ID and Transaction ID are required for allocations')
   }
   const params = {
     AMaaSClass: 'allocations',
     AMId,
-    resourceId,
-    token
+    resourceId
   }
   let promise = retrieveData(params).then(result => {
     const allocations = result.map(link => {
@@ -46,12 +44,11 @@ export function retrieve({ AMId, resourceId, token }, callback) {
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of Transaction
  * @param {string} params.resourceId - Transaction ID
- * @param {object} params.data - Allocation data for the Transaction of the form [ { book_id: '123', quantity: '50', transaction_id: 'XYZ' }, { book_id: '456', quantity: '50', transaction_id: 'ABC' } ]
-   If transaction_id is given, the new Transaction that is created will have this as ID.
- * @param {string} params.token - Authorization token
- * @returns {Promise|Array} ???
+ * @param {object} params.data - Allocation data for the Transaction of the form [ { book_id: '123', quantity: '50', transaction_id: 'XYZ' }, { book_id: '456', quantity: '50', transaction_id: 'ABC' } ]. If transaction_id is supplied, it is used as the inserted Allocation's transactionId. Otherwise a random ID is generated
+ * @param {function} [callback] - Called with two arugments (error, result) on completion. `result` is the inserted Allocations. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the inserted Allocations
  */
-export function send({ AMId, resourceId, data, token }, callback) {
+export function send({ AMId, resourceId, data }, callback) {
   if (!AMId || !resourceId) {
     throw new Error('Asset Manager ID and Transaction ID are required for allocations')
   }
@@ -59,8 +56,7 @@ export function send({ AMId, resourceId, data, token }, callback) {
     AMaaSClass: 'allocations',
     AMId,
     resourceId,
-    data,
-    token
+    data
   }
   let promise = insertData(params).then(result => {
     const allocated = result

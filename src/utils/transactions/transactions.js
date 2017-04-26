@@ -8,9 +8,9 @@ import { Transaction } from '../../transactions'
 * @static
 * @param {object} params - object of parameters:
 * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
-* @param {string} params.resourceId - Transaction ID
-* @param {function} callback - Called with two arguments (error, result) on completion
-* @returns {Promise|null} If no callback supplied, returns Promise that resolves with an Array of Transactions or a single Transaction
+* @param {string} [params.resourceId] - Transaction ID. Omit to return all Transactions for the supplied AMId
+* @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an Array of Transactions or a single Transaction instance. Omit to return Promise
+* @returns {Promise|null} If no callback supplied, returns Promise that resolves with an Array of Transactions or a single Transaction instance
 */
 export function retrieve({ AMId, resourceId }, callback) {
   const params = {
@@ -44,8 +44,8 @@ export function retrieve({ AMId, resourceId }, callback) {
  * @param {object} params - object of parameters:
  * @param {Transaction} params.transaction - Transaction instance or object to insert
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|null} If no callback supplied, returns Promise that resolves the inserted Transaction instance
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the inserted Transaction instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the inserted Transaction instance
  */
 export function insert({ AMId, transaction }, callback) {
  let data
@@ -80,7 +80,7 @@ export function insert({ AMId, transaction }, callback) {
   * @param {Transaction} params.transaction - The amended Transaction instance
   * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
   * @param {string} params.resourceId - Transaction ID
-  * @param {function} callback - Called with two arguments (error, result) on completion
+  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Transaction instance. Omit to return Promise
   * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the amended Transaction instance
   */
 export function amend({ transaction, AMId, resourceId }, callback) {
@@ -117,7 +117,7 @@ export function amend({ transaction, AMId, resourceId }, callback) {
  * @param {Transaction} params.changes - object of changes to apply to the Transaction
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
  * @param {string} params.resourceId - Transaction ID
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Transaction instance. Omit to return Promise
  * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the amended Transaction instance
  */
 export function partialAmend({ changes, AMId, resourceId }, callback) {
@@ -149,7 +149,7 @@ export function partialAmend({ changes, AMId, resourceId }, callback) {
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
  * @param {string} params.resourceId - Transaction ID
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the cancelled Transaction instance. Omit to return Promise
  * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the cancelled Transaction instance. Note that this is the only time the API returns a Transaction instance where transactionStatus === 'Cancelled'
  */
  export function cancel({ AMId, resourceId }, callback) {

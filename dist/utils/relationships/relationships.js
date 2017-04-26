@@ -18,18 +18,15 @@ var _relationships = require('../../relationships');
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Relationships
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise} Returns a promise that resolves with Relationship instance or Array of Relationships if callback is not supplied
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Relationships or a Relationship instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a promise that resolves with an array of Relationships or a Relationship instance
  */
 function retrieve(_ref, callback) {
-  var AMId = _ref.AMId,
-      token = _ref.token;
+  var AMId = _ref.AMId;
 
   var params = {
     AMaaSClass: 'relationships',
-    AMId: AMId,
-    token: token
+    AMId: AMId
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
     var relationships = void 0;
@@ -59,14 +56,14 @@ function retrieve(_ref, callback) {
  * @memberof module:api.Relationships
  * @static
  * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager for whom the Relationship will belong
  * @param {Relationship} params.relationship - Relationship instance to insert
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise} Returns ???
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the inserted Relationship instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the inserted Relationship instance
  */
 function insert(_ref2, callback) {
-  var relationship = _ref2.relationship,
-      token = _ref2.token;
+  var AMId = _ref2.AMId,
+      relationship = _ref2.relationship;
 
   var data = void 0;
   if (relationship) {
@@ -74,8 +71,7 @@ function insert(_ref2, callback) {
   }
   var params = {
     AMaaSClass: 'relationships',
-    data: data,
-    token: token
+    data: data
   };
   var promise = (0, _network.insertData)(params).then(function (result) {
     result = _parseRelationship(result);
@@ -98,16 +94,14 @@ function insert(_ref2, callback) {
  * @memberof module:api.Relationships
  * @static
  * @param {object} params - object of parameters:
- * @param {Relationship} params.relationship - Amended Relationship instance
  * @param {number} params.AMId - Asset Manager ID who owns the Relationship to amend
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise} Returns ???
+ * @param {Relationship} params.relationship - Amended Relationship instance
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Relationship instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the amended Relationship instance
  */
 function amend(_ref3, callback) {
-  var relationship = _ref3.relationship,
-      AMId = _ref3.AMId,
-      token = _ref3.token;
+  var AMId = _ref3.AMId,
+      relationship = _ref3.relationship;
 
   var data = void 0;
   if (relationship) {
@@ -116,8 +110,7 @@ function amend(_ref3, callback) {
   var params = {
     AMaaSClass: 'relationships',
     AMId: AMId,
-    data: data,
-    token: token
+    data: data
   };
   var promise = (0, _network.putData)(params).then(function (result) {
     result = _parseRelationship(result);

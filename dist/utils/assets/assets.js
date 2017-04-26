@@ -20,26 +20,24 @@ var AssetClasses = _interopRequireWildcard(_assets);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 /**
- * Retrieve Asset data for specified AMId and partyId
+ * Retrieve Asset data for specified AMId and assetId
  * @function retrieve
  * @memberof module:api.Assets
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Asset
- * @param {string} [params.resourceId] - Party ID of the Asset. Omitting this will return all Assets associated with that AMId
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {string} [params.resourceId] - Asset ID of the Asset. Omit to return all Assets for the supplied AMId
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Assets or a single Asset instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Assets or a single Asset instance
  */
 function retrieve(_ref, callback) {
   var AMId = _ref.AMId,
-      resourceId = _ref.resourceId,
-      token = _ref.token;
+      resourceId = _ref.resourceId;
 
   var params = {
     AMaaSClass: 'assets',
     AMId: AMId,
-    resourceId: resourceId,
-    token: token
+    resourceId: resourceId
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
     if (Array.isArray(result)) {
@@ -69,14 +67,14 @@ function retrieve(_ref, callback) {
  * @memberof module:api.Assets
  * @static
  * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID of the Asset Manager to whom the inserted Asset belongs
  * @param {Asset} params.asset - Asset instance to insert
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. ` result` is the inserted Asset instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the inserted Asset instance
  */
 function insert(_ref2, callback) {
   var AMId = _ref2.AMId,
-      asset = _ref2.asset,
-      token = _ref2.token;
+      asset = _ref2.asset;
 
   var stringified = void 0,
       data = void 0;
@@ -87,8 +85,7 @@ function insert(_ref2, callback) {
   var params = {
     AMaaSClass: 'assets',
     AMId: AMId,
-    data: data,
-    token: token
+    data: data
   };
   var promise = (0, _network.insertData)(params).then(function (result) {
     result = _parseAsset(result);
@@ -112,17 +109,16 @@ function insert(_ref2, callback) {
  * @memberof module:api.Assets
  * @static
  * @param {object} params - object of parameters:
+ * @param {number} params.AMId - AMId of the Asset to amend
  * @param {Asset} params.asset - Amended Asset instance to PUT
- * @param {number} params.AMId - AMId of the Party to amend
- * @param {string} params.resourceId - Asset ID of the Party to amend
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {string} params.resourceId - Asset ID of the Asset to amend
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Asset instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the amended Asset instance
  */
 function amend(_ref3, callback) {
-  var asset = _ref3.asset,
-      AMId = _ref3.AMId,
-      resourceId = _ref3.resourceId,
-      token = _ref3.token;
+  var AMId = _ref3.AMId,
+      asset = _ref3.asset,
+      resourceId = _ref3.resourceId;
 
   var stringified = void 0,
       data = void 0;
@@ -134,8 +130,7 @@ function amend(_ref3, callback) {
     AMaaSClass: 'assets',
     AMId: AMId,
     resourceId: resourceId,
-    data: data,
-    token: token
+    data: data
   };
   var promise = (0, _network.putData)(params).then(function (result) {
     result = _parseAsset(result);
@@ -159,24 +154,22 @@ function amend(_ref3, callback) {
  * @memberof module:api.Assets
  * @static
  * @param {object} params - object of parameters:
- * @param {object} params.changes - Object of changes to the Asset.
  * @param {string} params.AMId - AMId of the Asset to be partially amended
+ * @param {object} params.changes - Object of changes to the Asset.
  * @param {string} params.resourceId - Asset ID of the Asset to be partially amended
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Asset instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the amended Asset instance
  */
 function partialAmend(_ref4, callback) {
-  var changes = _ref4.changes,
-      AMId = _ref4.AMId,
-      resourceId = _ref4.resourceId,
-      token = _ref4.token;
+  var AMId = _ref4.AMId,
+      changes = _ref4.changes,
+      resourceId = _ref4.resourceId;
 
   var params = {
     AMaaSClass: 'assets',
     AMId: AMId,
     resourceId: resourceId,
-    data: changes,
-    token: token
+    data: changes
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseAsset(result);
@@ -202,20 +195,18 @@ function partialAmend(_ref4, callback) {
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Asset to be deleted
  * @param {string} params.resourceId - Asset ID of the Asset to be deleted
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the deactivated Asset instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the deactivated Asset instance
  */
 function deactivate(_ref5, callback) {
   var AMId = _ref5.AMId,
-      resourceId = _ref5.resourceId,
-      token = _ref5.token;
+      resourceId = _ref5.resourceId;
 
   var params = {
     AMaaSClass: 'assets',
     AMId: AMId,
     resourceId: resourceId,
-    data: { assetStatus: 'Inactive' },
-    token: token
+    data: { assetStatus: 'Inactive' }
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseAsset(result);
@@ -241,20 +232,18 @@ function deactivate(_ref5, callback) {
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Asset to be deleted
  * @param {string} params.resourceId - Asset ID of the Asset to be deleted
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the reactivated Asset instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the reactivated Asset instance
  */
 function reactivate(_ref6, callback) {
   var AMId = _ref6.AMId,
-      resourceId = _ref6.resourceId,
-      token = _ref6.token;
+      resourceId = _ref6.resourceId;
 
   var params = {
     AMaaSClass: 'assets',
     AMId: AMId,
     resourceId: resourceId,
-    data: { assetStatus: 'Active' },
-    token: token
+    data: { assetStatus: 'Active' }
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseAsset(result);

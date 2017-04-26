@@ -20,9 +20,9 @@ var _transactions = require('../../transactions');
 * @static
 * @param {object} params - object of parameters:
 * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
-* @param {string} params.resourceId - Transaction ID
-* @param {function} callback - Called with two arguments (error, result) on completion
-* @returns {Promise|null} If no callback supplied, returns Promise that resolves with an Array of Transactions or a single Transaction
+* @param {string} [params.resourceId] - Transaction ID. Omit to return all Transactions for the supplied AMId
+* @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an Array of Transactions or a single Transaction instance. Omit to return Promise
+* @returns {Promise|null} If no callback supplied, returns Promise that resolves with an Array of Transactions or a single Transaction instance
 */
 function retrieve(_ref, callback) {
   var AMId = _ref.AMId,
@@ -63,8 +63,8 @@ function retrieve(_ref, callback) {
  * @param {object} params - object of parameters:
  * @param {Transaction} params.transaction - Transaction instance or object to insert
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|null} If no callback supplied, returns Promise that resolves the inserted Transaction instance
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the inserted Transaction instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the inserted Transaction instance
  */
 function insert(_ref2, callback) {
   var AMId = _ref2.AMId,
@@ -104,7 +104,7 @@ function insert(_ref2, callback) {
  * @param {Transaction} params.transaction - The amended Transaction instance
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
  * @param {string} params.resourceId - Transaction ID
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Transaction instance. Omit to return Promise
  * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the amended Transaction instance
  */
 function amend(_ref3, callback) {
@@ -147,7 +147,7 @@ function amend(_ref3, callback) {
  * @param {Transaction} params.changes - object of changes to apply to the Transaction
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
  * @param {string} params.resourceId - Transaction ID
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Transaction instance. Omit to return Promise
  * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the amended Transaction instance
  */
 function partialAmend(_ref4, callback) {
@@ -185,7 +185,7 @@ function partialAmend(_ref4, callback) {
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
  * @param {string} params.resourceId - Transaction ID
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the cancelled Transaction instance. Omit to return Promise
  * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the cancelled Transaction instance. Note that this is the only time the API returns a Transaction instance where transactionStatus === 'Cancelled'
  */
 function cancel(_ref5, callback) {

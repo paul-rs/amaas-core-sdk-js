@@ -25,17 +25,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID to retrieve
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise | AssetManager} If callback supplied, callback(null, AssetManager) is called. Otherwise promise is returned that resolves with AssetManager instance
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an AssetManager instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an AssetManager instance
  */
 function retrieve(_ref, callback) {
-  var AMId = _ref.AMId,
-      token = _ref.token;
+  var AMId = _ref.AMId;
 
   var params = {
     AMaaSClass: 'assetManagers',
-    AMId: AMId, token: token
+    AMId: AMId
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
     var assetManager = _parseAM(result);
@@ -60,13 +58,11 @@ function retrieve(_ref, callback) {
  * @static
  * @param {object} params - object of parameters:
  * @param {AssetManager} params.assetManager - Asset Manager instance to insert
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise | AssetManager} If callback supplied, callback(null, AssetManager) is called. Otherwise promise is returned that resolves with AssetManager instance
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the inserted AssetManager instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the inserted AssetManager instance
  */
 function insert(_ref2, callback) {
-  var assetManager = _ref2.assetManager,
-      token = _ref2.token;
+  var assetManager = _ref2.assetManager;
 
   var stringified = void 0,
       data = void 0;
@@ -76,8 +72,7 @@ function insert(_ref2, callback) {
   }
   var params = {
     AMaaSClass: 'assetManagers',
-    data: data,
-    token: token
+    data: data
   };
   var promise = (0, _network.insertData)(params).then(function (result) {
     result = _parseAM(result);
@@ -103,14 +98,12 @@ function insert(_ref2, callback) {
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - AMID of the Asset Manager to amend
  * @param {AssetManager} params.assetManager - Asset Manager instance to insert
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise | AssetManager} If callback supplied, callback(null, AssetManager) is called. Otherwise promise is returned that resolves with AssetManager instance
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended AssetManager instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the amended AssetManager instance
  */
 function amend(_ref3, callback) {
-  var assetManager = _ref3.assetManager,
-      AMId = _ref3.AMId,
-      token = _ref3.token;
+  var AMId = _ref3.AMId,
+      assetManager = _ref3.assetManager;
 
   var stringified = void 0,
       data = void 0;
@@ -121,8 +114,7 @@ function amend(_ref3, callback) {
   var params = {
     AMaaSClass: 'assetManagers',
     AMId: AMId,
-    data: data,
-    token: token
+    data: data
   };
   var promise = (0, _network.putData)(params).then(function (result) {
     result = _parseAM(result);
@@ -159,19 +151,16 @@ function amend(_ref3, callback) {
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - AMID of the Asset Manager to deactivate
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise | AssetManager} ???
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the deactivated AssetManager instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the deactivated AssetManager instance
  */
 function deactivate(_ref4, callback) {
-  var AMId = _ref4.AMId,
-      token = _ref4.token;
+  var AMId = _ref4.AMId;
 
   var params = {
     AMaaSClass: 'assetManagers',
     AMId: AMId,
-    data: { assetManagerStatus: 'Inactive' },
-    token: token
+    data: { assetManagerStatus: 'Inactive' }
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseAM(result);
@@ -196,19 +185,16 @@ function deactivate(_ref4, callback) {
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - AMID of the Asset Manager to deactivate
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise | AssetManager} ???
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the reactivated AssetManager instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the reactivated AssetManager instance
  */
 function reactivate(_ref5, callback) {
-  var AMId = _ref5.AMId,
-      token = _ref5.token;
+  var AMId = _ref5.AMId;
 
   var params = {
     AMaaSClass: 'assetManagers',
     AMId: AMId,
-    data: { assetManagerStatus: 'Active' },
-    token: token
+    data: { assetManagerStatus: 'Active' }
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseAM(result);

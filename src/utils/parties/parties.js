@@ -11,17 +11,15 @@ import Email from '../../parties/Children/email.js'
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Party
- * @param {string} [params.partyId] - Party ID of the Party. Omitting this will return all Parties associated with that AMId
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|Array|Party} - If callback supplied, it is called and function returns either a Party instance of array of Party instances. Otherwise promise that resolves with Party instance or array of Party instances is returned
+ * @param {string} [params.partyId] - Party ID of the Party. Omitting this will return all Parties associated with the supplied AMId
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Parties or a single Party instance. Omit to return Promise
+ * @returns {Promise|null} - If no callback supplied, returns a Promise that resolves with an array of Parties or a single Party instance
  */
-export function retrieve({AMId, resourceId, token}, callback) {
+export function retrieve({ AMId, resourceId }, callback) {
   const params = {
     AMaaSClass: 'parties',
     AMId,
-    resourceId,
-    token
+    resourceId
   }
   let promise = retrieveData(params).then(result => {
     if (Array.isArray(result)) {
@@ -47,12 +45,12 @@ export function retrieve({AMId, resourceId, token}, callback) {
  * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID to whom the Party will belong
  * @param {Party} params.party - Party instance to insert
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|Party} If callback is supplied, it is called and function returns the inserted Party instance. Otherwise promise that resolves with inserted Party instance is returned
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the inserted Party instance. Omit to return Promise.
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the inserted Party instance
  */
-export function insert({AMId, party, token}, callback) {
+export function insert({ AMId, party }, callback) {
   let stringified, data
   if (party) {
     stringified = JSON.stringify(party)
@@ -61,8 +59,7 @@ export function insert({AMId, party, token}, callback) {
   const params = {
     AMaaSClass: 'parties',
     AMId,
-    data,
-    token
+    data
   }
   let promise = insertData(params).then(result => {
     result = _parseParty(result)
@@ -84,14 +81,13 @@ export function insert({AMId, party, token}, callback) {
  * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
- * @param {Party} params.party - Amended Party instance to PUT
  * @param {number} params.AMId - AMId of the Party to amend
+ * @param {Party} params.party - Amended Party instance to PUT
  * @param {string} params.resourceId - Party ID of the Party to amend
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|Party} If callback is supplied, it is called and function returns the amended Party instance. Otherwise promise that resolves with amended Party instance is returned
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Party instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the amended Party instance
  */
-export function amend({party, AMId, resourceId, token}, callback) {
+export function amend({ AMId, party, resourceId }, callback) {
   let stringified, data
   if (party) {
     stringified = JSON.stringify(party)
@@ -101,8 +97,7 @@ export function amend({party, AMId, resourceId, token}, callback) {
     AMaaSClass: 'parties',
     AMId,
     resourceId,
-    data,
-    token
+    data
   }
   let promise = putData(params).then(result => {
     result = _parseParty(result)
@@ -124,20 +119,18 @@ export function amend({party, AMId, resourceId, token}, callback) {
  * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
- * @param {object} params.changes - Object of changes to the Party.
  * @param {string} params.AMId - AMId of the Party to be partially amended
+ * @param {object} params.changes - Object of changes to the Party
  * @param {string} params.resourceId - Party ID of the Party to be partially amended
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|Party} If callback is supplied, it is called and function returns the amended Party instance. Otherwise a promise that resolves with the amended Party instance is returned
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Party instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the amended Party instance
  */
-export function partialAmend({changes, AMId, resourceId, token}, callback) {
+export function partialAmend({ AMId, changes, resourceId }, callback) {
   const params = {
     AMaaSClass: 'parties',
     AMId,
     resourceId,
-    data: changes,
-    token
+    data: changes
   }
   let promise = patchData(params).then(result => {
     result = _parseParty(result)
@@ -159,19 +152,17 @@ export function partialAmend({changes, AMId, resourceId, token}, callback) {
  * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
- * @param {string} params.AMId - AMId of the Party to be deleted
- * @param {string} params.resourceId - Party ID of the Party to be deleted
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @erturns {PRomise|string} If callback is supplied, it is called and the function returns ???. Otherwise a promise that resolves with ??? is returned
+ * @param {string} params.AMId - AMId of the Party to be deactivated
+ * @param {string} params.resourceId - Party ID of the Party to be deactivated
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the deactivated Party instance. Omit to return Promise
+ * @erturns {PRomise|null} If no callback supplied, returns a Promise that resolves with the deactivated Party instance
  */
-export function deactivate({AMId, resourceId, token}, callback) {
+export function deactivate({ AMId, resourceId }, callback) {
   const params = {
     AMaaSClass: 'parties',
     AMId,
     resourceId,
-    data: { partyStatus: 'Inactive' },
-    token
+    data: { partyStatus: 'Inactive' }
   }
   let promise = patchData(params).then(result => {
     result = _parseParty(result)
@@ -195,17 +186,15 @@ export function deactivate({AMId, resourceId, token}, callback) {
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Party to be reactivated
  * @param {string} params.resourceId - Party ID of the Party to be reactivated
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @erturns {Promise|string} If callback is supplied, it is called and the function returns ???. Otherwise a promise that resolves with ??? is returned
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the reactivated Party instance. Omit to return Promise
+ * @erturns {Promise|null} If no callback supplied, returns a Promise that resolves with the reactivated Party instance
  */
-export function reactivate({AMId, resourceId, token}, callback) {
+export function reactivate({ AMId, resourceId }, callback) {
   const params = {
     AMaaSClass: 'parties',
     AMId,
     resourceId,
-    data: { partyStatus: 'Active' },
-    token
+    data: { partyStatus: 'Active' }
   }
   let promise = patchData(params).then(result => {
     result = _parseParty(result)
@@ -222,7 +211,7 @@ export function reactivate({AMId, resourceId, token}, callback) {
 }
 
 export function _parseParty(object) {
-  if (!object.partyType) {
+  if (!object.partyType || !PartyClasses[object.partyType]) {
     return new PartyClasses.Party(object)
   }
   return new PartyClasses[object.partyType](object)

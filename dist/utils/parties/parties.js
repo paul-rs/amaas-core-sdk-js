@@ -36,21 +36,18 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Party
- * @param {string} [params.partyId] - Party ID of the Party. Omitting this will return all Parties associated with that AMId
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|Array|Party} - If callback supplied, it is called and function returns either a Party instance of array of Party instances. Otherwise promise that resolves with Party instance or array of Party instances is returned
+ * @param {string} [params.partyId] - Party ID of the Party. Omitting this will return all Parties associated with the supplied AMId
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Parties or a single Party instance. Omit to return Promise
+ * @returns {Promise|null} - If no callback supplied, returns a Promise that resolves with an array of Parties or a single Party instance
  */
 function retrieve(_ref, callback) {
   var AMId = _ref.AMId,
-      resourceId = _ref.resourceId,
-      token = _ref.token;
+      resourceId = _ref.resourceId;
 
   var params = {
     AMaaSClass: 'parties',
     AMId: AMId,
-    resourceId: resourceId,
-    token: token
+    resourceId: resourceId
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
     if (Array.isArray(result)) {
@@ -80,15 +77,14 @@ function retrieve(_ref, callback) {
  * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID to whom the Party will belong
  * @param {Party} params.party - Party instance to insert
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|Party} If callback is supplied, it is called and function returns the inserted Party instance. Otherwise promise that resolves with inserted Party instance is returned
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the inserted Party instance. Omit to return Promise.
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the inserted Party instance
  */
 function insert(_ref2, callback) {
   var AMId = _ref2.AMId,
-      party = _ref2.party,
-      token = _ref2.token;
+      party = _ref2.party;
 
   var stringified = void 0,
       data = void 0;
@@ -99,8 +95,7 @@ function insert(_ref2, callback) {
   var params = {
     AMaaSClass: 'parties',
     AMId: AMId,
-    data: data,
-    token: token
+    data: data
   };
   var promise = (0, _network.insertData)(params).then(function (result) {
     result = _parseParty(result);
@@ -124,18 +119,16 @@ function insert(_ref2, callback) {
  * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
- * @param {Party} params.party - Amended Party instance to PUT
  * @param {number} params.AMId - AMId of the Party to amend
+ * @param {Party} params.party - Amended Party instance to PUT
  * @param {string} params.resourceId - Party ID of the Party to amend
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|Party} If callback is supplied, it is called and function returns the amended Party instance. Otherwise promise that resolves with amended Party instance is returned
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Party instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the amended Party instance
  */
 function amend(_ref3, callback) {
-  var party = _ref3.party,
-      AMId = _ref3.AMId,
-      resourceId = _ref3.resourceId,
-      token = _ref3.token;
+  var AMId = _ref3.AMId,
+      party = _ref3.party,
+      resourceId = _ref3.resourceId;
 
   var stringified = void 0,
       data = void 0;
@@ -147,8 +140,7 @@ function amend(_ref3, callback) {
     AMaaSClass: 'parties',
     AMId: AMId,
     resourceId: resourceId,
-    data: data,
-    token: token
+    data: data
   };
   var promise = (0, _network.putData)(params).then(function (result) {
     result = _parseParty(result);
@@ -172,25 +164,22 @@ function amend(_ref3, callback) {
  * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
- * @param {object} params.changes - Object of changes to the Party.
  * @param {string} params.AMId - AMId of the Party to be partially amended
+ * @param {object} params.changes - Object of changes to the Party
  * @param {string} params.resourceId - Party ID of the Party to be partially amended
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|Party} If callback is supplied, it is called and function returns the amended Party instance. Otherwise a promise that resolves with the amended Party instance is returned
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Party instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the amended Party instance
  */
 function partialAmend(_ref4, callback) {
-  var changes = _ref4.changes,
-      AMId = _ref4.AMId,
-      resourceId = _ref4.resourceId,
-      token = _ref4.token;
+  var AMId = _ref4.AMId,
+      changes = _ref4.changes,
+      resourceId = _ref4.resourceId;
 
   var params = {
     AMaaSClass: 'parties',
     AMId: AMId,
     resourceId: resourceId,
-    data: changes,
-    token: token
+    data: changes
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseParty(result);
@@ -214,23 +203,20 @@ function partialAmend(_ref4, callback) {
  * @memberof module:api.Parties
  * @static
  * @param {object} params - object of parameters:
- * @param {string} params.AMId - AMId of the Party to be deleted
- * @param {string} params.resourceId - Party ID of the Party to be deleted
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @erturns {PRomise|string} If callback is supplied, it is called and the function returns ???. Otherwise a promise that resolves with ??? is returned
+ * @param {string} params.AMId - AMId of the Party to be deactivated
+ * @param {string} params.resourceId - Party ID of the Party to be deactivated
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the deactivated Party instance. Omit to return Promise
+ * @erturns {PRomise|null} If no callback supplied, returns a Promise that resolves with the deactivated Party instance
  */
 function deactivate(_ref5, callback) {
   var AMId = _ref5.AMId,
-      resourceId = _ref5.resourceId,
-      token = _ref5.token;
+      resourceId = _ref5.resourceId;
 
   var params = {
     AMaaSClass: 'parties',
     AMId: AMId,
     resourceId: resourceId,
-    data: { partyStatus: 'Inactive' },
-    token: token
+    data: { partyStatus: 'Inactive' }
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseParty(result);
@@ -256,21 +242,18 @@ function deactivate(_ref5, callback) {
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Party to be reactivated
  * @param {string} params.resourceId - Party ID of the Party to be reactivated
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @erturns {Promise|string} If callback is supplied, it is called and the function returns ???. Otherwise a promise that resolves with ??? is returned
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the reactivated Party instance. Omit to return Promise
+ * @erturns {Promise|null} If no callback supplied, returns a Promise that resolves with the reactivated Party instance
  */
 function reactivate(_ref6, callback) {
   var AMId = _ref6.AMId,
-      resourceId = _ref6.resourceId,
-      token = _ref6.token;
+      resourceId = _ref6.resourceId;
 
   var params = {
     AMaaSClass: 'parties',
     AMId: AMId,
     resourceId: resourceId,
-    data: { partyStatus: 'Active' },
-    token: token
+    data: { partyStatus: 'Active' }
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseParty(result);
@@ -289,7 +272,7 @@ function reactivate(_ref6, callback) {
 }
 
 function _parseParty(object) {
-  if (!object.partyType) {
+  if (!object.partyType || !PartyClasses[object.partyType]) {
     return new PartyClasses.Party(object);
   }
   return new PartyClasses[object.partyType](object);

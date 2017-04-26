@@ -8,14 +8,13 @@ import AssetManager from '../../assetManagers/AssetManager/assetManager.js'
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID to retrieve
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise | AssetManager} If callback supplied, callback(null, AssetManager) is called. Otherwise promise is returned that resolves with AssetManager instance
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an AssetManager instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an AssetManager instance
  */
-export function retrieve({AMId, token}, callback) {
+export function retrieve({ AMId }, callback) {
   const params = {
     AMaaSClass: 'assetManagers',
-    AMId, token
+    AMId
   }
   let promise = retrieveData(params).then(result => {
     const assetManager = _parseAM(result)
@@ -38,11 +37,10 @@ export function retrieve({AMId, token}, callback) {
  * @static
  * @param {object} params - object of parameters:
  * @param {AssetManager} params.assetManager - Asset Manager instance to insert
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise | AssetManager} If callback supplied, callback(null, AssetManager) is called. Otherwise promise is returned that resolves with AssetManager instance
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the inserted AssetManager instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the inserted AssetManager instance
  */
-export function insert({assetManager, token}, callback) {
+export function insert({ assetManager }, callback) {
   let stringified, data
   if (assetManager) {
     stringified = JSON.stringify(assetManager)
@@ -50,8 +48,7 @@ export function insert({assetManager, token}, callback) {
   }
   const params = {
     AMaaSClass: 'assetManagers',
-    data,
-    token
+    data
   }
   let promise = insertData(params).then(result => {
     result = _parseAM(result)
@@ -75,11 +72,10 @@ export function insert({assetManager, token}, callback) {
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - AMID of the Asset Manager to amend
  * @param {AssetManager} params.assetManager - Asset Manager instance to insert
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise | AssetManager} If callback supplied, callback(null, AssetManager) is called. Otherwise promise is returned that resolves with AssetManager instance
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended AssetManager instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the amended AssetManager instance
  */
-export function amend({assetManager, AMId, token}, callback) {
+export function amend({ AMId, assetManager }, callback) {
   let stringified, data
   if (assetManager) {
     stringified = JSON.stringify(assetManager)
@@ -88,8 +84,7 @@ export function amend({assetManager, AMId, token}, callback) {
   const params = {
     AMaaSClass: 'assetManagers',
     AMId,
-    data,
-    token
+    data
   }
   let promise = putData(params).then(result => {
     result = _parseAM(result)
@@ -124,16 +119,14 @@ export function amend({assetManager, AMId, token}, callback) {
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - AMID of the Asset Manager to deactivate
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise | AssetManager} ???
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the deactivated AssetManager instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the deactivated AssetManager instance
  */
-export function deactivate({AMId, token}, callback) {
+export function deactivate({ AMId }, callback) {
   const params = {
     AMaaSClass: 'assetManagers',
     AMId,
-    data: { assetManagerStatus: 'Inactive' },
-    token
+    data: { assetManagerStatus: 'Inactive' }
   }
   let promise = patchData(params).then(result => {
     result = _parseAM(result)
@@ -156,16 +149,14 @@ export function deactivate({AMId, token}, callback) {
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - AMID of the Asset Manager to deactivate
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise | AssetManager} ???
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the reactivated AssetManager instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the reactivated AssetManager instance
  */
-export function reactivate({AMId, token}, callback) {
+export function reactivate({ AMId }, callback) {
   const params = {
     AMaaSClass: 'assetManagers',
     AMId,
-    data: { assetManagerStatus: 'Active' },
-    token
+    data: { assetManagerStatus: 'Active' }
   }
   let promise = patchData(params).then(result => {
     result = _parseAM(result)

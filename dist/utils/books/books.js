@@ -26,21 +26,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @static
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the Asset
- * @param {string} [params.resourceId] - ID of the Book
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|Array|Book} If callback supplied, it is called and the function returns either an array of Books or a single Book instance. Otherwise promise is returned that resolves with either an array of Books or a single Book instance
+ * @param {string} [params.resourceId] - ID of the Book. Omit to return all Books for the supplied AMId
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Books or a single Book instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Books or a single Book instance
  */
 function retrieve(_ref, callback) {
   var AMId = _ref.AMId,
-      resourceId = _ref.resourceId,
-      token = _ref.token;
+      resourceId = _ref.resourceId;
 
   var params = {
     AMaaSClass: 'book',
     AMId: AMId,
-    resourceId: resourceId,
-    token: token
+    resourceId: resourceId
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
     var books = void 0;
@@ -71,22 +68,19 @@ function retrieve(_ref, callback) {
  * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
- * @param {string} params.queryKey - Key of the category over which to search (e.g. bookIds)
- * @param {string} params.queryValue - Value of the key for the search (e.g. 123 where 123 is a Book ID and queryKey = bookIds)
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
- * @returns {Promise|Array} If callback supplied, it is called and the function returns an array of Books. Otherwise promise is returned that resolves with an array of Books
+ * @param {number} params.AMId - Asset Manager ID of the user calling the API
+ * @param {array} params.query - Array of query parameters of the form: [{ key: <string>, values: <array> }]. e.g. [{ key: book_ids, values: [1, 2, 3]}]
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Books or a single Book instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Books or a single Book instance
  */
 function search(_ref2, callback) {
-  var queryKey = _ref2.queryKey,
-      queryValue = _ref2.queryValue,
-      token = _ref2.token;
+  var AMId = _ref2.AMId,
+      query = _ref2.query;
 
   var params = {
     AMaaSClass: 'book',
-    queryKey: queryKey,
-    queryValue: queryValue,
-    token: token
+    AMId: AMId,
+    query: query
   };
   var promise = (0, _network.searchData)(params).then(function (result) {
     var books = result.map(function (book) {
@@ -114,13 +108,12 @@ function search(_ref2, callback) {
  * @param {object} params - object of parameters:
  * @param {number} params.AMId - Asset Manager ID of the AM insering the Book
  * @param {Asset} params.book - Book instance to insert
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the inserted Book instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the inserted Book instance
  */
 function insert(_ref3, callback) {
   var AMId = _ref3.AMId,
-      book = _ref3.book,
-      token = _ref3.token;
+      book = _ref3.book;
 
   var data = void 0;
   if (book) {
@@ -129,8 +122,7 @@ function insert(_ref3, callback) {
   var params = {
     AMaaSClass: 'book',
     AMId: AMId,
-    data: data,
-    token: token
+    data: data
   };
   var promise = (0, _network.insertData)(params).then(function (result) {
     result = _parseBook(result);
@@ -153,17 +145,16 @@ function insert(_ref3, callback) {
  * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
- * @param {Asset} params.book - Amended Book instance to PUT
  * @param {number} params.AMId - AMId of the Book to amend
+ * @param {Asset} params.book - Amended Book instance to PUT
  * @param {string} params.resourceId - Book ID of the Book to amend
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Book instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the amended Book instance
  */
 function amend(_ref4, callback) {
-  var book = _ref4.book,
-      AMId = _ref4.AMId,
-      resourceId = _ref4.resourceId,
-      token = _ref4.token;
+  var AMId = _ref4.AMId,
+      book = _ref4.book,
+      resourceId = _ref4.resourceId;
 
   var data = void 0;
   if (book) {
@@ -173,8 +164,7 @@ function amend(_ref4, callback) {
     AMaaSClass: 'book',
     AMId: AMId,
     resourceId: resourceId,
-    data: data,
-    token: token
+    data: data
   };
   var promise = (0, _network.putData)(params).then(function (result) {
     result = _parseBook(result);
@@ -199,20 +189,18 @@ function amend(_ref4, callback) {
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Books to be retired
  * @param {string} params.resourceId - Book ID of the Book to be retired
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the retired Book instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the retired Book instance
  */
 function retire(_ref5, callback) {
   var AMId = _ref5.AMId,
-      resourceId = _ref5.resourceId,
-      token = _ref5.token;
+      resourceId = _ref5.resourceId;
 
   var params = {
     AMaaSClass: 'book',
     AMId: AMId,
     resourceId: resourceId,
-    data: { bookStatus: 'Retired' },
-    token: token
+    data: { bookStatus: 'Retired' }
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseBook(result);
@@ -237,20 +225,18 @@ function retire(_ref5, callback) {
  * @param {object} params - object of parameters:
  * @param {string} params.AMId - AMId of the Books to be reactivated
  * @param {string} params.resourceId - Book ID of the Book to be reactivated
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the reactivated Book instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the reactivated Book instance
  */
 function reactivate(_ref6, callback) {
   var AMId = _ref6.AMId,
-      resourceId = _ref6.resourceId,
-      token = _ref6.token;
+      resourceId = _ref6.resourceId;
 
   var params = {
     AMaaSClass: 'book',
     AMId: AMId,
     resourceId: resourceId,
-    data: { bookStatus: 'Active' },
-    token: token
+    data: { bookStatus: 'Active' }
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseBook(result);
@@ -269,12 +255,4 @@ function reactivate(_ref6, callback) {
 
 function _parseBook(object) {
   return new _book2.default(object);
-}
-
-function _handleCallback(error, result, callback) {
-  if (error) {
-    callback(error);
-  } else {
-    callback(null, result);
-  }
 }
