@@ -17,8 +17,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function retrieve(_ref, callback) {
   var AMId = _ref.AMId,
-      resourceId = _ref.resourceId,
-      token = _ref.token;
+      resourceId = _ref.resourceId;
 
   var params = {
     AMaaSClass: 'positions',
@@ -27,11 +26,17 @@ function retrieve(_ref, callback) {
     token: token
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
-    var pos = _parsePos(result);
-    if (typeof callback === 'function') {
-      callback(null, pos);
+    if (Array.isArray(result)) {
+      result = result.map(function (pos) {
+        return _parsePos(pos);
+      });
     } else {
-      return pos;
+      result = _parsePos(result);
+    }
+    if (typeof callback === 'function') {
+      callback(null, result);
+    } else {
+      return result;
     }
   });
   if (typeof callback !== 'function') {
@@ -44,24 +49,24 @@ function retrieve(_ref, callback) {
 }
 
 function search(_ref2, callback) {
-  var queryKey = _ref2.queryKey,
-      queryValue = _ref2.queryValue,
-      token = _ref2.token;
+  var query = _ref2.query;
 
   var params = {
     AMaaSClass: 'positions',
-    queryKey: queryKey,
-    queryValue: queryValue,
-    token: token
+    query: query
   };
   var promise = (0, _network.searchData)(params).then(function (result) {
-    var positions = result.map(function (pos) {
-      return _parsePos(pos);
-    });
-    if (typeof callback === 'function') {
-      callback(null, positions);
+    if (Array.isArray(result)) {
+      result = result.map(function (pos) {
+        return _parsePos(pos);
+      });
     } else {
-      return positions;
+      result = _parsePos(result);
+    }
+    if (typeof callback === 'function') {
+      callback(null, result);
+    } else {
+      return result;
     }
   });
   if (typeof callback !== 'function') {

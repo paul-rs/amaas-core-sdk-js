@@ -190,13 +190,13 @@ function buildURL(_ref) {
       baseURL = getEndpoint() + '/asset/assets';
       break;
     case 'positions':
-      baseURL = getEndpoint() + '/position/positions';
+      baseURL = getEndpoint() + '/transaction/positions';
       break;
     case 'allocations':
-      baseURL = getEndpoint() + '/allocation/allocations';
+      baseURL = getEndpoint() + '/transaction/allocations';
       break;
     case 'netting':
-      baseURL = getEndpoint() + '/netting/netting';
+      baseURL = getEndpoint() + '/transaction/netting';
       break;
     case 'relationships':
       baseURL = getEndpoint() + '/asset-manager-relationship/asset-manager-relationships';
@@ -232,7 +232,6 @@ function makeRequest(_ref2) {
       data = _ref2.data;
 
   return getToken().then(function (res) {
-    console.log(res);
     switch (method) {
       case 'GET':
         return _superagent2.default.get(url).set(setAuthorization(), res).query({ camelcase: true });
@@ -534,14 +533,14 @@ function searchData(_ref8, callback) {
   }
   var data = { camelcase: true };
   for (var i = 0; i < query.length; i++) {
-    queryString[query[i].key] = query[i].values.join();
+    data[query[i].key] = query[i].values.join();
   }
   var promise = makeRequest({ method: 'SEARCH', url: url, data: data });
   // let promise = request.get(url).set('x-api-key', token).query(queryString)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
-      return response;
+      return response.body;
     });
   }
   promise.end(function (error, response) {

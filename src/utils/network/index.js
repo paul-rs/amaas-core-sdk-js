@@ -145,13 +145,13 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
       baseURL = `${getEndpoint()}/asset/assets`
       break
     case 'positions':
-      baseURL = `${getEndpoint()}/position/positions`
+      baseURL = `${getEndpoint()}/transaction/positions`
       break
     case 'allocations':
-      baseURL = `${getEndpoint()}/allocation/allocations`
+      baseURL = `${getEndpoint()}/transaction/allocations`
       break
     case 'netting':
-      baseURL = `${getEndpoint()}/netting/netting`
+      baseURL = `${getEndpoint()}/transaction/netting`
       break
     case 'relationships':
       baseURL = `${getEndpoint()}/asset-manager-relationship/asset-manager-relationships`
@@ -184,7 +184,6 @@ export function setAuthorization() {
 export function makeRequest({ method, url, data }) {
   return getToken()
     .then(res => {
-      console.log(res)
       switch (method) {
         case 'GET':
           return request.get(url).set(setAuthorization(), res).query({ camelcase: true })
@@ -449,13 +448,13 @@ export function searchData({ AMaaSClass, query }, callback) {
   }
   let data = { camelcase: true }
   for (let i = 0; i < query.length; i++) {
-    queryString[query[i].key] = query[i].values.join()
+    data[query[i].key] = query[i].values.join()
   }
   let promise = makeRequest({ method: 'SEARCH', url, data })
   // let promise = request.get(url).set('x-api-key', token).query(queryString)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
-    return promise.then(response => response)
+    return promise.then(response => response.body)
   }
   promise.end((error, response) => {
     let body

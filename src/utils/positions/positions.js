@@ -2,7 +2,7 @@ import { retrieveData, insertData, patchData, putData, deleteData, searchData } 
 
 import Position from '../../transactions/Positions/position.js'
 
-export function retrieve({AMId, resourceId, token}, callback) {
+export function retrieve({ AMId, resourceId }, callback) {
   const params = {
     AMaaSClass: 'positions',
     AMId,
@@ -10,11 +10,17 @@ export function retrieve({AMId, resourceId, token}, callback) {
     token
   }
   let promise = retrieveData(params).then(result => {
-    const pos = _parsePos(result)
-    if (typeof callback === 'function') {
-      callback(null, pos)
+    if (Array.isArray(result)) {
+      result = result.map(pos => (
+        _parsePos(pos)
+      ))
     } else {
-      return pos
+      result = _parsePos(result)
+    }
+    if (typeof callback === 'function') {
+      callback(null, result)
+    } else {
+      return result
     }
   })
   if (typeof callback !== 'function') {
@@ -24,21 +30,23 @@ export function retrieve({AMId, resourceId, token}, callback) {
   promise.catch(error => callback(error))
 }
 
-export function search({queryKey, queryValue, token}, callback) {
+export function search({ query }, callback) {
   const params = {
     AMaaSClass: 'positions',
-    queryKey,
-    queryValue,
-    token
+    query
   }
   let promise = searchData(params).then(result => {
-    const positions = result.map((pos) => {
-      return _parsePos(pos)
-    })
-    if (typeof callback === 'function') {
-      callback(null, positions)
+    if (Array.isArray(result)) {
+      result = result.map(pos => {
+        return _parsePos(pos)
+      })
     } else {
-      return positions
+      result = _parsePos(result)
+    }
+    if (typeof callback === 'function') {
+      callback(null, result)
+    } else {
+      return result
     }
   })
   if (typeof callback !== 'function') {

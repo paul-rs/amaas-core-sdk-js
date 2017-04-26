@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.transactions = exports.positions = exports.parties = exports.books = exports.assets = exports.assetManagers = exports.api = undefined;
+exports.transactions = exports.parties = exports.books = exports.assets = exports.assetManagers = exports.api = undefined;
 
 var _assetManager = require('./exports/assetManager');
 
@@ -21,10 +21,6 @@ var _parties = require('./exports/parties');
 
 var parties = _interopRequireWildcard(_parties);
 
-var _positions = require('./exports/positions');
-
-var positions = _interopRequireWildcard(_positions);
-
 var _transactions = require('./exports/transactions');
 
 var transactions = _interopRequireWildcard(_transactions);
@@ -40,5 +36,4 @@ exports.assetManagers = assetManagers;
 exports.assets = assets;
 exports.books = books;
 exports.parties = parties;
-exports.positions = positions;
 exports.transactions = transactions;

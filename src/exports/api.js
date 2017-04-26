@@ -20,6 +20,7 @@ export {
   Assets,
   Books,
   Parties,
+  Positions,
   config
 }
 
