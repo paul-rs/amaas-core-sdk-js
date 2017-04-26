@@ -7,6 +7,7 @@ exports.retrieve = retrieve;
 exports.insert = insert;
 exports.amend = amend;
 exports.partialAmend = partialAmend;
+exports.cancel = cancel;
 
 var _network = require('../network');
 
@@ -178,6 +179,40 @@ function partialAmend(_ref4, callback) {
   });
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
+  });
+}
+
+/**
+ * Cancel a Transaction
+ * @function cancel
+ * @memberof module:api.Transactions
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
+ * @param {string} params.resourceId - Transaction ID
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ */
+function cancel(_ref5, callback) {
+  var AMId = _ref5.AMId,
+      resourceId = _ref5.resourceId;
+
+  var params = {
+    AMaaSClass: 'transactions',
+    AMId: AMId,
+    resourceId: resourceId
+  };
+  var promise = (0, _network.deleteData)(params).then(function (result) {
+    result = _parseTransaction(result);
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
     return promise;
   }
   promise.catch(function (error) {

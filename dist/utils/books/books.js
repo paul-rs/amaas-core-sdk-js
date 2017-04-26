@@ -53,9 +53,8 @@ function retrieve(_ref, callback) {
     }
     if (typeof callback === 'function') {
       callback(null, books);
-    } else {
-      return books;
     }
+    return books;
   });
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -95,9 +94,8 @@ function search(_ref2, callback) {
     });
     if (typeof callback === 'function') {
       callback(null, books);
-    } else {
-      return books;
     }
+    return books;
   });
   if (typeof callback !== 'function') {
     // return promise if callback is not provided

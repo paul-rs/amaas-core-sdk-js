@@ -1,11 +1,46 @@
-import { retrieve, insert, amend, partialAmend } from './transactions'
+import { retrieve, insert, amend, partialAmend, cancel } from './transactions'
+import * as api from '../../exports/api'
+
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
+
+api.config({
+  stage: 'staging',
+  apiKey: process.env.API_TOKEN
+})
 
 const token = process.env.API_TOKEN
 
 describe('utils/transactions', () => {
   describe('retrieve', () => {
+    test('with callback', done => {
+      const params = { AMId: 1 }
+      retrieve(params, (err, res) => {
+        expect(res).toBeDefined()
+        if (Array.isArray(res)) {
+          expect(res[0].transactionId).toBeDefined()
+          done()
+        } else {
+          expect(res.transactionId).toBeDefined()
+          done()
+        }
+      })
+    })
+
+    test('with promise', done => {
+      let promise = retrieve({ AMId: 1 })
+      expect(promise).toBeInstanceOf(Promise)
+      promise.then(res => {
+        if (Array.isArray(res)) {
+          expect(res[0].transactionId).toBeDefined()
+          done()
+        } else {
+          expect(res.transactionId).toBeDefined()
+          done()
+        }
+      })
+    })
     it('retrieves', done => {
-      retrieve({ AMId: 1, resourceId: '4f82cc16adf14af9bfc01da8e7c6e580', token })
+      retrieve({ AMId: 1, resourceId: '4f82cc16adf14af9bfc01da8e7c6e580' })
         .then(res => {
           expect(res).toBeDefined()
           expect(res.transactionId).toEqual('4f82cc16adf14af9bfc01da8e7c6e580')
@@ -88,6 +123,21 @@ describe('utils/transactions', () => {
           done()
         })
         .catch(err => {})
+    })
+  })
+
+  describe('cancel', () => {
+    it.skip('cancels', done => {
+      retrieve({ AMId: 1 })
+        .then(res => {
+          const tId = res[0].transactionId
+          return cancel({ AMId: res[0].assetManagerId, resourceId: tId })
+        })
+        .then(res => {
+          expect(res.transactionStatus).toEqual('Cancelled')
+          done()
+        })
+        .catch(err => console.error(err))
     })
   })
 })

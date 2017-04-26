@@ -146,6 +146,35 @@ export function partialAmend({ changes, AMId, resourceId, token }, callback) {
   promise.catch(error => callback(error))
 }
 
+/**
+ * Cancel a Transaction
+ * @function cancel
+ * @memberof module:api.Transactions
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
+ * @param {string} params.resourceId - Transaction ID
+ * @param {function} callback - Called with two arguments (error, result) on completion
+ */
+ export function cancel({ AMId, resourceId }, callback) {
+   const params = {
+     AMaaSClass: 'transactions',
+     AMId,
+     resourceId
+   }
+   let promise = deleteData(params).then(result => {
+     result = _parseTransaction(result)
+     if (typeof callback === 'function') {
+       callback(null, result)
+     }
+     return result
+   })
+   if (typeof callback !== 'function') {
+     return promise
+   }
+   promise.catch(error => callback(error))
+ }
+
 function _parseTransaction(t) {
   return new Transaction(t)
 }

@@ -31,9 +31,8 @@ export function retrieve({AMId, resourceId, token}, callback) {
     }
     if (typeof callback === 'function') {
       callback(null, books)
-    } else {
-      return books
     }
+    return books
   })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -67,9 +66,8 @@ export function search({queryKey, queryValue, token}, callback) {
     })
     if (typeof callback === 'function') {
       callback(null, books)
-    } else {
-      return books
     }
+    return books
   })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
