@@ -15,14 +15,22 @@ var _position2 = _interopRequireDefault(_position);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Retrieve a Position from the database
+ * @function retrieve
+ * @memberof module:api.Positions
+ * @static
+ * @param {object} params - object of parameters
+ * @param {number} params.AMId - Asset Manager ID of the the Positions
+ * @param {function} callback - Called with two arugments (error, result) on completion
+ * @returns {Promise|null} f no callback is supplied, returns promise that resolves with array of Positions.
+ */
 function retrieve(_ref, callback) {
-  var AMId = _ref.AMId,
-      resourceId = _ref.resourceId;
+  var AMId = _ref.AMId;
 
   var params = {
     AMaaSClass: 'positions',
     AMId: AMId,
-    resourceId: resourceId,
     token: token
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
@@ -35,9 +43,8 @@ function retrieve(_ref, callback) {
     }
     if (typeof callback === 'function') {
       callback(null, result);
-    } else {
-      return result;
     }
+    return result;
   });
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -48,11 +55,23 @@ function retrieve(_ref, callback) {
   });
 }
 
+/**
+ * Search for Positions in the database
+ * @function search
+ * @memberof module:api.Positions
+ * @static
+ * @param {object} params - object of parameters
+ * @param {array} params.query - array of query objects: { key: string, values: array }. e.g. [{ key: 'book_ids', values: [1, 2, 3] }]
+ * @param {function} [callback] - Called with two arguments (error, result) on completion
+ * @returns {Promise|null} If no callback is supplied, returns promise that resolves with array of Positions.
+ */
 function search(_ref2, callback) {
-  var query = _ref2.query;
+  var AMId = _ref2.AMId,
+      query = _ref2.query;
 
   var params = {
     AMaaSClass: 'positions',
+    AMId: AMId,
     query: query
   };
   var promise = (0, _network.searchData)(params).then(function (result) {
@@ -65,9 +84,8 @@ function search(_ref2, callback) {
     }
     if (typeof callback === 'function') {
       callback(null, result);
-    } else {
-      return result;
     }
+    return result;
   });
   if (typeof callback !== 'function') {
     // return promise if callback is not provided

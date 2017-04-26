@@ -26,9 +26,8 @@ describe('utils/positions', () => {
   describe('search', () => {
     test('with callback', callback => {
       search({
-        token,
-        queryKey: 'asset_manager_ids',
-        queryValue: [269]
+        AMId: 1,
+        query: [{ key: 'book_ids', values: ['GRGWGA']}]
       }, (error, positions) => {
         expect(Array.isArray(positions)).toBeTruthy()
         expect(positions[0]).toBeInstanceOf(Position)
@@ -50,7 +49,7 @@ describe('utils/positions', () => {
       })
     })
 
-    it.only('should search', done => {
+    it('should search', done => {
       const query = [
         { key: 'book_ids', values: ['BY1BABL8ZX'] }
       ]
