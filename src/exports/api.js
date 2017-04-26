@@ -21,6 +21,7 @@ export {
   Books,
   Parties,
   Positions,
+  Transactions,
   config
 }
 

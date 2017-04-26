@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.config = exports.Positions = exports.Parties = exports.Books = exports.Assets = exports.AssetManagers = undefined;
+exports.config = exports.Transactions = exports.Positions = exports.Parties = exports.Books = exports.Assets = exports.AssetManagers = undefined;
 
 var _allocations = require('../utils/allocations');
 
@@ -55,6 +55,7 @@ exports.Assets = Assets;
 exports.Books = Books;
 exports.Parties = Parties;
 exports.Positions = Positions;
+exports.Transactions = Transactions;
 exports.config = config;
 
 
