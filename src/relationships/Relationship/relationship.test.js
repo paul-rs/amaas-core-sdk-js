@@ -9,6 +9,13 @@ describe('Relationship', () => {
       expect(tester).toThrowError('Invalid Relationship Type: notAType')
     })
 
+    it('should default relationshipStatus to "Pending"', () => {
+      const testRel = new Relationship({
+        relationshipType: 'Employee'
+      })
+      expect(testRel.relationshipStatus).toEqual('Pending')
+    })
+
     it('should construct', () => {
       const testRel = new Relationship({
         assetManagerId: 'testAMId',

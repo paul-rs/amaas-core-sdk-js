@@ -28,7 +28,7 @@ class Relationship extends AMaaSModel {
     relatedId,
     relationshipType,
     clientId,
-    relationshipStatus,
+    relationshipStatus='Pending',
     createdBy,
     updatedBy,
     createdTime,
