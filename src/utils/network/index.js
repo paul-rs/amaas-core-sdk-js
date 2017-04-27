@@ -159,6 +159,9 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
     case 'transactions':
       baseURL = `${getEndpoint()}/transaction/transactions`
       break
+    case 'corporateActions':
+      baseURL = `${getEndpoint()}/corporateaction/corporate-actions`
+      break
     default:
       throw new Error(`Invalid class type: ${AMaaSClass}`)
   }
@@ -426,7 +429,7 @@ export function deleteData({ AMaaSClass, AMId, resourceId }, callback) {
  *     { key: 'assetTypes', values: ['GovernmentBond, ForeignExchange']}
  *   ]
  */
-export function searchData({ AMaaSClass, query }, callback) {
+export function searchData({ AMaaSClass, AMId, query }, callback) {
   // if (stage === 'dev' || stage === 'staging' && !token) {
   //   if (typeof callback !== 'function') {
   //     return Promise.reject('Missing Authorization')
@@ -437,7 +440,8 @@ export function searchData({ AMaaSClass, query }, callback) {
   let url
   try {
     url = buildURL({
-      AMaaSClass
+      AMaaSClass,
+      AMId
     })
   } catch (e) {
     if (typeof callback !== 'function') {

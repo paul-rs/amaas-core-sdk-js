@@ -204,6 +204,9 @@ function buildURL(_ref) {
     case 'transactions':
       baseURL = getEndpoint() + '/transaction/transactions';
       break;
+    case 'corporateActions':
+      baseURL = getEndpoint() + '/corporateaction/corporate-actions';
+      break;
     default:
       throw new Error('Invalid class type: ' + AMaaSClass);
   }
@@ -510,6 +513,7 @@ function deleteData(_ref7, callback) {
  */
 function searchData(_ref8, callback) {
   var AMaaSClass = _ref8.AMaaSClass,
+      AMId = _ref8.AMId,
       query = _ref8.query;
 
   // if (stage === 'dev' || stage === 'staging' && !token) {
@@ -522,7 +526,8 @@ function searchData(_ref8, callback) {
   var url = void 0;
   try {
     url = buildURL({
-      AMaaSClass: AMaaSClass
+      AMaaSClass: AMaaSClass,
+      AMId: AMId
     });
   } catch (e) {
     if (typeof callback !== 'function') {
