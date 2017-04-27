@@ -12,13 +12,15 @@ describe('Relationship', () => {
     it('should construct', () => {
       const testRel = new Relationship({
         assetManagerId: 'testAMId',
-        relationId: 'testRelId',
+        relationshipId: 'testRelationshipId',
+        relatedId: 'testRelatedId',
         relationshipStatus: 'testRelStatus',
         relationshipType: 'Employee',
         clientId: 'testClientId'
       })
       expect(testRel.assetManagerId).toEqual('testAMId')
-      expect(testRel.relationId).toEqual('testRelId')
+      expect(testRel.relationshipId).toEqual('testRelationshipId')
+      expect(testRel.relatedId).toEqual('testRelatedId')
       expect(testRel.relationshipStatus).toEqual('testRelStatus')
       expect(testRel.relationshipType).toEqual('Employee')
       expect(testRel.clientId).toEqual('testClientId')

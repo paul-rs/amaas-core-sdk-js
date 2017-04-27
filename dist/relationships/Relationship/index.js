@@ -26,7 +26,8 @@ var Relationship = function (_AMaaSModel) {
    * Construct a new Relationship instance
    * @param {object} params - Relationship creation options
    * @param {number} params.assetManagerId - ID of the Asset Manager who owns this Relationship
-   * @param {number} params.relationId - ID of the Asset Manager to whom this Relationship connects
+   * @param {number} params.relationshipId - ID of the Relationship (to uniquely identity Relationship amongst other Relationships between the same parties)
+   * @param {number} params.relatedId - ID of the Asset Manager to whom this Relationship connects
    * @param {string} params.relationshipType - The type of Relationship between these Asset Managers
    * @param {string} params.clientId - The client ID that owns this Relationship
    * @param {string} params.relationshipStatus - The status of the Relationship
@@ -38,7 +39,8 @@ var Relationship = function (_AMaaSModel) {
    */
   function Relationship(_ref) {
     var assetManagerId = _ref.assetManagerId,
-        relationId = _ref.relationId,
+        relationshipId = _ref.relationshipId,
+        relatedId = _ref.relatedId,
         relationshipType = _ref.relationshipType,
         clientId = _ref.clientId,
         relationshipStatus = _ref.relationshipStatus,
@@ -76,7 +78,8 @@ var Relationship = function (_AMaaSModel) {
       }
     });
     _this.assetManagerId = assetManagerId;
-    _this.relationId = relationId;
+    _this.relationshipId = relationshipId;
+    _this.relatedId = relatedId;
     _this.clientId = clientId;
     _this.relationshipStatus = relationshipStatus;
     _this.relationshipType = relationshipType;
