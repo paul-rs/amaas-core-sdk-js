@@ -7,6 +7,7 @@ exports.retrieve = retrieve;
 exports.insert = insert;
 exports.amend = amend;
 exports.partialAmend = partialAmend;
+exports.search = search;
 exports.deactivate = deactivate;
 exports.reactivate = reactivate;
 exports._parseParty = _parseParty;
@@ -198,6 +199,53 @@ function partialAmend(_ref4, callback) {
 }
 
 /**
+ * Search for Parties
+ * @function search
+ * @memberof module:api.Parties
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} [params.AMId] - Asset Manager of the Parties to search over. Omit to return matching parties for all permissioned Asset Managers
+ * @param {array} params.query - Array of query parameters of the form: [{ key: <string>, values: <array> }]. e.g. [{ key: 'client_ids', values: [1, 2, 3] }]<br />
+ * Available keys are:
+ * <li>client_ids</li>
+ * <li>party_statuses</li>
+ * <li>party_ids</li>
+ * <li>party_classes</li>
+ * <li>party_types</li>
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Parties or a single Party instance. Omit to return promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Parties or a single Party instance
+ */
+function search(_ref5, callback) {
+  var AMId = _ref5.AMId,
+      query = _ref5.query;
+
+  var params = {
+    AMaaSClass: 'parties',
+    AMId: AMId,
+    query: query
+  };
+  var promise = (0, _network.searchData)(params).then(function (result) {
+    if (Array.isArray(result)) {
+      result = result.map(function (party) {
+        return _parseParty(party);
+      });
+    } else {
+      result = _parseParty(result);
+    }
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
+  });
+}
+
+/**
  * Deactivate an exising Party. This will set the Party status to 'Inactive'
  * @function deactivate
  * @memberof module:api.Parties
@@ -208,9 +256,9 @@ function partialAmend(_ref4, callback) {
  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the deactivated Party instance. Omit to return Promise
  * @erturns {PRomise|null} If no callback supplied, returns a Promise that resolves with the deactivated Party instance
  */
-function deactivate(_ref5, callback) {
-  var AMId = _ref5.AMId,
-      resourceId = _ref5.resourceId;
+function deactivate(_ref6, callback) {
+  var AMId = _ref6.AMId,
+      resourceId = _ref6.resourceId;
 
   var params = {
     AMaaSClass: 'parties',
@@ -245,9 +293,9 @@ function deactivate(_ref5, callback) {
  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the reactivated Party instance. Omit to return Promise
  * @erturns {Promise|null} If no callback supplied, returns a Promise that resolves with the reactivated Party instance
  */
-function reactivate(_ref6, callback) {
-  var AMId = _ref6.AMId,
-      resourceId = _ref6.resourceId;
+function reactivate(_ref7, callback) {
+  var AMId = _ref7.AMId,
+      resourceId = _ref7.resourceId;
 
   var params = {
     AMaaSClass: 'parties',

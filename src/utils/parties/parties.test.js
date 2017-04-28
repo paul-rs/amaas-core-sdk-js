@@ -1,11 +1,17 @@
 import uuid from 'uuid'
 import ENDPOINTS from '../../config.js'
-import { retrieve, _parseParty, insert, partialAmend, amend, deactivate, reactivate } from './parties.js'
+import { retrieve, _parseParty, insert, partialAmend, amend, search, deactivate, reactivate } from './parties.js'
 import Party from '../../parties/Party/party.js'
 import Individual from '../../parties/Individual/individual'
 import Broker from '../../parties/Broker/broker.js'
 import Address from '../../parties/Children/address.js'
+import * as api from '../../exports/api'
 
+api.config({
+  stage: 'staging',
+  apiKey: process.env.API_TOKEN
+})
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
 let token = process.env.API_TOKEN
 
 describe('parties util functions', () => {
@@ -106,6 +112,27 @@ describe('parties util functions', () => {
           done()
         })
       })
+  })
+
+  describe('search', () => {
+    it.only('searches', done => {
+      const query = [
+        { key: 'party_types', values: ['Broker', 'Individual'] }
+      ]
+      search({ AMId: 516, query })
+        .then(res => {
+          if (Array.isArray(res)) {
+            const pT = res[0].partyType
+            expect(pT).toEqual(pT !== 'Broker' ? 'Individual' : 'Broker')
+            done()
+          } else {
+            const pT = res.partyType
+            expect(pT).toEqual(pT !== 'Broker' ? 'Individual' : 'Broker')
+            done()
+          }
+        })
+        .catch(err => console.error(err))
+    })
   })
 
   describe('deactivate', () => {

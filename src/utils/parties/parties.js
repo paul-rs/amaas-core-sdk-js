@@ -1,4 +1,4 @@
-import { retrieveData, insertData, patchData, putData, deleteData } from '../network'
+import { retrieveData, insertData, patchData, putData, deleteData, searchData } from '../network'
 import * as PartyClasses from '../../parties'
 
 import Address from '../../parties/Children/address.js'
@@ -141,6 +141,46 @@ export function partialAmend({ AMId, changes, resourceId }, callback) {
   })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
+}
+
+/**
+ * Search for Parties
+ * @function search
+ * @memberof module:api.Parties
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} [params.AMId] - Asset Manager of the Parties to search over. Omit to return matching parties for all permissioned Asset Managers
+ * @param {array} params.query - Array of query parameters of the form: [{ key: <string>, values: <array> }]. e.g. [{ key: 'client_ids', values: [1, 2, 3] }]<br />
+ * Available keys are:
+ * <li>client_ids</li>
+ * <li>party_statuses</li>
+ * <li>party_ids</li>
+ * <li>party_classes</li>
+ * <li>party_types</li>
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Parties or a single Party instance. Omit to return promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Parties or a single Party instance
+ */
+export function search({ AMId, query }, callback) {
+  const params = {
+    AMaaSClass: 'parties',
+    AMId,
+    query
+  }
+  let promise = searchData(params).then(result => {
+    if (Array.isArray(result)) {
+      result = result.map(party => _parseParty(party))
+    } else {
+      result = _parseParty(result)
+    }
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
+  })
+  if (typeof callback !== 'function') {
     return promise
   }
   promise.catch(error => callback(error))
