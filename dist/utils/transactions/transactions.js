@@ -7,6 +7,7 @@ exports.retrieve = retrieve;
 exports.insert = insert;
 exports.amend = amend;
 exports.partialAmend = partialAmend;
+exports.search = search;
 exports.cancel = cancel;
 
 var _network = require('../network');
@@ -178,6 +179,64 @@ function partialAmend(_ref4, callback) {
 }
 
 /**
+ * Search Transactions
+ * @function search
+ * @memberof module:api.Transactions
+ * @static
+ * @param {object} params - object of parameters
+ * @param {number} [params.AMId] - Asset Manager ID of the Transactions to search over. Omit to return all matching Transactions for all permissioned Asset Managers
+ * @param {array} params.query - Array of query parameters of the form: [{ key: <string>, values: <array> }]. e.g. [{ key: book_ids, values: [1, 2, 3]}]<br />
+ * Available keys are:
+ * <li>client_ids</li>
+ * <li>transaction_statuses</li>
+ * <li>transaction_ids</li>
+ * <li>asset_book_ids</li>
+ * <li>counterparty_book_ids</li>
+ * <li>asset_ids</li>
+ * <li>transaction_date_start</li>
+ * <li>transaction_date_end</li>
+ * <li>code_types</li>
+ * <li>code_values</li>
+ * <li>link_types</li>
+ * <li>linked_transaction_ids</li>
+ * <li>party_types</li>
+ * <li>party_ids</li>
+ * <li>reference_types</li>
+ * <li>reference_values</li>
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Transactions or a single Transaction instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Transactions or a single Transaction instance
+ */
+function search(_ref5, callback) {
+  var AMId = _ref5.AMId,
+      query = _ref5.query;
+
+  var params = {
+    AMaaSClass: 'transactions',
+    AMId: AMId,
+    query: query
+  };
+  var promise = (0, _network.searchData)(params).then(function (result) {
+    if (Array.isArray(result)) {
+      result = result.map(function (tran) {
+        return _parseTransaction(tran);
+      });
+    } else {
+      result = _parseTransaction(result);
+    }
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
+  });
+}
+
+/**
  * Cancel a Transaction
  * @function cancel
  * @memberof module:api.Transactions
@@ -188,9 +247,9 @@ function partialAmend(_ref4, callback) {
  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the cancelled Transaction instance. Omit to return Promise
  * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the cancelled Transaction instance. Note that this is the only time the API returns a Transaction instance where transactionStatus === 'Cancelled'
  */
-function cancel(_ref5, callback) {
-  var AMId = _ref5.AMId,
-      resourceId = _ref5.resourceId;
+function cancel(_ref6, callback) {
+  var AMId = _ref6.AMId,
+      resourceId = _ref6.resourceId;
 
   var params = {
     AMaaSClass: 'transactions',

@@ -1,4 +1,4 @@
-import { retrieveData, insertData, patchData, putData, deleteData } from '../network'
+import { retrieveData, insertData, patchData, putData, searchData, deleteData } from '../network'
 import { Transaction } from '../../transactions'
 
 /**
@@ -136,6 +136,57 @@ export function partialAmend({ changes, AMId, resourceId }, callback) {
   })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
+}
+
+/**
+ * Search Transactions
+ * @function search
+ * @memberof module:api.Transactions
+ * @static
+ * @param {object} params - object of parameters
+ * @param {number} [params.AMId] - Asset Manager ID of the Transactions to search over. Omit to return all matching Transactions for all permissioned Asset Managers
+ * @param {array} params.query - Array of query parameters of the form: [{ key: <string>, values: <array> }]. e.g. [{ key: book_ids, values: [1, 2, 3]}]<br />
+ * Available keys are:
+ * <li>client_ids</li>
+ * <li>transaction_statuses</li>
+ * <li>transaction_ids</li>
+ * <li>asset_book_ids</li>
+ * <li>counterparty_book_ids</li>
+ * <li>asset_ids</li>
+ * <li>transaction_date_start</li>
+ * <li>transaction_date_end</li>
+ * <li>code_types</li>
+ * <li>code_values</li>
+ * <li>link_types</li>
+ * <li>linked_transaction_ids</li>
+ * <li>party_types</li>
+ * <li>party_ids</li>
+ * <li>reference_types</li>
+ * <li>reference_values</li>
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Transactions or a single Transaction instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Transactions or a single Transaction instance
+ */
+export function search({ AMId, query }, callback) {
+  const params = {
+    AMaaSClass: 'transactions',
+    AMId,
+    query
+  }
+  let promise = searchData(params).then(result => {
+    if (Array.isArray(result)) {
+      result = result.map(tran => _parseTransaction(tran))
+    } else {
+      result = _parseTransaction(result)
+    }
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
+  })
+  if (typeof callback !== 'function') {
     return promise
   }
   promise.catch(error => callback(error))

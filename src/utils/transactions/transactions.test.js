@@ -1,4 +1,4 @@
-import { retrieve, insert, amend, partialAmend, cancel } from './transactions'
+import { retrieve, insert, amend, partialAmend, search, cancel } from './transactions'
 import * as api from '../../exports/api'
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
@@ -123,6 +123,25 @@ describe('utils/transactions', () => {
           done()
         })
         .catch(err => {})
+    })
+  })
+
+  describe('search', () => {
+    it('searches', done => {
+      const query = [
+        { key: 'asset_book_ids', values: ['Z5FHJFCO6M', 'Y0JTY73A9T'] }
+      ]
+      search({ AMId: 1, query })
+        .then(res => {
+          if (Array.isArray(res)) {
+            res = res[0]
+            expect(res.assetBookId).toEqual(res.assetBookId !== 'Z5FHJFCO6M' ? 'Y0JTY73A9T' : 'Z5FHJFCO6M')
+          } else {
+            expect(res.assetBookId).toEqual(res.assetBookId !== 'Z5FHJFCO6M' ? 'Y0JTY73A9T' : 'Z5FHJFCO6M')
+          }
+          done()
+        })
+        .catch(err => console.error(err))
     })
   })
 
