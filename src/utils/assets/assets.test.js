@@ -1,8 +1,14 @@
 import uuid from 'uuid'
 
-import { retrieve, insert, amend, partialAmend, deactivate, reactivate } from './assets.js'
+import { retrieve, insert, amend, partialAmend, search, deactivate, reactivate } from './assets.js'
 import Asset from '../../assets/Asset/asset.js'
+import * as api from '../../exports/api'
 
+api.config({
+  stage: 'staging',
+  apiKey: process.env.API_TOKEN
+})
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
 let token = process.env.API_TOKEN
 
 describe('utils/assets', () => {
@@ -93,6 +99,37 @@ describe('utils/assets', () => {
           expect(err).toBeUndefined()
           done()
         })
+    })
+  })
+
+  describe('search', () => {
+    it('searches', done => {
+      const query = [
+        { key: 'asset_classes', values: ['Asset', 'ForeignExchange']}
+      ]
+      search({ AMId: 1, query })
+        .then(res => {
+          if (Array.isArray(res)) {
+            expect(res[0]).toBeDefined()
+            if (res[0].assetClass !== 'Asset') {
+              expect(res[0].assetClass).toEqual('ForeignExchange')
+              done()
+            } else {
+              expect(res[0].assetClass).toEqual('Asset')
+              done()
+            }
+          } else {
+            const aC = res.assetClass
+            if (aC !== 'Asset') {
+              expect(aC).toEqual('ForeignExchange')
+              done()
+            } else {
+              expect(aC).toEqual('Asset')
+              done()
+            }
+          }
+        })
+        .catch(err => console.error(err))
     })
   })
 

@@ -7,6 +7,7 @@ exports.retrieve = retrieve;
 exports.insert = insert;
 exports.amend = amend;
 exports.partialAmend = partialAmend;
+exports.search = search;
 exports.deactivate = deactivate;
 exports.reactivate = reactivate;
 exports._parseAsset = _parseAsset;
@@ -188,6 +189,56 @@ function partialAmend(_ref4, callback) {
 }
 
 /**
+ * Search for Assets
+ * @function search
+ * @memberof module:api.Assets
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} [params.AMId] - Asset Manager ID of the Assets to search over. Omit to return results for all permissioned Asset Managers
+ * @param {array} params.query - Search parameters of the form [{ key: <string>, values: <array> }]<br />
+ * Available keys are:
+ * <li>client_ids</li>
+ * <li>asset_statuses</li>
+ * <li>asset_ids</li>
+ * <li>reference_types</li>
+ * <li>reference_values</li>
+ * <li>asset_issuer_ids</li>
+ * <li>asset_classes</li>
+ * <li>asset_types</li>
+ * @param {function} callback - Called with two arguments (error, result) on completion. `result` is an array of Assets or a single Asset instance
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Assets or a single Asset instance
+ */
+function search(_ref5, callback) {
+  var AMId = _ref5.AMId,
+      query = _ref5.query;
+
+  var params = {
+    AMaaSClass: 'assets',
+    AMId: AMId,
+    query: query
+  };
+  var promise = (0, _network.searchData)(params).then(function (result) {
+    if (Array.isArray(result)) {
+      result = result.map(function (ass) {
+        return _parseAsset(ass);
+      });
+    } else {
+      result = _parseAsset(result);
+    }
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
+  });
+}
+
+/**
  * Delete an exising Asset. This will set the Asset status to 'Inactive'.
  * @function deactivate
  * @memberof module:api.Assets
@@ -198,9 +249,9 @@ function partialAmend(_ref4, callback) {
  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the deactivated Asset instance. Omit to return Promise
  * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the deactivated Asset instance
  */
-function deactivate(_ref5, callback) {
-  var AMId = _ref5.AMId,
-      resourceId = _ref5.resourceId;
+function deactivate(_ref6, callback) {
+  var AMId = _ref6.AMId,
+      resourceId = _ref6.resourceId;
 
   var params = {
     AMaaSClass: 'assets',
@@ -235,9 +286,9 @@ function deactivate(_ref5, callback) {
  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the reactivated Asset instance. Omit to return Promise
  * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with the reactivated Asset instance
  */
-function reactivate(_ref6, callback) {
-  var AMId = _ref6.AMId,
-      resourceId = _ref6.resourceId;
+function reactivate(_ref7, callback) {
+  var AMId = _ref7.AMId,
+      resourceId = _ref7.resourceId;
 
   var params = {
     AMaaSClass: 'assets',

@@ -26,7 +26,10 @@ function retrieve(_ref, callback) {
       resourceId = _ref.resourceId;
 
   if (!AMId || !resourceId) {
-    throw new Error('Asset Manager ID and Transaction ID are required for allocations');
+    if (typeof callback === 'function') {
+      return callback('Asset Manager ID and Transaction ID are required for allocations');
+    }
+    return Promise.reject('Asset Manager ID and Transaction ID are required for allocations');
   }
   var params = {
     AMaaSClass: 'allocations',
@@ -68,7 +71,10 @@ function send(_ref2, callback) {
       data = _ref2.data;
 
   if (!AMId || !resourceId) {
-    throw new Error('Asset Manager ID and Transaction ID are required for allocations');
+    if (typeof callback === 'function') {
+      return callback('Asset Manager ID and Transaction ID are required for allocations');
+    }
+    return Promise.reject('Asset Manager ID and Transaction ID are required for allocations');
   }
   var params = {
     AMaaSClass: 'allocations',

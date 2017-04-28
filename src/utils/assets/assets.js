@@ -1,4 +1,4 @@
-import { retrieveData, insertData, patchData, putData, deleteData } from '../network'
+import { retrieveData, insertData, patchData, putData, deleteData, searchData } from '../network'
 
 import * as AssetClasses from '../../assets'
 
@@ -139,6 +139,49 @@ export function partialAmend({ AMId, changes, resourceId }, callback) {
   })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
+    return promise
+  }
+  promise.catch(error => callback(error))
+}
+
+/**
+ * Search for Assets
+ * @function search
+ * @memberof module:api.Assets
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} [params.AMId] - Asset Manager ID of the Assets to search over. Omit to return results for all permissioned Asset Managers
+ * @param {array} params.query - Search parameters of the form [{ key: <string>, values: <array> }]<br />
+ * Available keys are:
+ * <li>client_ids</li>
+ * <li>asset_statuses</li>
+ * <li>asset_ids</li>
+ * <li>reference_types</li>
+ * <li>reference_values</li>
+ * <li>asset_issuer_ids</li>
+ * <li>asset_classes</li>
+ * <li>asset_types</li>
+ * @param {function} callback - Called with two arguments (error, result) on completion. `result` is an array of Assets or a single Asset instance
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Assets or a single Asset instance
+ */
+export function search({ AMId, query }, callback) {
+  const params = {
+    AMaaSClass: 'assets',
+    AMId,
+    query
+  }
+  let promise = searchData(params).then(result => {
+    if (Array.isArray(result)) {
+      result = result.map(ass => _parseAsset(ass))
+    } else {
+      result = _parseAsset(result)
+    }
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
+  })
+  if (typeof callback !== 'function') {
     return promise
   }
   promise.catch(error => callback(error))

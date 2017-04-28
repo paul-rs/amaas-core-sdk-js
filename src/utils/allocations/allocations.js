@@ -14,7 +14,10 @@ import { Link } from '../../children'
  */
 export function retrieve({ AMId, resourceId }, callback) {
   if (!AMId || !resourceId) {
-    throw new Error('Asset Manager ID and Transaction ID are required for allocations')
+    if (typeof callback === 'function') {
+      return callback('Asset Manager ID and Transaction ID are required for allocations')
+    }
+    return Promise.reject('Asset Manager ID and Transaction ID are required for allocations')
   }
   const params = {
     AMaaSClass: 'allocations',
@@ -50,7 +53,10 @@ export function retrieve({ AMId, resourceId }, callback) {
  */
 export function send({ AMId, resourceId, data }, callback) {
   if (!AMId || !resourceId) {
-    throw new Error('Asset Manager ID and Transaction ID are required for allocations')
+    if (typeof callback === 'function') {
+      return callback('Asset Manager ID and Transaction ID are required for allocations')
+    }
+    return Promise.reject('Asset Manager ID and Transaction ID are required for allocations')
   }
   const params = {
     AMaaSClass: 'allocations',
