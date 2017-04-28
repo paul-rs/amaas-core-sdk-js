@@ -3,10 +3,9 @@ import uuid from 'uuid'
 import { retrieve, insert, amend, search, cancel, reopen } from './corporateActions'
 import * as api from '../../exports/api'
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 api.config({
-  stage: 'staging',
-  apiKey: process.env.API_TOKEN
+  stage: 'staging'
 })
 
 describe('retrieve', () => {

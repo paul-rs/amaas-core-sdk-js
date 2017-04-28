@@ -1,8 +1,12 @@
 import uuid from 'uuid'
 import { retrieve, search, insert, amend, retire, reactivate } from './books'
 import Book from '../../books/Book/book'
+import * as api from '../../exports/api'
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
+api.config({
+  stage: 'staging'
+})
 
 describe('utils/books', () => {
   describe('retrieve', () => {
