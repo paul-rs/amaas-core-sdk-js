@@ -15,8 +15,7 @@ import Position from '../../transactions/Positions/position.js'
 export function retrieve({ AMId }, callback) {
   const params = {
     AMaaSClass: 'positions',
-    AMId,
-    token
+    AMId
   }
   let promise = retrieveData(params).then(result => {
     if (Array.isArray(result)) {

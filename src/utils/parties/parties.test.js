@@ -1,5 +1,4 @@
 import uuid from 'uuid'
-import ENDPOINTS from '../../config.js'
 import { retrieve, _parseParty, insert, partialAmend, amend, search, deactivate, reactivate } from './parties.js'
 import Party from '../../parties/Party/party.js'
 import Individual from '../../parties/Individual/individual'
@@ -7,17 +6,15 @@ import Broker from '../../parties/Broker/broker.js'
 import Address from '../../parties/Children/address.js'
 import * as api from '../../exports/api'
 
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 api.config({
-  stage: 'staging',
-  apiKey: process.env.API_TOKEN
+  stage: 'staging'
 })
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
-let token = process.env.API_TOKEN
 
 describe('parties util functions', () => {
   describe('insert function', () => {
     test('with promise', () => {
-      let promise = insert({token}).catch(error => {})
+      let promise = insert({}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
     test.skip('should insert', done => {
@@ -27,15 +24,13 @@ describe('parties util functions', () => {
         assetManagerId: 516,
         partyId: uuid().substring(0, 30)
       }
-      insert({ party, AMId: 1, token })
+      insert({ party, AMId: 1 })
         .then(res => {
           expect(res).toEqual(expect.objectContaining(party))
           done()
         })
         .catch(err => {
-          console.log(err)
-          expect(err).toBeUndefined()
-          done()
+          console.error(err)
         })
     })
   })
@@ -43,7 +38,7 @@ describe('parties util functions', () => {
   describe('retrieve function', () => {
     test('with promise', () => {
       let promise = retrieve({
-        AMId: 1, partyId: 'party', token
+        AMId: 1, partyId: 'party'
       }).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
@@ -51,12 +46,12 @@ describe('parties util functions', () => {
 
   describe('amend', () => {
     test('with promise', () => {
-      let promise = amend({token}).catch(error => {})
+      let promise = amend({}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
     test('should amend', done => {
       let d
-      retrieve({ AMId: 516, resourceId: '39da5cef-08af-40f8-9c9a-b13856', token })
+      retrieve({ AMId: 516, resourceId: '39da5cef-08af-40f8-9c9a-b13856' })
         .then(res => {
           if (res.description === 'description') {
             d = 'description'
@@ -64,30 +59,29 @@ describe('parties util functions', () => {
           } else {
             res.description = 'description'
           }
-          return amend({ party: res, AMId: res.assetManagerId, resourceId: res.partyId, token })
+          return amend({ party: res, AMId: res.assetManagerId, resourceId: res.partyId })
         })
         .then(res => {
           expect(res.description).toEqual(d === 'description' ? 'Amended Description' : 'description')
           done()
         })
         .catch(err => {
-          expect(err).toBeUndefined()
-          done()
+          console.error(err)
         })
     })
   })
 
   describe('partialAmend', () => {
     test('with promise', () => {
-      let promise = partialAmend({token}).catch(error => {})
+      let promise = partialAmend({}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
     test('should partial amend', done => {
       let bC
-      retrieve({ AMId: 516, resourceId: 'fa337e08-1363-47a8-95ba-6ebb55', token })
+      retrieve({ AMId: 516, resourceId: 'fa337e08-1363-47a8-95ba-6ebb55' })
         .then(res => {
           if (res.partyStatus === 'Inactive') {
-            return reactivate({ AMId: res.assetManagerId, resourceId: res.partyId, token })
+            return reactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
           } else {
             return Promise.resolve(res)
           }
@@ -100,7 +94,7 @@ describe('parties util functions', () => {
           } else {
             changes.baseCurrency = 'SGD'
           }
-          return partialAmend({ changes, AMId: res.assetManagerId, resourceId: res.partyId, token })
+          return partialAmend({ changes, AMId: res.assetManagerId, resourceId: res.partyId })
         })
         .then(res => {
           expect(res.baseCurrency).toEqual(bC === 'SGD' ? 'USD' : 'SGD')
@@ -108,14 +102,12 @@ describe('parties util functions', () => {
         })
         .catch(err => {
           console.error(err)
-          expect(err).toBeUndefined()
-          done()
         })
       })
   })
 
   describe('search', () => {
-    it.only('searches', done => {
+    it('searches', done => {
       const query = [
         { key: 'party_types', values: ['Broker', 'Individual'] }
       ]
@@ -140,7 +132,7 @@ describe('parties util functions', () => {
     const testId = 'fa337e08-1363-47a8-95ba-6ebb55'
 
     afterAll(() => {
-      reactivate({ AMId: testAMId, resourceId: testId, token })
+      reactivate({ AMId: testAMId, resourceId: testId })
         .then()
         .catch(err => {
           console.error(`Error in cleanup: Reactivating partyId ${testId} for Asset Manager ${testAMId}`)
@@ -148,26 +140,26 @@ describe('parties util functions', () => {
     })
 
     test('with promise', () => {
-      let promise = deactivate({token}).catch(error => {})
+      let promise = deactivate({}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
     test('deactivate/reactivate', done => {
       let status
-      retrieve({ AMId: testAMId, resourceId: testId, token })
+      retrieve({ AMId: testAMId, resourceId: testId })
         .then(res => {
           if (res.partyStatus === 'Active') {
             status = 'Active'
-            return deactivate({ AMId: res.assetManagerId, resourceId: res.partyId, token })
+            return deactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
           } else {
             status = 'Inactive'
-            return reactivate({ AMId: res.assetManagerId, resourceId: res.partyId, token })
+            return reactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
           }
         })
         .then(res => {
           if (res.partyStatus === 'Active') {
-            return deactivate({ AMId: res.assetManagerId, resourceId: res.partyId, token })
+            return deactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
           } else {
-            return reactivate({ AMId: res.assetManagerId, resourceId: res.partyId, token })
+            return reactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
           }
         })
         .then(res => {
@@ -175,8 +167,7 @@ describe('parties util functions', () => {
           done()
         })
         .catch(err => {
-          expect(err).toBeUndefined()
-          done()
+          console.error(err)
         })
     })
   })

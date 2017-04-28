@@ -14,7 +14,7 @@ let token
 let credPath
 
 export function configureStage(config) {
-  if (config.state) {
+  if (config.stage) {
     stage = config.stage
   }
   if (config.credentialsPath) {
@@ -57,6 +57,9 @@ export function authenticate() {
     }
     console.log(`Reading credentials from ${path}`)
     fs.readFile(path, (error, data) => {
+      if (error) {
+        return injectedReject(error)
+      }
       const Username = JSON.parse(data).username
       const Password = JSON.parse(data).password
       const authenticationDetails = new AuthenticationDetails({
@@ -67,6 +70,7 @@ export function authenticate() {
         Username,
         Pool: userPool
       })
+      console.log('Starting authentication...')
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: res => injectedResolve(res.getIdToken().getJwtToken()),
         onFailure: err => injectedReject(err)
@@ -83,8 +87,6 @@ export function getToken() {
     injectedReject = reject
     switch (stage) {
       case 'staging':
-        injectedResolve(token)
-        break
       case 'prod':
         const cognitoUser = userPool.getCurrentUser()
         if (!cognitoUser) {
@@ -177,7 +179,6 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
 export function setAuthorization() {
   switch (stage) {
     case 'staging':
-      return 'x-api-key'
     case 'prod':
     default:
       return 'Authorization'
@@ -236,6 +237,7 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
     callback(e)
     return
   }
+  console.log(url)
   let promise = makeRequest({ method: 'GET', url })
   // let promise = request.get(url).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {

@@ -1,14 +1,6 @@
 import { retrieve, insert, amend, partialAmend, search, cancel } from './transactions'
-import * as api from '../../exports/api'
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
-
-api.config({
-  stage: 'staging',
-  apiKey: process.env.API_TOKEN
-})
-
-const token = process.env.API_TOKEN
 
 describe('utils/transactions', () => {
   describe('retrieve', () => {
@@ -38,6 +30,7 @@ describe('utils/transactions', () => {
           done()
         }
       })
+      .catch(err => console.error(err))
     })
     it('retrieves', done => {
       retrieve({ AMId: 1, resourceId: '4f82cc16adf14af9bfc01da8e7c6e580' })
@@ -47,6 +40,7 @@ describe('utils/transactions', () => {
           done()
         })
         .catch(err => {
+          console.error(err)
         })
     })
   })
@@ -72,7 +66,7 @@ describe('utils/transactions', () => {
         assetBookId: "JWXWNSBABR",
         quantity: 100
       }
-      insert({ transaction, token })
+      insert({ transaction })
         .then(res => {
           expect(res).toBeDefined()
           expect(res.transactionId).toEqual('testTransactionID')
@@ -87,11 +81,11 @@ describe('utils/transactions', () => {
   describe('amend', () => {
     it('amends', done => {
       let q
-      retrieve({ AMId: 1, resourceId: 'testTransactionID', token })
+      retrieve({ AMId: 1, resourceId: 'testTransactionID' })
         .then(res => {
           q = res.quantity
           res.quantity = res.quantity.plus(1)
-          return amend({ transaction: res, AMId: 1, resourceId: res.transactionId, token })
+          return amend({ transaction: res, AMId: 1, resourceId: res.transactionId })
         })
         .then(res => {
           expect(res.quantity).toEqual(q.plus(1))
@@ -107,7 +101,7 @@ describe('utils/transactions', () => {
     it('partial amends', done => {
       let tC
       let changes = {}
-      retrieve({ AMId: 1, resourceId: 'testTransactionID', token })
+      retrieve({ AMId: 1, resourceId: 'testTransactionID' })
         .then(res => {
           if (res.transactionCurrency === 'USD') {
             tC = 'USD'
@@ -116,13 +110,13 @@ describe('utils/transactions', () => {
             tC = 'SGD'
             changes.transactionCurrency = 'USD'
           }
-          return partialAmend({ changes, AMId: 1, resourceId: res.transactionId, token})
+          return partialAmend({ changes, AMId: 1, resourceId: res.transactionId })
         })
         .then(res => {
           expect(res.transactionCurrency).toEqual(tC === 'SGD' ? 'USD' : 'SGD')
           done()
         })
-        .catch(err => {})
+        .catch(err => console.error(err))
     })
   })
 
