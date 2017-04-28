@@ -1,17 +1,8 @@
 import uuid from 'uuid'
-
 import { retrieve, search, insert, amend, retire, reactivate } from './books'
 import Book from '../../books/Book/book'
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
-
-let token = process.env.API_TOKEN
-
-import * as api from '../../exports/api'
-
-api.config({
-  credentialsPath: '/Users/thomaschia/authFile.js'
-})
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 
 describe('utils/books', () => {
   describe('retrieve', () => {
@@ -33,7 +24,7 @@ describe('utils/books', () => {
       })
     })
 
-    it('should retrieve', done => {
+    it.only('should retrieve', done => {
       const params = {
         AMId: 1
       }
@@ -69,8 +60,7 @@ describe('utils/books', () => {
           expect(res).toEqual(expect.objectContaining(data))
         })
         .catch(err => {
-          console.log(err)
-          expect(err).toBeUndefined()
+          console.error(error)
         })
     })
   })
@@ -97,9 +87,7 @@ describe('utils/books', () => {
           done()
         })
         .catch(err => {
-          console.log(err.message)
-          expect(err).toBeUndefined()
-          done()
+          console.error(error)
         })
     })
   })
@@ -116,7 +104,6 @@ describe('utils/books', () => {
           }
         })
         .then(res => {
-          console.log(res)
           res.businessUnit = bU
           return amend({ book: res, AMId: res.assetManagerId, resourceId: res.bookId })
         })

@@ -2,8 +2,7 @@ import { _parseAM, getAssetManager } from './assetManagers.js'
 import { retrieve, insert, amend, deactivate, reactivate } from './assetManagers.js'
 import AssetManager from '../../assetManagers/AssetManager/assetManager.js'
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
-let token = process.env.API_TOKEN
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 
 describe('utils/assetManagers', () => {
   describe('_parseAM function', () => {
@@ -66,7 +65,7 @@ describe('utils/assetManagers', () => {
         .catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
-    test.only('amends', done => {
+    test('amends', done => {
       let dboi
       retrieve({ AMId: 4 })
         .then(res => {
