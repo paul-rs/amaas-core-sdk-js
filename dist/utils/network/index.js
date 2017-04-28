@@ -44,20 +44,14 @@ var userPool = new _amazonCognitoIdentityJs.CognitoUserPool({
 });
 var stage = 'prod';
 var token = void 0;
+var credPath = void 0;
 
 function configureStage(config) {
-  stage = config.stage;
-  switch (config.stage) {
-    case 'staging':
-      if (!config.apiKey) {
-        throw new Error('Missing Authorization');
-      }
-      token = config.apiKey;
-      break;
-    // Leave it undefined for prod because we will get the token from Cognito later
-    case 'prod':
-    default:
-      null;
+  if (config.stage) {
+    stage = config.stage;
+  }
+  if (config.credentialsPath) {
+    credPath = config.credentialsPath;
   }
   return;
 }
@@ -88,8 +82,17 @@ function authenticate() {
   return new Promise(function (resolve, reject) {
     injectedResolve = resolve;
     injectedReject = reject;
-    var path = (0, _expandTilde2.default)('~') + '/amaas.js';
+    var path = void 0;
+    if (credPath) {
+      path = credPath;
+    } else {
+      path = (0, _expandTilde2.default)('~') + '/amaas.js';
+    }
+    console.log('Reading credentials from ' + path);
     _fs2.default.readFile(path, function (error, data) {
+      if (error) {
+        return injectedReject(error);
+      }
       var Username = JSON.parse(data).username;
       var Password = JSON.parse(data).password;
       var authenticationDetails = new _amazonCognitoIdentityJs.AuthenticationDetails({
@@ -100,6 +103,7 @@ function authenticate() {
         Username: Username,
         Pool: userPool
       });
+      console.log('Starting authentication...');
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function onSuccess(res) {
           return injectedResolve(res.getIdToken().getJwtToken());
@@ -120,8 +124,6 @@ function getToken() {
     injectedReject = reject;
     switch (stage) {
       case 'staging':
-        injectedResolve(token);
-        break;
       case 'prod':
         var cognitoUser = userPool.getCurrentUser();
         if (!cognitoUser) {
@@ -222,7 +224,6 @@ function buildURL(_ref) {
 function setAuthorization() {
   switch (stage) {
     case 'staging':
-      return 'x-api-key';
     case 'prod':
     default:
       return 'Authorization';
@@ -232,16 +233,18 @@ function setAuthorization() {
 function makeRequest(_ref2) {
   var method = _ref2.method,
       url = _ref2.url,
-      data = _ref2.data;
+      data = _ref2.data,
+      query = _ref2.query;
 
   return getToken().then(function (res) {
+    console.log(res);
     switch (method) {
       case 'GET':
         return _superagent2.default.get(url).set(setAuthorization(), res).query({ camelcase: true });
       case 'SEARCH':
         return _superagent2.default.get(url).set(setAuthorization(), res).query(data);
       case 'POST':
-        return _superagent2.default.post(url).send(data).set(setAuthorization(), res).query({ camelcase: true });
+        return _superagent2.default.post(url).send(data).set(setAuthorization(), res).query(query);
       case 'PUT':
         return _superagent2.default.put(url).send(data).set(setAuthorization(), res).query({ camelcase: true });
       case 'PATCH':
@@ -288,6 +291,7 @@ function retrieveData(_ref3, callback) {
     callback(e);
     return;
   }
+  console.log(url);
   var promise = makeRequest({ method: 'GET', url: url });
   // let promise = request.get(url).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
@@ -323,7 +327,8 @@ function insertData(_ref4, callback) {
   var AMaaSClass = _ref4.AMaaSClass,
       AMId = _ref4.AMId,
       resourceId = _ref4.resourceId,
-      data = _ref4.data;
+      data = _ref4.data,
+      queryParams = _ref4.queryParams;
 
   // if (stage === 'dev' || stage === 'staging' && !token) {
   //   if (typeof callback !== 'function') {
@@ -353,7 +358,14 @@ function insertData(_ref4, callback) {
     url: url,
     json: data
   };
-  var promise = makeRequest({ method: 'POST', url: url, data: data });
+  var query = { camelcase: true };
+  if (queryParams) {
+    for (var i = 0; i < queryParams.length; i++) {
+      data[queryParams[i].key] = queryParams[i].values.join();
+    }
+    Object.assign(query, queryParams);
+  }
+  var promise = makeRequest({ method: 'POST', url: url, data: data, query: query });
   // let promise = request.post(url).send(data).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided

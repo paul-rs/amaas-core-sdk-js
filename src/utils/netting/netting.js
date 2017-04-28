@@ -57,7 +57,7 @@ export function send({ AMId, data, nettingType }, callback) {
     AMaaSClass: 'netting',
     AMId,
     data,
-    queryParams: [{ key: 'netting_type': values: [nettingType] }]
+    queryParams: [{ key: 'netting_type', values: [nettingType] }]
   }
   let promise = insertData(params).then(result => {
     // TODO: Parse this accoringly

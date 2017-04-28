@@ -30,8 +30,7 @@ function retrieve(_ref, callback) {
 
   var params = {
     AMaaSClass: 'positions',
-    AMId: AMId,
-    token: token
+    AMId: AMId
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
     if (Array.isArray(result)) {
