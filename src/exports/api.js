@@ -27,6 +27,6 @@ export {
 }
 
 function config(config) {
-  const { stage, apiKey } = config
-  configureStage({ stage, apiKey })
+  const { stage, credentialsPath } = config
+  configureStage({ stage, credentialsPath })
 }

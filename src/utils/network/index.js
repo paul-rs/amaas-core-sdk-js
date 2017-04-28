@@ -11,20 +11,14 @@ const userPool = new CognitoUserPool({
 })
 let stage = 'prod'
 let token
+let credPath
 
 export function configureStage(config) {
-  stage = config.stage
-  switch (config.stage) {
-    case 'staging':
-      if (!config.apiKey) {
-        throw new Error('Missing Authorization')
-      }
-      token = config.apiKey
-      break
-    // Leave it undefined for prod because we will get the token from Cognito later
-    case 'prod':
-    default:
-      null
+  if (config.state) {
+    stage = config.stage
+  }
+  if (config.credentialsPath) {
+    credPath = config.credentialsPath
   }
   return
 }
@@ -55,7 +49,13 @@ export function authenticate() {
   return new Promise((resolve, reject) => {
     injectedResolve = resolve
     injectedReject = reject
-    const path = `${expandTilde('~')}/amaas.js`
+    let path
+    if (credPath) {
+      path = credPath
+    } else {
+      path = `${expandTilde('~')}/amaas.js`
+    }
+    console.log(`Reading credentials from ${path}`)
     fs.readFile(path, (error, data) => {
       const Username = JSON.parse(data).username
       const Password = JSON.parse(data).password
@@ -184,16 +184,17 @@ export function setAuthorization() {
   }
 }
 
-export function makeRequest({ method, url, data }) {
+export function makeRequest({ method, url, data, query }) {
   return getToken()
     .then(res => {
+      console.log(res)
       switch (method) {
         case 'GET':
           return request.get(url).set(setAuthorization(), res).query({ camelcase: true })
         case 'SEARCH':
           return request.get(url).set(setAuthorization(), res).query(data)
         case 'POST':
-          return request.post(url).send(data).set(setAuthorization(), res).query({ camelcase: true })
+          return request.post(url).send(data).set(setAuthorization(), res).query(query)
         case 'PUT':
           return request.put(url).send(data).set(setAuthorization(), res).query({ camelcase: true })
         case 'PATCH':
@@ -264,7 +265,7 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} data: data to insert into database
 */
-export function insertData({ AMaaSClass, AMId, resourceId, data }, callback) {
+export function insertData({ AMaaSClass, AMId, resourceId, data, queryParams }, callback) {
   // if (stage === 'dev' || stage === 'staging' && !token) {
   //   if (typeof callback !== 'function') {
   //     return Promise.reject('Missing Authorization')
@@ -293,7 +294,14 @@ export function insertData({ AMaaSClass, AMId, resourceId, data }, callback) {
     url,
     json: data
   }
-  let promise = makeRequest({ method: 'POST', url, data })
+  let query = { camelcase: true }
+  if (queryParams) {
+    for (let i = 0; i < queryParams.length; i++) {
+      data[queryParams[i].key] = queryParams[i].values.join()
+    }
+    Object.assign(query, queryParams)
+  }
+  let promise = makeRequest({ method: 'POST', url, data, query })
   // let promise = request.post(url).send(data).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
