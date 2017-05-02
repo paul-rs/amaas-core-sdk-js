@@ -14,6 +14,7 @@ import { retrieveData, insertData } from '../network'
  * @param {number} params.AMId - Asset Manager ID of Transaction
  * @param {string} params.resourceId - Transaction ID
  * @param {string} params.token - Authorization token
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is ???. Omit to return Promise
  * @returns {Promise|Array} If callback is supplied, it is called with ???. Otherwise a promise that resolves with ??? is returned
  */
 export function retrieve({ AMId, resourceId, token }, callback) {
@@ -57,7 +58,7 @@ export function send({ AMId, data, nettingType }, callback) {
     AMaaSClass: 'netting',
     AMId,
     data,
-    queryParams: [{ key: 'netting_type': values: [nettingType] }]
+    queryParams: [{ key: 'netting_type', values: [nettingType] }]
   }
   let promise = insertData(params).then(result => {
     // TODO: Parse this accoringly

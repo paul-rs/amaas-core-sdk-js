@@ -22,6 +22,7 @@ var _network = require('../network');
  * @param {number} params.AMId - Asset Manager ID of Transaction
  * @param {string} params.resourceId - Transaction ID
  * @param {string} params.token - Authorization token
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is ???. Omit to return Promise
  * @returns {Promise|Array} If callback is supplied, it is called with ???. Otherwise a promise that resolves with ??? is returned
  */
 function retrieve(_ref, callback) {
@@ -59,9 +60,35 @@ function retrieve(_ref, callback) {
  * @function send
  * @memberof module:api.Netting
  * @static
- * @param {string} - *
- * @returns {string} *
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID of the Transactions to be netted
+ * @param {array} params.data - An Array of Transaction IDs to be netted
+ * @param {string} [params.nettingType=Net] - Optional netting type
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is ??? Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with ???
  */
-function send() {
-  // TODO: Implement this once the DB testing env is stable
+function send(_ref2, callback) {
+  var AMId = _ref2.AMId,
+      data = _ref2.data,
+      nettingType = _ref2.nettingType;
+
+  var params = {
+    AMaaSClass: 'netting',
+    AMId: AMId,
+    data: data,
+    queryParams: [{ key: 'netting_type', values: [nettingType] }]
+  };
+  var promise = (0, _network.insertData)(params).then(function (result) {
+    // TODO: Parse this accoringly
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
+  });
+  if (typeof callback !== 'function') {
+    return promise;
+  }
+  promise.catch(function (error) {
+    return callback(error);
+  });
 }
