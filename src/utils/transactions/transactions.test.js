@@ -1,5 +1,10 @@
 import { retrieve, insert, amend, partialAmend, search, cancel } from './transactions'
+import * as api from '../../exports/api'
 
+api.config({
+  stage: 'staging',
+  token: process.env.API_TOKEN
+})
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
 
 describe('utils/transactions', () => {

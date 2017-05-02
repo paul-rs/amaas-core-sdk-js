@@ -23,6 +23,13 @@ export function configureStage(config) {
   return
 }
 
+export function configureAuth(config) {
+  if (config.token) {
+    token = config.token
+  }
+  return
+}
+
 export function getEndpoint() {
   switch (stage) {
     case 'staging':
@@ -80,6 +87,9 @@ export function authenticate() {
 }
 
 export function getToken() {
+  if (token && token.length > 0) {
+    return Promise.resolve(token)
+  }
   let injectedResolve
   let injectedReject
   return new Promise((resolve, reject) => {
@@ -141,7 +151,7 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
       baseURL = `${getEndpoint()}/party/parties`
       break
     case 'assetManagers':
-      baseURL = `${getEndpoint()}/asset-manager/asset-managers`
+      baseURL = `${getEndpoint()}/assetmanager/asset-managers`
       break
     case 'assets':
       baseURL = `${getEndpoint()}/asset/assets`
@@ -156,7 +166,7 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
       baseURL = `${getEndpoint()}/transaction/netting`
       break
     case 'relationships':
-      baseURL = `${getEndpoint()}/asset-manager-relationship/asset-manager-relationships`
+      baseURL = `${getEndpoint()}/assetmanager/asset-manager-relationships`
       break
     case 'transactions':
       baseURL = `${getEndpoint()}/transaction/transactions`
@@ -168,7 +178,7 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
       throw new Error(`Invalid class type: ${AMaaSClass}`)
   }
   if (!AMId) {
-    return `${baseURL}/`
+    return `${baseURL}`
   } else if (!resourceId) {
     return `${baseURL}/${AMId}`
   } else {
@@ -188,7 +198,6 @@ export function setAuthorization() {
 export function makeRequest({ method, url, data, query }) {
   return getToken()
     .then(res => {
-      console.log(res)
       switch (method) {
         case 'GET':
           return request.get(url).set(setAuthorization(), res).query({ camelcase: true })

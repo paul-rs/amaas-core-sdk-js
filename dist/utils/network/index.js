@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.configureStage = configureStage;
+exports.configureAuth = configureAuth;
 exports.getEndpoint = getEndpoint;
 exports.authenticate = authenticate;
 exports.getToken = getToken;
@@ -52,6 +53,13 @@ function configureStage(config) {
   }
   if (config.credentialsPath) {
     credPath = config.credentialsPath;
+  }
+  return;
+}
+
+function configureAuth(config) {
+  if (config.token) {
+    token = config.token;
   }
   return;
 }
@@ -117,6 +125,9 @@ function authenticate() {
 }
 
 function getToken() {
+  if (token && token.length > 0) {
+    return Promise.resolve(token);
+  }
   var injectedResolve = void 0;
   var injectedReject = void 0;
   return new Promise(function (resolve, reject) {
@@ -186,7 +197,7 @@ function buildURL(_ref) {
       baseURL = getEndpoint() + '/party/parties';
       break;
     case 'assetManagers':
-      baseURL = getEndpoint() + '/asset-manager/asset-managers';
+      baseURL = getEndpoint() + '/assetmanager/asset-managers';
       break;
     case 'assets':
       baseURL = getEndpoint() + '/asset/assets';
@@ -201,7 +212,7 @@ function buildURL(_ref) {
       baseURL = getEndpoint() + '/transaction/netting';
       break;
     case 'relationships':
-      baseURL = getEndpoint() + '/asset-manager-relationship/asset-manager-relationships';
+      baseURL = getEndpoint() + '/assetmanager/asset-manager-relationships';
       break;
     case 'transactions':
       baseURL = getEndpoint() + '/transaction/transactions';
@@ -213,7 +224,7 @@ function buildURL(_ref) {
       throw new Error('Invalid class type: ' + AMaaSClass);
   }
   if (!AMId) {
-    return baseURL + '/';
+    return '' + baseURL;
   } else if (!resourceId) {
     return baseURL + '/' + AMId;
   } else {
@@ -237,7 +248,6 @@ function makeRequest(_ref2) {
       query = _ref2.query;
 
   return getToken().then(function (res) {
-    console.log(res);
     switch (method) {
       case 'GET':
         return _superagent2.default.get(url).set(setAuthorization(), res).query({ camelcase: true });

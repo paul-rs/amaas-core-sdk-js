@@ -5,13 +5,18 @@ import Individual from '../../parties/Individual/individual'
 import Broker from '../../parties/Broker/broker.js'
 import Address from '../../parties/Children/address.js'
 import * as api from '../../exports/api'
+import { getToken } from '../network'
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 api.config({
-  stage: 'staging'
+  stage: 'staging',
+  token: process.env.API_TOKEN
 })
 
 describe('parties util functions', () => {
+  beforeAll(() => {
+    return getToken()
+  })
   describe('insert function', () => {
     test('with promise', () => {
       let promise = insert({}).catch(error => {})
@@ -36,11 +41,12 @@ describe('parties util functions', () => {
   })
 
   describe('retrieve function', () => {
-    test('with promise', () => {
+    test('with promise', done => {
       let promise = retrieve({
         AMId: 1, partyId: 'party'
       }).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
+      done()
     })
   })
 

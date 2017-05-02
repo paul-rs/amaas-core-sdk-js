@@ -71,6 +71,7 @@ function insert(_ref2, callback) {
   }
   var params = {
     AMaaSClass: 'relationships',
+    AMId: AMId,
     data: data
   };
   var promise = (0, _network.insertData)(params).then(function (result) {

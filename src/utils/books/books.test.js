@@ -2,10 +2,12 @@ import uuid from 'uuid'
 import { retrieve, search, insert, amend, retire, reactivate } from './books'
 import Book from '../../books/Book/book'
 import * as api from '../../exports/api'
+import { getToken } from '../network'
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 api.config({
-  stage: 'staging'
+  stage: 'staging',
+  token: process.env.API_TOKEN
 })
 
 describe('utils/books', () => {
@@ -28,7 +30,7 @@ describe('utils/books', () => {
       })
     })
 
-    it.only('should retrieve', done => {
+    it('should retrieve', done => {
       const params = {
         AMId: 1
       }

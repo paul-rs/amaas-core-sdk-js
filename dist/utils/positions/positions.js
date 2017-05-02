@@ -61,6 +61,8 @@ function retrieve(_ref, callback) {
  * @static
  * @param {object} params - object of parameters
  * @param {array} params.query - array of query objects: { key: string, values: array }. e.g. [{ key: 'book_ids', values: [1, 2, 3] }]
+ * Available keys are:
+ * TODO: List the keys (Note that if omitting AMId, then asset_manager_ids must be passed in the query string)
  * @param {function} [callback] - Called with two arguments (error, result) on completion. Omit to return Promise
  * @returns {Promise|null} If no callback is supplied, returns promise that resolves with array of Positions
  */

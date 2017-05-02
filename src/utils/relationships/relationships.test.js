@@ -1,6 +1,12 @@
+import uuid from 'uuid'
 import { retrieve, insert, amend } from './relationships'
 import Relationship from '../../relationships'
+import * as api from '../../exports/api'
 
+api.config({
+  stage: 'staging',
+  token: process.env.API_TOKEN
+})
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 
 const AMId = 5
@@ -24,9 +30,10 @@ describe('utils/relationships', () => {
       const rel = {
         assetManagerId: AMId,
         relationshipType: "External",
-        relationId: 10
+        relatedId: 10,
+        relationshipId: uuid().substring(0, 10)
       }
-      insert({ relationship: rel })
+      insert({ AMId: rel.assetManagerId, relationship: rel })
         .then(res => {
           expect(res).toEqual(expect.objectContaining(rel))
           done()
@@ -38,12 +45,12 @@ describe('utils/relationships', () => {
   })
 
   describe('amend', () => {
-    it.only('amends', done => {
+    it('amends', done => {
       let type
       retrieve({ AMId })
         .then(res => {
           const target = res.filter(rel => {
-            return rel.relationId === 4
+            return rel.relatedId === 10
           })
           switch(target[0].relationshipType) {
             case 'Employee':

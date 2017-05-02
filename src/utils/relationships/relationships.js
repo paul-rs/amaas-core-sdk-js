@@ -54,6 +54,7 @@ import { Relationship } from '../../relationships'
    }
    const params = {
      AMaaSClass: 'relationships',
+     AMId,
      data
    }
    let promise = insertData(params).then(result => {

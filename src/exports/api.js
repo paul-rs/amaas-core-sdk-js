@@ -13,7 +13,7 @@ import * as Positions from '../utils/positions'
 import * as Relationships from '../utils/relationships'
 import * as Transactions from '../utils/transactions'
 
-import { configureStage } from '../utils/network'
+import { configureStage, configureAuth } from '../utils/network'
 
 export {
   Allocations,
@@ -27,6 +27,7 @@ export {
 }
 
 function config(config) {
-  const { stage, credentialsPath } = config
+  const { stage, credentialsPath, token } = config
   configureStage({ stage, credentialsPath })
+  configureAuth({ token })
 }

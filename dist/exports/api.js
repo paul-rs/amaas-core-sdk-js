@@ -62,7 +62,9 @@ exports.config = config;
 
 function config(config) {
   var stage = config.stage,
-      credentialsPath = config.credentialsPath;
+      credentialsPath = config.credentialsPath,
+      token = config.token;
 
   (0, _network.configureStage)({ stage: stage, credentialsPath: credentialsPath });
+  (0, _network.configureAuth)({ token: token });
 }

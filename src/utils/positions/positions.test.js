@@ -4,15 +4,16 @@ import * as api from '../../exports/api'
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 api.config({
-  stage: 'staging'
+  stage: 'staging',
+  token: process.env.API_TOKEN
 })
 
 describe('utils/positions', () => {
   describe('retrieve', () => {
-    it.only('retrieves', done => {
+    it('retrieves', done => {
       retrieve({ AMId: 1 })
         .then(res => {
-          console.log(res[0])
+          expect(res[0]).toBeDefined()
           done()
         })
         .catch(err => console.error(err))
@@ -50,7 +51,8 @@ describe('utils/positions', () => {
 
     it('should search', done => {
       const query = [
-        { key: 'book_ids', values: ['BY1BABL8ZX'] }
+        { key: 'book_ids', values: ['BY1BABL8ZX'] },
+        { key: 'asset_manager_ids', values: [1] }
       ]
       search({ query })
         .then(res => {

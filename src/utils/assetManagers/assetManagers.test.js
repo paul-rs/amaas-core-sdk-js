@@ -1,7 +1,12 @@
 import { _parseAM, getAssetManager } from './assetManagers.js'
 import { retrieve, insert, amend, deactivate, reactivate } from './assetManagers.js'
 import AssetManager from '../../assetManagers/AssetManager/assetManager.js'
+import * as api from '../../exports/api'
 
+api.config({
+  stage: 'staging',
+  token: process.env.API_TOKEN
+})
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 
 describe('utils/assetManagers', () => {

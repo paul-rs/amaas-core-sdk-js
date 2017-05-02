@@ -5,7 +5,8 @@ import * as api from '../../exports/api'
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 api.config({
-  stage: 'staging'
+  stage: 'staging',
+  token: process.env.API_TOKEN
 })
 
 describe('retrieve', () => {

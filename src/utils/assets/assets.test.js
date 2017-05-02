@@ -4,7 +4,8 @@ import Asset from '../../assets/Asset/asset.js'
 import * as api from '../../exports/api'
 
 api.config({
-  stage: 'staging'
+  stage: 'staging',
+  token: process.env.API_TOKEN
 })
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
