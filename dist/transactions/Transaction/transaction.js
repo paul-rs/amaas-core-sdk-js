@@ -10,6 +10,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _decimal = require('decimal.js');
 
+var _decimal2 = _interopRequireDefault(_decimal);
+
 var _core = require('../../core');
 
 var _children = require('../../children');
@@ -19,6 +21,8 @@ var _enums = require('../enums');
 var types = _interopRequireWildcard(_enums);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -117,7 +121,7 @@ var Transaction = function (_AMaaSModel) {
         set: function set() {
           var newQuantity = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
-          _this._quantity = new _decimal.Decimal(newQuantity);
+          _this._quantity = new _decimal2.default(newQuantity);
         }, enumerable: true
       },
       _price: { writable: true, enumerable: false },
@@ -128,7 +132,7 @@ var Transaction = function (_AMaaSModel) {
         set: function set() {
           var newPrice = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
-          _this._price = new _decimal.Decimal(newPrice);
+          _this._price = new _decimal2.default(newPrice);
         }, enumerable: true
       },
       _grossSettlement: { writable: true, enumerable: false },
@@ -139,7 +143,7 @@ var Transaction = function (_AMaaSModel) {
         set: function set() {
           var newGrossSettlement = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
-          _this._grossSettlement = new _decimal.Decimal(newGrossSettlement);
+          _this._grossSettlement = new _decimal2.default(newGrossSettlement);
         }, enumerable: true
       },
       _netSettlement: { writable: true, enumerable: false },
@@ -150,7 +154,7 @@ var Transaction = function (_AMaaSModel) {
         set: function set() {
           var newNetSettlement = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
-          _this._netSettlement = new _decimal.Decimal(newNetSettlement);
+          _this._netSettlement = new _decimal2.default(newNetSettlement);
         }, enumerable: true
       },
       _transactionAction: { writable: true, enumerable: false },
@@ -347,9 +351,9 @@ var Transaction = function (_AMaaSModel) {
     key: 'chargesNetEffect',
     value: function chargesNetEffect() {
       if (Object.keys(this.charges).length == 0) {
-        return new _decimal.Decimal(0);
+        return new _decimal2.default(0);
       }
-      var netCharges = new _decimal.Decimal(0);
+      var netCharges = new _decimal2.default(0);
       for (var chargeType in this.charges) {
         if (this.charges[chargeType].active && this.charges[chargeType].netAffecting) {
           netCharges = netCharges.plus(this.charges[chargeType].chargeValue);

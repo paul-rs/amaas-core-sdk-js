@@ -1,3 +1,4 @@
+import nock from 'nock'
 import {
   buildURL,
   retrieveData,
@@ -6,16 +7,15 @@ import {
   putData,
   patchData,
   deleteData,
-  endpoint
+  getEndpoint
 } from './'
+import * as funcs from './'
+import * as api from '../../exports/api'
 
-import ENDPOINTS from '../../config.js'
-
-// import { baseURL } from './constants.js'
-
-import nock from 'nock'
-
-let token = process.env.API_TOKEN
+api.config({
+  stage: 'staging',
+  token: process.env.API_TOKEN
+})
 
 describe('buildURL function', () => {
   it('should throw if no class supplied', () => {
@@ -30,7 +30,7 @@ describe('buildURL function', () => {
       AMId: undefined,
       resourceId: 'testResource'
     }
-    const expectedURL = `${endpoint()}/book/books/`
+    const expectedURL = `${getEndpoint()}/book/books`
     expect(buildURL(testParams)).toEqual(expectedURL)
   })
   it('should build correctly if all parameters are specified', () => {
@@ -39,19 +39,21 @@ describe('buildURL function', () => {
       AMId: 'testAMId',
       resourceId: 'testResource'
     }
-    const expectedURL = `${endpoint()}/book/books/testAMId/testResource`
+    const expectedURL = `${getEndpoint()}/book/books/testAMId/testResource`
     expect(buildURL(testParams)).toEqual(expectedURL)
   })
 })
 
 describe('retrieveData', () => {
+  afterAll(() => {
+    nock.cleanAll()
+  })
   const testParams = {
     AMaaSClass: 'book',
-    AMId: '1234',
-    token: 'testToken'
+    AMId: '1234'
   }
   it('should hit the correct endpoint', callback => {
-    const scope = nock(endpoint())
+    const scope = nock(getEndpoint())
       .get('/book/books/1234?camelcase=true')
       .reply(200, {
         param1: 'testBody'
@@ -61,12 +63,12 @@ describe('retrieveData', () => {
       callback()
     })
   })
-  it('should receive the correct HTTP status code', callback => {
-    const scope = nock(endpoint())
+  it.only('should receive the correct HTTP status code', callback => {
+    const scope = nock(getEndpoint())
       .get('/book/books/1234?camelcase=true')
       .reply(501)
     retrieveData(testParams, (error, result) => {
-      expect(error.statusCode).toEqual(501)
+      expect(error.status).toEqual(501)
       callback()
     })
   })
@@ -77,16 +79,18 @@ describe('retrieveData', () => {
 })
 
 describe('insertData', () => {
+  afterAll(() => {
+    nock.cleanAll()
+  })
   const testParams = {
     AMaaSClass: 'book',
     AMId: '1234',
-    token: 'testToken',
     data: {
       price: 20
     }
   }
   it('should build the correct url and POST to it', callback => {
-    const scope = nock(endpoint())
+    const scope = nock(getEndpoint())
       .post('/book/books/1234?camelcase=true')
       .reply(200, {
         param1: 'testResponse'
@@ -115,7 +119,7 @@ describe('searchData', () => {
 })
 
 describe('putData', () => {
-  let params = {token, AMaaSClass: 'positions'}
+  let params = { AMaaSClass: 'positions'}
   it('should return a promise if callback is not provided', () => {
     let promise = putData(params).catch(error => {})
     expect(promise).toBeInstanceOf(Promise)
@@ -123,7 +127,7 @@ describe('putData', () => {
 })
 
 describe('patchData', () => {
-  let params = {token, AMaaSClass: 'positions'}
+  let params = { AMaaSClass: 'positions'}
   it('should return a promise if callback is not provided', () => {
     let promise = patchData(params).catch(error => {})
     expect(promise).toBeInstanceOf(Promise)

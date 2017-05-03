@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.config = exports.Parties = exports.Books = exports.Assets = exports.AssetManagers = undefined;
+exports.config = exports.Transactions = exports.Positions = exports.Parties = exports.CorporateActions = exports.Books = exports.Assets = exports.AssetManagers = exports.Allocations = undefined;
 
 var _allocations = require('../utils/allocations');
 
@@ -20,6 +20,10 @@ var Assets = _interopRequireWildcard(_assets);
 var _books = require('../utils/books');
 
 var Books = _interopRequireWildcard(_books);
+
+var _corporateActions = require('../utils/corporateActions');
+
+var CorporateActions = _interopRequireWildcard(_corporateActions);
 
 var _netting = require('../utils/netting');
 
@@ -45,21 +49,24 @@ var _network = require('../utils/network');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-/**
- * API Methods
- * @module api
- */
-
+exports.Allocations = Allocations;
 exports.AssetManagers = AssetManagers;
 exports.Assets = Assets;
 exports.Books = Books;
+exports.CorporateActions = CorporateActions;
 exports.Parties = Parties;
-exports.config = config;
-
+exports.Positions = Positions;
+exports.Transactions = Transactions;
+exports.config = config; /**
+                          * API Methods
+                          * @module api
+                          */
 
 function config(config) {
   var stage = config.stage,
-      apiKey = config.apiKey;
+      credentialsPath = config.credentialsPath,
+      token = config.token;
 
-  (0, _network.configureStage)({ stage: stage, apiKey: apiKey });
+  (0, _network.configureStage)({ stage: stage, credentialsPath: credentialsPath });
+  (0, _network.configureAuth)({ token: token });
 }

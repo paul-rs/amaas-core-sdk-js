@@ -11,7 +11,8 @@ class Relationship extends AMaaSModel {
    * Construct a new Relationship instance
    * @param {object} params - Relationship creation options
    * @param {number} params.assetManagerId - ID of the Asset Manager who owns this Relationship
-   * @param {number} params.relationId - ID of the Asset Manager to whom this Relationship connects
+   * @param {number} params.relationshipId - ID of the Relationship (to uniquely identity Relationship amongst other Relationships between the same parties)
+   * @param {number} params.relatedId - ID of the Asset Manager to whom this Relationship connects
    * @param {string} params.relationshipType - The type of Relationship between these Asset Managers
    * @param {string} params.clientId - The client ID that owns this Relationship
    * @param {string} params.relationshipStatus - The status of the Relationship
@@ -23,10 +24,11 @@ class Relationship extends AMaaSModel {
    */
   constructor({
     assetManagerId,
-    relationId,
+    relationshipId,
+    relatedId,
     relationshipType,
     clientId,
-    relationshipStatus,
+    relationshipStatus='Pending',
     createdBy,
     updatedBy,
     createdTime,
@@ -56,7 +58,8 @@ class Relationship extends AMaaSModel {
       }
     })
     this.assetManagerId = assetManagerId
-    this.relationId = relationId
+    this.relationshipId = relationshipId
+    this.relatedId = relatedId
     this.clientId = clientId
     this.relationshipStatus = relationshipStatus
     this.relationshipType = relationshipType

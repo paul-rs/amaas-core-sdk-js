@@ -1,8 +1,8 @@
 import * as assetManagers from './exports/assetManager'
 import * as assets from './exports/assets'
 import * as books from './exports/books'
+import * as corporateActions from './exports/corporateActions'
 import * as parties from './exports/parties'
-import * as positions from './exports/positions'
 import * as transactions from './exports/transactions'
 
 import * as api from './exports/api'
@@ -12,7 +12,7 @@ export {
   assetManagers,
   assets,
   books,
+  corporateActions,
   parties,
-  positions,
   transactions
 }

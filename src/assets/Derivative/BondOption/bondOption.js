@@ -1,4 +1,4 @@
-import { Decimal } from 'decimal.js'
+import Decimal from 'decimal.js'
 
 import Derivative from '../Derivative/derivative.js'
 import { OPTION_STYLES, OPTION_TYPES } from '../../enums'

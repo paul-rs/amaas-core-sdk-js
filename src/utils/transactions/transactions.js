@@ -1,4 +1,4 @@
-import { retrieveData, insertData, patchData, putData, deleteData } from '../network'
+import { retrieveData, insertData, patchData, putData, searchData, deleteData } from '../network'
 import { Transaction } from '../../transactions'
 
 /**
@@ -8,16 +8,15 @@ import { Transaction } from '../../transactions'
 * @static
 * @param {object} params - object of parameters:
 * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
-* @param {string} params.resourceId - Transaction ID
-* @param {string} params.token - Authorization token
-* @param {function} callback - Called with two arguments (error, result) on completion
+* @param {string} [params.resourceId] - Transaction ID. Omit to return all Transactions for the supplied AMId
+* @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an Array of Transactions or a single Transaction instance. Omit to return Promise
+* @returns {Promise|null} If no callback supplied, returns Promise that resolves with an Array of Transactions or a single Transaction instance
 */
-export function retrieve({ AMId, resourceId, token}, callback) {
+export function retrieve({ AMId, resourceId }, callback) {
   const params = {
     AMaaSClass: 'transactions',
     AMId,
-    resourceId,
-    token
+    resourceId
   }
   let promise = retrieveData(params).then(result => {
     if (Array.isArray(result)) {
@@ -45,11 +44,10 @@ export function retrieve({ AMId, resourceId, token}, callback) {
  * @param {object} params - object of parameters:
  * @param {Transaction} params.transaction - Transaction instance or object to insert
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
- * @param {string} params.resourceId - Transaction ID
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the inserted Transaction instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the inserted Transaction instance
  */
-export function insert({ AMId, transaction, token }, callback) {
+export function insert({ AMId, transaction }, callback) {
  let data
  if (transaction) {
    data = JSON.parse(JSON.stringify(transaction))
@@ -57,8 +55,7 @@ export function insert({ AMId, transaction, token }, callback) {
  const params = {
    AMaaSClass: 'transactions',
    AMId,
-   data,
-   token
+   data
  }
  let promise = insertData(params).then(result => {
    result = _parseTransaction(result)
@@ -80,13 +77,13 @@ export function insert({ AMId, transaction, token }, callback) {
   * @memberof module:api.Transactions
   * @static
   * @param {object} params - object of parameters:
-  * @param {Transaction} params.transaction - Transaction instance or object to amend
+  * @param {Transaction} params.transaction - The amended Transaction instance
   * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
   * @param {string} params.resourceId - Transaction ID
-  * @param {string} params.token - Authorization token
-  * @param {function} callback - Called with two arguments (error, result) on completion
+  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Transaction instance. Omit to return Promise
+  * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the amended Transaction instance
   */
-export function amend({ transaction, AMId, resourceId, token }, callback) {
+export function amend({ transaction, AMId, resourceId }, callback) {
   let data
   if (transaction) {
     data = JSON.parse(JSON.stringify(transaction))
@@ -95,8 +92,7 @@ export function amend({ transaction, AMId, resourceId, token }, callback) {
     AMaaSClass: 'transactions',
     AMId,
     resourceId,
-    data,
-    token
+    data
   }
   let promise = putData(params).then(result => {
     result = _parseTransaction(result)
@@ -121,16 +117,15 @@ export function amend({ transaction, AMId, resourceId, token }, callback) {
  * @param {Transaction} params.changes - object of changes to apply to the Transaction
  * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
  * @param {string} params.resourceId - Transaction ID
- * @param {string} params.token - Authorization token
- * @param {function} callback - Called with two arguments (error, result) on completion
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the amended Transaction instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the amended Transaction instance
  */
-export function partialAmend({ changes, AMId, resourceId, token }, callback) {
+export function partialAmend({ changes, AMId, resourceId }, callback) {
   const params = {
     AMaaSClass: 'transactions',
     AMId,
     resourceId,
-    data: changes,
-    token
+    data: changes
   }
   let promise = patchData(params).then(result => {
     result = _parseTransaction(result)
@@ -145,6 +140,88 @@ export function partialAmend({ changes, AMId, resourceId, token }, callback) {
   }
   promise.catch(error => callback(error))
 }
+
+/**
+ * Search Transactions
+ * @function search
+ * @memberof module:api.Transactions
+ * @static
+ * @param {object} params - object of parameters
+ * @param {number} [params.AMId] - Asset Manager ID of the Transactions to search over. If omitted you must pass assetManagerIds in the query
+ * @param {array} params.query - Array of query parameters of the form: [{ key: `string`, values: `array` }]<br />
+ * Available keys are:
+ * <li>clientIds</li>
+ * <li>transactionStatuses</li>
+ * <li>transactionIds</li>
+ * <li>assetBookIds</li>
+ * <li>counterpartyBookIds</li>
+ * <li>assetIds</li>
+ * <li>transactionDateStart</li>
+ * <li>transactionDateEnd</li>
+ * <li>codeTypes</li>
+ * <li>codeValues</li>
+ * <li>linkTypes</li>
+ * <li>linkedTransactionIds</li>
+ * <li>partyTypes</li>
+ * <li>partyIds</li>
+ * <li>referenceTypes</li>
+ * <li>referenceValues</li>
+ * e.g. `[ { key: 'assetManagerIds', values: [1] }, { key: 'bookIds', values: [1, 2, 3]} ]`
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Transactions or a single Transaction instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Transactions or a single Transaction instance
+ */
+export function search({ AMId, query }, callback) {
+  const params = {
+    AMaaSClass: 'transactions',
+    AMId,
+    query
+  }
+  let promise = searchData(params).then(result => {
+    if (Array.isArray(result)) {
+      result = result.map(tran => _parseTransaction(tran))
+    } else {
+      result = _parseTransaction(result)
+    }
+    if (typeof callback === 'function') {
+      callback(null, result)
+    }
+    return result
+  })
+  if (typeof callback !== 'function') {
+    return promise
+  }
+  promise.catch(error => callback(error))
+}
+
+/**
+ * Cancel a Transaction
+ * @function cancel
+ * @memberof module:api.Transactions
+ * @static
+ * @param {object} params - object of parameters:
+ * @param {number} params.AMId - Asset Manager ID of the Transaction's owner
+ * @param {string} params.resourceId - Transaction ID
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is the cancelled Transaction instance. Omit to return Promise
+ * @returns {Promise|null} If no callback supplied, returns Promise that resolves with the cancelled Transaction instance. Note that this is the only time the API returns a Transaction instance where transactionStatus === 'Cancelled'
+ */
+ export function cancel({ AMId, resourceId }, callback) {
+   const params = {
+     AMaaSClass: 'transactions',
+     AMId,
+     resourceId
+   }
+   let promise = deleteData(params).then(result => {
+     result = _parseTransaction(result)
+     if (typeof callback === 'function') {
+       callback(null, result)
+     }
+     return result
+   })
+   if (typeof callback !== 'function') {
+     return promise
+   }
+   promise.catch(error => callback(error))
+ }
 
 function _parseTransaction(t) {
   return new Transaction(t)

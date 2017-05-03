@@ -4,7 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.configureStage = configureStage;
+exports.configureAuth = configureAuth;
 exports.getEndpoint = getEndpoint;
+exports.authenticate = authenticate;
 exports.getToken = getToken;
 exports.buildURL = buildURL;
 exports.setAuthorization = setAuthorization;
@@ -22,29 +24,42 @@ var _superagent2 = _interopRequireDefault(_superagent);
 
 var _config = require('../../config.js');
 
-var _config2 = _interopRequireDefault(_config);
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
+
+var _amazonCognitoIdentityJs = require('amazon-cognito-identity-js');
+
+var _expandTilde = require('expand-tilde');
+
+var _expandTilde2 = _interopRequireDefault(_expandTilde);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 require('dotenv').config();
 
 
+var userPool = new _amazonCognitoIdentityJs.CognitoUserPool({
+  UserPoolId: _config.userPoolId,
+  ClientId: _config.clientAppId
+});
 var stage = 'prod';
 var token = void 0;
+var credPath = void 0;
 
 function configureStage(config) {
-  stage = config.stage;
-  switch (config.stage) {
-    case 'staging':
-      if (!config.apiKey) {
-        throw new Error('Missing Authorization');
-      }
-      token = config.apiKey;
-      break;
-    // Leave it undefined for prod because we will get the token from Cognito later
-    case 'prod':
-    default:
-      null;
+  if (config.stage) {
+    stage = config.stage;
+  }
+  if (config.credentialsPath) {
+    credPath = config.credentialsPath;
+  }
+  return;
+}
+
+function configureAuth(config) {
+  if (config.token) {
+    token = config.token;
   }
   return;
 }
@@ -52,27 +67,109 @@ function configureStage(config) {
 function getEndpoint() {
   switch (stage) {
     case 'staging':
-      return _config2.default + '/staging';
+      return _config.endpoint.staging + '/staging';
     case 'prod':
-      return _config2.default + '/prod';
+      return _config.endpoint.prod + '/prod';
     default:
       console.warn('Unknown stage variable: ' + stage + '. Defaulting to /prod');
-      return _config2.default + '/prod';
+      return _config.endpoint.prod + '/prod';
   }
 }
 
-function getToken() {
+function isNode() {
+  try {
+    return Object.prototype.toString.call(global.process) === '[object process]';
+  } catch (e) {
+    return false;
+  }
+}
+
+function authenticate() {
+  var injectedResolve = void 0;
+  var injectedReject = void 0;
   return new Promise(function (resolve, reject) {
+    injectedResolve = resolve;
+    injectedReject = reject;
+    var path = void 0;
+    if (credPath) {
+      path = credPath;
+    } else {
+      path = (0, _expandTilde2.default)('~') + '/amaas.js';
+    }
+    console.log('Reading credentials from ' + path);
+    _fs2.default.readFile(path, function (error, data) {
+      if (error) {
+        return injectedReject(error);
+      }
+      var Username = JSON.parse(data).username;
+      var Password = JSON.parse(data).password;
+      var authenticationDetails = new _amazonCognitoIdentityJs.AuthenticationDetails({
+        Username: Username,
+        Password: Password
+      });
+      var cognitoUser = new _amazonCognitoIdentityJs.CognitoUser({
+        Username: Username,
+        Pool: userPool
+      });
+      console.log('Starting authentication...');
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: function onSuccess(res) {
+          return injectedResolve(res.getIdToken().getJwtToken());
+        },
+        onFailure: function onFailure(err) {
+          return injectedReject(err);
+        }
+      });
+    });
+  });
+}
+
+function getToken() {
+  if (token && token.length > 0) {
+    return Promise.resolve(token);
+  }
+  var injectedResolve = void 0;
+  var injectedReject = void 0;
+  return new Promise(function (resolve, reject) {
+    injectedResolve = resolve;
+    injectedReject = reject;
     switch (stage) {
       case 'staging':
-        resolve(token);
-        break;
       case 'prod':
-        // TODO: Implement Cognito to get access tokens
-        resolve('token');
+        var cognitoUser = userPool.getCurrentUser();
+        if (!cognitoUser) {
+          if (isNode()) {
+            console.warn('No user in storage, attempting to authenticate...');
+            authenticate().then(function (res) {
+              return injectedResolve(res);
+            }).catch(function (err) {
+              return injectedReject(err);
+            });
+          } else {
+            injectedReject('Unauthorized, please re-authenticate');
+          }
+        } else {
+          cognitoUser.getSession(function (err, session) {
+            if (session) {
+              console.log('getSession success');
+              injectedResolve(session.getIdToken().getJwtToken());
+            } else {
+              if (isNode()) {
+                console.warn('getSession failure, attempting to authenticate');
+                authenticate().then(function (res) {
+                  return injectedResolve(res);
+                }).catch(function (err) {
+                  return injectedReject(err);
+                });
+              } else {
+                injectedReject('Unauthorized, please re-authenticate');
+              }
+            }
+          });
+        }
         break;
       default:
-        reject('Missing Authorization');
+        injectedReject('Missing Authorization');
     }
   });
 }
@@ -100,31 +197,34 @@ function buildURL(_ref) {
       baseURL = getEndpoint() + '/party/parties';
       break;
     case 'assetManagers':
-      baseURL = getEndpoint() + '/asset-manager/asset-managers';
+      baseURL = getEndpoint() + '/assetmanager/asset-managers';
       break;
     case 'assets':
       baseURL = getEndpoint() + '/asset/assets';
       break;
     case 'positions':
-      baseURL = getEndpoint() + '/position/positions';
+      baseURL = getEndpoint() + '/transaction/positions';
       break;
     case 'allocations':
-      baseURL = getEndpoint() + '/allocation/allocations';
+      baseURL = getEndpoint() + '/transaction/allocations';
       break;
     case 'netting':
-      baseURL = getEndpoint() + '/netting/netting';
+      baseURL = getEndpoint() + '/transaction/netting';
       break;
     case 'relationships':
-      baseURL = getEndpoint() + '/asset-manager-relationship/asset-manager-relationships';
+      baseURL = getEndpoint() + '/assetmanager/asset-manager-relationships';
       break;
     case 'transactions':
       baseURL = getEndpoint() + '/transaction/transactions';
+      break;
+    case 'corporateActions':
+      baseURL = getEndpoint() + '/corporateaction/corporate-actions';
       break;
     default:
       throw new Error('Invalid class type: ' + AMaaSClass);
   }
   if (!AMId) {
-    return baseURL + '/';
+    return '' + baseURL;
   } else if (!resourceId) {
     return baseURL + '/' + AMId;
   } else {
@@ -135,7 +235,6 @@ function buildURL(_ref) {
 function setAuthorization() {
   switch (stage) {
     case 'staging':
-      return 'x-api-key';
     case 'prod':
     default:
       return 'Authorization';
@@ -145,7 +244,8 @@ function setAuthorization() {
 function makeRequest(_ref2) {
   var method = _ref2.method,
       url = _ref2.url,
-      data = _ref2.data;
+      data = _ref2.data,
+      query = _ref2.query;
 
   return getToken().then(function (res) {
     switch (method) {
@@ -154,7 +254,7 @@ function makeRequest(_ref2) {
       case 'SEARCH':
         return _superagent2.default.get(url).set(setAuthorization(), res).query(data);
       case 'POST':
-        return _superagent2.default.post(url).send(data).set(setAuthorization(), res).query({ camelcase: true });
+        return _superagent2.default.post(url).send(data).set(setAuthorization(), res).query(query);
       case 'PUT':
         return _superagent2.default.put(url).send(data).set(setAuthorization(), res).query({ camelcase: true });
       case 'PATCH':
@@ -209,7 +309,8 @@ function retrieveData(_ref3, callback) {
       return response.body;
     });
   }
-  promise.end(function (error, response) {
+  // promise.end((error, response) => {
+  promise.then(function (response, error) {
     if (!error && response.status == 200) {
       callback(null, response.body);
     } else {
@@ -218,6 +319,10 @@ function retrieveData(_ref3, callback) {
       if (typeof callback === 'function') {
         callback(requestError);
       }
+    }
+  }).catch(function (err) {
+    if (typeof callback === 'function') {
+      return callback(err);
     }
   });
 }
@@ -236,7 +341,8 @@ function insertData(_ref4, callback) {
   var AMaaSClass = _ref4.AMaaSClass,
       AMId = _ref4.AMId,
       resourceId = _ref4.resourceId,
-      data = _ref4.data;
+      data = _ref4.data,
+      queryParams = _ref4.queryParams;
 
   // if (stage === 'dev' || stage === 'staging' && !token) {
   //   if (typeof callback !== 'function') {
@@ -266,7 +372,14 @@ function insertData(_ref4, callback) {
     url: url,
     json: data
   };
-  var promise = makeRequest({ method: 'POST', url: url, data: data });
+  var query = { camelcase: true };
+  if (queryParams) {
+    for (var i = 0; i < queryParams.length; i++) {
+      data[queryParams[i].key] = queryParams[i].values.join();
+    }
+    Object.assign(query, queryParams);
+  }
+  var promise = makeRequest({ method: 'POST', url: url, data: data, query: query });
   // let promise = request.post(url).send(data).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -274,10 +387,15 @@ function insertData(_ref4, callback) {
       return response.body;
     });
   }
-  promise.end(function (error, response) {
+  // promise.end((error, response) => {
+  promise.then(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
+  }).catch(function (err) {
+    if (typeof callback === 'function') {
+      return callback(err);
+    }
   });
 }
 
@@ -320,10 +438,15 @@ function putData(_ref5, callback) {
       return response.body;
     });
   }
-  promise.end(function (error, response) {
+  // promise.end((error, response) => {
+  promise.then(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
+  }).catch(function (err) {
+    if (typeof callback === 'function') {
+      return callback(err);
+    }
   });
 }
 
@@ -366,10 +489,15 @@ function patchData(_ref6, callback) {
       return response.body;
     });
   }
-  promise.end(function (error, response) {
+  // promise.end((error, response) => {
+  promise.end(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
+  }).catch(function (err) {
+    if (typeof callback === 'function') {
+      return callback(err);
+    }
   });
 }
 
@@ -407,10 +535,15 @@ function deleteData(_ref7, callback) {
       return response.body;
     });
   }
-  promise.end(function (error, response) {
+  // promise.end((error, response) => {
+  promise.then(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
+  }).catch(function (err) {
+    if (typeof callback === 'function') {
+      return callback(err);
+    }
   });
 }
 
@@ -426,6 +559,7 @@ function deleteData(_ref7, callback) {
  */
 function searchData(_ref8, callback) {
   var AMaaSClass = _ref8.AMaaSClass,
+      AMId = _ref8.AMId,
       query = _ref8.query;
 
   // if (stage === 'dev' || stage === 'staging' && !token) {
@@ -438,7 +572,8 @@ function searchData(_ref8, callback) {
   var url = void 0;
   try {
     url = buildURL({
-      AMaaSClass: AMaaSClass
+      AMaaSClass: AMaaSClass,
+      AMId: AMId
     });
   } catch (e) {
     if (typeof callback !== 'function') {
@@ -449,20 +584,25 @@ function searchData(_ref8, callback) {
   }
   var data = { camelcase: true };
   for (var i = 0; i < query.length; i++) {
-    queryString[query[i].key] = query[i].values.join();
+    data[query[i].key] = query[i].values.join();
   }
   var promise = makeRequest({ method: 'SEARCH', url: url, data: data });
   // let promise = request.get(url).set('x-api-key', token).query(queryString)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
-      return response;
+      return response.body;
     });
   }
-  promise.end(function (error, response) {
+  // promise.end((error, response) => {
+  promise.then(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
+  }).catch(function (err) {
+    if (typeof callback === 'function') {
+      return callback(err);
+    }
   });
 }
 

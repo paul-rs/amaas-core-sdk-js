@@ -15,24 +15,35 @@ var _position2 = _interopRequireDefault(_position);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Retrieve a Position from the database
+ * @function retrieve
+ * @memberof module:api.Positions
+ * @static
+ * @param {object} params - object of parameters
+ * @param {number} params.AMId - Asset Manager ID of the the Positions
+ * @param {function} [callback] - Called with two arugments (error, result) on completion. `result` is an array of Positions. Omit to return Promise
+ * @returns {Promise|null} If no callback is supplied, returns promise that resolves with an array of Positions
+ */
 function retrieve(_ref, callback) {
-  var AMId = _ref.AMId,
-      resourceId = _ref.resourceId,
-      token = _ref.token;
+  var AMId = _ref.AMId;
 
   var params = {
     AMaaSClass: 'positions',
-    AMId: AMId,
-    resourceId: resourceId,
-    token: token
+    AMId: AMId
   };
   var promise = (0, _network.retrieveData)(params).then(function (result) {
-    var pos = _parsePos(result);
-    if (typeof callback === 'function') {
-      callback(null, pos);
+    if (Array.isArray(result)) {
+      result = result.map(function (pos) {
+        return _parsePos(pos);
+      });
     } else {
-      return pos;
+      result = _parsePos(result);
     }
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
   });
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
@@ -43,26 +54,47 @@ function retrieve(_ref, callback) {
   });
 }
 
+/**
+ * Search for Positions in the database
+ * @function search
+ * @memberof module:api.Positions
+ * @static
+ * @param {object} params - object of parameters
+ * @param {number} params.AMId - Asset Manager ID of the Asset Manager owning the Postions
+ * @param {array} params.query - array of query objects: { key: `string`, values: `array` }<br />
+ * Available keys are:
+ * <li>assetManagerIds (Required if AMId param is omitted)</li>
+ * <li>bookIds</li>
+ * <li>assetIds</li>
+ * <li>clientIds</li>
+ * <li>accountIds</li>
+ * <li>accountingTypes</li>
+ * <li>positionDate</li>
+ * e.g. `[ { key: 'assetManagerIds', values: [1] }, { key: 'bookIds', values: [1, 2, 3] } ]`
+ * @param {function} [callback] - Called with two arguments (error, result) on completion. Omit to return Promise
+ * @returns {Promise|null} If no callback is supplied, returns promise that resolves with array of Positions
+ */
 function search(_ref2, callback) {
-  var queryKey = _ref2.queryKey,
-      queryValue = _ref2.queryValue,
-      token = _ref2.token;
+  var AMId = _ref2.AMId,
+      query = _ref2.query;
 
   var params = {
     AMaaSClass: 'positions',
-    queryKey: queryKey,
-    queryValue: queryValue,
-    token: token
+    AMId: AMId,
+    query: query
   };
   var promise = (0, _network.searchData)(params).then(function (result) {
-    var positions = result.map(function (pos) {
-      return _parsePos(pos);
-    });
-    if (typeof callback === 'function') {
-      callback(null, positions);
+    if (Array.isArray(result)) {
+      result = result.map(function (pos) {
+        return _parsePos(pos);
+      });
     } else {
-      return positions;
+      result = _parsePos(result);
     }
+    if (typeof callback === 'function') {
+      callback(null, result);
+    }
+    return result;
   });
   if (typeof callback !== 'function') {
     // return promise if callback is not provided

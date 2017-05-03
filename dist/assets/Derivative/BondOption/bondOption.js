@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _decimal = require('decimal.js');
 
+var _decimal2 = _interopRequireDefault(_decimal);
+
 var _derivative = require('../Derivative/derivative.js');
 
 var _derivative2 = _interopRequireDefault(_derivative);
@@ -150,9 +152,9 @@ var BondOption = function (_Derivative) {
         },
         set: function set(newStrike) {
           if (!newStrike) {
-            _this._strike = new _decimal.Decimal(0);
+            _this._strike = new _decimal2.default(0);
           } else {
-            _this._strike = new _decimal.Decimal(newStrike);
+            _this._strike = new _decimal2.default(newStrike);
           }
         },
         enumerable: true

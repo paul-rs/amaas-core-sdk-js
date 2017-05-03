@@ -1,4 +1,4 @@
-import { Decimal } from 'decimal.js'
+import Decimal from 'decimal.js'
 
 import Asset from '../../Asset/asset'
 import { FUND_TYPES } from '../../enums.js'

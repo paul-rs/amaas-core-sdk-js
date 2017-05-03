@@ -8,6 +8,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _decimal = require('decimal.js');
 
+var _decimal2 = _interopRequireDefault(_decimal);
+
 var _future = require('../Future/future');
 
 var _future2 = _interopRequireDefault(_future);
@@ -140,9 +142,9 @@ var BondFuture = function (_Future) {
         },
         set: function set(newCoupon) {
           if (!newCoupon) {
-            _this._underlyingBondCoupon = new _decimal.Decimal(0);
+            _this._underlyingBondCoupon = new _decimal2.default(0);
           } else {
-            _this._underlyingBondCoupon = new _decimal.Decimal(newCoupon);
+            _this._underlyingBondCoupon = new _decimal2.default(newCoupon);
           }
         },
         enumerable: true

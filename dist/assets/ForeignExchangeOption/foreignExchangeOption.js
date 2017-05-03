@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _decimal = require('decimal.js');
 
+var _decimal2 = _interopRequireDefault(_decimal);
+
 var _asset = require('../Asset/asset');
 
 var _asset2 = _interopRequireDefault(_asset);
@@ -152,9 +154,9 @@ var ForeignExchangeOption = function (_Asset) {
         },
         set: function set(newStrike) {
           if (!newStrike) {
-            _this._strike = new _decimal.Decimal(0);
+            _this._strike = new _decimal2.default(0);
           } else {
-            _this._strike = new _decimal.Decimal(newStrike);
+            _this._strike = new _decimal2.default(newStrike);
           }
         },
         enumerable: true
@@ -166,9 +168,9 @@ var ForeignExchangeOption = function (_Asset) {
         },
         set: function set(newPremium) {
           if (!newPremium) {
-            _this._premium = new _decimal.Decimal(0);
+            _this._premium = new _decimal2.default(0);
           } else {
-            _this._premium = new _decimal.Decimal(newPremium);
+            _this._premium = new _decimal2.default(newPremium);
           }
         },
         enumerable: true

@@ -1,23 +1,31 @@
-import request from 'superagent'
 require('dotenv').config()
-import endpoint from '../../config.js'
+import request from 'superagent'
+import { endpoint, userPoolId, clientAppId } from '../../config.js'
+import fs from 'fs'
+import { AuthenticationDetails, CognitoUser, CognitoUserPool } from 'amazon-cognito-identity-js'
+import expandTilde from 'expand-tilde'
 
+const userPool = new CognitoUserPool({
+  UserPoolId: userPoolId,
+  ClientId: clientAppId
+})
 let stage = 'prod'
 let token
+let credPath
 
 export function configureStage(config) {
-  stage = config.stage
-  switch (config.stage) {
-    case 'staging':
-      if (!config.apiKey) {
-        throw new Error('Missing Authorization')
-      }
-      token = config.apiKey
-      break
-    // Leave it undefined for prod because we will get the token from Cognito later
-    case 'prod':
-    default:
-      null
+  if (config.stage) {
+    stage = config.stage
+  }
+  if (config.credentialsPath) {
+    credPath = config.credentialsPath
+  }
+  return
+}
+
+export function configureAuth(config) {
+  if (config.token) {
+    token = config.token
   }
   return
 }
@@ -25,27 +33,101 @@ export function configureStage(config) {
 export function getEndpoint() {
   switch (stage) {
     case 'staging':
-      return `${endpoint}/staging`
+      return `${endpoint.staging}/staging`
     case 'prod':
-      return `${endpoint}/prod`
+      return `${endpoint.prod}/prod`
     default:
       console.warn(`Unknown stage variable: ${stage}. Defaulting to /prod`)
-      return `${endpoint}/prod`
+      return `${endpoint.prod}/prod`
   }
 }
 
-export function getToken() {
+function isNode() {
+  try {
+    return Object.prototype.toString.call(global.process) === '[object process]'
+  } catch(e) {
+    return false
+  }
+}
+
+export function authenticate() {
+  let injectedResolve
+  let injectedReject
   return new Promise((resolve, reject) => {
+    injectedResolve = resolve
+    injectedReject = reject
+    let path
+    if (credPath) {
+      path = credPath
+    } else {
+      path = `${expandTilde('~')}/amaas.js`
+    }
+    console.log(`Reading credentials from ${path}`)
+    fs.readFile(path, (error, data) => {
+      if (error) {
+        return injectedReject(error)
+      }
+      const Username = JSON.parse(data).username
+      const Password = JSON.parse(data).password
+      const authenticationDetails = new AuthenticationDetails({
+        Username,
+        Password
+      })
+      const cognitoUser = new CognitoUser({
+        Username,
+        Pool: userPool
+      })
+      console.log('Starting authentication...')
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: res => injectedResolve(res.getIdToken().getJwtToken()),
+        onFailure: err => injectedReject(err)
+      })
+    })
+  })
+}
+
+export function getToken() {
+  if (token && token.length > 0) {
+    return Promise.resolve(token)
+  }
+  let injectedResolve
+  let injectedReject
+  return new Promise((resolve, reject) => {
+    injectedResolve = resolve
+    injectedReject = reject
     switch (stage) {
       case 'staging':
-        resolve(token)
-        break
       case 'prod':
-        // TODO: Implement Cognito to get access tokens
-        resolve('token')
+        const cognitoUser = userPool.getCurrentUser()
+        if (!cognitoUser) {
+          if (isNode()) {
+            console.warn('No user in storage, attempting to authenticate...')
+            authenticate()
+              .then(res => injectedResolve(res))
+              .catch(err => injectedReject(err))
+          } else {
+            injectedReject('Unauthorized, please re-authenticate')
+          }
+        } else {
+          cognitoUser.getSession((err, session) => {
+            if (session) {
+              console.log('getSession success')
+              injectedResolve(session.getIdToken().getJwtToken())
+            } else {
+              if (isNode()) {
+                console.warn('getSession failure, attempting to authenticate')
+                  authenticate()
+                  .then(res => injectedResolve(res))
+                  .catch(err => injectedReject(err))
+              } else {
+                injectedReject('Unauthorized, please re-authenticate')
+              }
+            }
+          })
+        }
         break
       default:
-        reject('Missing Authorization')
+        injectedReject('Missing Authorization')
     }
   })
 }
@@ -69,31 +151,34 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
       baseURL = `${getEndpoint()}/party/parties`
       break
     case 'assetManagers':
-      baseURL = `${getEndpoint()}/asset-manager/asset-managers`
+      baseURL = `${getEndpoint()}/assetmanager/asset-managers`
       break
     case 'assets':
       baseURL = `${getEndpoint()}/asset/assets`
       break
     case 'positions':
-      baseURL = `${getEndpoint()}/position/positions`
+      baseURL = `${getEndpoint()}/transaction/positions`
       break
     case 'allocations':
-      baseURL = `${getEndpoint()}/allocation/allocations`
+      baseURL = `${getEndpoint()}/transaction/allocations`
       break
     case 'netting':
-      baseURL = `${getEndpoint()}/netting/netting`
+      baseURL = `${getEndpoint()}/transaction/netting`
       break
     case 'relationships':
-      baseURL = `${getEndpoint()}/asset-manager-relationship/asset-manager-relationships`
+      baseURL = `${getEndpoint()}/assetmanager/asset-manager-relationships`
       break
     case 'transactions':
       baseURL = `${getEndpoint()}/transaction/transactions`
+      break
+    case 'corporateActions':
+      baseURL = `${getEndpoint()}/corporateaction/corporate-actions`
       break
     default:
       throw new Error(`Invalid class type: ${AMaaSClass}`)
   }
   if (!AMId) {
-    return `${baseURL}/`
+    return `${baseURL}`
   } else if (!resourceId) {
     return `${baseURL}/${AMId}`
   } else {
@@ -104,14 +189,13 @@ export function buildURL({ AMaaSClass, AMId, resourceId }) {
 export function setAuthorization() {
   switch (stage) {
     case 'staging':
-      return 'x-api-key'
     case 'prod':
     default:
       return 'Authorization'
   }
 }
 
-export function makeRequest({ method, url, data }) {
+export function makeRequest({ method, url, data, query }) {
   return getToken()
     .then(res => {
       switch (method) {
@@ -120,7 +204,7 @@ export function makeRequest({ method, url, data }) {
         case 'SEARCH':
           return request.get(url).set(setAuthorization(), res).query(data)
         case 'POST':
-          return request.post(url).send(data).set(setAuthorization(), res).query({ camelcase: true })
+          return request.post(url).send(data).set(setAuthorization(), res).query(query)
         case 'PUT':
           return request.put(url).send(data).set(setAuthorization(), res).query({ camelcase: true })
         case 'PATCH':
@@ -168,7 +252,8 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  promise.end((error, response) => {
+  // promise.end((error, response) => {
+  promise.then((response, error) => {
     if (!error && response.status == 200) {
       callback(null, response.body)
     } else {
@@ -177,6 +262,10 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
       if (typeof callback === 'function') {
         callback(requestError)
       }
+    }
+  }).catch(err => {
+    if (typeof callback === 'function') {
+      return callback(err)
     }
   })
 }
@@ -191,7 +280,7 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
  * @param {string} AMId: Asset Manager Id (required)
  * @param {string} data: data to insert into database
 */
-export function insertData({ AMaaSClass, AMId, resourceId, data }, callback) {
+export function insertData({ AMaaSClass, AMId, resourceId, data, queryParams }, callback) {
   // if (stage === 'dev' || stage === 'staging' && !token) {
   //   if (typeof callback !== 'function') {
   //     return Promise.reject('Missing Authorization')
@@ -220,16 +309,28 @@ export function insertData({ AMaaSClass, AMId, resourceId, data }, callback) {
     url,
     json: data
   }
-  let promise = makeRequest({ method: 'POST', url, data })
+  let query = { camelcase: true }
+  if (queryParams) {
+    for (let i = 0; i < queryParams.length; i++) {
+      data[queryParams[i].key] = queryParams[i].values.join()
+    }
+    Object.assign(query, queryParams)
+  }
+  let promise = makeRequest({ method: 'POST', url, data, query })
   // let promise = request.post(url).send(data).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  promise.end((error, response) => {
+  // promise.end((error, response) => {
+  promise.then((response, error) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
+  }).catch(err => {
+    if (typeof callback === 'function') {
+      return callback(err)
+    }
   })
 }
 
@@ -265,10 +366,15 @@ export function putData({ AMaaSClass, AMId, resourceId, data }, callback) {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  promise.end((error, response) => {
+  // promise.end((error, response) => {
+  promise.then((response, error) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
+  }).catch(err => {
+    if (typeof callback === 'function') {
+      return callback(err)
+    }
   })
 }
 
@@ -304,10 +410,15 @@ export function patchData({ AMaaSClass, AMId, resourceId, data }, callback) {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  promise.end((error, response) => {
+  // promise.end((error, response) => {
+  promise.end((response, error) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
+  }).catch(err => {
+    if (typeof callback === 'function') {
+      return callback(err)
+    }
   })
 }
 
@@ -339,10 +450,15 @@ export function deleteData({ AMaaSClass, AMId, resourceId }, callback) {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  promise.end((error, response) => {
+  // promise.end((error, response) => {
+  promise.then((response, error) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
+  }).catch(err => {
+    if (typeof callback === 'function') {
+      return callback(err)
+    }
   })
 }
 
@@ -356,7 +472,7 @@ export function deleteData({ AMaaSClass, AMId, resourceId }, callback) {
  *     { key: 'assetTypes', values: ['GovernmentBond, ForeignExchange']}
  *   ]
  */
-export function searchData({ AMaaSClass, query }, callback) {
+export function searchData({ AMaaSClass, AMId, query }, callback) {
   // if (stage === 'dev' || stage === 'staging' && !token) {
   //   if (typeof callback !== 'function') {
   //     return Promise.reject('Missing Authorization')
@@ -367,7 +483,8 @@ export function searchData({ AMaaSClass, query }, callback) {
   let url
   try {
     url = buildURL({
-      AMaaSClass
+      AMaaSClass,
+      AMId
     })
   } catch (e) {
     if (typeof callback !== 'function') {
@@ -378,18 +495,23 @@ export function searchData({ AMaaSClass, query }, callback) {
   }
   let data = { camelcase: true }
   for (let i = 0; i < query.length; i++) {
-    queryString[query[i].key] = query[i].values.join()
+    data[query[i].key] = query[i].values.join()
   }
   let promise = makeRequest({ method: 'SEARCH', url, data })
   // let promise = request.get(url).set('x-api-key', token).query(queryString)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
-    return promise.then(response => response)
+    return promise.then(response => response.body)
   }
-  promise.end((error, response) => {
+  // promise.end((error, response) => {
+  promise.then((response, error) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
+  }).catch(err => {
+    if (typeof callback === 'function') {
+      return callback(err)
+    }
   })
 }
 

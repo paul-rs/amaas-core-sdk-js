@@ -8,4 +8,7 @@ exports.search = exports.retrieve = undefined;
 var _positions = require('./positions.js');
 
 exports.retrieve = _positions.retrieve;
-exports.search = _positions.search;
+exports.search = _positions.search; /**
+                                     * @namespace Positions
+                                     * @memberof module:api
+                                     */

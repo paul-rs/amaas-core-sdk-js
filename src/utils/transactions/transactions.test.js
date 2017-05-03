@@ -1,17 +1,51 @@
-import { retrieve, insert, amend, partialAmend } from './transactions'
+import { retrieve, insert, amend, partialAmend, search, cancel } from './transactions'
+import * as api from '../../exports/api'
 
-const token = process.env.API_TOKEN
+api.config({
+  stage: 'staging',
+  token: process.env.API_TOKEN
+})
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
 
 describe('utils/transactions', () => {
   describe('retrieve', () => {
+    test('with callback', done => {
+      const params = { AMId: 1 }
+      retrieve(params, (err, res) => {
+        expect(res).toBeDefined()
+        if (Array.isArray(res)) {
+          expect(res[0].transactionId).toBeDefined()
+          done()
+        } else {
+          expect(res.transactionId).toBeDefined()
+          done()
+        }
+      })
+    })
+
+    test('with promise', done => {
+      let promise = retrieve({ AMId: 1 })
+      expect(promise).toBeInstanceOf(Promise)
+      promise.then(res => {
+        if (Array.isArray(res)) {
+          expect(res[0].transactionId).toBeDefined()
+          done()
+        } else {
+          expect(res.transactionId).toBeDefined()
+          done()
+        }
+      })
+      .catch(err => console.error(err))
+    })
     it('retrieves', done => {
-      retrieve({ AMId: 1, resourceId: '4f82cc16adf14af9bfc01da8e7c6e580', token })
+      retrieve({ AMId: 1, resourceId: '4f82cc16adf14af9bfc01da8e7c6e580' })
         .then(res => {
           expect(res).toBeDefined()
           expect(res.transactionId).toEqual('4f82cc16adf14af9bfc01da8e7c6e580')
           done()
         })
         .catch(err => {
+          console.error(err)
         })
     })
   })
@@ -37,7 +71,7 @@ describe('utils/transactions', () => {
         assetBookId: "JWXWNSBABR",
         quantity: 100
       }
-      insert({ transaction, token })
+      insert({ transaction })
         .then(res => {
           expect(res).toBeDefined()
           expect(res.transactionId).toEqual('testTransactionID')
@@ -52,11 +86,11 @@ describe('utils/transactions', () => {
   describe('amend', () => {
     it('amends', done => {
       let q
-      retrieve({ AMId: 1, resourceId: 'testTransactionID', token })
+      retrieve({ AMId: 1, resourceId: 'testTransactionID' })
         .then(res => {
           q = res.quantity
           res.quantity = res.quantity.plus(1)
-          return amend({ transaction: res, AMId: 1, resourceId: res.transactionId, token })
+          return amend({ transaction: res, AMId: 1, resourceId: res.transactionId })
         })
         .then(res => {
           expect(res.quantity).toEqual(q.plus(1))
@@ -72,7 +106,7 @@ describe('utils/transactions', () => {
     it('partial amends', done => {
       let tC
       let changes = {}
-      retrieve({ AMId: 1, resourceId: 'testTransactionID', token })
+      retrieve({ AMId: 1, resourceId: 'testTransactionID' })
         .then(res => {
           if (res.transactionCurrency === 'USD') {
             tC = 'USD'
@@ -81,13 +115,47 @@ describe('utils/transactions', () => {
             tC = 'SGD'
             changes.transactionCurrency = 'USD'
           }
-          return partialAmend({ changes, AMId: 1, resourceId: res.transactionId, token})
+          return partialAmend({ changes, AMId: 1, resourceId: res.transactionId })
         })
         .then(res => {
           expect(res.transactionCurrency).toEqual(tC === 'SGD' ? 'USD' : 'SGD')
           done()
         })
-        .catch(err => {})
+        .catch(err => console.error(err))
+    })
+  })
+
+  describe('search', () => {
+    it('searches', done => {
+      const query = [
+        { key: 'asset_book_ids', values: ['Z5FHJFCO6M', 'Y0JTY73A9T'] }
+      ]
+      search({ AMId: 1, query })
+        .then(res => {
+          if (Array.isArray(res)) {
+            res = res[0]
+            expect(res.assetBookId).toEqual(res.assetBookId !== 'Z5FHJFCO6M' ? 'Y0JTY73A9T' : 'Z5FHJFCO6M')
+          } else {
+            expect(res.assetBookId).toEqual(res.assetBookId !== 'Z5FHJFCO6M' ? 'Y0JTY73A9T' : 'Z5FHJFCO6M')
+          }
+          done()
+        })
+        .catch(err => console.error(err))
+    })
+  })
+
+  describe('cancel', () => {
+    it.skip('cancels', done => {
+      retrieve({ AMId: 1 })
+        .then(res => {
+          const tId = res[0].transactionId
+          return cancel({ AMId: res[0].assetManagerId, resourceId: tId })
+        })
+        .then(res => {
+          expect(res.transactionStatus).toEqual('Cancelled')
+          done()
+        })
+        .catch(err => console.error(err))
     })
   })
 })

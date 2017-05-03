@@ -1,5 +1,5 @@
 import { AMaaSModel } from '../../core'
-import { Decimal } from 'decimal.js'
+import Decimal from 'decimal.js'
 
 class Charge extends AMaaSModel {
   constructor({

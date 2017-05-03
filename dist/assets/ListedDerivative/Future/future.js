@@ -8,6 +8,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _decimal = require('decimal.js');
 
+var _decimal2 = _interopRequireDefault(_decimal);
+
 var _listedDerivative = require('../ListedDerivative/listedDerivative');
 
 var _listedDerivative2 = _interopRequireDefault(_listedDerivative);
@@ -157,9 +159,9 @@ var Future = function (_ListedDerivative) {
         },
         set: function set(newTickSize) {
           if (!newTickSize) {
-            _this._tickSize = new _decimal.Decimal(0);
+            _this._tickSize = new _decimal2.default(0);
           } else {
-            _this._tickSize = new _decimal.Decimal(newTickSize);
+            _this._tickSize = new _decimal2.default(newTickSize);
           }
         },
         enumerable: true
@@ -171,9 +173,9 @@ var Future = function (_ListedDerivative) {
         },
         set: function set(newContractSize) {
           if (!newContractSize) {
-            _this._contractSize = new _decimal.Decimal(0);
+            _this._contractSize = new _decimal2.default(0);
           } else {
-            _this._contractSize = new _decimal.Decimal(newContractSize);
+            _this._contractSize = new _decimal2.default(newContractSize);
           }
         },
         enumerable: true
