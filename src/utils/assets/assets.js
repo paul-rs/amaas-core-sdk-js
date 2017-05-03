@@ -150,17 +150,18 @@ export function partialAmend({ AMId, changes, resourceId }, callback) {
  * @memberof module:api.Assets
  * @static
  * @param {object} params - object of parameters:
- * @param {number} [params.AMId] - Asset Manager ID of the Assets to search over. Omit to return results for all permissioned Asset Managers
+ * @param {number} [params.AMId] - Asset Manager ID of the Assets to search over. If omitted, you must send assetManagerIds in the search query with at least one value
  * @param {array} params.query - Search parameters of the form [{ key: <string>, values: <array> }]<br />
  * Available keys are:
- * <li>client_ids</li>
- * <li>asset_statuses</li>
- * <li>asset_ids</li>
- * <li>reference_types</li>
- * <li>reference_values</li>
- * <li>asset_issuer_ids</li>
- * <li>asset_classes</li>
- * <li>asset_types</li>
+ * <li>assetManagerIds (Required if AMId param is omitted)</li>
+ * <li>clientIds</li>
+ * <li>assetStatuses</li>
+ * <li>assetIds</li>
+ * <li>referenceTypes</li>
+ * <li>referenceValues</li>
+ * <li>assetIssuerIds</li>
+ * <li>assetClasses</li>
+ * <li>assetTypes</li>
  * @param {function} callback - Called with two arguments (error, result) on completion. `result` is an array of Assets or a single Asset instance
  * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Assets or a single Asset instance
  */

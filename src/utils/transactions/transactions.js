@@ -147,25 +147,25 @@ export function partialAmend({ changes, AMId, resourceId }, callback) {
  * @memberof module:api.Transactions
  * @static
  * @param {object} params - object of parameters
- * @param {number} [params.AMId] - Asset Manager ID of the Transactions to search over. Omit to return all matching Transactions for all permissioned Asset Managers
+ * @param {number} [params.AMId] - Asset Manager ID of the Transactions to search over. If omitted you must pass assetManagerIds in the query
  * @param {array} params.query - Array of query parameters of the form: [{ key: <string>, values: <array> }]. e.g. [{ key: book_ids, values: [1, 2, 3]}]<br />
  * Available keys are:
- * <li>client_ids</li>
- * <li>transaction_statuses</li>
- * <li>transaction_ids</li>
- * <li>asset_book_ids</li>
- * <li>counterparty_book_ids</li>
- * <li>asset_ids</li>
- * <li>transaction_date_start</li>
- * <li>transaction_date_end</li>
- * <li>code_types</li>
- * <li>code_values</li>
- * <li>link_types</li>
- * <li>linked_transaction_ids</li>
- * <li>party_types</li>
- * <li>party_ids</li>
- * <li>reference_types</li>
- * <li>reference_values</li>
+ * <li>clientIds</li>
+ * <li>transactionStatuses</li>
+ * <li>transactionIds</li>
+ * <li>assetBookIds</li>
+ * <li>counterpartyBookIds</li>
+ * <li>assetIds</li>
+ * <li>transactionDateStart</li>
+ * <li>transactionDateEnd</li>
+ * <li>codeTypes</li>
+ * <li>codeValues</li>
+ * <li>linkTypes</li>
+ * <li>linkedTransactionIds</li>
+ * <li>partyTypes</li>
+ * <li>partyIds</li>
+ * <li>referenceTypes</li>
+ * <li>referenceValues</li>
  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Transactions or a single Transaction instance. Omit to return Promise
  * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Transactions or a single Transaction instance
  */

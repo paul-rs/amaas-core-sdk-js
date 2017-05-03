@@ -127,7 +127,9 @@ describe('utils/books', () => {
     test('with callback', callback => {
       search({
         AMId: 269,
-        query: [{ key: 'book_ids', values: ['35QIZ0'] }]
+        query: [
+          { key: 'book_ids', values: ['35QIZ0'] }
+        ]
       }, (error, books) => {
         expect(Array.isArray(books)).toBeTruthy()
         callback(error)
@@ -144,6 +146,21 @@ describe('utils/books', () => {
         expect(Array.isArray(books)).toBeTruthy()
         callback()
       })
+    })
+    it('searches', done => {
+      search({
+        query: [
+          { key: 'assetManagerIds', values: [269] },
+          { key: 'bookIds', values: ['35QIZ0'] }
+        ]
+      })
+      .then(res => {
+        expect(res[0]).toBeDefined()
+        expect(res[0].bookId).toEqual('35QIZ0')
+        expect(res[0].assetManagerId).toEqual(269)
+        done()
+      })
+      .catch(err => console.error(err))
     })
   })
 })

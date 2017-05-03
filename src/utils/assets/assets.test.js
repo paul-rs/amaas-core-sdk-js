@@ -99,6 +99,7 @@ describe('utils/assets', () => {
   describe('search', () => {
     it('searches', done => {
       const query = [
+        // TODO: Update this to camelCase options is available
         { key: 'asset_classes', values: ['Asset', 'ForeignExchange']}
       ]
       search({ AMId: 1, query })

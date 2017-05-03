@@ -150,22 +150,22 @@ function amend(_ref3, callback) {
  * @memberof module:api.CorporateActions
  * @static
  * @param {object} params - object of parameters:
- * @param {number} [params.AMId] - AMId of the Asset Manager that owns the Corporate Action. Omit to return matching results for all permissioned Asset Managers
+ * @param {number} [params.AMId] - AMId of the Asset Manager that owns the Corporate Action. If omitted you must pass assetManagerIds in the query
  * @param {array} params.query - Query parameters to search in the form [{ key: <string>, values: <array of values> }]<br />
  * Available keys are:
- * <li>client_ids</li>
- * <li>asset_manager_ids</li>
- * <li>corporate_action_ids</li>
- * <li>corporate_action_statuses</li>
- * <li>corporate_action_types</li>
- * <li>asset_ids</li>
- * <li>party_ids</li>
- * <li>record_date_start</li>
- * <li>record_date_end</li>
- * <li>declared_date_start</li>
- * <li>declared_date_end</li>
- * <li>reference_types</li>
- * <li>reference_values</li>
+ * <li>assetManagerIds (Required if AMId param is omitted)</li>
+ * <li>clientIds</li>
+ * <li>corporateActionIds</li>
+ * <li>corporateActionStatuses</li>
+ * <li>corporateActionTypes</li>
+ * <li>assetIds</li>
+ * <li>partyIds</li>
+ * <li>recordDateStart</li>
+ * <li>recordDateEnd</li>
+ * <li>declaredDateStart</li>
+ * <li>declaredDateEnd</li>
+ * <li>referenceTypes</li>
+ * <li>referenceValues</li>
  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Corporate Actions or a single CorporateAction instance. Omit to return Promise
  * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Corporate Actions or a single CorporateAction instance
  */

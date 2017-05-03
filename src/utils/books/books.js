@@ -45,8 +45,14 @@ export function retrieve({ AMId, resourceId }, callback) {
  * @memberof module:api.Books
  * @static
  * @param {object} params - object of parameters:
- * @param {number} params.AMId - Asset Manager ID of the user calling the API
+ * @param {number} [params.AMId] - Asset Manager ID of the user calling the API. If omitted, you must pass assetManagerIds in the query
  * @param {array} params.query - Array of query parameters of the form: [{ key: <string>, values: <array> }]. e.g. [{ key: book_ids, values: [1, 2, 3]}]
+ * Available keys are:
+ * <li>assetManagerIds (Required if AMId param is omitted)</li>
+ * <li>clientIds</li>
+ * <li>bookStatuses</li>
+ * <li>bookIds</li>
+ * <li>ownerIds</li>
  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Books or a single Book instance. Omit to return Promise
  * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Books or a single Book instance
  */
@@ -158,7 +164,7 @@ export function retire({ AMId, resourceId }, callback) {
     AMaaSClass: 'book',
     AMId,
     resourceId,
-    data: { book_status: 'Retired' }
+    data: { bookStatus: 'Retired' }
   }
   let promise = patchData(params).then(result => {
     result = _parseBook(result)
@@ -189,7 +195,7 @@ export function reactivate({ AMId, resourceId }, callback) {
     AMaaSClass: 'book',
     AMId,
     resourceId,
-    data: { book_status: 'Active' }
+    data: { bookStatus: 'Active' }
   }
   let promise = patchData(params).then(result => {
     result = _parseBook(result)

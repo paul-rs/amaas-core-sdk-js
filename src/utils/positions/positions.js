@@ -43,9 +43,16 @@ export function retrieve({ AMId }, callback) {
  * @memberof module:api.Positions
  * @static
  * @param {object} params - object of parameters
+ * @param {number} params.AMId - Asset Manager ID of the Asset Manager owning the Postions
  * @param {array} params.query - array of query objects: { key: string, values: array }. e.g. [{ key: 'book_ids', values: [1, 2, 3] }]
  * Available keys are:
- * TODO: List the keys (Note that if omitting AMId, then asset_manager_ids must be passed in the query string)
+ * <li>assetManagerIds (Required if AMId param is omitted)</li>
+ * <li>bookIds</li>
+ * <li>assetIds</li>
+ * <li>clientIds</li>
+ * <li>accountIds</li>
+ * <li>accountingTypes</li>
+ * <li>positionDate</li>
  * @param {function} [callback] - Called with two arguments (error, result) on completion. Omit to return Promise
  * @returns {Promise|null} If no callback is supplied, returns promise that resolves with array of Positions
  */
