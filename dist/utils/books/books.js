@@ -200,7 +200,7 @@ function retire(_ref5, callback) {
     AMaaSClass: 'book',
     AMId: AMId,
     resourceId: resourceId,
-    data: { bookStatus: 'Retired' }
+    data: { book_status: 'Retired' }
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseBook(result);
@@ -236,7 +236,7 @@ function reactivate(_ref6, callback) {
     AMaaSClass: 'book',
     AMId: AMId,
     resourceId: resourceId,
-    data: { bookStatus: 'Active' }
+    data: { book_status: 'Active' }
   };
   var promise = (0, _network.patchData)(params).then(function (result) {
     result = _parseBook(result);

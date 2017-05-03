@@ -55,8 +55,16 @@ describe('amend', () => {
     const nowish = new Date()
     retrieve({ AMId: 338 })
       .then(res => {
-        res[0].description = `Amended on ${nowish}`
-        return amend({ AMId: res[0].assetManagerId, resourceId: res[0].corporateActionId, corporateAction: res[0] })
+        const id = res[0].corporateActionId
+        if (res[0].corporateActionStatus === 'Cancelled') {
+          console.log('Cancelled')
+          return reopen({ AMId: res[0].assetManagerId, resourceId: id })
+        }
+        return Promise.resolve(res[0])
+      })
+      .then(res => {
+        res.description = `Amended on ${nowish}`
+        return amend({ AMId: res.assetManagerId, resourceId: res.corporateActionId, corporateAction: res })
       })
       .then(res => {
         expect(res.description).toEqual(`Amended on ${nowish}`)

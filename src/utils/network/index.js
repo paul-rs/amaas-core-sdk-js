@@ -246,14 +246,14 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
     callback(e)
     return
   }
-  console.log(url)
   let promise = makeRequest({ method: 'GET', url })
   // let promise = request.get(url).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  promise.end((error, response) => {
+  // promise.end((error, response) => {
+  promise.then((response, error) => {
     if (!error && response.status == 200) {
       callback(null, response.body)
     } else {
@@ -262,6 +262,10 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
       if (typeof callback === 'function') {
         callback(requestError)
       }
+    }
+  }).catch(err => {
+    if (typeof callback === 'function') {
+      return callback(err)
     }
   })
 }
@@ -318,10 +322,15 @@ export function insertData({ AMaaSClass, AMId, resourceId, data, queryParams }, 
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  promise.end((error, response) => {
+  // promise.end((error, response) => {
+  promise.then((response, error) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
+  }).catch(err => {
+    if (typeof callback === 'function') {
+      return callback(err)
+    }
   })
 }
 
@@ -357,10 +366,15 @@ export function putData({ AMaaSClass, AMId, resourceId, data }, callback) {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  promise.end((error, response) => {
+  // promise.end((error, response) => {
+  promise.then((response, error) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
+  }).catch(err => {
+    if (typeof callback === 'function') {
+      return callback(err)
+    }
   })
 }
 
@@ -396,10 +410,15 @@ export function patchData({ AMaaSClass, AMId, resourceId, data }, callback) {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  promise.end((error, response) => {
+  // promise.end((error, response) => {
+  promise.end((response, error) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
+  }).catch(err => {
+    if (typeof callback === 'function') {
+      return callback(err)
+    }
   })
 }
 
@@ -431,10 +450,15 @@ export function deleteData({ AMaaSClass, AMId, resourceId }, callback) {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  promise.end((error, response) => {
+  // promise.end((error, response) => {
+  promise.then((response, error) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
+  }).catch(err => {
+    if (typeof callback === 'function') {
+      return callback(err)
+    }
   })
 }
 
@@ -479,10 +503,15 @@ export function searchData({ AMaaSClass, AMId, query }, callback) {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  promise.end((error, response) => {
+  // promise.end((error, response) => {
+  promise.then((response, error) => {
     let body
     if (response) body = response.body
     _networkCallback(error, response, body, callback)
+  }).catch(err => {
+    if (typeof callback === 'function') {
+      return callback(err)
+    }
   })
 }
 

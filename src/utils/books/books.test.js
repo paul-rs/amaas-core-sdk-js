@@ -66,7 +66,7 @@ describe('utils/books', () => {
           expect(res).toEqual(expect.objectContaining(data))
         })
         .catch(err => {
-          console.error(error)
+          console.error(err)
         })
     })
   })
@@ -93,7 +93,7 @@ describe('utils/books', () => {
           done()
         })
         .catch(err => {
-          console.error(error)
+          console.error(err)
         })
     })
   })

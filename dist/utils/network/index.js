@@ -301,7 +301,6 @@ function retrieveData(_ref3, callback) {
     callback(e);
     return;
   }
-  console.log(url);
   var promise = makeRequest({ method: 'GET', url: url });
   // let promise = request.get(url).set('x-api-key', token).query({ camelcase: true })
   if (typeof callback !== 'function') {
@@ -310,7 +309,8 @@ function retrieveData(_ref3, callback) {
       return response.body;
     });
   }
-  promise.end(function (error, response) {
+  // promise.end((error, response) => {
+  promise.then(function (response, error) {
     if (!error && response.status == 200) {
       callback(null, response.body);
     } else {
@@ -319,6 +319,10 @@ function retrieveData(_ref3, callback) {
       if (typeof callback === 'function') {
         callback(requestError);
       }
+    }
+  }).catch(function (err) {
+    if (typeof callback === 'function') {
+      return callback(err);
     }
   });
 }
@@ -383,10 +387,15 @@ function insertData(_ref4, callback) {
       return response.body;
     });
   }
-  promise.end(function (error, response) {
+  // promise.end((error, response) => {
+  promise.then(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
+  }).catch(function (err) {
+    if (typeof callback === 'function') {
+      return callback(err);
+    }
   });
 }
 
@@ -429,10 +438,15 @@ function putData(_ref5, callback) {
       return response.body;
     });
   }
-  promise.end(function (error, response) {
+  // promise.end((error, response) => {
+  promise.then(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
+  }).catch(function (err) {
+    if (typeof callback === 'function') {
+      return callback(err);
+    }
   });
 }
 
@@ -475,10 +489,15 @@ function patchData(_ref6, callback) {
       return response.body;
     });
   }
-  promise.end(function (error, response) {
+  // promise.end((error, response) => {
+  promise.end(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
+  }).catch(function (err) {
+    if (typeof callback === 'function') {
+      return callback(err);
+    }
   });
 }
 
@@ -516,10 +535,15 @@ function deleteData(_ref7, callback) {
       return response.body;
     });
   }
-  promise.end(function (error, response) {
+  // promise.end((error, response) => {
+  promise.then(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
+  }).catch(function (err) {
+    if (typeof callback === 'function') {
+      return callback(err);
+    }
   });
 }
 
@@ -570,10 +594,15 @@ function searchData(_ref8, callback) {
       return response.body;
     });
   }
-  promise.end(function (error, response) {
+  // promise.end((error, response) => {
+  promise.then(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
     _networkCallback(error, response, body, callback);
+  }).catch(function (err) {
+    if (typeof callback === 'function') {
+      return callback(err);
+    }
   });
 }
 

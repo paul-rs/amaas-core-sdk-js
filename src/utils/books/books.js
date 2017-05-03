@@ -158,7 +158,7 @@ export function retire({ AMId, resourceId }, callback) {
     AMaaSClass: 'book',
     AMId,
     resourceId,
-    data: { bookStatus: 'Retired' }
+    data: { book_status: 'Retired' }
   }
   let promise = patchData(params).then(result => {
     result = _parseBook(result)
@@ -189,7 +189,7 @@ export function reactivate({ AMId, resourceId }, callback) {
     AMaaSClass: 'book',
     AMId,
     resourceId,
-    data: { bookStatus: 'Active' }
+    data: { book_status: 'Active' }
   }
   let promise = patchData(params).then(result => {
     result = _parseBook(result)

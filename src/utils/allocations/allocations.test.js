@@ -9,7 +9,7 @@ api.config({
 describe('allocations', () => {
   describe('retrieve', () => {
     test('with promise', done => {
-      let promise = retrieve({})
+      let promise = retrieve({}).catch(err => {})
       expect(promise).toBeInstanceOf(Promise)
       done()
     })
