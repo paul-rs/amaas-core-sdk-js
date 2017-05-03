@@ -148,7 +148,7 @@ export function partialAmend({ changes, AMId, resourceId }, callback) {
  * @static
  * @param {object} params - object of parameters
  * @param {number} [params.AMId] - Asset Manager ID of the Transactions to search over. If omitted you must pass assetManagerIds in the query
- * @param {array} params.query - Array of query parameters of the form: [{ key: <string>, values: <array> }]. e.g. [{ key: book_ids, values: [1, 2, 3]}]<br />
+ * @param {array} params.query - Array of query parameters of the form: [{ key: `string`, values: `array` }]<br />
  * Available keys are:
  * <li>clientIds</li>
  * <li>transactionStatuses</li>
@@ -166,6 +166,7 @@ export function partialAmend({ changes, AMId, resourceId }, callback) {
  * <li>partyIds</li>
  * <li>referenceTypes</li>
  * <li>referenceValues</li>
+ * e.g. `[ { key: 'assetManagerIds', values: [1] }, { key: 'bookIds', values: [1, 2, 3]} ]`
  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Transactions or a single Transaction instance. Omit to return Promise
  * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Transactions or a single Transaction instance
  */
