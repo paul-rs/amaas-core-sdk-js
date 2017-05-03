@@ -8,6 +8,10 @@ var _core = require('../../core');
 
 var _decimal = require('decimal.js');
 
+var _decimal2 = _interopRequireDefault(_decimal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -46,9 +50,9 @@ var Charge = function (_AMaaSModel) {
         },
         set: function set(newChargeValue) {
           if (newChargeValue) {
-            _this._chargeValue = new _decimal.Decimal(chargeValue);
+            _this._chargeValue = new _decimal2.default(chargeValue);
           } else {
-            _this._chargeValue = new _decimal.Decimal(0);
+            _this._chargeValue = new _decimal2.default(0);
           }
         },
         enumerable: true

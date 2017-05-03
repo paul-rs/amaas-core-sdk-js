@@ -1,4 +1,4 @@
-import { Decimal } from 'decimal.js'
+import Decimal from 'decimal.js'
 
 import ListedDerivative from '../ListedDerivative/listedDerivative'
 import { FUTURE_SETTLEMENT_TYPES }  from '../../enums.js'

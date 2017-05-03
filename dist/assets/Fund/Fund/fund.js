@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _decimal = require('decimal.js');
 
+var _decimal2 = _interopRequireDefault(_decimal);
+
 var _asset = require('../../Asset/asset');
 
 var _asset2 = _interopRequireDefault(_asset);
@@ -152,9 +154,9 @@ var Fund = function (_Asset) {
         },
         set: function set(newExpenseRatio) {
           if (!newExpenseRatio) {
-            _this._expenseRatio = new _decimal.Decimal(0);
+            _this._expenseRatio = new _decimal2.default(0);
           } else {
-            _this._expenseRatio = new _decimal.Decimal(newExpenseRatio);
+            _this._expenseRatio = new _decimal2.default(newExpenseRatio);
           }
         },
         enumerable: true
@@ -166,9 +168,9 @@ var Fund = function (_Asset) {
         },
         set: function set(newNav) {
           if (!newNav) {
-            _this._nav = new _decimal.Decimal(0);
+            _this._nav = new _decimal2.default(0);
           } else {
-            _this._nav = new _decimal.Decimal(newNav);
+            _this._nav = new _decimal2.default(newNav);
           }
         },
         enumerable: true
