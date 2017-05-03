@@ -1,11 +1,6 @@
 import { retrieveData, insertData } from '../network'
 
 /**
- * @namespace Netting
- * @memberof module:api
- */
-
-/**
  * Retrieve Netting for a specific Transaction
  * @function retrieve
  * @memberof module:api.Netting

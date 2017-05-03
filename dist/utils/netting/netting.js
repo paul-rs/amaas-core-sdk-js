@@ -9,11 +9,6 @@ exports.send = send;
 var _network = require('../network');
 
 /**
- * @namespace Netting
- * @memberof module:api
- */
-
-/**
  * Retrieve Netting for a specific Transaction
  * @function retrieve
  * @memberof module:api.Netting
