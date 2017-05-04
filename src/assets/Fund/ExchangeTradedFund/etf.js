@@ -8,49 +8,43 @@ import Fund from '../Fund/fund'
 class ExchangeTradedFund extends Fund {
   /**
    * Construct a new ETF instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {string} params.fundType - Type of Fund (Open, Closed, ETF)
-   * @param {string} params.creationDate - Fund's creation date (YYYY-MM-DD)
-   * @param {number} params.nav - Fund's Net Asset Value
-   * @param {number} params.expenseRatio - Fund's expense ratio
-   * @param {number} params.netAssets - ???
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created the ETF
-   * @param {string} params.updatedBy - ID of the user that updated the ETF
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {object} params - ExchangeTradedFund creation options:
+   * @param {number} params.assetManagerId - ID of ETF's Asset Manager __(required)__
+   * @param {number} params.assetId - ID of the ETF __(required)__
+   * @param {string} [params.assetClass] - Auto-set to `Fund` __(read-only)__
+   * @param {boolean} [params.fungible=true] - Auto-set to `true` for Fund and its subclasses
+   * @param {string} [params.assetIssuerId] - ID of the ETF's issuer
+   * @param {string} [params.assetStatus=Active] - Status of the ETF
+   * @param {string} [params.countryId] - ID of ETF's country
+   * @param {string} [params.venueId] - ID of ETF's venue if applicable
+   * @param {string} [params.currency] - ETF currency (e.g. USD, SGD)
+   * @param {string} [params.creationDate=0001-01-01] - ETF's creation date (YYYY-MM-DD)
+   * @param {string} [params.description] - Description of the ETF
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {string} [params.fundType=ETF] - Auto-set to `ETF` __(read-only)__
+   * @param {number} [params.nav] - ETF's Net Asset Value. Stored as a Decimal instance
+   * @param {number} [params.expenseRatio] - ETF's expense ratio. Stored as a Decimal instance
+   * @param {number} [params.netAssets] - ETF's net assets. Stored as a Decimal instance
+   * @param {object} [params.comments] - Object of Comments attached to the ETF
+   * @param {object} [params.links] - Object of array of Links attached to the ETF
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the ETF. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the ETF
+   * @param {string} [params.updatedBy] - ID of the user that updated the ETF
+   * @param {date} [params.createdTime] - Time that the ETF was created
+   * @param {date} [params.updatedTime] - Time that the ETF was updated
+   * @param {number} [params.version] - Version number
   */
   constructor({
     assetManagerId,
     assetId,
-    assetClass='Fund',
-    fungible,
     assetIssuerId,
     assetStatus='Active',
     countryId,
     venueId,
     currency,
-    issueDate,
-    maturityDate,
+    expiryDate,
     description='',
     clientId,
-    fundType,
     creationDate,
     nav,
     expenseRatio,
@@ -67,15 +61,12 @@ class ExchangeTradedFund extends Fund {
     super({
       assetManagerId,
       assetId,
-      assetClass,
-      fungible,
       assetIssuerId,
       assetStatus,
       countryId,
       venueId,
       currency,
-      issueDate,
-      maturityDate,
+      expiryDate,
       description,
       clientId,
       fundType: 'ETF',

@@ -32,40 +32,43 @@ var BondOption = function (_Derivative) {
 
   /**
    * Construct a new Bond Option instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {number} params.premium - Premium of the Asset
-   * @param {string} params.optionStyle - Option style (American, Bermudan, European)
-   * @param {string} params.optionType - Option type (Put, Call)
-   * @param {number} params.strike - Strike price of the Option
-   * @param {string} params.underlyingAssetId - ID of the underlying Asset
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created the Bond Option
-   * @param {string} params.updatedBy - ID of the user that updated the Bond Option
-   * @param {date} params.createdTime - Time that the Bond Option was created
-   * @param {date} params.updatedTime - Time that the Bond Option was updated
-   * @param {number} params.version - Version number of the Bond Option
+   * @param {object} params - BondOption creation options
+   * @param {number} params.assetManagerId - ID of Bond Option's Asset Manager __(required)__
+   * @param {number} params.assetId - ID of the Bond Option __(required)__
+   * @param {string} [params.assetClass=Derivative] - Auto-set to `Derivative` __(read-only)__
+   * @param {boolean} [params.fungible=false] - Auto-set to `false` for Derivative and subclasses
+   * @param {string} [params.assetIssuerId] - ID of the Bond Option's issuer
+   * @param {string} [params.assetStatus=Active] - Status of the Bond Option
+   * @param {string} [params.countryId] - ID of Bond Option's country
+   * @param {string} [params.venueId] - ID of Bond Option's venue if applicable
+   * @param {string} [params.currency] - Bond Option currency (e.g. USD, SGD)
+   * @param {string} [params.issueDate=0001-01-01] - Issue date (YYYY-MM-DD)
+   * @param {string} [params.expiryDate=9999-12-31] - Expiry date (YYYY-MM-DD)
+   * @param {string} [params.description] - Description of the Bond Option
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {string} params.optionStyle - Option style __(required)__<br />
+   * Available options:
+   * <li>American</li>
+   * <li>Bermudan</li>
+   * <li>European</li>
+   * @param {string} params.optionType - Option type __(required)__<br />
+   * Available options:
+   * <li>Put</li>
+   * <li>Call</li>
+   * @param {number} params.strike - Strike price of the Bond Option. Stored as a Decimal instance __(required)__
+   * @param {string} params.underlyingAssetId - ID of the underlying Asset __(required)__
+   * @param {object} [params.comments] - Object of Comments attached to the Bond Option
+   * @param {object} [params.links] - Object of array of Links attached to the Bond Option
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the Bond Option. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the Bond Option
+   * @param {string} [params.updatedBy] - ID of the user that updated the Bond Option
+   * @param {date} [params.createdTime] - Time that the Bond Option was created
+   * @param {date} [params.updatedTime] - Time that the Bond Option was updated
+   * @param {number} [params.version] - Version number of the Bond Option
   */
   function BondOption(_ref) {
     var assetManagerId = _ref.assetManagerId,
         assetId = _ref.assetId,
-        _ref$assetClass = _ref.assetClass,
-        assetClass = _ref$assetClass === undefined ? 'Derivative' : _ref$assetClass,
-        fungible = _ref.fungible,
         assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
         assetStatus = _ref$assetStatus === undefined ? 'Active' : _ref$assetStatus,
@@ -96,8 +99,8 @@ var BondOption = function (_Derivative) {
     var _this = _possibleConstructorReturn(this, (BondOption.__proto__ || Object.getPrototypeOf(BondOption)).call(this, {
       assetManagerId: assetManagerId,
       assetId: assetId,
-      assetClass: assetClass,
-      fungible: fungible,
+      assetClass: 'Derivative',
+      fungible: false,
       assetIssuerId: assetIssuerId,
       assetStatus: assetStatus,
       countryId: countryId,
@@ -158,11 +161,26 @@ var BondOption = function (_Derivative) {
           }
         },
         enumerable: true
+      },
+      _expiryDate: { writable: true, enumerable: false },
+      expiryDate: {
+        get: function get() {
+          return _this._expiryDate;
+        },
+        set: function set(newExpiryDate) {
+          if (newExpiryDate) {
+            _this._expiryDate = newExpiryDate;
+          } else {
+            _this._expiryDate = '9999-12-31';
+          }
+        },
+        enumerable: true
       }
     });
     _this.optionStyle = optionStyle;
     _this.optionType = optionType;
     _this.strike = strike;
+    _this.expiryDate = expiryDate;
     _this.underlyingAssetId = underlyingAssetId;
     return _this;
   }

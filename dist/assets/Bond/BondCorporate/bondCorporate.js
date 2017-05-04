@@ -26,39 +26,37 @@ var BondCorporate = function (_BondBase) {
 
   /**
    * Construct new Corporate Bond instance
-   * @param {object} params - BondBase creation options
-   * @param {string} params.assetManagerId - ID of Bond's Asset Manager
-   * @param {string} params.assetId - ID of asset
-   * @param {string} params.assetClass - Class of Asset. This should always be 'Bond'
-   * @param {boolean} params.fungible - Whether this Bond is fungible
-   * @param {string} params.assetIssuerId - ID of the Bond Issuer
-   * @param {string} params.assetStatus - Status of the Bond
-   * @param {string} params.countryId - ID of the Bond's origin country
-   * @param {string} params.venueId - ID of the Bond's venue
-   * @param {string} params.currency - Currency denomination of the Bond
-   * @param {string} params.issueDate - The date that the Bond was issued
-   * @param {string} params.maturityDate - Date of Bond's maturity
-   * @param {string} params.description - Description of the Bond
-   * @param {string} params.clientId - ID of the client
-   * @param {decimal} params.coupon - The Bond's coupon (represented as a fraction of 1 i.e. 0.05 = 5%)
-   * @param {decimal} params.par - The Bond's par
-   * @param {string} params.payFrequency - ???
-   * @param {boolean} params.defaulted - Whether the issuer has defaulted
-   * @param {object} params.comments - Object of comments for the Bond. { name: string: comment: Comment }
-   * @param {object} params.links - Object of links for the Bond. { name: string: link: Link[] }
-   * @param {object} params.references - Object of references for the Bond
-   * @param {string} params.createdBy - ID of the user that created the Bond
-   * @param {string} params.updatedBy - ID of the user that updated the Bond
-   * @param {date} params.createdTime - Time that the Bond was created
-   * @param {date} params.updatedTime - Time that the Bond was updated
-   * @param {number} params.version - Version number of the Bond
+   * @param {object} params - BondCorporate creation options:
+   * @param {string} params.assetManagerId - ID of Bond's Asset Manager __(required)__
+   * @param {string} params.assetId - ID of the Bond __(required)__
+   * @param {string} [params.assetClass=Bond] - Auto-set to `Bond` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Asset. Auto-set based on the class or subclass constructor
+   * @param {boolean} [params.fungible=true] - Auto-set `true` for Bonds __(read-only)__
+   * @param {string} [params.assetIssuerId] - ID of the Bond Issuer
+   * @param {string} [params.assetStatus=Active] - Status of the Bond
+   * @param {string} [params.countryId] - ID of the Bond's origin country
+   * @param {string} [params.venueId] - ID of the Bond's venue
+   * @param {string} [params.currency] - Currency denomination of the Bond
+   * @param {string} [params.issueDate=0001-01-01] - Bond issue date (YYYY-MM-DD)
+   * @param {string} [params.maturityDate=9999-12-31] - Bond maturity date (YYYY-MM-DD)
+   * @param {string} [params.description] - Description of the Bond
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {number} params.coupon - The Bond's coupon represented as a fraction of 1 i.e. 0.05 = 5%. Stored as a Decimal instance __(required)__
+   * @param {number} params.par - The Bond's par value. Stored as a Decimal instance __(required)__
+   * @param {string} params.payFrequency - Frequency of the coupon payment __(required)__
+   * @param {boolean} [params.defaulted=false] - Whether the issuer has defaulted
+   * @param {object} [params.comments] - Object of Comments attached to the Bond
+   * @param {object} [params.links] - Object of array of Links attached to the Bond
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References attached to the Bond. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the Bond
+   * @param {string} [params.updatedBy] - ID of the user that updated the Bond
+   * @param {date} [params.createdTime] - Time that the Bond was created
+   * @param {date} [params.updatedTime] - Time that the Bond was updated
+   * @param {number} [params.version] - Version number of the Bond
   */
   function BondCorporate(_ref) {
     var assetManagerId = _ref.assetManagerId,
         assetId = _ref.assetId,
-        _ref$assetClass = _ref.assetClass,
-        assetClass = _ref$assetClass === undefined ? 'Bond' : _ref$assetClass,
-        fungible = _ref.fungible,
         assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
         assetStatus = _ref$assetStatus === undefined ? 'Active' : _ref$assetStatus,
@@ -73,7 +71,8 @@ var BondCorporate = function (_BondBase) {
         coupon = _ref.coupon,
         par = _ref.par,
         payFrequency = _ref.payFrequency,
-        defaulted = _ref.defaulted,
+        _ref$defaulted = _ref.defaulted,
+        defaulted = _ref$defaulted === undefined ? false : _ref$defaulted,
         comments = _ref.comments,
         links = _ref.links,
         references = _ref.references,
@@ -88,8 +87,8 @@ var BondCorporate = function (_BondBase) {
     return _possibleConstructorReturn(this, (BondCorporate.__proto__ || Object.getPrototypeOf(BondCorporate)).call(this, {
       assetManagerId: assetManagerId,
       assetId: assetId,
-      assetClass: assetClass,
-      fungible: fungible,
+      assetClass: 'Bond',
+      fungible: true,
       assetIssuerId: assetIssuerId,
       assetStatus: assetStatus,
       countryId: countryId,

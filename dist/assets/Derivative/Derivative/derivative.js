@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _decimal = require('decimal.js');
+
+var _decimal2 = _interopRequireDefault(_decimal);
+
 var _asset = require('../../Asset/asset.js');
 
 var _asset2 = _interopRequireDefault(_asset);
@@ -26,36 +30,34 @@ var Derivative = function (_Asset) {
 
   /**
    * Construct a new Derivative instance
-   * @param {object} params - Derivative creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {number} params.premium - Premium of the Asset
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created the Derivative
-   * @param {string} params.updatedBy - ID of the user that updated the Derivative
-   * @param {date} params.createdTime - Time that the Derivative was created
-   * @param {date} params.updatedTime - Time that the Derivative was updated
-   * @param {number} params.version - Version number of the Derivative
+   * @param {object} params - Derivative creation options:
+   * @param {integer} params.assetManagerId - ID of Derivative's Asset Manager __(required)__
+   * @param {number} params.assetId - ID of the Derivative __(required)__
+   * @param {string} [params.assetClass=Derivative] - Class of the Derivative (a subclass of Derivative may define its own assetClass)
+   * @param {boolean} [params.fungible=false] - Auto-set to `false` for Derivative __(read-only)__
+   * @param {string} [params.assetIssuerId] - ID of the Derivative's issuer
+   * @param {string} [params.assetStatus=Active] - Status of the Derivative
+   * @param {string} [params.countryId] - ID of Derivative's country
+   * @param {string} [params.venueId] - ID of Derivative's venue if applicable
+   * @param {string} params.currency - Derivative currency (e.g. USD, SGD)
+   * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
+   * @param {string} [params.maturityDate=9999-12-31] - Maturity date if applicable (YYYY-MM-DD)
+   * @param {string} [params.description] - Description of the Derivative
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {object} [params.comments] - Object of Comments attached to the Derivative
+   * @param {object} [params.links] - Object of array of Links attached to the Derivative
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the Derivative. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the Derivative
+   * @param {string} [params.updatedBy] - ID of the user that updated the Derivative
+   * @param {date} [params.createdTime] - Time that the Derivative was created
+   * @param {date} [params.updatedTime] - Time that the Derivative was updated
+   * @param {number} [params.version] - Version number of the Derivative
   */
   function Derivative(_ref) {
     var assetManagerId = _ref.assetManagerId,
         assetId = _ref.assetId,
         _ref$assetClass = _ref.assetClass,
         assetClass = _ref$assetClass === undefined ? 'Derivative' : _ref$assetClass,
-        fungible = _ref.fungible,
         assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
         assetStatus = _ref$assetStatus === undefined ? 'Active' : _ref$assetStatus,
@@ -67,7 +69,6 @@ var Derivative = function (_Asset) {
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
         clientId = _ref.clientId,
-        premium = _ref.premium,
         comments = _ref.comments,
         links = _ref.links,
         references = _ref.references,
@@ -79,11 +80,11 @@ var Derivative = function (_Asset) {
 
     _classCallCheck(this, Derivative);
 
-    var _this = _possibleConstructorReturn(this, (Derivative.__proto__ || Object.getPrototypeOf(Derivative)).call(this, {
+    return _possibleConstructorReturn(this, (Derivative.__proto__ || Object.getPrototypeOf(Derivative)).call(this, {
       assetManagerId: assetManagerId,
       assetId: assetId,
       assetClass: assetClass,
-      fungible: fungible,
+      fungible: false,
       assetIssuerId: assetIssuerId,
       assetStatus: assetStatus,
       countryId: countryId,
@@ -102,9 +103,6 @@ var Derivative = function (_Asset) {
       updatedTime: updatedTime,
       version: version
     }));
-
-    _this.premium = premium;
-    return _this;
   }
 
   return Derivative;

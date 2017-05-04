@@ -8,11 +8,9 @@ var _decimal = require('decimal.js');
 
 var _decimal2 = _interopRequireDefault(_decimal);
 
-var _future = require('../Future/future');
+var _futureOption = require('../FutureOption/futureOption');
 
-var _future2 = _interopRequireDefault(_future);
-
-var _enums = require('../../enums.js');
+var _futureOption2 = _interopRequireDefault(_futureOption);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27,50 +25,55 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @memberof module:assets
  * @extends module:assets.Future
  */
-var BondFutureOption = function (_Future) {
-  _inherits(BondFutureOption, _Future);
+var BondFutureOption = function (_FutureOption) {
+  _inherits(BondFutureOption, _FutureOption);
 
   /**
    * Construct a new Bond Future Option instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {string} params.settlementType - Settlement Type (Physical, Cash)
-   * @param {number} params.contractSize - Contract Size
-   * @param {number} params.pointValue - ???
-   * @param {number} params.tickSize -???
-   * @param {number} params.quoteUnit - ???
-   * @param {string} params.underlyingAssetId - ID of the underlying Asset
-   * @param {string} params.expiryDate - Date of the contract's expiry (YYYY-MM-DD)
-   * @param {string} params.optionType - Option type (Put, Call)
-   * @param {number} params.strike - Strike price
-   * @param {string} params.optionStyle - Option style (American , Bermudan, European)
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created the Asset
-   * @param {string} params.updatedBy - ID of the user that updated the Asset
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {object} params - Bond Future Option creation options:
+   * @param {number} params.assetManagerId - ID of Bond Future Option's Asset Manager __(required)__
+   * @param {number} params.assetId - ID of the Bond Future Option __(required)__
+   * @param {string} [params.assetClass=Future] - Auto-set to `Future` __(read-only)__
+   * @param {boolean} [params.fungible=true] - Auto-set to `true` __(read-only)__
+   * @param {string} [params.assetIssuerId] - ID of the Bond Future Option's issuer
+   * @param {string} [params.assetStatus=Active] - Status of the Bond Future Option
+   * @param {string} [params.countryId] - ID of Bond Future Option's country
+   * @param {string} [params.venueId] - ID of Bond Future Option's venue if applicable
+   * @param {string} [params.currency] - Bond Future Option currency (e.g. USD, SGD)
+   * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
+   * @param {string} [params.expiryDate=9999-12-31] - Date of the contract's expiry (YYYY-MM-DD)
+   * @param {string} [params.description] - Description of the Bond Future Option
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {string} params.settlementType - Settlement Type __(required)__<br />
+   * <li>Cash</li>
+   * <li>Physical</li>
+   * @param {number} params.contractSize - Contract Size __(required)__
+   * @param {number} [params.pointValue] - Future point value. Stored as a Decimal instance
+   * @param {number} params.tickSize - Future tick size. Stored as a Decimal instance __(required)__
+   * @param {string} [params.quoteUnit] - Future quote unit
+   * @param {string} params.underlyingAssetId - ID of the underlying Asset __(required)__
+   * @param {string} params.optionType - Option type __(required)__<br />
+   * Available options:
+   * <li>Put</li>
+   * <li>Call</li>
+   * @param {string} params.optionStyle - Option style __(required)__<br />
+   * Available options:
+   * <li>American</li>
+   * <li>Bermudan</li>
+   * <li>European</li>
+   * @param {number} params.strike - Strike price. Stored as a Decimal instance __(required)__
+   * @param {object} [params.comments] - Object of Comments attached to the Bond Future Option
+   * @param {object} [params.links] - Object of array of Links attached to the Bond Future Option
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the Bond Future Option. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the Bond Future Option
+   * @param {string} [params.updatedBy] - ID of the user that updated the Bond Future Option
+   * @param {date} [params.createdTime] - Time that the Bond Future Option was created
+   * @param {date} [params.updatedTime] - Time that the Bond Future Option was updated
+   * @param {number} [params.version] - Version number
   */
   function BondFutureOption(_ref) {
     var assetManagerId = _ref.assetManagerId,
         assetId = _ref.assetId,
-        _ref$assetClass = _ref.assetClass,
-        assetClass = _ref$assetClass === undefined ? 'BondFutureOption' : _ref$assetClass,
-        fungible = _ref.fungible,
         assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
         assetStatus = _ref$assetStatus === undefined ? 'Active' : _ref$assetStatus,
@@ -78,7 +81,6 @@ var BondFutureOption = function (_Future) {
         venueId = _ref.venueId,
         currency = _ref.currency,
         issueDate = _ref.issueDate,
-        maturityDate = _ref.maturityDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
         clientId = _ref.clientId,
@@ -103,18 +105,18 @@ var BondFutureOption = function (_Future) {
 
     _classCallCheck(this, BondFutureOption);
 
-    var _this = _possibleConstructorReturn(this, (BondFutureOption.__proto__ || Object.getPrototypeOf(BondFutureOption)).call(this, {
+    return _possibleConstructorReturn(this, (BondFutureOption.__proto__ || Object.getPrototypeOf(BondFutureOption)).call(this, {
       assetManagerId: assetManagerId,
       assetId: assetId,
-      assetClass: assetClass,
-      fungible: fungible,
       assetIssuerId: assetIssuerId,
       assetStatus: assetStatus,
       countryId: countryId,
       venueId: venueId,
       currency: currency,
       issueDate: issueDate,
-      maturityDate: maturityDate,
+      optionType: optionType,
+      strike: strike,
+      optionStyle: optionStyle,
       description: description,
       clientId: clientId,
       settlementType: settlementType,
@@ -133,61 +135,9 @@ var BondFutureOption = function (_Future) {
       updatedTime: updatedTime,
       version: version
     }));
-
-    Object.defineProperties(_this, {
-      _optionType: { writable: true, enumerable: false },
-      optionType: {
-        get: function get() {
-          return _this._optionType;
-        },
-        set: function set(newOptionType) {
-          if (newOptionType) {
-            if (_enums.OPTION_TYPES.indexOf(newOptionType) === -1) {
-              throw new Error('Invalid Option Type: ' + newOptionType);
-            }
-            _this._optionType = newOptionType;
-          }
-        },
-        enumerable: true
-      },
-      _optionStyle: { writable: true, enumerable: false },
-      optionStyle: {
-        get: function get() {
-          return _this._optionStyle;
-        },
-        set: function set(newOptionStyle) {
-          if (newOptionStyle) {
-            if (_enums.OPTION_STYLES.indexOf(newOptionStyle) === -1) {
-              throw new Error('Invalid Option Style: ' + newOptionStyle);
-            }
-            _this._optionStyle = newOptionStyle;
-          }
-        },
-        enumerable: true
-      },
-      _strike: { writable: true, enumerable: false },
-      strike: {
-        get: function get() {
-          return _this._strike;
-        },
-        set: function set(newStrike) {
-          if (!newStrike) {
-            _this._strike = new _decimal2.default(0);
-          } else {
-            _this._strike = new _decimal2.default(newStrike);
-          }
-        },
-        enumerable: true
-      }
-    });
-    _this.optionType = optionType;
-    _this.strike = strike;
-    _this.optionStyle = optionStyle;
-    // Should this have a premium?
-    return _this;
   }
 
   return BondFutureOption;
-}(_future2.default);
+}(_futureOption2.default);
 
 exports.default = BondFutureOption;

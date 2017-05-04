@@ -8,41 +8,36 @@ import Asset from '../../Asset/asset'
 class RealAsset extends Asset {
   /**
    * Construct a new Real Asset instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created the Asset
-   * @param {string} params.updatedBy - ID of the user that updated the Asset
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {object} params - RealAsset creation options
+   * @param {number} params.assetManagerId - ID of Asset's Asset Manager __(required)__
+   * @param {number} params.assetId - ID of the Asset __(required)__
+   * @param {string} [params.assetClass=RealAsset] - Class of the Asset (a subclass of RealAsset may define its own assetClass)
+   * @param {boolean} [params.fungible=false] - Auto-set to `false` __(read-only)__
+   * @param {string} [params.assetIssuerId] - ID of the Real Asset's issuer
+   * @param {string} [params.assetStatus=Active] - Status of the Real Asset
+   * @param {string} [params.countryId] - ID of Real Asset's country
+   * @param {string} [params.venueId] - ID of Real Asset's venue if applicable
+   * @param {string} [params.currency] - Real Asset currency (e.g. USD, SGD)
+   * @param {string} [params.description] - Description of the Real Asset
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {object} [params.comments] - Object of Comments attached to the Real Asset
+   * @param {object} [params.links] - Object of array of Links attached to the Real Asset
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the Real Asset. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the Real Asset
+   * @param {string} [params.updatedBy] - ID of the user that updated the Real Asset
+   * @param {date} [params.createdTime] - Time that the Real Asset was created
+   * @param {date} [params.updatedTime] - Time that the Real Asset was updated
+   * @param {number} [params.version] - Version number
   */
   constructor({
     assetManagerId,
     assetId,
     assetClass='RealAsset',
-    fungible,
     assetIssuerId,
     assetStatus='Active',
     countryId,
     venueId,
     currency,
-    issueDate,
-    maturityDate,
     description='',
     clientId,
     comments,
@@ -58,14 +53,12 @@ class RealAsset extends Asset {
       assetManagerId,
       assetId,
       assetClass,
-      fungible,
+      fungible: false,
       assetIssuerId,
       assetStatus,
       countryId,
       venueId,
       currency,
-      issueDate,
-      maturityDate,
       description,
       clientId,
       comments,

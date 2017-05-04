@@ -11,48 +11,48 @@ import { FUTURE_SETTLEMENT_TYPES }  from '../../enums.js'
 class Future extends ListedDerivative {
   /**
    * Construct a new Future instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {string} params.settlementType - Settlement Type (Physical, Cash)
-   * @param {number} params.contractSize - Contract Size
-   * @param {number} params.pointValue - ???
-   * @param {number} params.tickSize -???
-   * @param {number} params.quoteUnit - ???
-   * @param {string} params.underlyingAssetId - ID of the underlying Asset
-   * @param {string} params.expiryDate - Date of the contract's expiry (YYYY-MM-DD)
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created the Asset
-   * @param {string} params.updatedBy - ID of the user that updated the Asset
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {object} params - Future creation options:
+   * @param {number} params.assetManagerId - ID of Future's Asset Manager __(required)__
+   * @param {number} params.assetId - ID of the Future __(required)__
+   * @param {string} [params.assetClass=Future] - Class of the Future (a subclass of Future may define its own assetClass)
+   * @param {boolean} [params.fungible=true] - Auto-set to `true` __(read-only)__
+   * @param {string} [params.assetIssuerId] - ID of the Future's issuer
+   * @param {string} [params.assetStatus=Active] - Status of the Future
+   * @param {string} [params.countryId] - ID of Future's country
+   * @param {string} [params.venueId] - ID of Future's venue if applicable
+   * @param {string} [params.currency] - Asset currency (e.g. USD, SGD)
+   * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
+   * @param {string} [params.description] - Description of the Future
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {string} params.settlementType - Settlement Type __(required)__<br />
+   * Available options:
+   * <li>Cash</li>
+   * <li>Physical</li>
+   * @param {number} params.contractSize - Contract Size __(required)__
+   * @param {number} [params.pointValue] - Future point value. Stored as a Decimal instance
+   * @param {number} params.tickSize - Future tick size. Stored as a Decimal instance __(required)__
+   * @param {string} [params.quoteUnit] - Future quote unit
+   * @param {string} params.underlyingAssetId - ID of the underlying Asset __(required)__
+   * @param {string} [params.expiryDate] - Date of the Future's expiry (YYYY-MM-DD)
+   * @param {object} [params.comments] - Object of Comments attached to the Future
+   * @param {object} [params.links] - Object of array of Links attached to the Future
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the Future. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the Future
+   * @param {string} [params.updatedBy] - ID of the user that updated the Future
+   * @param {date} [params.createdTime] - Time that the Future was created
+   * @param {date} [params.updatedTime] - Time that the Future was updated
+   * @param {number} [params.version] - Version number
   */
   constructor({
     assetManagerId,
     assetId,
     assetClass='Future',
-    fungible,
     assetIssuerId,
     assetStatus='Active',
     countryId,
     venueId,
     currency,
     issueDate,
-    maturityDate,
     description='',
     clientId,
     settlementType,
@@ -75,14 +75,12 @@ class Future extends ListedDerivative {
       assetManagerId,
       assetId,
       assetClass,
-      fungible,
       assetIssuerId,
       assetStatus,
       countryId,
       venueId,
       currency,
       issueDate,
-      maturityDate,
       description,
       clientId,
       comments,
@@ -114,7 +112,9 @@ class Future extends ListedDerivative {
         set: (newPointValue) => {
           // TODO: This should be replaced with a calculation
           if (newPointValue) {
-            this._pointValue = newPointValue
+            this._pointValue = new Decimal(newPointValue)
+          } else {
+            this._pointValue = new Decimal(0)
           }
         },
         enumerable: true
@@ -148,9 +148,9 @@ class Future extends ListedDerivative {
         get: () => this._expiryDate,
         set: (newExpiryDate) => {
           if (newExpiryDate) {
-            const dArray = newExpiryDate.split('-')
-            const date = new Date(dArray[0], dArray[1]-1, dArray[2])
-            this._expiryDate = date
+            this._expiryDate = newExpiryDate
+          } else {
+            this._expiryDate = '9999-12-31'
           }
         },
         enumerable: true

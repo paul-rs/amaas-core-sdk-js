@@ -8,29 +8,28 @@ import Asset from '../Asset/asset.js'
 class Equity extends Asset {
   /**
    * Construct a new Equity instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {string} params.shareClass - Share Class. Defaults to 'Common'
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created the Equity
-   * @param {string} params.updatedBy - ID of the user that updated the Equity
-   * @param {date} params.createdTime - Time that the Equity was created
-   * @param {date} params.updatedTime - Time that the Equity was updated
-   * @param {number} params.version - Version number of the Equity
+   * @param {object} params - Equity creation options:
+   * @param {number} params.assetManagerId - ID of Equity's Asset Manager __(required)__
+   * @param {number} params.assetId - ID of the Equity __(required)__
+   * @param {string} [params.assetClass=Equity] - Class of the Equity (a subclass of Equity may define its own assetClass)
+   * @param {boolean} [params.fungible=true] - Auto-set to `true` for Equity __(read-only)__
+   * @param {string} [params.assetIssuerId] - ID of the Equity's issuer
+   * @param {string} [params.assetStatus=Active] - Status of the Equity
+   * @param {string} [params.countryId] - ID of Equity's country
+   * @param {string} [params.venueId] - ID of Equity's venue if applicable
+   * @param {string} [params.currency] - Equity currency (e.g. USD, SGD)
+   * @param {string} [params.issueDate] - Issue date if applicable (YYYY-MM-DD)
+   * @param {string} [params.description] - Description of the Equity
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {string} [params.shareClass=Common] - Share Class
+   * @param {object} [params.comments] - Object of Comments attached to the Equity
+   * @param {object} [params.links] - Object of array of Links attached to the Equity
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the Equity. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the Equity
+   * @param {string} [params.updatedBy] - ID of the user that updated the Equity
+   * @param {date} [params.createdTime] - Time that the Equity was created
+   * @param {date} [params.updatedTime] - Time that the Equity was updated
+   * @param {number} [params.version] - Version number of the Equity
   */
   constructor({
     assetManagerId,
@@ -43,7 +42,6 @@ class Equity extends Asset {
     venueId,
     currency,
     issueDate,
-    maturityDate,
     description='',
     clientId,
     shareClass='Common',
@@ -60,14 +58,13 @@ class Equity extends Asset {
       assetManagerId,
       assetId,
       assetClass,
-      fungible,
+      fungible: true,
       assetIssuerId,
       assetStatus,
       countryId,
       venueId,
       currency,
       issueDate,
-      maturityDate,
       description,
       clientId,
       comments,
