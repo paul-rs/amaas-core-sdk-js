@@ -64,7 +64,7 @@ In Node, the token set is stored in memory. When you make an API call from this 
 --}}
 
 ## Numbers in the AMaaS Core SDK for JavaScript
-Numbers are handled by the [decimal.js](https://github.com/MikeMcl/decimal.js/) package. All numbers in the classes are stored as Decimal instances. For a full list of functions available on these numbers please refer to the decmial.js documentation.
+Numbers are handled by the [decimal.js](https://github.com/MikeMcl/decimal.js/) package. All numbers in the classes are stored as Decimal instances. For a full list of functions available on these numbers please refer to the decimal.js documentation.
 
 ### Common functions
 Note that the decimal.js functions return Decimal instances and are immutable (you will need to assign results of arithmetic operations to new variables).
@@ -73,12 +73,12 @@ Note that the decimal.js functions return Decimal instances and are immutable (y
 let x = new Decimal(5)
 let y = new Decimal(10)
 
-const a = x.plus(y) // a = 15
+const a = x.plus(y) // a = 15, x = 5
 const b = x.times(y) // b = 50
 const c = y.minus(x) // c = 5
 const d = y.dividedBy(x) // d = 2
 ```
-Returning a Decimal to a string
+Converting a Decimal to a string
 ```javascript
 let x = new Decimal(3.14)
 

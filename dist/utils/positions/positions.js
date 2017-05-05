@@ -61,7 +61,7 @@ function retrieve(_ref, callback) {
  * @static
  * @param {object} params - object of parameters
  * @param {number} params.AMId - Asset Manager ID of the Asset Manager owning the Postions
- * @param {array} params.query - array of query objects: { key: `string`, values: `array` }<br />
+ * @param {object} params.query - Search parameters of the form: { `key`: `[values]` }<br />
  * Available keys are:
  * <li>assetManagerIds (Required if AMId param is omitted)</li>
  * <li>bookIds</li>
@@ -70,7 +70,7 @@ function retrieve(_ref, callback) {
  * <li>accountIds</li>
  * <li>accountingTypes</li>
  * <li>positionDate</li>
- * e.g. `[ { key: 'assetManagerIds', values: [1] }, { key: 'bookIds', values: [1, 2, 3] } ]`
+ * e.g. `{ assetManagerIds: [1], bookIds: ['LAXJ98', 'OXYW09', 'COSY45'] }`
  * @param {function} [callback] - Called with two arguments (error, result) on completion. Omit to return Promise
  * @returns {Promise|null} If no callback is supplied, returns promise that resolves with array of Positions
  */

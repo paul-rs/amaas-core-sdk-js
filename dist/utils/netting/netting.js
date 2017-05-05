@@ -18,7 +18,7 @@ var _network = require('../network');
  * @param {string} params.resourceId - Transaction ID
  * @param {string} params.token - Authorization token
  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is ???. Omit to return Promise
- * @returns {Promise|Array} If callback is supplied, it is called with ???. Otherwise a promise that resolves with ??? is returned
+ * @returns {Promise|null} If callback is supplied, it is called with ???. Otherwise a promise that resolves with ??? is returned
  */
 function retrieve(_ref, callback) {
   var AMId = _ref.AMId,

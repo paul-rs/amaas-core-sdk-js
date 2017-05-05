@@ -228,13 +228,6 @@ export function makeRequest({ method, url, data, query }) {
  * @param {string} resourceId: Id of the resource being requested (e.g. book_id)
 */
 export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
-  // if (stage === 'dev' || stage === 'staging' && !token) {
-  //   if (typeof callback !== 'function') {
-  //     return Promise.reject('Missing Authorization')
-  //   }
-  //   callback('Missing Authorization')
-  //   return
-  // }
   let url
   // If resourceId is supplied, append to url. Otherwise, return all data for AMId
   try {
@@ -252,7 +245,6 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  // promise.end((error, response) => {
   promise.then((response, error) => {
     if (!error && response.status == 200) {
       callback(null, response.body)
@@ -281,13 +273,6 @@ export function retrieveData({ AMaaSClass, AMId, resourceId }, callback) {
  * @param {string} data: data to insert into database
 */
 export function insertData({ AMaaSClass, AMId, resourceId, data, queryParams }, callback) {
-  // if (stage === 'dev' || stage === 'staging' && !token) {
-  //   if (typeof callback !== 'function') {
-  //     return Promise.reject('Missing Authorization')
-  //   }
-  //   callback('Missing Authorization')
-  //   return
-  // }
   let url
   try {
     url = buildURL({
@@ -303,8 +288,6 @@ export function insertData({ AMaaSClass, AMId, resourceId, data, queryParams }, 
     return
   }
   // Data is object with required key value pairs for that class
-  // const am = 'asset_manager_id'
-  // data[am] = AMId
   const params = {
     url,
     json: data
@@ -322,7 +305,6 @@ export function insertData({ AMaaSClass, AMId, resourceId, data, queryParams }, 
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  // promise.end((error, response) => {
   promise.then((response, error) => {
     let body
     if (response) body = response.body
@@ -335,13 +317,6 @@ export function insertData({ AMaaSClass, AMId, resourceId, data, queryParams }, 
 }
 
 export function putData({ AMaaSClass, AMId, resourceId, data }, callback) {
-  // if (stage === 'dev' || stage === 'staging' && !token) {
-  //   if (typeof callback !== 'function') {
-  //     return Promise.reject('Missing Authorization')
-  //   }
-  //   callback('Missing Authorization')
-  //   return
-  // }
   let url
   try {
     url = buildURL({
@@ -366,7 +341,6 @@ export function putData({ AMaaSClass, AMId, resourceId, data }, callback) {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  // promise.end((error, response) => {
   promise.then((response, error) => {
     let body
     if (response) body = response.body
@@ -379,13 +353,6 @@ export function putData({ AMaaSClass, AMId, resourceId, data }, callback) {
 }
 
 export function patchData({ AMaaSClass, AMId, resourceId, data }, callback) {
-  // if (stage === 'dev' || stage === 'staging' && !token) {
-  //   if (typeof callback !== 'function') {
-  //     return Promise.reject('Missing Authorization')
-  //   }
-  //   callback('Missing Authorization')
-  //   return
-  // }
   let url
   try {
     url = buildURL({
@@ -410,7 +377,6 @@ export function patchData({ AMaaSClass, AMId, resourceId, data }, callback) {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  // promise.end((error, response) => {
   promise.end((response, error) => {
     let body
     if (response) body = response.body
@@ -423,13 +389,6 @@ export function patchData({ AMaaSClass, AMId, resourceId, data }, callback) {
 }
 
 export function deleteData({ AMaaSClass, AMId, resourceId }, callback) {
-  // if (stage === 'dev' || stage === 'staging' && !token) {
-  //   if (typeof callback !== 'function') {
-  //     return Promise.reject('Missing Authorization')
-  //   }
-  //   callback('Missing Authorization')
-  //   return
-  // }
   let url
   try {
     url = buildURL({
@@ -450,7 +409,6 @@ export function deleteData({ AMaaSClass, AMId, resourceId }, callback) {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  // promise.end((error, response) => {
   promise.then((response, error) => {
     let body
     if (response) body = response.body
@@ -466,20 +424,9 @@ export function deleteData({ AMaaSClass, AMId, resourceId }, callback) {
  * query is an array of objects: { key: <string>, values: <array> }
  * key is the key to search over (depends on the specific service)
  * and values are all the values to search over. E.g.
- *   const queries = [
- *     { key: 'assetIds', values: [1, 2, 44, 'asf'] },
- *     { key: 'assetClasses', values: ['Currency', 'Bond', 'Equity']},
- *     { key: 'assetTypes', values: ['GovernmentBond, ForeignExchange']}
- *   ]
+ * `const queries = { assetIds: ['abc', 'def'], assetClasses: ['Currency', 'Bond'] }`
  */
 export function searchData({ AMaaSClass, AMId, query }, callback) {
-  // if (stage === 'dev' || stage === 'staging' && !token) {
-  //   if (typeof callback !== 'function') {
-  //     return Promise.reject('Missing Authorization')
-  //   }
-  //   callback('Missing Authorization')
-  //   return
-  // }
   let url
   try {
     url = buildURL({
@@ -494,16 +441,16 @@ export function searchData({ AMaaSClass, AMId, query }, callback) {
     return
   }
   let data = { camelcase: true }
-  for (let i = 0; i < query.length; i++) {
-    data[query[i].key] = query[i].values.join()
+  for (let q in query) {
+    if (query.hasOwnProperty(q)) {
+      data[q] = query[q].join()
+    }
   }
   let promise = makeRequest({ method: 'SEARCH', url, data })
-  // let promise = request.get(url).set('x-api-key', token).query(queryString)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(response => response.body)
   }
-  // promise.end((error, response) => {
   promise.then((response, error) => {
     let body
     if (response) body = response.body

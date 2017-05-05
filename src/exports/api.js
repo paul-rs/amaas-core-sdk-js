@@ -1,5 +1,5 @@
 /**
- * API Methods
+ * API Methods. These methods enable communication with the AMaaS Database. All methods return Promises with the option to use callbacks instead. Specific implementation instructions are detailed below.
  * @module api
  */
 

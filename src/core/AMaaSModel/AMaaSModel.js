@@ -1,6 +1,6 @@
 /**
  * Class representing a AMaaSModel.
- * This is the Base Class for almost every other class
+ * This is the base class for almost every other class.
  * @memberof module:core
  */
 class AMaaSModel {

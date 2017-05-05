@@ -10,7 +10,7 @@ import { retrieveData, insertData } from '../network'
  * @param {string} params.resourceId - Transaction ID
  * @param {string} params.token - Authorization token
  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is ???. Omit to return Promise
- * @returns {Promise|Array} If callback is supplied, it is called with ???. Otherwise a promise that resolves with ??? is returned
+ * @returns {Promise|null} If callback is supplied, it is called with ???. Otherwise a promise that resolves with ??? is returned
  */
 export function retrieve({ AMId, resourceId, token }, callback) {
   if (!AMId || !resourceId) {
