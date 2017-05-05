@@ -17,7 +17,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
- * Class representing a Synthetic From Book
+ * Class representing a Synthetic From Book. This is an Asset whose value is based on the value of the assets in a referenced Book
  * @memberof module:assets
  * @extends module:assets.Synthetic
  */
@@ -25,7 +25,7 @@ var SyntheticFromBook = function (_Synthetic) {
   _inherits(SyntheticFromBook, _Synthetic);
 
   /**
-   * Construct a new Synthetic From Book instance (an Asset whose value is based on the value of the assets in a referenced Book)
+   * Construct a new Synthetic From Book instance
    * @param {object} params - SyntheticFromBook creation options:
    * @param {number} params.assetManagerId - ID of Synthetic's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Synthetic __(required)__

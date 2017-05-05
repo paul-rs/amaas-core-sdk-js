@@ -1,13 +1,13 @@
 import Synthetic from '../Synthetic/synthetic.js'
 
 /**
- * Class representing a Synthetic From Book
+ * Class representing a Synthetic From Book. This is an Asset whose value is based on the value of the assets in a referenced Book
  * @memberof module:assets
  * @extends module:assets.Synthetic
  */
 class SyntheticFromBook extends Synthetic {
   /**
-   * Construct a new Synthetic From Book instance (an Asset whose value is based on the value of the assets in a referenced Book)
+   * Construct a new Synthetic From Book instance
    * @param {object} params - SyntheticFromBook creation options:
    * @param {number} params.assetManagerId - ID of Synthetic's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Synthetic __(required)__

@@ -19,7 +19,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
- * Class representing a Multi-Leg Synthetic
+ * Class representing a Multi-Leg Synthetic. This is an Asset which takes multiple assets as 'legs'. The value of the entire structure is equal to the sum of the legs
  * @memberof module:assets
  * @extends module:assets.Synthetic
  */
@@ -27,7 +27,7 @@ var SyntheticMultiLeg = function (_Synthetic) {
   _inherits(SyntheticMultiLeg, _Synthetic);
 
   /**
-   * Construct a new Multi-Leg Synthetic instance (an Asset which takes multiple assets as 'legs'. The value of the entire structure is equal to the sum of the legs)
+   * Construct a new Multi-Leg Synthetic instance
    * @param {object} params - SyntheticMultiLeg creation options:
    * @param {number} params.assetManagerId - ID of Synthetic's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Synthetic __(required)__

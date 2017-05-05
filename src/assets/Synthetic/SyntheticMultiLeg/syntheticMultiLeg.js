@@ -1,13 +1,13 @@
 import Synthetic from '../Synthetic/synthetic.js'
 
 /**
- * Class representing a Multi-Leg Synthetic
+ * Class representing a Multi-Leg Synthetic. This is an Asset which takes multiple assets as 'legs'. The value of the entire structure is equal to the sum of the legs
  * @memberof module:assets
  * @extends module:assets.Synthetic
  */
 class SyntheticMultiLeg extends Synthetic {
   /**
-   * Construct a new Multi-Leg Synthetic instance (an Asset which takes multiple assets as 'legs'. The value of the entire structure is equal to the sum of the legs)
+   * Construct a new Multi-Leg Synthetic instance
    * @param {object} params - SyntheticMultiLeg creation options:
    * @param {number} params.assetManagerId - ID of Synthetic's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Synthetic __(required)__
