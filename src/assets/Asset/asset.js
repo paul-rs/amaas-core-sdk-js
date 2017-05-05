@@ -50,7 +50,7 @@ class Asset extends AMaaSModel {
     issueDate,
     maturityDate,
     description='',
-    displayName,
+    displayName='',
     rollPrice=true,
     clientId,
     comments,
