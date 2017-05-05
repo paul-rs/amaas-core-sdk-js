@@ -14,7 +14,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * Class representing a Party (a Transaction children type)
- * @memberof module:transactions
+ * @memberof module:children
  * @extends module:core.AMaaSModel
  */
 var PartyChild = function (_AMaaSModel) {

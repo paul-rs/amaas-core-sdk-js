@@ -71,6 +71,9 @@ These classes cannot be instantiated from the SDK, they are included for referen
 <dt><a href="#module_books">books</a></dt>
 <dd><p>Classes for the Books Service</p>
 </dd>
+<dt><a href="#module_children">children</a></dt>
+<dd><p>These are general children classes used in a variety of places</p>
+</dd>
 <dt><a href="#module_corporateActions">corporateActions</a></dt>
 <dd><p>Classes for the CorporateActions Service</p>
 </dd>
@@ -81,7 +84,7 @@ These classes cannot be instantiated from the SDK, they are included for referen
 <dd><p>Classes and API methods for the Relationships service (not ready yet)</p>
 </dd>
 <dt><a href="#module_transactions">transactions</a></dt>
-<dd><p>Classes for the Transactions service. (Not ready yet)</p>
+<dd><p>Classes for the Transactions service.</p>
 </dd>
 </dl>
 
@@ -1089,18 +1092,18 @@ Classes for the Assets service
         * [new Derivative(params)](#new_module_assets.Derivative_new)
     * [.Equity](#module_assets.Equity) ⇐ <code>[Asset](#module_assets.Asset)</code>
         * [new Equity(params)](#new_module_assets.Equity_new)
+    * [.ForeignExchangeBase](#module_assets.ForeignExchangeBase) ⇐ <code>[Asset](#module_assets.Asset)</code>
+        * [new ForeignExchangeBase(params)](#new_module_assets.ForeignExchangeBase_new)
+    * [.ForeignExchange](#module_assets.ForeignExchange) ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
+        * [new ForeignExchange(params)](#new_module_assets.ForeignExchange_new)
+    * [.NonDeliverableForward](#module_assets.NonDeliverableForward) ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
+        * [new NonDeliverableForward(params)](#new_module_assets.NonDeliverableForward_new)
     * [.ForeignExchangeOption](#module_assets.ForeignExchangeOption) ⇐ <code>[Asset](#module_assets.Asset)</code>
         * [new ForeignExchangeOption(params)](#new_module_assets.ForeignExchangeOption_new)
     * [.ExchangeTradedFund](#module_assets.ExchangeTradedFund) ⇐ <code>[Fund](#module_assets.Fund)</code>
         * [new ExchangeTradedFund(params)](#new_module_assets.ExchangeTradedFund_new)
     * [.Fund](#module_assets.Fund) ⇐ <code>[Asset](#module_assets.Asset)</code>
         * [new Fund(params)](#new_module_assets.Fund_new)
-    * [.ForeignExchange](#module_assets.ForeignExchange) ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
-        * [new ForeignExchange(params)](#new_module_assets.ForeignExchange_new)
-    * [.ForeignExchangeBase](#module_assets.ForeignExchangeBase) ⇐ <code>[Asset](#module_assets.Asset)</code>
-        * [new ForeignExchangeBase(params)](#new_module_assets.ForeignExchangeBase_new)
-    * [.NonDeliverableForward](#module_assets.NonDeliverableForward) ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
-        * [new NonDeliverableForward(params)](#new_module_assets.NonDeliverableForward_new)
     * [.Index](#module_assets.Index) ⇐ <code>[Asset](#module_assets.Asset)</code>
         * [new Index(params)](#new_module_assets.Index_new)
     * [.BondFuture](#module_assets.BondFuture) ⇐ <code>[Future](#module_assets.Future)</code>
@@ -1619,6 +1622,114 @@ Construct a new Equity instance
 | [params.updatedTime] | <code>date</code> |  | Time that the Equity was updated |
 | [params.version] | <code>number</code> |  | Version number of the Equity |
 
+<a name="module_assets.ForeignExchangeBase"></a>
+
+### assets.ForeignExchangeBase ⇐ <code>[Asset](#module_assets.Asset)</code>
+Class representing FX (this should never be instantiated directly, use the appropriate subclass instead).
+Note that creating and editing FXBase subclasses and other public subclasses is a restricted action.
+
+**Kind**: static class of <code>[assets](#module_assets)</code>  
+**Extends:** <code>[Asset](#module_assets.Asset)</code>  
+<a name="new_module_assets.ForeignExchangeBase_new"></a>
+
+#### new ForeignExchangeBase(params)
+Construct a new ForeignExchangeBase instance
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | ForeignExchangeBase creation options: |
+| [params.assetManagerId] | <code>number</code> | <code>0</code> | Auto-set to `0`. All FX classes and subclasses are treated as public Assets |
+| params.assetId | <code>number</code> |  | ID of the ForeignExchangeBase __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;ForeignExchange&quot;</code> | Auto-set to `ForeignExchange` __(read-only)__ |
+| [params.assetType] | <code>string</code> |  | Type of the ForeignExchangeBase. Auto-set based on the class or subclass constructor |
+| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` for ForeignExchangeBase __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the ForeignExchangeBase's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the ForeignExchangeBase |
+| [params.description] | <code>string</code> |  | Description of the ForeignExchangeBase |
+| [params.displayName] | <code>string</code> |  | Display name of the ForeignExchangeBase |
+| [params.rollPrice] | <code>boolean</code> | <code>false</code> | Auto-set to `false` __(read-only)__ |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the ForeignExchangeBase |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the ForeignExchangeBase |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the ForeignExchangeBase. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the ForeignExchangeBase |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the ForeignExchangeBase |
+| [params.createdTime] | <code>date</code> |  | Time that the ForeignExchangeBase was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the ForeignExchangeBase was updated |
+| params.version | <code>number</code> |  | Version number |
+
+<a name="module_assets.ForeignExchange"></a>
+
+### assets.ForeignExchange ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
+Class representing FX
+
+**Kind**: static class of <code>[assets](#module_assets)</code>  
+**Extends:** <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>  
+<a name="new_module_assets.ForeignExchange_new"></a>
+
+#### new ForeignExchange(params)
+Construct a new Foreign Exchange instance
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | ForeignExchange creation options: |
+| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
+| params.assetClass | <code>string</code> |  | Auto-set to `ForeignExchange` __(read-only)__ |
+| [params.assetType] | <code>string</code> |  | Type of the ForeignExchange. Auto-set based on the class or subclass constructor |
+| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Foreign Exchange's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Foreign Exchange |
+| [params.description] | <code>string</code> |  | Description of the Foreign Exchange |
+| [params.displayName] | <code>string</code> |  | Display name of the ForeignExchange |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Foreign Exchange |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Foreign Exchange |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Foreign Exchange. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Foreign Exchange |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Foreign Exchange |
+| [params.createdTime] | <code>date</code> |  | Time that the Foreign Exchange was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Foreign Exchange was updated |
+| [params.version] | <code>number</code> |  | Version number |
+
+<a name="module_assets.NonDeliverableForward"></a>
+
+### assets.NonDeliverableForward ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
+Class representing FX
+
+**Kind**: static class of <code>[assets](#module_assets)</code>  
+**Extends:** <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>  
+<a name="new_module_assets.NonDeliverableForward_new"></a>
+
+#### new NonDeliverableForward(params)
+Construct a new Non Deliverable Forward instance
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | NonDeliverableForward creation options: |
+| params.assetId | <code>number</code> |  | ID of the Non Deliverable Forward __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;ForeignExchange&quot;</code> | Auto-set to `ForeignExchange` __(read-only)__ |
+| [params.assetType] | <code>string</code> |  | Type of the Non Deliverable Forward. Auto-set based on the class or subclass constructor |
+| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Non Deliverable Forward's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Asset |
+| [params.description] | <code>string</code> |  | Description of the Non Deliverable Forward |
+| [params.displayName] | <code>string</code> |  | Display name of the Non Deliverable Forward |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Non Deliverable Forward |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Non Deliverable Forward |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with this Asset. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Non Deliverable Forward |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Non Deliverable Forward |
+| [params.createdTime] | <code>date</code> |  | Time that the Non Deliverable Forward was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Non Deliverable Forward was updated |
+| [params.version] | <code>number</code> |  | Version number |
+
 <a name="module_assets.ForeignExchangeOption"></a>
 
 ### assets.ForeignExchangeOption ⇐ <code>[Asset](#module_assets.Asset)</code>
@@ -1752,114 +1863,6 @@ Construct a new Fund instance
 | [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Fund |
 | [params.createdTime] | <code>date</code> |  | Time that the Fund was created |
 | [params.updatedTime] | <code>date</code> |  | Time that the Fund was updated |
-| [params.version] | <code>number</code> |  | Version number |
-
-<a name="module_assets.ForeignExchange"></a>
-
-### assets.ForeignExchange ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
-Class representing FX
-
-**Kind**: static class of <code>[assets](#module_assets)</code>  
-**Extends:** <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>  
-<a name="new_module_assets.ForeignExchange_new"></a>
-
-#### new ForeignExchange(params)
-Construct a new Foreign Exchange instance
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>object</code> |  | ForeignExchange creation options: |
-| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
-| params.assetClass | <code>string</code> |  | Auto-set to `ForeignExchange` __(read-only)__ |
-| [params.assetType] | <code>string</code> |  | Type of the ForeignExchange. Auto-set based on the class or subclass constructor |
-| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
-| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
-| [params.assetIssuerId] | <code>string</code> |  | ID of the Foreign Exchange's issuer |
-| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Foreign Exchange |
-| [params.description] | <code>string</code> |  | Description of the Foreign Exchange |
-| [params.displayName] | <code>string</code> |  | Display name of the ForeignExchange |
-| [params.clientId] | <code>string</code> |  | ID of the associated client |
-| [params.comments] | <code>object</code> |  | Object of Comments attached to the Foreign Exchange |
-| [params.links] | <code>object</code> |  | Object of array of Links attached to the Foreign Exchange |
-| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Foreign Exchange. * The AMaaS Reference is auto-created and populated |
-| [params.createdBy] | <code>string</code> |  | ID of the user that created the Foreign Exchange |
-| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Foreign Exchange |
-| [params.createdTime] | <code>date</code> |  | Time that the Foreign Exchange was created |
-| [params.updatedTime] | <code>date</code> |  | Time that the Foreign Exchange was updated |
-| [params.version] | <code>number</code> |  | Version number |
-
-<a name="module_assets.ForeignExchangeBase"></a>
-
-### assets.ForeignExchangeBase ⇐ <code>[Asset](#module_assets.Asset)</code>
-Class representing FX (this should never be instantiated directly, use the appropriate subclass instead).
-Note that creating and editing FXBase subclasses and other public subclasses is a restricted action.
-
-**Kind**: static class of <code>[assets](#module_assets)</code>  
-**Extends:** <code>[Asset](#module_assets.Asset)</code>  
-<a name="new_module_assets.ForeignExchangeBase_new"></a>
-
-#### new ForeignExchangeBase(params)
-Construct a new ForeignExchangeBase instance
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>object</code> |  | ForeignExchangeBase creation options: |
-| [params.assetManagerId] | <code>number</code> | <code>0</code> | Auto-set to `0`. All FX classes and subclasses are treated as public Assets |
-| params.assetId | <code>number</code> |  | ID of the ForeignExchangeBase __(required)__ |
-| [params.assetClass] | <code>string</code> | <code>&quot;ForeignExchange&quot;</code> | Auto-set to `ForeignExchange` __(read-only)__ |
-| [params.assetType] | <code>string</code> |  | Type of the ForeignExchangeBase. Auto-set based on the class or subclass constructor |
-| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
-| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` for ForeignExchangeBase __(read-only)__ |
-| [params.assetIssuerId] | <code>string</code> |  | ID of the ForeignExchangeBase's issuer |
-| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the ForeignExchangeBase |
-| [params.description] | <code>string</code> |  | Description of the ForeignExchangeBase |
-| [params.displayName] | <code>string</code> |  | Display name of the ForeignExchangeBase |
-| [params.rollPrice] | <code>boolean</code> | <code>false</code> | Auto-set to `false` __(read-only)__ |
-| [params.clientId] | <code>string</code> |  | ID of the associated client |
-| [params.comments] | <code>object</code> |  | Object of Comments attached to the ForeignExchangeBase |
-| [params.links] | <code>object</code> |  | Object of array of Links attached to the ForeignExchangeBase |
-| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the ForeignExchangeBase. * The AMaaS Reference is auto-created and populated |
-| [params.createdBy] | <code>string</code> |  | ID of the user that created the ForeignExchangeBase |
-| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the ForeignExchangeBase |
-| [params.createdTime] | <code>date</code> |  | Time that the ForeignExchangeBase was created |
-| [params.updatedTime] | <code>date</code> |  | Time that the ForeignExchangeBase was updated |
-| params.version | <code>number</code> |  | Version number |
-
-<a name="module_assets.NonDeliverableForward"></a>
-
-### assets.NonDeliverableForward ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
-Class representing FX
-
-**Kind**: static class of <code>[assets](#module_assets)</code>  
-**Extends:** <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>  
-<a name="new_module_assets.NonDeliverableForward_new"></a>
-
-#### new NonDeliverableForward(params)
-Construct a new Non Deliverable Forward instance
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>object</code> |  | NonDeliverableForward creation options: |
-| params.assetId | <code>number</code> |  | ID of the Non Deliverable Forward __(required)__ |
-| [params.assetClass] | <code>string</code> | <code>&quot;ForeignExchange&quot;</code> | Auto-set to `ForeignExchange` __(read-only)__ |
-| [params.assetType] | <code>string</code> |  | Type of the Non Deliverable Forward. Auto-set based on the class or subclass constructor |
-| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
-| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
-| [params.assetIssuerId] | <code>string</code> |  | ID of the Non Deliverable Forward's issuer |
-| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Asset |
-| [params.description] | <code>string</code> |  | Description of the Non Deliverable Forward |
-| [params.displayName] | <code>string</code> |  | Display name of the Non Deliverable Forward |
-| [params.clientId] | <code>string</code> |  | ID of the associated client |
-| [params.comments] | <code>object</code> |  | Object of Comments attached to the Non Deliverable Forward |
-| [params.links] | <code>object</code> |  | Object of array of Links attached to the Non Deliverable Forward |
-| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with this Asset. * The AMaaS Reference is auto-created and populated |
-| [params.createdBy] | <code>string</code> |  | ID of the user that created the Non Deliverable Forward |
-| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Non Deliverable Forward |
-| [params.createdTime] | <code>date</code> |  | Time that the Non Deliverable Forward was created |
-| [params.updatedTime] | <code>date</code> |  | Time that the Non Deliverable Forward was updated |
 | [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.Index"></a>
@@ -2718,6 +2721,40 @@ Construct a new Book object
 | params.updatedTime | <code>date</code> | Time that the Book was updated (required if amending existing Book) |
 | params.version | <code>number</code> | Version number of the Book |
 
+<a name="module_children"></a>
+
+## children
+These are general children classes used in a variety of places
+
+
+* [children](#module_children)
+    * [.PartyChild](#module_children.PartyChild) ⇐ <code>[AMaaSModel](#module_core.AMaaSModel)</code>
+        * [new PartyChild(params)](#new_module_children.PartyChild_new)
+
+<a name="module_children.PartyChild"></a>
+
+### children.PartyChild ⇐ <code>[AMaaSModel](#module_core.AMaaSModel)</code>
+Class representing a Party (a Transaction children type)
+
+**Kind**: static class of <code>[children](#module_children)</code>  
+**Extends:** <code>[AMaaSModel](#module_core.AMaaSModel)</code>  
+<a name="new_module_children.PartyChild_new"></a>
+
+#### new PartyChild(params)
+Construct a new PartyChild object
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | PartyChild creation options |
+| params.partyId | <code>string</code> | ID of the linked Party |
+| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
+| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
+| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
+| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
+| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
+| params.version | <code>number</code> | Version number of the linked Party |
+
 <a name="module_corporateActions"></a>
 
 ## corporateActions
@@ -3534,38 +3571,12 @@ Construct a new Relationship instance
 <a name="module_transactions"></a>
 
 ## transactions
-Classes for the Transactions service. (Not ready yet)
+Classes for the Transactions service.
 
 
 * [transactions](#module_transactions)
-    * [.PartyChild](#module_transactions.PartyChild) ⇐ <code>[AMaaSModel](#module_core.AMaaSModel)</code>
-        * [new PartyChild(params)](#new_module_transactions.PartyChild_new)
     * [.Transaction](#module_transactions.Transaction) ⇐ <code>[AMaaSModel](#module_core.AMaaSModel)</code>
         * [new Transaction(params)](#new_module_transactions.Transaction_new)
-
-<a name="module_transactions.PartyChild"></a>
-
-### transactions.PartyChild ⇐ <code>[AMaaSModel](#module_core.AMaaSModel)</code>
-Class representing a Party (a Transaction children type)
-
-**Kind**: static class of <code>[transactions](#module_transactions)</code>  
-**Extends:** <code>[AMaaSModel](#module_core.AMaaSModel)</code>  
-<a name="new_module_transactions.PartyChild_new"></a>
-
-#### new PartyChild(params)
-Construct a new PartyChild object
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | PartyChild creation options |
-| params.partyId | <code>string</code> | ID of the linked Party |
-| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
-| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
-| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
-| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
-| params.version | <code>number</code> | Version number of the linked Party |
 
 <a name="module_transactions.Transaction"></a>
 
