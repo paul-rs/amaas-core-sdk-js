@@ -2843,7 +2843,7 @@ Classes for the Parties service
         * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
         * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
     * [.SubFund](#module_parties.SubFund) ⇐ <code>[Party](#module_parties.Party)</code>
-        * [new SubFund(params, (object))](#new_module_parties.SubFund_new)
+        * [new SubFund(params)](#new_module_parties.SubFund_new)
         * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
         * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
 
@@ -3477,34 +3477,34 @@ Class representing a Celled Fund Structure (SubFund)
 **Extends:** <code>[Party](#module_parties.Party)</code>  
 
 * [.SubFund](#module_parties.SubFund) ⇐ <code>[Party](#module_parties.Party)</code>
-    * [new SubFund(params, (object))](#new_module_parties.SubFund_new)
+    * [new SubFund(params)](#new_module_parties.SubFund_new)
     * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
     * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
 
 <a name="new_module_parties.SubFund_new"></a>
 
-#### new SubFund(params, (object))
+#### new SubFund(params)
 Construct a new SubFund instance
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | params | <code>object</code> |  | SubFund creation options: |
-| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the SubFund |
-| params.partyId | <code>string</code> |  | Party ID of the SubFund |
-| params.partyStatus | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the SubFund (e.g. 'Active') |
-| params.baseCurrency | <code>string</code> |  | Base Currency of the SubFund (e.g. SGD, USD) |
-| params.description | <code>string</code> |  | Description of the SubFund |
-| params.addresses | <code>object</code> |  | Object of Addresses associated with this SubFund |
-| (object) |  |  | params.emails - Object of Emails associated with this SubFund |
-| params.references | <code>object</code> |  | Object of References associated with this SubFund |
-| params.comments | <code>object</code> |  | Object of Comments associated with the SubFund |
-| params.links | <code>object</code> |  | Object of Links associated with the SubFund |
-| params.createdBy | <code>string</code> |  | ID of the user that created the SubFund |
-| params.updatedBy | <code>string</code> |  | ID of the user that updated the SubFund |
-| params.createdTime | <code>date</code> |  | Time that the SubFund was created |
-| params.updatedTime | <code>date</code> |  | Time that the SubFund was updated |
-| params.version | <code>number</code> |  | Version number of the SubFund |
+| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the SubFund __(required)__ |
+| params.partyId | <code>string</code> |  | Party ID of the SubFund __(required)__ |
+| [params.partyStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the SubFund |
+| [params.baseCurrency] | <code>string</code> |  | Base Currency of the SubFund (e.g. SGD, USD) |
+| [params.description] | <code>string</code> |  | Description of the SubFund |
+| [params.addresses] | <code>object</code> |  | Object of Addresses associated with the SubFund |
+| [params.emails] | <code>object</code> |  | Object of Emails associated with the SubFund |
+| [params.references] | <code>object</code> |  | Object of References associated with the SubFund |
+| [params.comments] | <code>object</code> |  | Object of Comments associated with the SubFund |
+| [params.links] | <code>object</code> |  | Object of Links associated with the SubFund |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the SubFund |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the SubFund |
+| [params.createdTime] | <code>date</code> |  | Time that the SubFund was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the SubFund was updated |
+| [params.version] | <code>number</code> |  | Version number of the SubFund |
 
 <a name="module_parties.Party+upsertAddress"></a>
 
