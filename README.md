@@ -27,6 +27,31 @@ $ API_TOKEN=xxxxx npm test
 ```
 
 # Docs
+
+
+## Numbers in the AMaaS Core SDK for JavaScript
+Numbers are handled by the [decimal.js](https://github.com/MikeMcl/decimal.js/) package. All numbers in the classes are stored as Decimal instances. For a full list of functions available on these numbers please refer to the decmial.js documentation.
+
+### Common functions
+Note that the decimal.js functions return Decimal instances and are immutable (you will need to assign results of arithmetic operations to new variables).
+
+```javascript
+let x = new Decimal(5)
+let y = new Decimal(10)
+
+const a = x.plus(y) // a = 15
+const b = x.times(y) // b = 50
+const c = y.minus(x) // c = 5
+const d = y.dividedBy(x) // d = 2
+```
+Returning a Decimal to a string
+```javascript
+let x = new Decimal(3.14)
+
+const a = x.toFixed(5) // a = '3.14000'
+const b = x.toPrecision(5) // b = '3.1400'
+```
+
 ## Modules
 
 <dl>
@@ -1018,22 +1043,22 @@ Class representing an Asset Manager
 Construct a new Asset Manager Model
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset Manager creation options |
-| params.assetManagerId | <code>number</code> | Asset Manager's ID |
-| params.assetManagerType | <code>string</code> | Type of Asset Manager (e.g. Hedge Fund) |
-| params.assetManagerStatus | <code>string</code> | Status of Asset Manager (e.g. Active) |
-| params.clientId | <code>string</code> | ID of the associated client |
-| params.partyId | <code>string</code> | ID of the associated party (associated party may be self) |
-| params.defaultBookOwnerId | <code>string</code> | ID of the default owner for any books owned by this Asset Manager |
-| params.defaultTimezone | <code>date</code> | Default timezone for any books owned by this Asset Manager |
-| params.defaultBookCloseTime | <code>date</code> | Default book close time for any books owned by this Asset Manager |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset Manager |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset Manager |
-| params.createdTime | <code>date</code> | Time that the Asset Manager was created |
-| params.updatedTime | <code>date</code> | Time that the Asset Manager was updated |
-| params.version | <code>number</code> | Version number of the Asset Manager |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Asset Manager creation options: |
+| [params.assetManagerId] | <code>number</code> | <code>generated server side</code> | Asset Manager's ID. Include to specifically set, if it does not already exist |
+| params.assetManagerType | <code>string</code> |  | Type of Asset Manager (e.g. Hedge Fund). Required<br /> Available types are: <li>Accredited Investor</li> <li>Bank</li> <li>Broker</li> <li>Corporate Treasury</li> <li>Family Office</li> <li>Fund Administrator</li> <li>Fund Manager</li> <li>Hedge Fund</li> <li>Private Equity</li> <li>Retail</li> <li>Venture Capital</li> |
+| [params.assetManagerStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of Asset Manager (e.g. Active) |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.partyId] | <code>string</code> | <code>&quot;&#x27;AMID&#x27;+assetManagerId&quot;</code> | ID of the Party that represents this Asset Manager. Defaults to e.g. AMID10 for assetManagerId 10 |
+| [params.defaultBookOwnerId] | <code>string</code> | <code>&quot;assetManagerId&quot;</code> | Asset Manager ID of the default owner for any Books owned by this Asset Manager. Will be used if no `ownerId` is set on the Book. Defaults to e.g. 10 for assetManagerId 10 |
+| [params.defaultTimezone] | <code>string</code> | <code>&quot;UTC&quot;</code> | Default timezone for any Books owned by this Asset Manager |
+| [params.defaultBookCloseTime] | <code>string</code> | <code>&quot;18:00:00&quot;</code> | Default Book close time for any books owned by this Asset Manager ('HH:MM:SS') |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Asset Manager |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Asset Manager |
+| [params.createdTime] | <code>date</code> |  | Time that the Asset Manager was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Asset Manager was updated |
+| [params.version] | <code>number</code> |  | Version number of the Asset Manager |
 
 <a name="module_assets"></a>
 
@@ -1126,31 +1151,32 @@ Class representing an Asset
 Construct a new Asset instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.clientAdditional | <code>object</code> | Object of custom properties for creating a Custom Asset (set in the Custom Asset class) |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Asset creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Asset's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Asset&quot;</code> | Class of the Asset |
+| [params.assetType] | <code>string</code> |  | Type of the Asset. Auto-set based on the class or subclass constructor |
+| params.fungible | <code>boolean</code> |  | Whether this Asset is fungible __(required)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Asset issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Asset |
+| [params.countryId] | <code>string</code> |  | ID of Asset's country |
+| [params.venueId] | <code>string</code> |  | ID of Asset's venue if applicable |
+| [params.currency] | <code>string</code> |  | Asset currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Maturity date if applicable (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Asset |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Asset |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Asset |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with this Asset. * The AMaaS Reference is auto-created and populated |
+| [params.clientAdditional] | <code>object</code> |  | Object of custom properties for creating a Custom Asset (set in the Custom Asset class) |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Asset |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Asset |
+| [params.createdTime] | <code>date</code> |  | Time that the Asset was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Asset was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.BondBase"></a>
 
@@ -1165,34 +1191,35 @@ Class representing a Base Bond
 Construct new Bond instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | BondBase creation options |
-| params.assetManagerId | <code>string</code> | ID of Bond's Asset Manager |
-| params.assetId | <code>string</code> | ID of asset |
-| params.assetClass | <code>string</code> | Class of Asset. This should always be 'Bond' |
-| params.fungible | <code>boolean</code> | Whether this Bond is fungible |
-| params.assetIssuerId | <code>string</code> | ID of the Bond Issuer |
-| params.assetStatus | <code>string</code> | Status of the Bond |
-| params.countryId | <code>string</code> | ID of the Bond's origin country |
-| params.venueId | <code>string</code> | ID of the Bond's venue |
-| params.currency | <code>string</code> | Currency denomination of the Bond |
-| params.issueDate | <code>string</code> | The date that the Bond was issued |
-| params.maturityDate | <code>string</code> | Date of Bond's maturity |
-| params.description | <code>string</code> | Description of the Bond |
-| params.clientId | <code>string</code> | ID of the client |
-| params.coupon | <code>number</code> | The Bond's coupon (represented as a fraction of 1 i.e. 0.05 = 5%) |
-| params.par | <code>number</code> | The Bond's par |
-| params.payFrequency | <code>string</code> | ??? |
-| params.defaulted | <code>boolean</code> | Whether the issuer has defaulted |
-| params.comments | <code>object</code> | Object of comments for the Bond. { name: string: comment: Comment } |
-| params.links | <code>object</code> | Object of links for the Bond. { name: string: link: Link[] } |
-| params.references | <code>object</code> | Object of references for the Bond |
-| params.createdBy | <code>string</code> | ID of the user that created the Bond |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Bond |
-| params.createdTime | <code>date</code> | Time that the Bond was created |
-| params.updatedTime | <code>date</code> | Time that the Bond was updated |
-| params.version | <code>number</code> | Version number of the Bond |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | BondBase creation options: |
+| params.assetManagerId | <code>string</code> |  | ID of Bond's Asset Manager __(required)__ |
+| params.assetId | <code>string</code> |  | ID of the Bond __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Bond&quot;</code> | Auto-set to `Bond` __(read-only)__ |
+| [params.assetType] | <code>string</code> |  | Type of the Asset. Auto-set based on the class or subclass constructor |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set `true` for Bonds __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Bond Issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Bond |
+| [params.countryId] | <code>string</code> |  | ID of the Bond's country |
+| [params.venueId] | <code>string</code> |  | ID of the Bond's venue if applicable |
+| [params.currency] | <code>string</code> |  | Bond currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Bond issue date (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Bond maturity date (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Bond |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.coupon | <code>number</code> |  | The Bond's coupon represented as a fraction of 1 i.e. 0.05 = 5%. Stored as a Decimal instance __(required)__ |
+| params.par | <code>number</code> |  | The Bond's par value. Stored as a Decimal instance __(required)__ |
+| params.payFrequency | <code>string</code> |  | Frequency of the coupon payment __(required)__ |
+| [params.defaulted] | <code>boolean</code> | <code>false</code> | Whether the issuer has defaulted |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Bond |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Bond |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References attached to the Bond. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Bond |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Bond |
+| [params.createdTime] | <code>date</code> |  | Time that the Bond was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Bond was updated |
+| [params.version] | <code>number</code> |  | Version number of the Bond |
 
 <a name="module_assets.BondCorporate"></a>
 
@@ -1207,34 +1234,35 @@ Class representing a Corporate Bond
 Construct new Corporate Bond instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | BondBase creation options |
-| params.assetManagerId | <code>string</code> | ID of Bond's Asset Manager |
-| params.assetId | <code>string</code> | ID of asset |
-| params.assetClass | <code>string</code> | Class of Asset. This should always be 'Bond' |
-| params.fungible | <code>boolean</code> | Whether this Bond is fungible |
-| params.assetIssuerId | <code>string</code> | ID of the Bond Issuer |
-| params.assetStatus | <code>string</code> | Status of the Bond |
-| params.countryId | <code>string</code> | ID of the Bond's origin country |
-| params.venueId | <code>string</code> | ID of the Bond's venue |
-| params.currency | <code>string</code> | Currency denomination of the Bond |
-| params.issueDate | <code>string</code> | The date that the Bond was issued |
-| params.maturityDate | <code>string</code> | Date of Bond's maturity |
-| params.description | <code>string</code> | Description of the Bond |
-| params.clientId | <code>string</code> | ID of the client |
-| params.coupon | <code>decimal</code> | The Bond's coupon (represented as a fraction of 1 i.e. 0.05 = 5%) |
-| params.par | <code>decimal</code> | The Bond's par |
-| params.payFrequency | <code>string</code> | ??? |
-| params.defaulted | <code>boolean</code> | Whether the issuer has defaulted |
-| params.comments | <code>object</code> | Object of comments for the Bond. { name: string: comment: Comment } |
-| params.links | <code>object</code> | Object of links for the Bond. { name: string: link: Link[] } |
-| params.references | <code>object</code> | Object of references for the Bond |
-| params.createdBy | <code>string</code> | ID of the user that created the Bond |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Bond |
-| params.createdTime | <code>date</code> | Time that the Bond was created |
-| params.updatedTime | <code>date</code> | Time that the Bond was updated |
-| params.version | <code>number</code> | Version number of the Bond |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | BondCorporate creation options: |
+| params.assetManagerId | <code>string</code> |  | ID of Bond's Asset Manager __(required)__ |
+| params.assetId | <code>string</code> |  | ID of the Bond __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Bond&quot;</code> | Auto-set to `Bond` __(read-only)__ |
+| [params.assetType] | <code>string</code> |  | Type of the Asset. Auto-set based on the class or subclass constructor |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set `true` for Bonds __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Bond Issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Bond |
+| [params.countryId] | <code>string</code> |  | ID of the Bond's origin country |
+| [params.venueId] | <code>string</code> |  | ID of the Bond's venue |
+| [params.currency] | <code>string</code> |  | Currency denomination of the Bond |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Bond issue date (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Bond maturity date (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Bond |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.coupon | <code>number</code> |  | The Bond's coupon represented as a fraction of 1 i.e. 0.05 = 5%. Stored as a Decimal instance __(required)__ |
+| params.par | <code>number</code> |  | The Bond's par value. Stored as a Decimal instance __(required)__ |
+| params.payFrequency | <code>string</code> |  | Frequency of the coupon payment __(required)__ |
+| [params.defaulted] | <code>boolean</code> | <code>false</code> | Whether the issuer has defaulted |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Bond |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Bond |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References attached to the Bond. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Bond |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Bond |
+| [params.createdTime] | <code>date</code> |  | Time that the Bond was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Bond was updated |
+| [params.version] | <code>number</code> |  | Version number of the Bond |
 
 <a name="module_assets.BondGovernment"></a>
 
@@ -1249,34 +1277,35 @@ Class representing a Government Bond
 Construct new Government Bond instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Bond creation options |
-| params.assetManagerId | <code>string</code> | ID of Bond's Asset Manager |
-| params.assetId | <code>string</code> | ID of asset |
-| params.assetClass | <code>string</code> | Class of Asset. This should always be 'Bond' |
-| params.fungible | <code>boolean</code> | Whether this Bond is fungible |
-| params.assetIssuerId | <code>string</code> | ID of the Bond Issuer |
-| params.assetStatus | <code>string</code> | Status of the Bond |
-| params.countryId | <code>string</code> | ID of the Bond's origin country |
-| params.venueId | <code>string</code> | ID of the Bond's venue |
-| params.currency | <code>string</code> | Currency denomination of the Bond |
-| params.issueDate | <code>string</code> | The date that the Bond was issued |
-| params.maturityDate | <code>string</code> | Date of Bond's maturity |
-| params.description | <code>string</code> | Description of the Bond |
-| params.clientId | <code>string</code> | ID of the client |
-| params.coupon | <code>decimal</code> | The Bond's coupon (represented as a fraction of 1 i.e. 0.05 = 5%) |
-| params.par | <code>decimal</code> | The Bond's par |
-| params.payFrequency | <code>string</code> | ??? |
-| params.defaulted | <code>boolean</code> | Whether the issuer has defaulted |
-| params.comments | <code>object</code> | Object of comments for the Bond. { name: string: comment: Comment } |
-| params.links | <code>object</code> | Object of links for the Bond. { name: string: link: Link[] } |
-| params.references | <code>object</code> | Object of references for the Bond |
-| params.createdBy | <code>string</code> | ID of the user that created the Bond |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Bond |
-| params.createdTime | <code>date</code> | Time that the Bond was created |
-| params.updatedTime | <code>date</code> | Time that the Bond was updated |
-| params.version | <code>number</code> | Version number of the Bond |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | BondGovernment creation options: |
+| params.assetManagerId | <code>string</code> |  | ID of Bond's Asset Manager __(required)__ |
+| params.assetId | <code>string</code> |  | ID of the Bond __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Bond&quot;</code> | Auto-set to `Bond` __(read-only)__ |
+| [params.assetType] | <code>string</code> |  | Type of the Asset. Auto-set based on the class or subclass constructor |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set `true` for Bonds __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Bond Issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Bond |
+| [params.countryId] | <code>string</code> |  | ID of the Bond's country |
+| [params.venueId] | <code>string</code> |  | ID of the Bond's venue |
+| [params.currency] | <code>string</code> |  | Bond currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Bond issue date (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Bond maturity date (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Bond |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.coupon | <code>number</code> |  | The Bond's coupon represented as a fraction of 1 i.e. 0.05 = 5%. Stored as a Decimal instance __(required)__ |
+| params.par | <code>number</code> |  | The Bond's par value. Stored as a Decimal instance __(required)__ |
+| params.payFrequency | <code>string</code> |  | Frequency of coupon payment __(required)__ |
+| [params.defaulted] | <code>boolean</code> | <code>false</code> | Whether the issuer has defaulted |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Bond |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Bond |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References attached to the Bond. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Bond |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Bond |
+| [params.createdTime] | <code>date</code> |  | Time that the Bond was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Bond was updated |
+| [params.version] | <code>number</code> |  | Version number of the Bond |
 
 <a name="module_assets.BondMortgage"></a>
 
@@ -1291,34 +1320,35 @@ Class representing a Mortgage Bond
 Construct new Mortgage Bond instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Bond creation options |
-| params.assetManagerId | <code>string</code> | ID of Bond's Asset Manager |
-| params.assetId | <code>string</code> | ID of asset |
-| params.assetClass | <code>string</code> | Class of Asset. This should always be 'Bond' |
-| params.fungible | <code>boolean</code> | Whether this Bond is fungible |
-| params.assetIssuerId | <code>string</code> | ID of the Bond Issuer |
-| params.assetStatus | <code>string</code> | Status of the Bond |
-| params.countryId | <code>string</code> | ID of the Bond's origin country |
-| params.venueId | <code>string</code> | ID of the Bond's venue |
-| params.currency | <code>string</code> | Currency denomination of the Bond |
-| params.issueDate | <code>string</code> | The date that the Bond was issued |
-| params.maturityDate | <code>string</code> | Date of Bond's maturity |
-| params.description | <code>string</code> | Description of the Bond |
-| params.clientId | <code>string</code> | ID of the client |
-| params.coupon | <code>decimal</code> | The Bond's coupon (represented as a fraction of 1 i.e. 0.05 = 5%) |
-| params.par | <code>decimal</code> | The Bond's par |
-| params.payFrequency | <code>string</code> | ??? |
-| params.defaulted | <code>boolean</code> | Whether the issuer has defaulted |
-| params.comments | <code>object</code> | Object of comments for the Bond. { name: string: comment: Comment } |
-| params.links | <code>object</code> | Object of links for the Bond. { name: string: link: Link[] } |
-| params.references | <code>object</code> | Object of references for the Bond |
-| params.createdBy | <code>string</code> | ID of the user that created the Bond |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Bond |
-| params.createdTime | <code>date</code> | Time that the Bond was created |
-| params.updatedTime | <code>date</code> | Time that the Bond was updated |
-| params.version | <code>number</code> | Version number of the Bond |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | BondMortgage creation options: |
+| params.assetManagerId | <code>string</code> |  | ID of Bond's Asset Manager __(required)__ |
+| params.assetId | <code>string</code> |  | ID of the Bond __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Bond&quot;</code> | Auto-set to `Bond` __(read-only)__ |
+| [params.assetType] | <code>string</code> |  | Type of the Asset. Auto-set based on the class or subclass constructor |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set `true` for Bonds __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Bond Issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Bond |
+| [params.countryId] | <code>string</code> |  | ID of the Bond's country |
+| [params.venueId] | <code>string</code> |  | ID of the Bond's venue |
+| [params.currency] | <code>string</code> |  | Bond Currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Bond issue date (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Bond maturity date (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Bond |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.coupon | <code>number</code> |  | The Bond's coupon represented as a fraction of 1 i.e. 0.05 = 5%. Stored as a Decimal instance __(required)__ |
+| params.par | <code>number</code> |  | The Bond's par value. Stored as a Decimal instance __(required)__ |
+| params.payFrequency | <code>string</code> |  | Frequency of the coupon payment __(required)__ |
+| [params.defaulted] | <code>boolean</code> | <code>false</code> | Whether the issuer has defaulted |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Bond |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Bond |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References attached to the Bond |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Bond |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Bond |
+| [params.createdTime] | <code>date</code> |  | Time that the Bond was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Bond was updated |
+| [params.version] | <code>number</code> |  | Version number of the Bond |
 
 <a name="module_assets.Currency"></a>
 
@@ -1333,32 +1363,30 @@ Class representing an Currency
 Construct a new Currency instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Currency creation options |
-| params.assetManagerId | <code>integer</code> | ID of Currency's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Currency (required) |
-| params.assetClass | <code>string</code> | Class of the Currency |
-| params.fungible | <code>bool</code> | Whether this Currency is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Currency's issuer |
-| params.assetStatus | <code>string</code> | Status of the Currency (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Currency's country |
-| params.venueId | <code>string</code> | ID of Currency's venue if applicable |
-| params.currency | <code>string</code> | Currency currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Currency |
-| params.clientId | <code>string</code> | ID of the client to which the Currency belongs |
-| params.deliverable | <code>boolean</code> | Whether the Currency is deliverable |
-| params.minorUnitPlaces | <code>number</code> | Decimal precision of Currency (e.g. 4 for JPY, 2 for USD) |
-| params.comments | <code>object</code> | Object of Comments attached to the Currency |
-| params.links | <code>object</code> | Object of array of Links attached to the Currency |
-| params.references | <code>object</code> | Object of References associated with this Currency |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number of the Asset |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Currency creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Currency's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Currency __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Currency&quot;</code> | Auto-set to `Currency` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` for Currency |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Currency issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Currency |
+| [params.countryId] | <code>string</code> |  | ID of Currency's country |
+| [params.venueId] | <code>string</code> |  | ID of Currency's venue if applicable |
+| [params.currency] | <code>string</code> |  | Auto-set to 'assetId' __(read-only)__ |
+| [params.description] | <code>string</code> |  | Description of the Currency |
+| [params.clientId] | <code>string</code> |  | ID of associated client |
+| [params.deliverable] | <code>boolean</code> | <code>true</code> | Whether the Currency is deliverable |
+| [params.minorUnitPlaces] | <code>number</code> |  | Decimal precision of Currency (e.g. 4 for JPY, 2 for USD) |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Currency |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Currency |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References attached to the Currency. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Asset |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Asset |
+| [params.createdTime] | <code>date</code> |  | Time that the Asset was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Asset was updated |
+| [params.version] | <code>number</code> |  | Version number of the Asset |
 
 <a name="module_assets.CustomAsset"></a>
 
@@ -1373,31 +1401,31 @@ Class representing an Custom Asset
 Construct a new Custom Asset instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.clientAdditional | <code>object</code> | Object of custom properties for creating a Custom Asset (e.g. { size: 'Large', Flavour: 'Lime' }) |
-| params.createdBy | <code>string</code> | ID of the user that created this object |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number of the Asset |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | CustomAsset creation options: |
+| params.assetManagerId | <code>integer</code> |  | ID of Asset's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Asset&quot;</code> | Auto-set to `Asset` __(read-only)__ |
+| params.fungible | <code>boolean</code> |  | Whether this Asset is fungible __(required)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Asset issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Asset |
+| [params.countryId] | <code>string</code> |  | ID of Asset's country |
+| [params.venueId] | <code>string</code> |  | ID of Asset's venue if applicable |
+| [params.currency] | <code>string</code> |  | Asset currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Maturity date if applicable (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Asset |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Asset |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Asset |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with this Asset. * The AMaaS Reference is auto-created and populated |
+| [params.clientAdditional] | <code>object</code> |  | Object of custom properties for creating a Custom Asset (e.g. { size: 'Large', Flavour: 'Lime' }) |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Asset |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Asset |
+| [params.createdTime] | <code>date</code> |  | Time that the Asset was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Asset was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.BondOption"></a>
 
@@ -1412,35 +1440,34 @@ Class representing an Bond Option
 Construct a new Bond Option instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.premium | <code>number</code> | Premium of the Asset |
-| params.optionStyle | <code>string</code> | Option style (American, Bermudan, European) |
-| params.optionType | <code>string</code> | Option type (Put, Call) |
-| params.strike | <code>number</code> | Strike price of the Option |
-| params.underlyingAssetId | <code>string</code> | ID of the underlying Asset |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Bond Option |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Bond Option |
-| params.createdTime | <code>date</code> | Time that the Bond Option was created |
-| params.updatedTime | <code>date</code> | Time that the Bond Option was updated |
-| params.version | <code>number</code> | Version number of the Bond Option |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | BondOption creation options |
+| params.assetManagerId | <code>number</code> |  | ID of Bond Option's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Bond Option __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Derivative&quot;</code> | Auto-set to `Derivative` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>false</code> | Auto-set to `false` for Derivative and subclasses |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Bond Option's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Bond Option |
+| [params.countryId] | <code>string</code> |  | ID of Bond Option's country |
+| [params.venueId] | <code>string</code> |  | ID of Bond Option's venue if applicable |
+| [params.currency] | <code>string</code> |  | Bond Option currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date (YYYY-MM-DD) |
+| [params.expiryDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Expiry date (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Bond Option |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.optionStyle | <code>string</code> |  | Option style __(required)__<br /> Available options: <li>American</li> <li>Bermudan</li> <li>European</li> |
+| params.optionType | <code>string</code> |  | Option type __(required)__<br /> Available options: <li>Put</li> <li>Call</li> |
+| params.strike | <code>number</code> |  | Strike price of the Bond Option. Stored as a Decimal instance __(required)__ |
+| params.underlyingAssetId | <code>string</code> |  | ID of the underlying Asset __(required)__ |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Bond Option |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Bond Option |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Bond Option. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Bond Option |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Bond Option |
+| [params.createdTime] | <code>date</code> |  | Time that the Bond Option was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Bond Option was updated |
+| [params.version] | <code>number</code> |  | Version number of the Bond Option |
 
 <a name="module_assets.CFD"></a>
 
@@ -1455,31 +1482,30 @@ Class representing a CFD
 Construct a new CFD instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.premium | <code>number</code> | Premium of the Asset |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the CFD |
-| params.updatedBy | <code>string</code> | ID of the user that updated the CFD |
-| params.createdTime | <code>date</code> | Time that the CFD was created |
-| params.updatedTime | <code>date</code> | Time that the CFD was updated |
-| params.version | <code>number</code> | Version number of the CFD |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | CFD creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Asset's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Derivative&quot;</code> | Auto-set to `Derivative` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>false</code> | Auto-set to `false` for Derivative and its subclasses __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the CFD issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the CFD |
+| [params.countryId] | <code>string</code> |  | ID of CFD's country |
+| [params.venueId] | <code>string</code> |  | ID of CFD's venue |
+| [params.currency] | <code>string</code> |  | CFD currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> |  | Issue date if applicable (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> |  | Maturity date if applicable (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the CFD |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the CFD |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the CFD |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the CFD. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the CFD |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the CFD |
+| [params.createdTime] | <code>date</code> |  | Time that the CFD was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the CFD was updated |
+| [params.version] | <code>number</code> |  | Version number of the CFD |
 
 <a name="module_assets.Derivative"></a>
 
@@ -1494,31 +1520,30 @@ Class representing an Derivative
 Construct a new Derivative instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Derivative creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.premium | <code>number</code> | Premium of the Asset |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Derivative |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Derivative |
-| params.createdTime | <code>date</code> | Time that the Derivative was created |
-| params.updatedTime | <code>date</code> | Time that the Derivative was updated |
-| params.version | <code>number</code> | Version number of the Derivative |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Derivative creation options: |
+| params.assetManagerId | <code>integer</code> |  | ID of Derivative's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Derivative __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Derivative&quot;</code> | Class of the Derivative (a subclass of Derivative may define its own assetClass) |
+| [params.fungible] | <code>boolean</code> | <code>false</code> | Auto-set to `false` for Derivative __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Derivative's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Derivative |
+| [params.countryId] | <code>string</code> |  | ID of Derivative's country |
+| [params.venueId] | <code>string</code> |  | ID of Derivative's venue if applicable |
+| params.currency | <code>string</code> |  | Derivative currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Maturity date if applicable (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Derivative |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Derivative |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Derivative |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Derivative. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Derivative |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Derivative |
+| [params.createdTime] | <code>date</code> |  | Time that the Derivative was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Derivative was updated |
+| [params.version] | <code>number</code> |  | Version number of the Derivative |
 
 <a name="module_assets.Equity"></a>
 
@@ -1533,31 +1558,30 @@ Class representing an Equity
 Construct a new Equity instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.shareClass | <code>string</code> | Share Class. Defaults to 'Common' |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Equity |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Equity |
-| params.createdTime | <code>date</code> | Time that the Equity was created |
-| params.updatedTime | <code>date</code> | Time that the Equity was updated |
-| params.version | <code>number</code> | Version number of the Equity |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Equity creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Equity's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Equity __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Equity&quot;</code> | Class of the Equity (a subclass of Equity may define its own assetClass) |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` for Equity __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Equity's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Equity |
+| [params.countryId] | <code>string</code> |  | ID of Equity's country |
+| [params.venueId] | <code>string</code> |  | ID of Equity's venue if applicable |
+| [params.currency] | <code>string</code> |  | Equity currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> |  | Issue date if applicable (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Equity |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.shareClass] | <code>string</code> | <code>&quot;Common&quot;</code> | Share Class |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Equity |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Equity |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Equity. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Equity |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Equity |
+| [params.createdTime] | <code>date</code> |  | Time that the Equity was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Equity was updated |
+| [params.version] | <code>number</code> |  | Version number of the Equity |
 
 <a name="module_assets.ForeignExchangeOption"></a>
 
@@ -1572,34 +1596,34 @@ Class representing an FX Option
 Construct a new FX Option instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.optionStyle | <code>string</code> | Option style (American, Bermudan, European) |
-| params.optionType | <code>string</code> | Option type (Put, Call) |
-| params.strike | <code>number</code> | Strike price of the Option |
-| params.underlyingAssetId | <code>string</code> | ID of the underlying Asset |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the FX Option |
-| params.updatedBy | <code>string</code> | ID of the user that updated the FX Option |
-| params.createdTime | <code>date</code> | Time that the FX Option was created |
-| params.updatedTime | <code>date</code> | Time that the FX Option was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | ForeignExchangeOption creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of FX Option's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;ForeignExchange&quot;</code> | Auto-set to `ForeignExchange` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>false</code> | Auto-set to `false` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the FX Option's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the FX Option |
+| [params.countryId] | <code>string</code> |  | ID of FX Option's country |
+| [params.venueId] | <code>string</code> |  | ID of FX Option's venue if applicable |
+| [params.currency] | <code>string</code> |  | FX Option currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> |  | Issue date (YYYY-MM-DD) |
+| [params.expiryDate] | <code>string</code> |  | Expiry date (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the FX Option |
+| [params.clientId] | <code>string</code> |  | ID of the client to which the FX Option belongs |
+| params.optionStyle | <code>string</code> |  | FX Option style __(required)__<br /> Available options: <li>American</li> <li>Bermudan</li> <li>European</li> |
+| params.optionType | <code>string</code> |  | FX Option type __(required)__<br /> Available options: <li>Put</li> <li>Call</li> |
+| params.strike | <code>number</code> |  | Strike price of the FX Option __(required)__ |
+| params.underlyingAssetId | <code>string</code> |  | ID of the underlying Asset __(required)__ |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the FX Option |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the FX Option |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the FX Option. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the FX Option |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the FX Option |
+| [params.createdTime] | <code>date</code> |  | Time that the FX Option was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the FX Option was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.ExchangeTradedFund"></a>
 
@@ -1614,35 +1638,33 @@ Class representing an ETF
 Construct a new ETF instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.fundType | <code>string</code> | Type of Fund (Open, Closed, ETF) |
-| params.creationDate | <code>string</code> | Fund's creation date (YYYY-MM-DD) |
-| params.nav | <code>number</code> | Fund's Net Asset Value |
-| params.expenseRatio | <code>number</code> | Fund's expense ratio |
-| params.netAssets | <code>number</code> | ??? |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the ETF |
-| params.updatedBy | <code>string</code> | ID of the user that updated the ETF |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | ExchangeTradedFund creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of ETF's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the ETF __(required)__ |
+| [params.assetClass] | <code>string</code> |  | Auto-set to `Fund` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` for Fund and its subclasses |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the ETF's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the ETF |
+| [params.countryId] | <code>string</code> |  | ID of ETF's country |
+| [params.venueId] | <code>string</code> |  | ID of ETF's venue if applicable |
+| [params.currency] | <code>string</code> |  | ETF currency (e.g. USD, SGD) |
+| [params.creationDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | ETF's creation date (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the ETF |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.fundType] | <code>string</code> | <code>&quot;ETF&quot;</code> | Auto-set to `ETF` __(read-only)__ |
+| [params.nav] | <code>number</code> |  | ETF's Net Asset Value. Stored as a Decimal instance |
+| [params.expenseRatio] | <code>number</code> |  | ETF's expense ratio. Stored as a Decimal instance |
+| [params.netAssets] | <code>number</code> |  | ETF's net assets. Stored as a Decimal instance |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the ETF |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the ETF |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the ETF. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the ETF |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the ETF |
+| [params.createdTime] | <code>date</code> |  | Time that the ETF was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the ETF was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.Fund"></a>
 
@@ -1657,35 +1679,33 @@ Class representing a Fund
 Construct a new Fund instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.fundType | <code>string</code> | Type of Fund (Open, Closed, ETF) |
-| params.creationDate | <code>string</code> | Fund's creation date (YYYY-MM-DD) |
-| params.nav | <code>number</code> | Fund's Net Asset Value |
-| params.expenseRatio | <code>number</code> | Fund's expense ratio |
-| params.netAssets | <code>number</code> | ??? |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Fund creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Fund's Asset Manager. Asset Manager refers to AMaaS user, NOT an asset manager in the Fund. __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Fund __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Fund&quot;</code> | Class of the Fund (a subclass of Fund may define its own assetClass) |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` for Fund __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Fund's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Fund |
+| [params.countryId] | <code>string</code> |  | ID of Fund's country |
+| [params.venueId] | <code>string</code> |  | ID of Fund's venue if applicable |
+| [params.currency] | <code>string</code> |  | Fund currency (e.g. USD, SGD) |
+| [params.description] | <code>string</code> |  | Description of the Fund |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.fundType | <code>string</code> |  | Type of Fund __(required)__<br /> Available options: <li>Open</li> <li>Closed</li> <li>ETF</li> |
+| [params.creationDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Fund's creation date (YYYY-MM-DD) |
+| [params.nav] | <code>number</code> |  | Fund's Net Asset Value. Stored as a Decimal instance |
+| [params.expenseRatio] | <code>number</code> |  | Fund's expense ratio. Stored as a Decimal instance |
+| [params.netAssets] | <code>number</code> |  | Fund's net assets. Stored as a Decimal instance |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Fund |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Fund |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Fund. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Fund |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Fund |
+| [params.createdTime] | <code>date</code> |  | Time that the Fund was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Fund was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.ForeignExchange"></a>
 
@@ -1700,35 +1720,30 @@ Class representing FX
 Construct a new Foreign Exchange instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | ForeignExchange creation options: |
+| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
+| params.assetClass | <code>string</code> |  | Auto-set to `ForeignExchange` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Foreign Exchange's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Foreign Exchange |
+| [params.description] | <code>string</code> |  | Description of the Foreign Exchange |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Foreign Exchange |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Foreign Exchange |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Foreign Exchange. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Foreign Exchange |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Foreign Exchange |
+| [params.createdTime] | <code>date</code> |  | Time that the Foreign Exchange was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Foreign Exchange was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.FXBase"></a>
 
 ### assets.FXBase ⇐ <code>[Asset](#module_assets.Asset)</code>
-Class representing FX (this should never be instantiated directly, use the appropriate subclass instead)
+Class representing FX (this should never be instantiated directly, use the appropriate subclass instead).
+Note that creating and editing FXBase subclasses and other public subclasses is a restricted action.
 
 **Kind**: static class of <code>[assets](#module_assets)</code>  
 **Extends:** <code>[Asset](#module_assets.Asset)</code>  
@@ -1738,30 +1753,25 @@ Class representing FX (this should never be instantiated directly, use the appro
 Construct a new FXBase instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | FXBase creation options: |
+| [params.assetManagerId] | <code>number</code> | <code>0</code> | Auto-set to `0`. All FX classes and subclasses are treated as public Assets |
+| params.assetId | <code>number</code> |  | ID of the FXBase __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;ForeignExchange&quot;</code> | Auto-set to `ForeignExchange` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` for FXBase __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the FXBase's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the FXBase |
+| [params.description] | <code>string</code> |  | Description of the FXBase |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the FXBase |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the FXBase |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the FXBase. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the FXBase |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the FXBase |
+| [params.createdTime] | <code>date</code> |  | Time that the FXBase was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the FXBase was updated |
+| params.version | <code>number</code> |  | Version number |
 
 <a name="module_assets.NonDeliverableForward"></a>
 
@@ -1776,30 +1786,24 @@ Class representing FX (this should never be instantiated directly, use the appro
 Construct a new Non Deliverable Forward instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | NonDeliverableForward creation options: |
+| params.assetId | <code>number</code> |  | ID of the Non Deliverable Forward __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;ForeignExchange&quot;</code> | Auto-set to `ForeignExchange` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Non Deliverable Forward's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Asset |
+| [params.description] | <code>string</code> |  | Description of the Non Deliverable Forward |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Non Deliverable Forward |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Non Deliverable Forward |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with this Asset. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Non Deliverable Forward |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Non Deliverable Forward |
+| [params.createdTime] | <code>date</code> |  | Time that the Non Deliverable Forward was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Non Deliverable Forward was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.Index"></a>
 
@@ -1814,30 +1818,28 @@ Class representing an Index
 Construct a new Index instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Index creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Index's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Index&quot;</code> | Auto-set to `Index` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` for Index __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Index's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Index |
+| [params.countryId] | <code>string</code> |  | ID of Index's country |
+| [params.currency] | <code>string</code> |  | Index currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Index |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Index |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Index |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Index. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Index |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Index |
+| [params.createdTime] | <code>date</code> |  | Time that the Index was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Index was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.BondFuture"></a>
 
@@ -1852,40 +1854,39 @@ Class representing a Bond Future
 Construct a new Bond Future instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.settlementType | <code>string</code> | Settlement Type (Physical, Cash) |
-| params.contractSize | <code>number</code> | Contract Size |
-| params.pointValue | <code>number</code> | ??? |
-| params.tickSize | <code>number</code> | ??? |
-| params.quoteUnit | <code>number</code> | ??? |
-| params.underlyingAssetId | <code>string</code> | ID of the underlying Asset |
-| params.expiryDate | <code>string</code> | Date of the contract's expiry (YYYY-MM-DD) |
-| params.cheapestToDeliverId | <code>string</code> | ??? |
-| params.underlyingBondTenor | <code>string</code> | ??? |
-| params.underlyingBondCoupon | <code>number</code> | Coupon of the underlying Bond |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Bond Future |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Bond Future |
-| params.createdTime | <code>date</code> | Time that the Bond Future was created |
-| params.updatedTime | <code>date</code> | Time that the Bond Future was updated |
-| params.version | <code>number</code> | Version number of the Bond Future |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Bond Future creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Bond Future's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Bond Future __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Future&quot;</code> | Auto-set to `Future` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Bond Future's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Bond Future |
+| [params.countryId] | <code>string</code> |  | ID of Bond Future's country |
+| [params.venueId] | <code>string</code> |  | ID of Bond Future's venue if applicable |
+| [params.currency] | <code>string</code> |  | Bond Future currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.expiryDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Date of the contract's expiry (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Bond Future |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.settlementType | <code>string</code> |  | Settlement Type __(required)__<br /> Available options: <li>Cash</li> <li>Physical</li> |
+| params.contractSize | <code>number</code> |  | Contract Size __(required)__ |
+| [params.pointValue] | <code>number</code> |  | Future point value. Stored as a Decimal instance |
+| params.tickSize | <code>number</code> |  | Future tick size. Stored as a Decimal instance __(required)__ |
+| [params.quoteUnit] | <code>string</code> |  | Future quote unit |
+| params.underlyingAssetId | <code>string</code> |  | ID of the underlying Asset __(required)__ |
+| [params.cheapestToDeliverId] | <code>string</code> |  | The cheapest Bond which can be delivered to the terms of the Future |
+| [params.underlyingBondTenor] | <code>string</code> |  | Tenor of the underlying Bond<br /> Available options: <li>1M</li> <li>3M</li> <li>6M</li> <li>9M</li> <li>1Y</li> <li>2Y</li> <li>5Y</li> <li>10Y</li> <li>15Y</li> <li>20Y</li> <li>30Y</li> <li>40Y</li> <li>50Y</li> |
+| [params.underlyingBondCoupon] | <code>number</code> |  | Coupon of the underlying Bond |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Bond Future |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Bond Future |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Bond Future. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Bond Future |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Bond Future |
+| [params.createdTime] | <code>date</code> |  | Time that the Bond Future was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Bond Future was updated |
+| [params.version] | <code>number</code> |  | Version number of the Bond Future |
 
 <a name="module_assets.BondFutureOption"></a>
 
@@ -1900,40 +1901,39 @@ Class representing a Bond Future Option
 Construct a new Bond Future Option instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.settlementType | <code>string</code> | Settlement Type (Physical, Cash) |
-| params.contractSize | <code>number</code> | Contract Size |
-| params.pointValue | <code>number</code> | ??? |
-| params.tickSize | <code>number</code> | ??? |
-| params.quoteUnit | <code>number</code> | ??? |
-| params.underlyingAssetId | <code>string</code> | ID of the underlying Asset |
-| params.expiryDate | <code>string</code> | Date of the contract's expiry (YYYY-MM-DD) |
-| params.optionType | <code>string</code> | Option type (Put, Call) |
-| params.strike | <code>number</code> | Strike price |
-| params.optionStyle | <code>string</code> | Option style (American , Bermudan, European) |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Bond Future Option creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Bond Future Option's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Bond Future Option __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Future&quot;</code> | Auto-set to `Future` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Bond Future Option's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Bond Future Option |
+| [params.countryId] | <code>string</code> |  | ID of Bond Future Option's country |
+| [params.venueId] | <code>string</code> |  | ID of Bond Future Option's venue if applicable |
+| [params.currency] | <code>string</code> |  | Bond Future Option currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.expiryDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Date of the contract's expiry (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Bond Future Option |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.settlementType | <code>string</code> |  | Settlement Type __(required)__<br /> <li>Cash</li> <li>Physical</li> |
+| params.contractSize | <code>number</code> |  | Contract Size __(required)__ |
+| [params.pointValue] | <code>number</code> |  | Future point value. Stored as a Decimal instance |
+| params.tickSize | <code>number</code> |  | Future tick size. Stored as a Decimal instance __(required)__ |
+| [params.quoteUnit] | <code>string</code> |  | Future quote unit |
+| params.underlyingAssetId | <code>string</code> |  | ID of the underlying Asset __(required)__ |
+| params.optionType | <code>string</code> |  | Option type __(required)__<br /> Available options: <li>Put</li> <li>Call</li> |
+| params.optionStyle | <code>string</code> |  | Option style __(required)__<br /> Available options: <li>American</li> <li>Bermudan</li> <li>European</li> |
+| params.strike | <code>number</code> |  | Strike price. Stored as a Decimal instance __(required)__ |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Bond Future Option |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Bond Future Option |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Bond Future Option. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Bond Future Option |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Bond Future Option |
+| [params.createdTime] | <code>date</code> |  | Time that the Bond Future Option was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Bond Future Option was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.EnergyFuture"></a>
 
@@ -1948,37 +1948,36 @@ Class representing an Energy Future
 Construct a new Energy Future instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.settlementType | <code>string</code> | Settlement Type (Physical, Cash) |
-| params.contractSize | <code>number</code> | Contract Size |
-| params.pointValue | <code>number</code> | ??? |
-| params.tickSize | <code>number</code> | ??? |
-| params.quoteUnit | <code>number</code> | ??? |
-| params.underlyingAssetId | <code>string</code> | ID of the underlying Asset |
-| params.expiryDate | <code>string</code> | Date of the contract's expiry (YYYY-MM-DD) |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | EnergyFuture creation options |
+| params.assetManagerId | <code>number</code> |  | ID of Energy Future's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Energy Future __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Future&quot;</code> | Auto-set to `Future` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Energy Future's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Energy Future |
+| [params.countryId] | <code>string</code> |  | ID of Energy Future's country |
+| [params.venueId] | <code>string</code> |  | ID of Energy Future's venue if applicable |
+| [params.currency] | <code>string</code> |  | Energy Future currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.expiryDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Date of the contract's expiry (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Energy Future |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.settlementType | <code>string</code> |  | Settlement Type __(required)__<br /> Available options <li>Cash</li> <li>Physical</li> |
+| params.contractSize | <code>number</code> |  | Contract Size __(required)__ |
+| [params.pointValue] | <code>number</code> |  | Future point value. Stored as a Decimal instance |
+| params.tickSize | <code>number</code> |  | Future tick size. Stored as a Decimal instance __(required)__ |
+| [params.quoteUnit] | <code>string</code> |  | Future quote unit |
+| params.underlyingAssetId | <code>string</code> |  | ID of the underlying Asset __(required)__ |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Energy Future |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Energy Future |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Energy Future. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Energy Future |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Energy Future |
+| [params.createdTime] | <code>date</code> |  | Time that the Energy Future was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Energy Future was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.EquityFuture"></a>
 
@@ -1990,40 +1989,39 @@ Class representing a Future
 <a name="new_module_assets.EquityFuture_new"></a>
 
 #### new EquityFuture(params)
-Construct a new Asset object
+Construct a new Equity Future instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.settlementType | <code>string</code> | Settlement Type (Physical, Cash) |
-| params.contractSize | <code>number</code> | Contract Size |
-| params.pointValue | <code>number</code> | ??? |
-| params.tickSize | <code>number</code> | ??? |
-| params.quoteUnit | <code>number</code> | ??? |
-| params.underlyingAssetId | <code>string</code> | ID of the underlying Asset |
-| params.expiryDate | <code>string</code> | Date of the contract's expiry (YYYY-MM-DD) |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | EquityFuture creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Equity Future's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Equity Future __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Future&quot;</code> | Auto-set to `Future` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Equity Future's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Equity Future |
+| [params.countryId] | <code>string</code> |  | ID of Equity Future's country |
+| [params.venueId] | <code>string</code> |  | ID of Equity Future's venue if applicable |
+| [params.currency] | <code>string</code> |  | Equity Future currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.expiryDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Date of the contract's expiry (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Equity Future |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.settlementType | <code>string</code> |  | Settlement Type __(required)__<br /> Available options: <li>Cash</li> <li>Physical</li> |
+| params.contractSize | <code>number</code> |  | Contract Size __(required)__ |
+| [params.pointValue] | <code>number</code> |  | Future point value. Stored as a Decimal instance |
+| params.tickSize | <code>number</code> |  | Future tick size. Stored as a Decimal instance |
+| [params.quoteUnit] | <code>string</code> |  | Future quote unit |
+| params.underlyingAssetId | <code>string</code> |  | ID of the underlying Asset __(required)__ |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Equity Future |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Equity Future |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Equity Future. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Equity Future |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Equity Future |
+| [params.createdTime] | <code>date</code> |  | Time that the Equity Future was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Equity Future was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.Future"></a>
 
@@ -2038,37 +2036,36 @@ Class representing a Future
 Construct a new Future instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.settlementType | <code>string</code> | Settlement Type (Physical, Cash) |
-| params.contractSize | <code>number</code> | Contract Size |
-| params.pointValue | <code>number</code> | ??? |
-| params.tickSize | <code>number</code> | ??? |
-| params.quoteUnit | <code>number</code> | ??? |
-| params.underlyingAssetId | <code>string</code> | ID of the underlying Asset |
-| params.expiryDate | <code>string</code> | Date of the contract's expiry (YYYY-MM-DD) |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Future creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Future's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Future __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Future&quot;</code> | Class of the Future (a subclass of Future may define its own assetClass) |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Future's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Future |
+| [params.countryId] | <code>string</code> |  | ID of Future's country |
+| [params.venueId] | <code>string</code> |  | ID of Future's venue if applicable |
+| [params.currency] | <code>string</code> |  | Asset currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Future |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.settlementType | <code>string</code> |  | Settlement Type __(required)__<br /> Available options: <li>Cash</li> <li>Physical</li> |
+| params.contractSize | <code>number</code> |  | Contract Size __(required)__ |
+| [params.pointValue] | <code>number</code> |  | Future point value. Stored as a Decimal instance |
+| params.tickSize | <code>number</code> |  | Future tick size. Stored as a Decimal instance __(required)__ |
+| [params.quoteUnit] | <code>string</code> |  | Future quote unit |
+| params.underlyingAssetId | <code>string</code> |  | ID of the underlying Asset __(required)__ |
+| [params.expiryDate] | <code>string</code> |  | Date of the Future's expiry (YYYY-MM-DD) |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Future |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Future |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Future. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Future |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Future |
+| [params.createdTime] | <code>date</code> |  | Time that the Future was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Future was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.FutureOption"></a>
 
@@ -2083,40 +2080,39 @@ Class representing a Future Option
 Construct a new Future Option instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.settlementType | <code>string</code> | Settlement Type (Physical, Cash) |
-| params.contractSize | <code>number</code> | Contract Size |
-| params.pointValue | <code>number</code> | ??? |
-| params.tickSize | <code>number</code> | ??? |
-| params.quoteUnit | <code>number</code> | ??? |
-| params.underlyingAssetId | <code>string</code> | ID of the underlying Asset |
-| params.expiryDate | <code>string</code> | Date of the contract's expiry (YYYY-MM-DD) |
-| params.optionType | <code>string</code> | Option type (Put, Call) |
-| params.optionStyle | <code>string</code> | Option style (American, Bermudan, European) |
-| params.strike | <code>number</code> | Strike price |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Future Option creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Future Option's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Future Option __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Future&quot;</code> | Auto-set to `Future` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` for Future subclasses __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Future Option's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Future Option |
+| [params.countryId] | <code>string</code> |  | ID of Future Option's country |
+| [params.venueId] | <code>string</code> |  | ID of Future Option's venue if applicable |
+| [params.currency] | <code>string</code> |  | Future Option currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.expiryDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Expiry date (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Future Option |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.settlementType | <code>string</code> |  | Settlement Type __(required)__<br /> Available options: <li>Cash</li> <li>Physical</li> |
+| params.contractSize | <code>number</code> |  | Contract Size __(required)__ |
+| [params.pointValue] | <code>number</code> |  | Future point value. Stored as a Decimal instance |
+| params.tickSize | <code>number</code> |  | Future tick size. Stored as a Decimal instance __(required)__ |
+| [params.quoteUnit] | <code>string</code> |  | Future quote unit |
+| params.underlyingAssetId | <code>string</code> |  | ID of the underlying Asset __(required)__ |
+| params.optionType | <code>string</code> |  | Option type __(required)__<br /> Available options: <li>Put</li> <li>Call</li> |
+| params.optionStyle | <code>string</code> |  | Option style __(required)__<br /> Available options: <li>American</li> <li>Bermudan</li> <li>European</li> |
+| params.strike | <code>number</code> |  | Strike price __(required)__ |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Future Option |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Future Option |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Future Option |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Future Option |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Future Option |
+| [params.createdTime] | <code>date</code> |  | Time that the Future Option was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Future Option was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.IndexFuture"></a>
 
@@ -2131,37 +2127,36 @@ Class representing an Index Future
 Construct a new Index Future instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.settlementType | <code>string</code> | Settlement Type (Physical, Cash) |
-| params.contractSize | <code>number</code> | Contract Size |
-| params.pointValue | <code>number</code> | ??? |
-| params.tickSize | <code>number</code> | ??? |
-| params.quoteUnit | <code>number</code> | ??? |
-| params.underlyingAssetId | <code>string</code> | ID of the underlying Asset |
-| params.expiryDate | <code>string</code> | Date of the contract's expiry (YYYY-MM-DD) |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | IndexFuture creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Index Future's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Index Future __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Future&quot;</code> | Auto-set to `Future` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Index Future's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Index Future |
+| [params.countryId] | <code>string</code> |  | ID of Index Future's country |
+| [params.venueId] | <code>string</code> |  | ID of Index Future's venue if applicable |
+| [params.currency] | <code>string</code> |  | Index Future currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.expiryDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Date of the contract's expiry (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Index Future |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.settlementType | <code>string</code> |  | Settlement Type __(required)__<br /> Available options: <li>Cash</li> <li>Physical</li> |
+| params.contractSize | <code>number</code> |  | Contract Size __(required)__ |
+| [params.pointValue] | <code>number</code> |  | Future point value. Stored as a Decimal instance |
+| params.tickSize | <code>number</code> |  | Future tick size. Stored as a Decimal instance __(required)__ |
+| [params.quoteUnit] | <code>string</code> |  | Future quote unit |
+| params.underlyingAssetId | <code>string</code> |  | ID of the underlying Asset __(required)__ |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Index Future |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Index Future |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Index Future. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Index Future |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Index Future |
+| [params.createdTime] | <code>date</code> |  | Time that the Index Future was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Index Future was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.InterestRateFuture"></a>
 
@@ -2176,37 +2171,36 @@ Class representing an Interest Rate Future
 Construct a new Interest Rate Future instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.settlementType | <code>string</code> | Settlement Type (Physical, Cash) |
-| params.contractSize | <code>number</code> | Contract Size |
-| params.pointValue | <code>number</code> | ??? |
-| params.tickSize | <code>number</code> | ??? |
-| params.quoteUnit | <code>number</code> | ??? |
-| params.underlyingAssetId | <code>string</code> | ID of the underlying Asset |
-| params.expiryDate | <code>string</code> | Date of the contract's expiry (YYYY-MM-DD) |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | InterestRateFuture creation options |
+| params.assetManagerId | <code>number</code> |  | ID of Interest Rate Future's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Interest Rate Future __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Future&quot;</code> | Auto-set to `Future` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Interest Rate Future's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Interest Rate Future |
+| [params.countryId] | <code>string</code> |  | ID of Interest Rate Future's country |
+| [params.venueId] | <code>string</code> |  | ID of Interest Rate Future's venue if applicable |
+| [params.currency] | <code>string</code> |  | Interest Rate Future currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.expiryDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Date of the contract's expiry (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Interest Rate Future |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.settlementType | <code>string</code> |  | Settlement Type __(required)__<br /> Available options: <li>Cash</li> <li>Physical</li> |
+| params.contractSize | <code>number</code> |  | Contract Size __(required)__ |
+| [params.pointValue] | <code>number</code> |  | Future point value. Stored as Decimal instance |
+| params.tickSize | <code>number</code> |  | Future tick size. Stored as a Decimal instance __(required)__ |
+| [params.quoteUnit] | <code>string</code> |  | Future quote unit |
+| params.underlyingAssetId | <code>string</code> |  | ID of the underlying Asset __(required)__ |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Interest Rate Future |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Interest Rate Future |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Interest Rate Future. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Interest Rate Future |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Interest Rate Future |
+| [params.createdTime] | <code>date</code> |  | Time that the Interest Rate Future was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Interest Rate Future was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.ListedContractForDifference"></a>
 
@@ -2221,30 +2215,30 @@ Class representing a Listed CFD
 Construct a new Listed CFD instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | ListedContractForDifference creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Listed CFD's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Listed CFD __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;ListedDerivative&quot;</code> | Auto-set to `ListedDerivative` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Listed CFD's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Listed CFD |
+| [params.countryId] | <code>string</code> |  | ID of Listed CFD's country |
+| [params.venueId] | <code>string</code> |  | ID of Listed CFD's venue if applicable |
+| [params.currency] | <code>string</code> |  | Listed CFD currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Maturity date if applicable (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Listed CFD |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Listed CFD |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Listed CFD |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Listed CFD. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Listed CFD |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Listed CFD |
+| [params.createdTime] | <code>date</code> |  | Time that the Listed CFD was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Listed CFD was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.ListedDerivative"></a>
 
@@ -2259,30 +2253,30 @@ Class representing a Listed Derivative
 Construct a new Listed Derivative instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created this object |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | ListedDerivative creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Listed Derivative's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Listed Derivative __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;ListedDerivative&quot;</code> | Class of the Listed Derivative (a subclass may define its own assetClass) |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Listed Derivative's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Listed Derivative |
+| [params.countryId] | <code>string</code> |  | ID of Listed Derivative's country |
+| [params.venueId] | <code>string</code> |  | ID of Listed Derivative's venue if applicable |
+| [params.currency] | <code>string</code> |  | Listed Derivative currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> |  | Issue date if applicable (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> |  | Maturity date if applicable (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Listed Derivative |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Listed Derivative |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Listed Derivative |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Listed Derivative. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Listed Derivative |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Listed Derivative |
+| [params.createdTime] | <code>date</code> |  | Time that the Listed Derivative was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Listed Derivative was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.RealAsset"></a>
 
@@ -2297,30 +2291,28 @@ Class representing a Real Asset
 Construct a new Real Asset instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | RealAsset creation options |
+| params.assetManagerId | <code>number</code> |  | ID of Asset's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;RealAsset&quot;</code> | Class of the Asset (a subclass of RealAsset may define its own assetClass) |
+| [params.fungible] | <code>boolean</code> | <code>false</code> | Auto-set to `false` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Real Asset's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Real Asset |
+| [params.countryId] | <code>string</code> |  | ID of Real Asset's country |
+| [params.venueId] | <code>string</code> |  | ID of Real Asset's venue if applicable |
+| [params.currency] | <code>string</code> |  | Real Asset currency (e.g. USD, SGD) |
+| [params.description] | <code>string</code> |  | Description of the Real Asset |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Real Asset |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Real Asset |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Real Asset. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Real Asset |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Real Asset |
+| [params.createdTime] | <code>date</code> |  | Time that the Real Asset was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Real Asset was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.RealEstate"></a>
 
@@ -2335,31 +2327,28 @@ Class representing Real Estate
 Construct a new Real Estate instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.clientAdditional | <code>object</code> | Object of custom properties for creating a Custom Asset (set in the Custom Asset class) |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | RealEstate creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Real Estate's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Real Estate __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;RealAsset&quot;</code> | Auto-set to `RealEstate` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>false</code> | Auto-set to `false` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Real Estate's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Real Estate |
+| [params.countryId] | <code>string</code> |  | ID of Real Estate's country |
+| [params.venueId] | <code>string</code> |  | ID of Real Estate's venue if applicable |
+| [params.currency] | <code>string</code> |  | Real Estate currency (e.g. USD, SGD) |
+| [params.description] | <code>string</code> |  | Description of the Real Estate |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Real Estate |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Real Estate |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Real Estate. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Real Estate |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Real Estate |
+| [params.createdTime] | <code>date</code> |  | Time that the Real Estate was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Real Estate was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.Wine"></a>
 
@@ -2374,31 +2363,43 @@ Class representing Wine
 Construct a new Wine instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.clientAdditional | <code>object</code> | Object of custom properties for creating a Custom Asset (set in the Custom Asset class) |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Wine creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Wine's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Wine __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;RealAsset&quot;</code> | Auto-set to `RealAsset` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>false</code> | Auto-set to `false` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Wine's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Wine |
+| [params.countryId] | <code>string</code> |  | ID of Wine's country |
+| [params.venueId] | <code>string</code> |  | ID of Wine's venue if applicable |
+| [params.currency] | <code>string</code> |  | Wine currency (e.g. USD, SGD) |
+| [params.description] | <code>string</code> |  | Description of the Wine |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.year] | <code>string</code> |  | Year of production |
+| [params.producer] | <code>string</code> |  | Name of the producer |
+| [params.region] | <code>string</code> |  | Region |
+| [params.appellation] | <code>string</code> |  | Appellation |
+| [params.classification] | <code>string</code> |  | Classification |
+| [params.color] | <code>string</code> |  | Color (e.g. red, white) |
+| [params.bottleSize] | <code>string</code> |  | Bottle size (e.g. Magnum) |
+| [params.bottleInCellar] | <code>string</code> |  | ??? |
+| [params.bottleLocation] | <code>string</code> |  | Location of the bottle |
+| [params.storageCost] | <code>string</code> |  | Storage cost of the Wine |
+| [params.ratingType] | <code>string</code> |  | Rating Type |
+| [params.ratingValue] | <code>string</code> |  | Rating Value |
+| [params.packingType] | <code>string</code> |  | Packing Type |
+| [params.toDrinkStart] | <code>string</code> |  | Earliest date it is suitable to begin drinking (YYYY-MM-DD) |
+| [params.toDrinkEnd] | <code>string</code> |  | Latest date to drink (YYYY-MM-DD) |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Wine |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Wine |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Wine. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Wine |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Wine |
+| [params.createdTime] | <code>date</code> |  | Time that the Wine created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Wine was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.Sukuk"></a>
 
@@ -2413,31 +2414,30 @@ Class representing a Sukuk
 Construct a new Sukuk instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.clientAdditional | <code>object</code> | Object of custom properties for creating a Custom Asset (set in the Custom Asset class) |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Sukuk creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Sukuk's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Sukuk __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Sukuk&quot;</code> | Class of the Sukuk (a subclass of Sukuk may define its own assetClass) |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Sukuk's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Sukuk |
+| [params.countryId] | <code>string</code> |  | ID of Sukuk's country |
+| [params.venueId] | <code>string</code> |  | ID of Sukuk's venue if applicable |
+| [params.currency] | <code>string</code> |  | Sukuk currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Maturity date if applicable (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Sukuk |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Sukuk |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Sukuk |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Sukuk. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Sukuk |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Sukuk |
+| [params.createdTime] | <code>date</code> |  | Time that the Sukuk was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Sukuk was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.Synthetic"></a>
 
@@ -2452,36 +2452,35 @@ Class representing a Synthetic
 Construct a new Synthetic instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.clientAdditional | <code>object</code> | Object of custom properties for creating a Custom Asset (set in the Custom Asset class) |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Synthetic creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Synthetic's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Synthetic&quot;</code> | Class of the Synthetic (a subclass of Synthetic may define its own assetClass) |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Whether the Synthetic is fungible __(required)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Synthetic's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Synthetic |
+| [params.countryId] | <code>string</code> |  | ID of Synthetic's country |
+| [params.venueId] | <code>string</code> |  | ID of Synthetic's venue if applicable |
+| [params.currency] | <code>string</code> |  | Synthetic currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Maturity date if applicable (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Synthetic |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Synthetic |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Synthetic |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Synthetic |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Synthetic |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Synthetic |
+| [params.createdTime] | <code>date</code> |  | Time that the Synthetic was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Synthetic was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.SyntheticFromBook"></a>
 
 ### assets.SyntheticFromBook ⇐ <code>[Synthetic](#module_assets.Synthetic)</code>
-Class representing a Synthetic From Book
+Class representing a Synthetic From Book. This is an Asset whose value is based on the value of the assets in a referenced Book
 
 **Kind**: static class of <code>[assets](#module_assets)</code>  
 **Extends:** <code>[Synthetic](#module_assets.Synthetic)</code>  
@@ -2491,36 +2490,36 @@ Class representing a Synthetic From Book
 Construct a new Synthetic From Book instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.clientAdditional | <code>object</code> | Object of custom properties for creating a Custom Asset (set in the Custom Asset class) |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | SyntheticFromBook creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Synthetic's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Synthetic __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Synthetic&quot;</code> | Auto-set to `Synthetic` __(read-only)__ |
+| params.fungible | <code>boolean</code> | <code>true</code> | Whether this Synthetic is fungible __(required)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Synthetic's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Synthetic |
+| [params.countryId] | <code>string</code> |  | ID of Synthetic's country |
+| [params.venueId] | <code>string</code> |  | ID of Synthetic's venue if applicable |
+| [params.currency] | <code>string</code> |  | Synthetic currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Maturity date if applicable (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Asset |
+| params.bookId | <code>string</code> |  | Underlying Book ID __(required)__ |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Synthetic |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Synthetic |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Synthetic. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Synthetic |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Synthetic |
+| [params.createdTime] | <code>date</code> |  | Time that the Synthetic was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Synthetic was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.SyntheticMultiLeg"></a>
 
 ### assets.SyntheticMultiLeg ⇐ <code>[Synthetic](#module_assets.Synthetic)</code>
-Class representing a Multi-Leg Synthetic
+Class representing a Multi-Leg Synthetic. This is an Asset which takes multiple assets as 'legs'. The value of the entire structure is equal to the sum of the legs
 
 **Kind**: static class of <code>[assets](#module_assets)</code>  
 **Extends:** <code>[Synthetic](#module_assets.Synthetic)</code>  
@@ -2530,32 +2529,31 @@ Class representing a Multi-Leg Synthetic
 Construct a new Multi-Leg Synthetic instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Asset creation options |
-| params.assetManagerId | <code>integer</code> | ID of Asset's Asset Manager (required) |
-| params.assetId | <code>integer</code> | ID of the Asset (required) |
-| params.assetClass | <code>string</code> | Class of the Asset |
-| params.fungible | <code>bool</code> | Whether this Asset is fungible (required) |
-| params.assetIssuerId | <code>string</code> | ID of the Asset's issuer |
-| params.assetStatus | <code>string</code> | Status of the Asset (e.g. 'Active') |
-| params.countryId | <code>string</code> | ID of Asset's country |
-| params.venueId | <code>string</code> | ID of Asset's venue if applicable |
-| params.currency | <code>string</code> | Asset currency (e.g. USD, SGD) |
-| params.issueDate | <code>string</code> | Issue date if applicable (YYYY-MM-DD) |
-| params.maturityDate | <code>string</code> | Maturity date if applicable (YYYY-MM-DD) |
-| params.description | <code>string</code> | Description of the Asset |
-| params.clientId | <code>string</code> | ID of the client to which the Asset belongs |
-| params.legs | <code>string</code> | ??? |
-| params.comments | <code>object</code> | Object of Comments attached to the Asset |
-| params.links | <code>object</code> | Object of array of Links attached to the Asset |
-| params.references | <code>object</code> | Object of References associated with this Asset |
-| params.clientAdditional | <code>object</code> | Object of custom properties for creating a Custom Asset (set in the Custom Asset class) |
-| params.createdBy | <code>string</code> | ID of the user that created the Asset |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Asset |
-| params.createdTime | <code>date</code> | Time that the Asset was created |
-| params.updatedTime | <code>date</code> | Time that the Asset was updated |
-| params.version | <code>number</code> | Version number |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | SyntheticMultiLeg creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Synthetic's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Synthetic __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;Synthetic&quot;</code> | Auto-set to `Synthetic` __(read-only)__ |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Whether this Asset is fungible __(required)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Synthetic's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Synthetic |
+| [params.countryId] | <code>string</code> |  | ID of Synthetic's country |
+| [params.venueId] | <code>string</code> |  | ID of Synthetic's venue if applicable |
+| [params.currency] | <code>string</code> |  | Synthetic currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
+| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Maturity date if applicable (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the Synthetic |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| params.legs | <code>array</code> |  | Legs of the Synthetic. Array of objects of the form { assetId: `string`, quantity: `Decimal` } __(required)__ |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Synthetic |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Synthetic |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Synthetic |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Synthetic |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Synthetic |
+| [params.createdTime] | <code>date</code> |  | Time that the Synthetic was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Synthetic was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_books"></a>
 
