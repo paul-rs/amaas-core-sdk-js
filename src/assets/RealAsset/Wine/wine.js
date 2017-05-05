@@ -12,6 +12,8 @@ class Wine extends RealAsset {
    * @param {number} params.assetManagerId - ID of Wine's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Wine __(required)__
    * @param {string} [params.assetClass=RealAsset] - Auto-set to `RealAsset` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Wine. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=false] - Auto-set to `false` __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Wine's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Wine
@@ -19,6 +21,7 @@ class Wine extends RealAsset {
    * @param {string} [params.venueId] - ID of Wine's venue if applicable
    * @param {string} [params.currency] - Wine currency (e.g. USD, SGD)
    * @param {string} [params.description] - Description of the Wine
+   * @param {string} [params.displayName] - Display name of the Wine
    * @param {string} [params.clientId] - ID of the associated client
 
    * @param {string} [params.year] - Year of production
@@ -55,6 +58,7 @@ class Wine extends RealAsset {
     venueId,
     currency,
     description='',
+    displayName,
     clientId,
 
     year,
@@ -91,6 +95,7 @@ class Wine extends RealAsset {
       venueId,
       currency,
       description,
+      displayName,
       clientId,
       comments,
       links,

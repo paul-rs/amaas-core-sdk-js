@@ -31,6 +31,7 @@ var Asset = function (_AMaaSModel) {
    * @param {number} params.assetId - ID of the Asset __(required)__
    * @param {string} [params.assetClass=Asset] - Class of the Asset
    * @param {string} [params.assetType] - Type of the Asset. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} params.fungible - Whether this Asset is fungible __(required)__
    * @param {string} [params.assetIssuerId] - ID of the Asset issuer
    * @param {string} [params.assetStatus=Active] - Status of the Asset
@@ -40,6 +41,8 @@ var Asset = function (_AMaaSModel) {
    * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.maturityDate=9999-12-31] - Maturity date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Asset
+   * @param {string} [params.displayName] - Display name of the Asset
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Asset
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the Asset
    * @param {object} [params.links] - Object of array of Links attached to the Asset
@@ -67,6 +70,9 @@ var Asset = function (_AMaaSModel) {
         maturityDate = _ref.maturityDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
+        _ref$rollPrice = _ref.rollPrice,
+        rollPrice = _ref$rollPrice === undefined ? true : _ref$rollPrice,
         clientId = _ref.clientId,
         comments = _ref.comments,
         links = _ref.links,
@@ -76,7 +82,7 @@ var Asset = function (_AMaaSModel) {
         createdTime = _ref.createdTime,
         updatedTime = _ref.updatedTime,
         version = _ref.version,
-        clientAdditional = _objectWithoutProperties(_ref, ['assetManagerId', 'assetId', 'assetClass', 'fungible', 'assetIssuerId', 'assetStatus', 'countryId', 'venueId', 'currency', 'issueDate', 'maturityDate', 'description', 'clientId', 'comments', 'links', 'references', 'createdBy', 'updatedBy', 'createdTime', 'updatedTime', 'version']);
+        clientAdditional = _objectWithoutProperties(_ref, ['assetManagerId', 'assetId', 'assetClass', 'fungible', 'assetIssuerId', 'assetStatus', 'countryId', 'venueId', 'currency', 'issueDate', 'maturityDate', 'description', 'displayName', 'rollPrice', 'clientId', 'comments', 'links', 'references', 'createdBy', 'updatedBy', 'createdTime', 'updatedTime', 'version']);
 
     _classCallCheck(this, Asset);
 
@@ -194,6 +200,7 @@ var Asset = function (_AMaaSModel) {
     _this.assetId = assetId;
     _this.assetClass = assetClass;
     _this.assetType = _this.constructor.name;
+    _this.assetTypeDisplay = _this.constructor.name.replace(/([A-Z])/g, ' $1').trim();
     _this.fungible = fungible;
     _this.assetIssuerId = assetIssuerId;
     _this.assetStatus = assetStatus;
@@ -203,6 +210,8 @@ var Asset = function (_AMaaSModel) {
     _this.issueDate = issueDate;
     _this.maturityDate = maturityDate;
     _this.description = description;
+    _this.displayName = displayName;
+    _this.rollPrice = rollPrice;
     _this.clientId = clientId;
     _this.comments = comments;
     _this.links = links;

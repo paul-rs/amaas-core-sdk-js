@@ -15,6 +15,8 @@ class Future extends ListedDerivative {
    * @param {number} params.assetManagerId - ID of Future's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Future __(required)__
    * @param {string} [params.assetClass=Future] - Class of the Future (a subclass of Future may define its own assetClass)
+   * @param {string} [params.assetType] - Type of the Future. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Future's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Future
@@ -23,6 +25,7 @@ class Future extends ListedDerivative {
    * @param {string} [params.currency] - Asset currency (e.g. USD, SGD)
    * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Future
+   * @param {string} [params.displayName] - Display name of the Future
    * @param {string} [params.clientId] - ID of the associated client
    * @param {string} params.settlementType - Settlement Type __(required)__<br />
    * Available options:
@@ -54,6 +57,7 @@ class Future extends ListedDerivative {
     currency,
     issueDate,
     description='',
+    displayName,
     clientId,
     settlementType,
     contractSize,
@@ -82,6 +86,7 @@ class Future extends ListedDerivative {
       currency,
       issueDate,
       description,
+      displayName,
       clientId,
       comments,
       links,

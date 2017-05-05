@@ -12,6 +12,8 @@ class RealEstate extends RealAsset {
    * @param {number} params.assetManagerId - ID of Real Estate's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Real Estate __(required)__
    * @param {string} [params.assetClass=RealAsset] - Auto-set to `RealEstate` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Real Estate. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=false] - Auto-set to `false` __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Real Estate's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Real Estate
@@ -19,6 +21,8 @@ class RealEstate extends RealAsset {
    * @param {string} [params.venueId] - ID of Real Estate's venue if applicable
    * @param {string} [params.currency] - Real Estate currency (e.g. USD, SGD)
    * @param {string} [params.description] - Description of the Real Estate
+   * @param {string} [params.displayName] - Display name of the Real Estate
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Real Estate
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the Real Estate
    * @param {object} [params.links] - Object of array of Links attached to the Real Estate
@@ -38,6 +42,8 @@ class RealEstate extends RealAsset {
     venueId,
     currency,
     description='',
+    displayName,
+    rollPrice,
     clientId,
     comments,
     links,
@@ -60,6 +66,8 @@ class RealEstate extends RealAsset {
       issueDate,
       maturityDate,
       description,
+      displayName,
+      rollPrice,
       clientId,
       comments,
       links,

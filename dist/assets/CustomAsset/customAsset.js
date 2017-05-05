@@ -32,6 +32,8 @@ var CustomAsset = function (_Asset) {
    * @param {integer} params.assetManagerId - ID of Asset's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Asset __(required)__
    * @param {string} [params.assetClass=Asset] - Auto-set to `Asset` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Asset. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} params.fungible - Whether this Asset is fungible __(required)__
    * @param {string} [params.assetIssuerId] - ID of the Asset issuer
    * @param {string} [params.assetStatus=Active] - Status of the Asset
@@ -41,6 +43,8 @@ var CustomAsset = function (_Asset) {
    * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.maturityDate=9999-12-31] - Maturity date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Asset
+   * @param {string} [params.displayName] - Display name of the Asset
+   * @param {boolean} [params.rollPrice] - Whether to roll the price for the Asset
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the Asset
    * @param {object} [params.links] - Object of array of Links attached to the Asset
@@ -68,6 +72,8 @@ var CustomAsset = function (_Asset) {
         maturityDate = _ref.maturityDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
+        rollPrice = _ref.rollPrice,
         clientId = _ref.clientId,
         comments = _ref.comments,
         links = _ref.links,
@@ -77,7 +83,7 @@ var CustomAsset = function (_Asset) {
         createdTime = _ref.createdTime,
         updatedTime = _ref.updatedTime,
         version = _ref.version,
-        clientAdditional = _objectWithoutProperties(_ref, ['assetManagerId', 'assetId', 'assetClass', 'fungible', 'assetIssuerId', 'assetStatus', 'countryId', 'venueId', 'currency', 'issueDate', 'maturityDate', 'description', 'clientId', 'comments', 'links', 'references', 'createdBy', 'updatedBy', 'createdTime', 'updatedTime', 'version']);
+        clientAdditional = _objectWithoutProperties(_ref, ['assetManagerId', 'assetId', 'assetClass', 'fungible', 'assetIssuerId', 'assetStatus', 'countryId', 'venueId', 'currency', 'issueDate', 'maturityDate', 'description', 'displayName', 'rollPrice', 'clientId', 'comments', 'links', 'references', 'createdBy', 'updatedBy', 'createdTime', 'updatedTime', 'version']);
 
     _classCallCheck(this, CustomAsset);
 
@@ -94,6 +100,8 @@ var CustomAsset = function (_Asset) {
       issueDate: issueDate,
       maturityDate: maturityDate,
       description: description,
+      displayName: displayName,
+      rollPrice: rollPrice,
       clientId: clientId,
       clientAdditional: clientAdditional,
       comments: comments,

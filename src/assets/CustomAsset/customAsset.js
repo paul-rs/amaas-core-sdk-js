@@ -12,6 +12,8 @@ class CustomAsset extends Asset {
    * @param {integer} params.assetManagerId - ID of Asset's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Asset __(required)__
    * @param {string} [params.assetClass=Asset] - Auto-set to `Asset` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Asset. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} params.fungible - Whether this Asset is fungible __(required)__
    * @param {string} [params.assetIssuerId] - ID of the Asset issuer
    * @param {string} [params.assetStatus=Active] - Status of the Asset
@@ -21,6 +23,8 @@ class CustomAsset extends Asset {
    * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.maturityDate=9999-12-31] - Maturity date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Asset
+   * @param {string} [params.displayName] - Display name of the Asset
+   * @param {boolean} [params.rollPrice] - Whether to roll the price for the Asset
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the Asset
    * @param {object} [params.links] - Object of array of Links attached to the Asset
@@ -45,6 +49,8 @@ class CustomAsset extends Asset {
     issueDate,
     maturityDate,
     description='',
+    displayName,
+    rollPrice,
     clientId,
     comments,
     links,
@@ -69,6 +75,8 @@ class CustomAsset extends Asset {
       issueDate,
       maturityDate,
       description,
+      displayName,
+      rollPrice,
       clientId,
       clientAdditional,
       comments,

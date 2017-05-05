@@ -12,6 +12,8 @@ class ExchangeTradedFund extends Fund {
    * @param {number} params.assetManagerId - ID of ETF's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the ETF __(required)__
    * @param {string} [params.assetClass] - Auto-set to `Fund` __(read-only)__
+   * @param {string} [params.assetType] - Type of the ETF. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` for Fund and its subclasses
    * @param {string} [params.assetIssuerId] - ID of the ETF's issuer
    * @param {string} [params.assetStatus=Active] - Status of the ETF
@@ -20,6 +22,8 @@ class ExchangeTradedFund extends Fund {
    * @param {string} [params.currency] - ETF currency (e.g. USD, SGD)
    * @param {string} [params.creationDate=0001-01-01] - ETF's creation date (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the ETF
+   * @param {string} [params.displayName] - Display name of the ETF
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the ETF
    * @param {string} [params.clientId] - ID of the associated client
    * @param {string} [params.fundType=ETF] - Auto-set to `ETF` __(read-only)__
    * @param {number} [params.nav] - ETF's Net Asset Value. Stored as a Decimal instance
@@ -44,6 +48,8 @@ class ExchangeTradedFund extends Fund {
     currency,
     expiryDate,
     description='',
+    displayName,
+    rollPrice,
     clientId,
     creationDate,
     nav,
@@ -68,6 +74,8 @@ class ExchangeTradedFund extends Fund {
       currency,
       expiryDate,
       description,
+      displayName,
+      rollPrice,
       clientId,
       fundType: 'ETF',
       creationDate,

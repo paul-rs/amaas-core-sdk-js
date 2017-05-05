@@ -12,6 +12,8 @@ class Equity extends Asset {
    * @param {number} params.assetManagerId - ID of Equity's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Equity __(required)__
    * @param {string} [params.assetClass=Equity] - Class of the Equity (a subclass of Equity may define its own assetClass)
+   * @param {string} [params.assetType] - Type of the Equity. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` for Equity __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Equity's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Equity
@@ -20,6 +22,8 @@ class Equity extends Asset {
    * @param {string} [params.currency] - Equity currency (e.g. USD, SGD)
    * @param {string} [params.issueDate] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Equity
+   * @param {string} [params.displayName] - Display name of the Equity
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Equity
    * @param {string} [params.clientId] - ID of the associated client
    * @param {string} [params.shareClass=Common] - Share Class
    * @param {object} [params.comments] - Object of Comments attached to the Equity
@@ -43,6 +47,8 @@ class Equity extends Asset {
     currency,
     issueDate,
     description='',
+    displayName,
+    rollPrice,
     clientId,
     shareClass='Common',
     comments,
@@ -66,6 +72,8 @@ class Equity extends Asset {
       currency,
       issueDate,
       description,
+      displayName,
+      rollPrice,
       clientId,
       comments,
       links,

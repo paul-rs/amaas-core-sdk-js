@@ -12,6 +12,8 @@ class SyntheticFromBook extends Synthetic {
    * @param {number} params.assetManagerId - ID of Synthetic's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Synthetic __(required)__
    * @param {string} [params.assetClass=Synthetic] - Auto-set to `Synthetic` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Synthetic. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} params.fungible=true - Whether this Synthetic is fungible __(required)__
    * @param {string} [params.assetIssuerId] - ID of the Synthetic's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Synthetic
@@ -20,7 +22,9 @@ class SyntheticFromBook extends Synthetic {
    * @param {string} [params.currency] - Synthetic currency (e.g. USD, SGD)
    * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.maturityDate=9999-12-31] - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} [params.description] - Description of the Asset
+   * @param {string} [params.description] - Description of the Synthetic
+   * @param {string} [params.displayName] - Display name of the Synthetic
+   * @param {boolean} [params.rollPrice=false] - Auto-set to `false` __(read-only)__
    * @param {string} params.bookId - Underlying Book ID __(required)__
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the Synthetic
@@ -44,6 +48,7 @@ class SyntheticFromBook extends Synthetic {
     issueDate,
     maturityDate,
     description='',
+    displayName,
     bookId,
     clientId,
     comments,
@@ -67,6 +72,8 @@ class SyntheticFromBook extends Synthetic {
       issueDate,
       maturityDate,
       description,
+      displayName,
+      rollPrice: false,
       clientId,
       comments,
       links,

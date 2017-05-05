@@ -15,6 +15,8 @@ class Fund extends Asset {
    * @param {number} params.assetManagerId - ID of Fund's Asset Manager. Asset Manager refers to AMaaS user, NOT an asset manager in the Fund. __(required)__
    * @param {number} params.assetId - ID of the Fund __(required)__
    * @param {string} [params.assetClass=Fund] - Class of the Fund (a subclass of Fund may define its own assetClass)
+   * @param {string} [params.assetType] - Type of the Fund. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` for Fund __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Fund's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Fund
@@ -22,6 +24,8 @@ class Fund extends Asset {
    * @param {string} [params.venueId] - ID of Fund's venue if applicable
    * @param {string} [params.currency] - Fund currency (e.g. USD, SGD)
    * @param {string} [params.description] - Description of the Fund
+   * @param {string} [params.displayName] - Display name of the Fund
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Fund
    * @param {string} [params.clientId] - ID of the associated client
    * @param {string} params.fundType - Type of Fund __(required)__<br />
    * Available options:
@@ -52,6 +56,8 @@ class Fund extends Asset {
     venueId,
     currency,
     description='',
+    displayName,
+    rollPrice,
     clientId,
     fundType,
     creationDate,
@@ -78,6 +84,8 @@ class Fund extends Asset {
       venueId,
       currency,
       description,
+      displayName,
+      rollPrice,
       clientId,
       comments,
       links,

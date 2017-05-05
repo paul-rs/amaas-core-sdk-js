@@ -15,6 +15,8 @@ class BondOption extends Derivative {
    * @param {number} params.assetManagerId - ID of Bond Option's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Bond Option __(required)__
    * @param {string} [params.assetClass=Derivative] - Auto-set to `Derivative` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Bond Option. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=false] - Auto-set to `false` for Derivative and subclasses
    * @param {string} [params.assetIssuerId] - ID of the Bond Option's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Bond Option
@@ -24,6 +26,7 @@ class BondOption extends Derivative {
    * @param {string} [params.issueDate=0001-01-01] - Issue date (YYYY-MM-DD)
    * @param {string} [params.expiryDate=9999-12-31] - Expiry date (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Bond Option
+   * @param {string} [params.displayName] - Display name of the Bond Option
    * @param {string} [params.clientId] - ID of the associated client
    * @param {string} params.optionStyle - Option style __(required)__<br />
    * Available options:
@@ -56,6 +59,7 @@ class BondOption extends Derivative {
     issueDate,
     expiryDate,
     description='',
+    displayName,
     clientId,
     premium,
     optionType,
@@ -83,6 +87,7 @@ class BondOption extends Derivative {
       currency,
       issueDate,
       description,
+      displayName,
       clientId,
       premium,
       comments,

@@ -12,6 +12,8 @@ class Index extends Asset {
    * @param {number} params.assetManagerId - ID of Index's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Asset __(required)__
    * @param {string} [params.assetClass=Index] - Auto-set to `Index` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Index. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` for Index __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Index's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Index
@@ -19,6 +21,8 @@ class Index extends Asset {
    * @param {string} [params.currency] - Index currency (e.g. USD, SGD)
    * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Index
+   * @param {string} [params.displayName] - Display name of the Index
+   * @param {boolean} [params.rollPrice=false] - Auto-set to `false` __(read-only)__
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the Index
    * @param {object} [params.links] - Object of array of Links attached to the Index
@@ -38,6 +42,7 @@ class Index extends Asset {
     currency,
     issueDate,
     description='',
+    displayName,
     clientId,
     comments,
     links,
@@ -59,6 +64,8 @@ class Index extends Asset {
       currency,
       issueDate,
       description,
+      displayName,
+      rollPrice: false,
       clientId,
       comments,
       links,

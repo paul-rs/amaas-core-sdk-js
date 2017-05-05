@@ -11,10 +11,13 @@ class ForeignExchange extends ForeignExchangeBase {
    * @param {object} params - ForeignExchange creation options:
    * @param {number} params.assetId - ID of the Asset __(required)__
    * @param {string} params.assetClass - Auto-set to `ForeignExchange` __(read-only)__
+   * @param {string} [params.assetType] - Type of the ForeignExchange. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Foreign Exchange's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Foreign Exchange
    * @param {string} [params.description] - Description of the Foreign Exchange
+   * @param {string} [params.displayName] - Display name of the ForeignExchange
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the Foreign Exchange
    * @param {object} [params.links] - Object of array of Links attached to the Foreign Exchange
@@ -30,6 +33,7 @@ class ForeignExchange extends ForeignExchangeBase {
     assetIssuerId,
     assetStatus='Active',
     description='',
+    displayName,
     clientId,
     comments,
     links,
@@ -45,6 +49,7 @@ class ForeignExchange extends ForeignExchangeBase {
       assetIssuerId,
       assetStatus,
       description,
+      displayName,
       clientId,
       comments,
       links,

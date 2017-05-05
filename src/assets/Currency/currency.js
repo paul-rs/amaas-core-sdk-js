@@ -12,6 +12,8 @@ class Currency extends Asset {
    * @param {number} params.assetManagerId - ID of Currency's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Currency __(required)__
    * @param {string} [params.assetClass=Currency] - Auto-set to `Currency` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Currency. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` for Currency
    * @param {string} [params.assetIssuerId] - ID of the Currency issuer
    * @param {string} [params.assetStatus=Active] - Status of the Currency
@@ -19,6 +21,7 @@ class Currency extends Asset {
    * @param {string} [params.venueId] - ID of Currency's venue if applicable
    * @param {string} [params.currency] - Auto-set to 'assetId' __(read-only)__
    * @param {string} [params.description] - Description of the Currency
+   * @param {string} [params.displayName] - Display name of the Currency
    * @param {string} [params.clientId] - ID of associated client
    * @param {boolean} [params.deliverable=true] - Whether the Currency is deliverable
    * @param {number} [params.minorUnitPlaces] - Decimal precision of Currency (e.g. 4 for JPY, 2 for USD)
@@ -41,6 +44,7 @@ class Currency extends Asset {
     countryId,
     venueId,
     description='',
+    displayName,
     clientId,
     deliverable,
     minorUnitPlaces,
@@ -64,6 +68,7 @@ class Currency extends Asset {
       venueId,
       currency: assetId,
       description,
+      displayName,
       clientId,
       comments,
       links,

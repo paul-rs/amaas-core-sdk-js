@@ -5,13 +5,15 @@ import Derivative from '../Derivative/derivative'
  * @memberof module:assets
  * @extends module:assets.Derivative
  */
-class CFD extends Derivative {
+class ContractForDifference extends Derivative {
   /**
    * Construct a new CFD instance
    * @param {object} params - CFD creation options:
    * @param {number} params.assetManagerId - ID of Asset's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Asset __(required)__
    * @param {string} [params.assetClass=Derivative] - Auto-set to `Derivative` __(read-only)__
+   * @param {string} [params.assetType] - Type of the CFD. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=false] - Auto-set to `false` for Derivative and its subclasses __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the CFD issuer
    * @param {string} [params.assetStatus=Active] - Status of the CFD
@@ -21,6 +23,7 @@ class CFD extends Derivative {
    * @param {string} [params.issueDate] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.maturityDate] - Maturity date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the CFD
+   * @param {string} [params.displayName] - Display name of the CFD
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the CFD
    * @param {object} [params.links] - Object of array of Links attached to the CFD
@@ -42,6 +45,7 @@ class CFD extends Derivative {
     issueDate,
     maturityDate,
     description='',
+    displayName,
     clientId,
     comments,
     links,
@@ -65,6 +69,7 @@ class CFD extends Derivative {
       issueDate,
       maturityDate,
       description,
+      displayName,
       clientId,
       comments,
       links,
@@ -77,4 +82,4 @@ class CFD extends Derivative {
     })
   }
 }
-export default CFD
+export default ContractForDifference

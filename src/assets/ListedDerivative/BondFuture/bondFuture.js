@@ -15,6 +15,8 @@ class BondFuture extends Future {
    * @param {number} params.assetManagerId - ID of Bond Future's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Bond Future __(required)__
    * @param {string} [params.assetClass=Future] - Auto-set to `Future` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Bond Future. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Bond Future's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Bond Future
@@ -24,6 +26,7 @@ class BondFuture extends Future {
    * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.expiryDate=9999-12-31] - Date of the contract's expiry (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Bond Future
+   * @param {string} [params.displayName] - Display name of the Bond Future
    * @param {string} [params.clientId] - ID of the associated client
    * @param {string} params.settlementType - Settlement Type __(required)__<br />
    * Available options:
@@ -70,6 +73,7 @@ class BondFuture extends Future {
     currency,
     issueDate,
     description='',
+    displayName,
     clientId,
     settlementType,
     contractSize,
@@ -102,6 +106,7 @@ class BondFuture extends Future {
       currency,
       issueDate,
       description,
+      displayName,
       clientId,
       settlementType,
       contractSize,

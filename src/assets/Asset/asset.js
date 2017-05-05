@@ -14,6 +14,7 @@ class Asset extends AMaaSModel {
    * @param {number} params.assetId - ID of the Asset __(required)__
    * @param {string} [params.assetClass=Asset] - Class of the Asset
    * @param {string} [params.assetType] - Type of the Asset. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} params.fungible - Whether this Asset is fungible __(required)__
    * @param {string} [params.assetIssuerId] - ID of the Asset issuer
    * @param {string} [params.assetStatus=Active] - Status of the Asset
@@ -23,6 +24,8 @@ class Asset extends AMaaSModel {
    * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.maturityDate=9999-12-31] - Maturity date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Asset
+   * @param {string} [params.displayName] - Display name of the Asset
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Asset
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the Asset
    * @param {object} [params.links] - Object of array of Links attached to the Asset
@@ -47,6 +50,8 @@ class Asset extends AMaaSModel {
     issueDate,
     maturityDate,
     description='',
+    displayName,
+    rollPrice=true,
     clientId,
     comments,
     links,
@@ -162,6 +167,7 @@ class Asset extends AMaaSModel {
     this.assetId = assetId
     this.assetClass = assetClass
     this.assetType = this.constructor.name
+    this.assetTypeDisplay = this.constructor.name.replace(/([A-Z])/g, ' $1').trim()
     this.fungible = fungible
     this.assetIssuerId = assetIssuerId
     this.assetStatus = assetStatus
@@ -171,6 +177,8 @@ class Asset extends AMaaSModel {
     this.issueDate = issueDate
     this.maturityDate = maturityDate
     this.description = description
+    this.displayName = displayName
+    this.rollPrice = rollPrice
     this.clientId = clientId
     this.comments = comments
     this.links = links
