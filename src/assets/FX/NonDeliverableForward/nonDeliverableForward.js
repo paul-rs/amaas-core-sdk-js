@@ -1,11 +1,11 @@
-import FXBase from '../FXBase/fxBase.js'
+import ForeignExchangeBase from '../FXBase/fxBase.js'
 
 /**
- * Class representing FX (this should never be instantiated directly, use the appropriate subclass instead)
+ * Class representing FX
  * @memberof module:assets
- * @extends module:assets.Asset
+ * @extends module:assets.ForeignExchangeBase
  */
-class NonDeliverableForward extends FXBase {
+class NonDeliverableForward extends ForeignExchangeBase {
   /**
    * Construct a new Non Deliverable Forward instance
    * @param {object} params - NonDeliverableForward creation options:

@@ -1,11 +1,11 @@
-import FXBase from '../FXBase/fxBase.js'
+import ForeignExchangeBase from '../FXBase/fxBase.js'
 
 /**
  * Class representing FX
  * @memberof module:assets
- * @extends module:assets.FXBase
+ * @extends module:assets.ForeignExchangeBase
  */
-class ForeignExchange extends FXBase {
+class ForeignExchange extends ForeignExchangeBase {
   /**
    * Construct a new Foreign Exchange instance
    * @param {object} params - ForeignExchange creation options:
