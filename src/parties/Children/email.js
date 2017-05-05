@@ -8,15 +8,15 @@ import { AMaaSModel } from '../../core'
 class Email extends AMaaSModel {
   /**
    * Construct a new Email object
-   * @param {object} params - Email creation options
+   * @param {object} params - Email creation options:
+   * @param {boolean} params.emailPrimary - Whether the Email is primary for its owner. If a Party has Emails, at least one must be primary
    * @param {string} params.email - Email address
-   * @param {bool} params.emailPrimary - Whether the Email is primary for its owner
-   * @param {bool} params.active - Whether the Email is active for its owner
-   * @param {string} params.createdBy - ID of the user that created the Email (required if creating a new Email)
-   * @param {string} params.updatedBy - ID of the user that updated the Email (use if amending existing Email)
-   * @param {date} params.createdTime - Time that the Email was created (required if creating new Email)
-   * @param {date} params.updatedTime - Time that the Email was updated (required if amending existing Email)
-   * @param {number} params.version - Version number of the Email
+   * @param {boolean} params.active - Whether the Email is active for its owner
+   * @param {string} [params.createdBy] - ID of the user that created the Email
+   * @param {string} [params.updatedBy] - ID of the user that updated the Email
+   * @param {date} [params.createdTime] - Time that the Email was created
+   * @param {date} [params.updatedTime] - Time that the Email was updated
+   * @param {number} [params.version] - Version number of the Email
    */
   constructor({ emailPrimary, email, active, createdBy, updatedBy, createdTime, updatedTime, version }) {
     super({

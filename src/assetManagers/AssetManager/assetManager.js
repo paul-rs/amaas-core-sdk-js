@@ -11,7 +11,7 @@ class AssetManager extends AMaaSModel {
    * Construct a new Asset Manager Model
    * @param {object} params - Asset Manager creation options:
    * @param {number} [params.assetManagerId=generated server side] - Asset Manager's ID. Include to specifically set, if it does not already exist
-   * @param {string} params.assetManagerType - Type of Asset Manager (e.g. Hedge Fund). Required<br />
+   * @param {string} params.assetManagerType - Type of Asset Manager (e.g. Hedge Fund). __(required)__<br />
    * Available types are:
    * <li>Accredited Investor</li>
    * <li>Bank</li>
@@ -24,7 +24,7 @@ class AssetManager extends AMaaSModel {
    * <li>Private Equity</li>
    * <li>Retail</li>
    * <li>Venture Capital</li>
-   * @param {string} [params.assetManagerStatus=Active] - Status of Asset Manager (e.g. Active)
+   * @param {string} [params.assetManagerStatus=Active] - Status of Asset Manager
    * @param {string} [params.clientId] - ID of the associated client
    * @param {string} [params.partyId='AMID'+assetManagerId] - ID of the Party that represents this Asset Manager. Defaults to e.g. AMID10 for assetManagerId 10
    * @param {string} [params.defaultBookOwnerId=assetManagerId] - Asset Manager ID of the default owner for any Books owned by this Asset Manager. Will be used if no `ownerId` is set on the Book. Defaults to e.g. 10 for assetManagerId 10

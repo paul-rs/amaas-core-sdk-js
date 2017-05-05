@@ -22,13 +22,13 @@ var Reference = function (_AMaaSModel) {
 
   /**
     * Construct a new Reference instance
-    * @param {object} params - Reference creation options
+    * @param {object} params - Reference creation options:
     * @param {string} params.referenceValue - The identifier of this Reference (e.g. transactionId)
-    * @param {string} params.createdBy - ID of the user that created this object
-    * @param {string} params.updatedBy - ID of the user that updated this object
-    * @param {date} params.createdTime - Time that the Reference was created
-    * @param {date} params.updatedTime - Time that the Reference was updated
-    * @param {number} params.version - Version number of the Reference
+    * @param {string} [params.createdBy] - ID of the user that created the Reference
+    * @param {string} [params.updatedBy] - ID of the user that updated the Reference
+    * @param {date} [params.createdTime] - Time that the Reference was created
+    * @param {date} [params.updatedTime] - Time that the Reference was updated
+    * @param {number} [params.version] - Version number of the Reference
   */
   function Reference(_ref) {
     var referenceValue = _ref.referenceValue,

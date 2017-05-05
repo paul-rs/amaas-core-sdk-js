@@ -116,13 +116,13 @@ Construct a new Reference instance
 
 | Param | Type | Description |
 | --- | --- | --- |
-| params | <code>object</code> | Reference creation options |
+| params | <code>object</code> | Reference creation options: |
 | params.referenceValue | <code>string</code> | The identifier of this Reference (e.g. transactionId) |
-| params.createdBy | <code>string</code> | ID of the user that created this object |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object |
-| params.createdTime | <code>date</code> | Time that the Reference was created |
-| params.updatedTime | <code>date</code> | Time that the Reference was updated |
-| params.version | <code>number</code> | Version number of the Reference |
+| [params.createdBy] | <code>string</code> | ID of the user that created the Reference |
+| [params.updatedBy] | <code>string</code> | ID of the user that updated the Reference |
+| [params.createdTime] | <code>date</code> | Time that the Reference was created |
+| [params.updatedTime] | <code>date</code> | Time that the Reference was updated |
+| [params.version] | <code>number</code> | Version number of the Reference |
 
 <a name="module_core.AMaaSModel"></a>
 
@@ -140,11 +140,11 @@ Construct new AMaaSModel object
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | AMaaSModel creation options: |
-| params.createdBy | <code>string</code> | ID of the user that created this object |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object |
-| params.createdTime | <code>date</code> | Time that the AMaaSModel was created |
-| params.updatedTime | <code>date</code> | Time that the AMaaSModel was updated |
-| params.version | <code>number</code> | Version number of the AMaaSModel |
+| [params.createdBy] | <code>string</code> | ID of the user that created the AMaaSModel |
+| [params.updatedBy] | <code>string</code> | ID of the user that updated the AMaaSModel |
+| [params.createdTime] | <code>date</code> | Time that the AMaaSModel was created |
+| [params.updatedTime] | <code>date</code> | Time that the AMaaSModel was updated |
+| [params.version] | <code>number</code> | Version number of the AMaaSModel |
 
 <a name="module_api"></a>
 
@@ -1050,8 +1050,8 @@ Construct a new Asset Manager Model
 | --- | --- | --- | --- |
 | params | <code>object</code> |  | Asset Manager creation options: |
 | [params.assetManagerId] | <code>number</code> | <code>generated server side</code> | Asset Manager's ID. Include to specifically set, if it does not already exist |
-| params.assetManagerType | <code>string</code> |  | Type of Asset Manager (e.g. Hedge Fund). Required<br /> Available types are: <li>Accredited Investor</li> <li>Bank</li> <li>Broker</li> <li>Corporate Treasury</li> <li>Family Office</li> <li>Fund Administrator</li> <li>Fund Manager</li> <li>Hedge Fund</li> <li>Private Equity</li> <li>Retail</li> <li>Venture Capital</li> |
-| [params.assetManagerStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of Asset Manager (e.g. Active) |
+| params.assetManagerType | <code>string</code> |  | Type of Asset Manager (e.g. Hedge Fund). __(required)__<br /> Available types are: <li>Accredited Investor</li> <li>Bank</li> <li>Broker</li> <li>Corporate Treasury</li> <li>Family Office</li> <li>Fund Administrator</li> <li>Fund Manager</li> <li>Hedge Fund</li> <li>Private Equity</li> <li>Retail</li> <li>Venture Capital</li> |
+| [params.assetManagerStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of Asset Manager |
 | [params.clientId] | <code>string</code> |  | ID of the associated client |
 | [params.partyId] | <code>string</code> | <code>&quot;&#x27;AMID&#x27;+assetManagerId&quot;</code> | ID of the Party that represents this Asset Manager. Defaults to e.g. AMID10 for assetManagerId 10 |
 | [params.defaultBookOwnerId] | <code>string</code> | <code>&quot;assetManagerId&quot;</code> | Asset Manager ID of the default owner for any Books owned by this Asset Manager. Will be used if no `ownerId` is set on the Book. Defaults to e.g. 10 for assetManagerId 10 |
@@ -1092,18 +1092,18 @@ Classes for the Assets service
         * [new Derivative(params)](#new_module_assets.Derivative_new)
     * [.Equity](#module_assets.Equity) ⇐ <code>[Asset](#module_assets.Asset)</code>
         * [new Equity(params)](#new_module_assets.Equity_new)
-    * [.ForeignExchangeBase](#module_assets.ForeignExchangeBase) ⇐ <code>[Asset](#module_assets.Asset)</code>
-        * [new ForeignExchangeBase(params)](#new_module_assets.ForeignExchangeBase_new)
-    * [.ForeignExchange](#module_assets.ForeignExchange) ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
-        * [new ForeignExchange(params)](#new_module_assets.ForeignExchange_new)
-    * [.NonDeliverableForward](#module_assets.NonDeliverableForward) ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
-        * [new NonDeliverableForward(params)](#new_module_assets.NonDeliverableForward_new)
     * [.ForeignExchangeOption](#module_assets.ForeignExchangeOption) ⇐ <code>[Asset](#module_assets.Asset)</code>
         * [new ForeignExchangeOption(params)](#new_module_assets.ForeignExchangeOption_new)
     * [.ExchangeTradedFund](#module_assets.ExchangeTradedFund) ⇐ <code>[Fund](#module_assets.Fund)</code>
         * [new ExchangeTradedFund(params)](#new_module_assets.ExchangeTradedFund_new)
     * [.Fund](#module_assets.Fund) ⇐ <code>[Asset](#module_assets.Asset)</code>
         * [new Fund(params)](#new_module_assets.Fund_new)
+    * [.ForeignExchange](#module_assets.ForeignExchange) ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
+        * [new ForeignExchange(params)](#new_module_assets.ForeignExchange_new)
+    * [.ForeignExchangeBase](#module_assets.ForeignExchangeBase) ⇐ <code>[Asset](#module_assets.Asset)</code>
+        * [new ForeignExchangeBase(params)](#new_module_assets.ForeignExchangeBase_new)
+    * [.NonDeliverableForward](#module_assets.NonDeliverableForward) ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
+        * [new NonDeliverableForward(params)](#new_module_assets.NonDeliverableForward_new)
     * [.Index](#module_assets.Index) ⇐ <code>[Asset](#module_assets.Asset)</code>
         * [new Index(params)](#new_module_assets.Index_new)
     * [.BondFuture](#module_assets.BondFuture) ⇐ <code>[Future](#module_assets.Future)</code>
@@ -1622,114 +1622,6 @@ Construct a new Equity instance
 | [params.updatedTime] | <code>date</code> |  | Time that the Equity was updated |
 | [params.version] | <code>number</code> |  | Version number of the Equity |
 
-<a name="module_assets.ForeignExchangeBase"></a>
-
-### assets.ForeignExchangeBase ⇐ <code>[Asset](#module_assets.Asset)</code>
-Class representing FX (this should never be instantiated directly, use the appropriate subclass instead).
-Note that creating and editing FXBase subclasses and other public subclasses is a restricted action.
-
-**Kind**: static class of <code>[assets](#module_assets)</code>  
-**Extends:** <code>[Asset](#module_assets.Asset)</code>  
-<a name="new_module_assets.ForeignExchangeBase_new"></a>
-
-#### new ForeignExchangeBase(params)
-Construct a new ForeignExchangeBase instance
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>object</code> |  | ForeignExchangeBase creation options: |
-| [params.assetManagerId] | <code>number</code> | <code>0</code> | Auto-set to `0`. All FX classes and subclasses are treated as public Assets |
-| params.assetId | <code>number</code> |  | ID of the ForeignExchangeBase __(required)__ |
-| [params.assetClass] | <code>string</code> | <code>&quot;ForeignExchange&quot;</code> | Auto-set to `ForeignExchange` __(read-only)__ |
-| [params.assetType] | <code>string</code> |  | Type of the ForeignExchangeBase. Auto-set based on the class or subclass constructor |
-| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
-| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` for ForeignExchangeBase __(read-only)__ |
-| [params.assetIssuerId] | <code>string</code> |  | ID of the ForeignExchangeBase's issuer |
-| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the ForeignExchangeBase |
-| [params.description] | <code>string</code> |  | Description of the ForeignExchangeBase |
-| [params.displayName] | <code>string</code> |  | Display name of the ForeignExchangeBase |
-| [params.rollPrice] | <code>boolean</code> | <code>false</code> | Auto-set to `false` __(read-only)__ |
-| [params.clientId] | <code>string</code> |  | ID of the associated client |
-| [params.comments] | <code>object</code> |  | Object of Comments attached to the ForeignExchangeBase |
-| [params.links] | <code>object</code> |  | Object of array of Links attached to the ForeignExchangeBase |
-| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the ForeignExchangeBase. * The AMaaS Reference is auto-created and populated |
-| [params.createdBy] | <code>string</code> |  | ID of the user that created the ForeignExchangeBase |
-| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the ForeignExchangeBase |
-| [params.createdTime] | <code>date</code> |  | Time that the ForeignExchangeBase was created |
-| [params.updatedTime] | <code>date</code> |  | Time that the ForeignExchangeBase was updated |
-| params.version | <code>number</code> |  | Version number |
-
-<a name="module_assets.ForeignExchange"></a>
-
-### assets.ForeignExchange ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
-Class representing FX
-
-**Kind**: static class of <code>[assets](#module_assets)</code>  
-**Extends:** <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>  
-<a name="new_module_assets.ForeignExchange_new"></a>
-
-#### new ForeignExchange(params)
-Construct a new Foreign Exchange instance
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>object</code> |  | ForeignExchange creation options: |
-| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
-| params.assetClass | <code>string</code> |  | Auto-set to `ForeignExchange` __(read-only)__ |
-| [params.assetType] | <code>string</code> |  | Type of the ForeignExchange. Auto-set based on the class or subclass constructor |
-| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
-| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
-| [params.assetIssuerId] | <code>string</code> |  | ID of the Foreign Exchange's issuer |
-| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Foreign Exchange |
-| [params.description] | <code>string</code> |  | Description of the Foreign Exchange |
-| [params.displayName] | <code>string</code> |  | Display name of the ForeignExchange |
-| [params.clientId] | <code>string</code> |  | ID of the associated client |
-| [params.comments] | <code>object</code> |  | Object of Comments attached to the Foreign Exchange |
-| [params.links] | <code>object</code> |  | Object of array of Links attached to the Foreign Exchange |
-| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Foreign Exchange. * The AMaaS Reference is auto-created and populated |
-| [params.createdBy] | <code>string</code> |  | ID of the user that created the Foreign Exchange |
-| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Foreign Exchange |
-| [params.createdTime] | <code>date</code> |  | Time that the Foreign Exchange was created |
-| [params.updatedTime] | <code>date</code> |  | Time that the Foreign Exchange was updated |
-| [params.version] | <code>number</code> |  | Version number |
-
-<a name="module_assets.NonDeliverableForward"></a>
-
-### assets.NonDeliverableForward ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
-Class representing FX
-
-**Kind**: static class of <code>[assets](#module_assets)</code>  
-**Extends:** <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>  
-<a name="new_module_assets.NonDeliverableForward_new"></a>
-
-#### new NonDeliverableForward(params)
-Construct a new Non Deliverable Forward instance
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>object</code> |  | NonDeliverableForward creation options: |
-| params.assetId | <code>number</code> |  | ID of the Non Deliverable Forward __(required)__ |
-| [params.assetClass] | <code>string</code> | <code>&quot;ForeignExchange&quot;</code> | Auto-set to `ForeignExchange` __(read-only)__ |
-| [params.assetType] | <code>string</code> |  | Type of the Non Deliverable Forward. Auto-set based on the class or subclass constructor |
-| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
-| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
-| [params.assetIssuerId] | <code>string</code> |  | ID of the Non Deliverable Forward's issuer |
-| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Asset |
-| [params.description] | <code>string</code> |  | Description of the Non Deliverable Forward |
-| [params.displayName] | <code>string</code> |  | Display name of the Non Deliverable Forward |
-| [params.clientId] | <code>string</code> |  | ID of the associated client |
-| [params.comments] | <code>object</code> |  | Object of Comments attached to the Non Deliverable Forward |
-| [params.links] | <code>object</code> |  | Object of array of Links attached to the Non Deliverable Forward |
-| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with this Asset. * The AMaaS Reference is auto-created and populated |
-| [params.createdBy] | <code>string</code> |  | ID of the user that created the Non Deliverable Forward |
-| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Non Deliverable Forward |
-| [params.createdTime] | <code>date</code> |  | Time that the Non Deliverable Forward was created |
-| [params.updatedTime] | <code>date</code> |  | Time that the Non Deliverable Forward was updated |
-| [params.version] | <code>number</code> |  | Version number |
-
 <a name="module_assets.ForeignExchangeOption"></a>
 
 ### assets.ForeignExchangeOption ⇐ <code>[Asset](#module_assets.Asset)</code>
@@ -1863,6 +1755,114 @@ Construct a new Fund instance
 | [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Fund |
 | [params.createdTime] | <code>date</code> |  | Time that the Fund was created |
 | [params.updatedTime] | <code>date</code> |  | Time that the Fund was updated |
+| [params.version] | <code>number</code> |  | Version number |
+
+<a name="module_assets.ForeignExchange"></a>
+
+### assets.ForeignExchange ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
+Class representing FX
+
+**Kind**: static class of <code>[assets](#module_assets)</code>  
+**Extends:** <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>  
+<a name="new_module_assets.ForeignExchange_new"></a>
+
+#### new ForeignExchange(params)
+Construct a new Foreign Exchange instance
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | ForeignExchange creation options: |
+| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
+| params.assetClass | <code>string</code> |  | Auto-set to `ForeignExchange` __(read-only)__ |
+| [params.assetType] | <code>string</code> |  | Type of the ForeignExchange. Auto-set based on the class or subclass constructor |
+| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Foreign Exchange's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Foreign Exchange |
+| [params.description] | <code>string</code> |  | Description of the Foreign Exchange |
+| [params.displayName] | <code>string</code> |  | Display name of the ForeignExchange |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Foreign Exchange |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Foreign Exchange |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Foreign Exchange. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Foreign Exchange |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Foreign Exchange |
+| [params.createdTime] | <code>date</code> |  | Time that the Foreign Exchange was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Foreign Exchange was updated |
+| [params.version] | <code>number</code> |  | Version number |
+
+<a name="module_assets.ForeignExchangeBase"></a>
+
+### assets.ForeignExchangeBase ⇐ <code>[Asset](#module_assets.Asset)</code>
+Class representing FX (this should never be instantiated directly, use the appropriate subclass instead).
+Note that creating and editing FXBase subclasses and other public subclasses is a restricted action.
+
+**Kind**: static class of <code>[assets](#module_assets)</code>  
+**Extends:** <code>[Asset](#module_assets.Asset)</code>  
+<a name="new_module_assets.ForeignExchangeBase_new"></a>
+
+#### new ForeignExchangeBase(params)
+Construct a new ForeignExchangeBase instance
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | ForeignExchangeBase creation options: |
+| [params.assetManagerId] | <code>number</code> | <code>0</code> | Auto-set to `0`. All FX classes and subclasses are treated as public Assets |
+| params.assetId | <code>number</code> |  | ID of the ForeignExchangeBase __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;ForeignExchange&quot;</code> | Auto-set to `ForeignExchange` __(read-only)__ |
+| [params.assetType] | <code>string</code> |  | Type of the ForeignExchangeBase. Auto-set based on the class or subclass constructor |
+| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` for ForeignExchangeBase __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the ForeignExchangeBase's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the ForeignExchangeBase |
+| [params.description] | <code>string</code> |  | Description of the ForeignExchangeBase |
+| [params.displayName] | <code>string</code> |  | Display name of the ForeignExchangeBase |
+| [params.rollPrice] | <code>boolean</code> | <code>false</code> | Auto-set to `false` __(read-only)__ |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the ForeignExchangeBase |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the ForeignExchangeBase |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the ForeignExchangeBase. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the ForeignExchangeBase |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the ForeignExchangeBase |
+| [params.createdTime] | <code>date</code> |  | Time that the ForeignExchangeBase was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the ForeignExchangeBase was updated |
+| params.version | <code>number</code> |  | Version number |
+
+<a name="module_assets.NonDeliverableForward"></a>
+
+### assets.NonDeliverableForward ⇐ <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>
+Class representing FX
+
+**Kind**: static class of <code>[assets](#module_assets)</code>  
+**Extends:** <code>[ForeignExchangeBase](#module_assets.ForeignExchangeBase)</code>  
+<a name="new_module_assets.NonDeliverableForward_new"></a>
+
+#### new NonDeliverableForward(params)
+Construct a new Non Deliverable Forward instance
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | NonDeliverableForward creation options: |
+| params.assetId | <code>number</code> |  | ID of the Non Deliverable Forward __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;ForeignExchange&quot;</code> | Auto-set to `ForeignExchange` __(read-only)__ |
+| [params.assetType] | <code>string</code> |  | Type of the Non Deliverable Forward. Auto-set based on the class or subclass constructor |
+| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
+| [params.fungible] | <code>boolean</code> | <code>true</code> | Auto-set to `true` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the Non Deliverable Forward's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Asset |
+| [params.description] | <code>string</code> |  | Description of the Non Deliverable Forward |
+| [params.displayName] | <code>string</code> |  | Display name of the Non Deliverable Forward |
+| [params.clientId] | <code>string</code> |  | ID of the associated client |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the Non Deliverable Forward |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the Non Deliverable Forward |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with this Asset. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Non Deliverable Forward |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Non Deliverable Forward |
+| [params.createdTime] | <code>date</code> |  | Time that the Non Deliverable Forward was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Non Deliverable Forward was updated |
 | [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.Index"></a>
@@ -2700,26 +2700,26 @@ Class representing a Book
 Construct a new Book object
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Book creation options |
-| params.assetManagerId | <code>integer</code> | ID of Book's Asset Manager |
-| params.bookId | <code>string</code> | ID of this Book |
-| params.bookType | <code>string</code> | Book Type |
-| params.bookStatus | <code>string</code> | status of Book (e.g. Active, Retired, Superseded) |
-| params.ownerId | <code>integer</code> | ID of the owner of the Book (e.g. the Trader who is responsible for the Book) |
-| params.partyId | <code>integer</code> | ID of the party of which the activity being tracked belongs (e.g. Registered fund or HNWI) |
-| params.closeTime | <code>string</code> | Book close time. This is stored as local time, to be referenced against timezone |
-| params.timezone | <code>string</code> | Book's timezone (use this to determine absolute close time) |
-| params.baseCurrency | <code>string</code> | Base currency for the Book |
-| params.businessUnit | <code>string</code> | A business unit to associate with the Book (e.g. Emerging Markets, Equities) |
-| params.description | <code>string</code> | Description of the book |
-| params.positions | <code>Array</code> | Array of objects [{asset_id: string, quantity: number}] |
-| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new Book) |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing Book) |
-| params.createdTime | <code>date</code> | Time that the Book was created (required if creating new Book) |
-| params.updatedTime | <code>date</code> | Time that the Book was updated (required if amending existing Book) |
-| params.version | <code>number</code> | Version number of the Book |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Book creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of Book's Asset Manager __(required)__ |
+| params.bookId | <code>string</code> |  | ID of this Book __(required)__ |
+| params.bookType | <code>string</code> |  | Book Type<br /> Available options: <li>Counterparty</li> <li>Management</li> <li>Trading</li> <li>Wash</li> |
+| [params.bookStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | status of Book |
+| [params.ownerId] | <code>number</code> |  | ID of the owner of the Book (e.g. the Trader who is responsible for the Book) |
+| [params.partyId] | <code>number</code> |  | ID of the party of which the activity being tracked belongs (e.g. Registered fund or HNWI) |
+| [params.closeTime] | <code>string</code> | <code>&quot;17:30:00&quot;</code> | Book close time. This is stored as local time, to be referenced against timezone |
+| [params.timezone] | <code>string</code> | <code>&quot;UTC&quot;</code> | Book's timezone (use this to determine absolute close time) |
+| [params.baseCurrency] | <code>string</code> | <code>&quot;USD&quot;</code> | Base currency for the Book |
+| [params.businessUnit] | <code>string</code> |  | A business unit to associate with the Book (e.g. Emerging Markets, Equities) |
+| [params.description] | <code>string</code> |  | Description of the book |
+| [params.positions] | <code>Array</code> |  | Array of objects [{asset_id: string, quantity: number}] |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created this object (required if creating a new Book) |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated this object (use if amending existing Book) |
+| [params.createdTime] | <code>date</code> |  | Time that the Book was created (required if creating new Book) |
+| [params.updatedTime] | <code>date</code> |  | Time that the Book was updated (required if amending existing Book) |
+| [params.version] | <code>number</code> |  | Version number of the Book |
 
 <a name="module_children"></a>
 
@@ -2746,14 +2746,14 @@ Construct a new PartyChild object
 
 | Param | Type | Description |
 | --- | --- | --- |
-| params | <code>object</code> | PartyChild creation options |
+| params | <code>object</code> | PartyChild creation options: |
 | params.partyId | <code>string</code> | ID of the linked Party |
-| params.active | <code>bool</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
-| params.createdBy | <code>string</code> | ID of the user that created this object (required if creating a new linked Party) |
-| params.updatedBy | <code>string</code> | ID of the user that updated this object (use if amending existing linked Party) |
-| params.createdTime | <code>date</code> | Time that the linked Party was created (required if creating new linked Party) |
-| params.updatedTime | <code>date</code> | Time that the linked Party was updated (required if amending existing linked Party) |
-| params.version | <code>number</code> | Version number of the linked Party |
+| params.active | <code>boolean</code> | Whether this Party as a child is active (Note: NOT whether the linked Party itself is active) |
+| [params.createdBy] | <code>string</code> | ID of the user that created the linked Party |
+| [params.updatedBy] | <code>string</code> | ID of the user that updated the linked Party |
+| [params.createdTime] | <code>date</code> | Time that the linked Party was created |
+| [params.updatedTime] | <code>date</code> | Time that the linked Party was updated |
+| [params.version] | <code>number</code> | Version number of the linked Party |
 
 <a name="module_corporateActions"></a>
 
@@ -2803,11 +2803,11 @@ Classes for the Parties service
 
 * [parties](#module_parties)
     * [.AssetManager](#module_parties.AssetManager) ⇐ <code>[Company](#module_parties.Company)</code>
-        * [new AssetManager(params, (object))](#new_module_parties.AssetManager_new)
+        * [new AssetManager(params)](#new_module_parties.AssetManager_new)
         * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
         * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
     * [.Broker](#module_parties.Broker) ⇐ <code>[Company](#module_parties.Company)</code>
-        * [new Broker(params, (object))](#new_module_parties.Broker_new)
+        * [new Broker(params)](#new_module_parties.Broker_new)
         * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
         * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
     * [.Address](#module_parties.Address) ⇐ <code>[AMaaSModel](#module_core.AMaaSModel)</code>
@@ -2815,31 +2815,31 @@ Classes for the Parties service
     * [.Email](#module_parties.Email) ⇐ <code>[AMaaSModel](#module_core.AMaaSModel)</code>
         * [new Email(params)](#new_module_parties.Email_new)
     * [.Company](#module_parties.Company) ⇐ <code>[Organisation](#module_parties.Organisation)</code>
-        * [new Company(params, (object))](#new_module_parties.Company_new)
+        * [new Company(params)](#new_module_parties.Company_new)
         * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
         * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
     * [.Exchange](#module_parties.Exchange) ⇐ <code>[Company](#module_parties.Company)</code>
-        * [new Exchange(params, (object))](#new_module_parties.Exchange_new)
+        * [new Exchange(params)](#new_module_parties.Exchange_new)
         * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
         * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
     * [.Fund](#module_parties.Fund) ⇐ <code>[Company](#module_parties.Company)</code>
-        * [new Fund(params, (object))](#new_module_parties.Fund_new)
+        * [new Fund(params)](#new_module_parties.Fund_new)
         * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
         * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
     * [.GovernmentAgency](#module_parties.GovernmentAgency) ⇐ <code>[Organisation](#module_parties.Organisation)</code>
-        * [new GovernmentAgency(params, (object))](#new_module_parties.GovernmentAgency_new)
+        * [new GovernmentAgency(params)](#new_module_parties.GovernmentAgency_new)
         * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
         * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
     * [.Individual](#module_parties.Individual) ⇐ <code>[Party](#module_parties.Party)</code>
-        * [new Individual(params, (object))](#new_module_parties.Individual_new)
+        * [new Individual(params)](#new_module_parties.Individual_new)
         * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
         * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
     * [.Organisation](#module_parties.Organisation) ⇐ <code>[Party](#module_parties.Party)</code>
-        * [new Organisation(params, (object))](#new_module_parties.Organisation_new)
+        * [new Organisation(params)](#new_module_parties.Organisation_new)
         * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
         * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
     * [.Party](#module_parties.Party) ⇐ <code>[AMaaSModel](#module_core.AMaaSModel)</code>
-        * [new Party(params, (object))](#new_module_parties.Party_new)
+        * [new Party(params)](#new_module_parties.Party_new)
         * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
         * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
     * [.SubFund](#module_parties.SubFund) ⇐ <code>[Party](#module_parties.Party)</code>
@@ -2856,13 +2856,13 @@ Class representing an Asset Manager
 **Extends:** <code>[Company](#module_parties.Company)</code>  
 
 * [.AssetManager](#module_parties.AssetManager) ⇐ <code>[Company](#module_parties.Company)</code>
-    * [new AssetManager(params, (object))](#new_module_parties.AssetManager_new)
+    * [new AssetManager(params)](#new_module_parties.AssetManager_new)
     * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
     * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
 
 <a name="new_module_parties.AssetManager_new"></a>
 
-#### new AssetManager(params, (object))
+#### new AssetManager(params)
 Construct a new Asset Manager instance
 
 
@@ -2875,7 +2875,7 @@ Construct a new Asset Manager instance
 | params.baseCurrency | <code>string</code> |  | Base Currency of the Asset Manager (e.g. SGD, USD) |
 | params.description | <code>string</code> |  | Description of the Asset Manager |
 | params.addresses | <code>object</code> |  | Object of Addresses associated with this Asset Manager |
-| (object) |  |  | params.emails - Object of Emails associated with this Asset Manager |
+| params.emails | <code>object</code> |  | Object of Emails associated with this Asset Manager |
 | params.references | <code>object</code> |  | Object of References associated with this Asset Manager |
 | params.comments | <code>object</code> |  | Object of Comments associated with the Asset Manager |
 | params.links | <code>object</code> |  | Object of Links associated with the Asset Manager |
@@ -2918,34 +2918,34 @@ Class representing a Broker
 **Extends:** <code>[Company](#module_parties.Company)</code>  
 
 * [.Broker](#module_parties.Broker) ⇐ <code>[Company](#module_parties.Company)</code>
-    * [new Broker(params, (object))](#new_module_parties.Broker_new)
+    * [new Broker(params)](#new_module_parties.Broker_new)
     * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
     * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
 
 <a name="new_module_parties.Broker_new"></a>
 
-#### new Broker(params, (object))
+#### new Broker(params)
 Construct a new Broker instance
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| params | <code>object</code> |  | Broker creation options |
-| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Broker |
-| params.partyId | <code>string</code> |  | Party ID of the Broker |
-| params.partyStatus | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Broker (e.g. 'Active') |
-| params.baseCurrency | <code>string</code> |  | Base Currency of the Broker (e.g. SGD, USD) |
-| params.description | <code>string</code> |  | Description of the Broker |
-| params.addresses | <code>object</code> |  | Object of Addresses associated with this Broker |
-| (object) |  |  | params.emails - Object of Emails associated with this Broker |
-| params.references | <code>object</code> |  | Object of References associated with this Broker |
-| params.comments | <code>object</code> |  | Object of Comments associated with the Broker |
-| params.links | <code>object</code> |  | Object of Links associated with the Broker |
-| params.createdBy | <code>string</code> |  | ID of the user that created the Broker |
-| params.updatedBy | <code>string</code> |  | ID of the user that updated the Broker |
-| params.createdTime | <code>date</code> |  | Time that the Broker was created |
-| params.updatedTime | <code>date</code> |  | Time that the Broker was updated |
-| params.version | <code>number</code> |  | Version number of the Broker |
+| params | <code>object</code> |  | Broker creation options: |
+| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Broker __(required)__ |
+| params.partyId | <code>string</code> |  | Party ID of the Broker __(required)__ |
+| [params.partyStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Broker |
+| [params.baseCurrency] | <code>string</code> |  | Base Currency of the Broker (e.g. SGD, USD) |
+| [params.description] | <code>string</code> |  | Description of the Broker |
+| [params.addresses] | <code>object</code> |  | Object of Addresses associated with the Broker |
+| [params.emails] | <code>object</code> |  | Object of Emails associated with the Broker |
+| [params.references] | <code>object</code> |  | Object of References associated with the Broker |
+| [params.comments] | <code>object</code> |  | Object of Comments associated with the Broker |
+| [params.links] | <code>object</code> |  | Object of Links associated with the Broker |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Broker |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Broker |
+| [params.createdTime] | <code>date</code> |  | Time that the Broker was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Broker was updated |
+| [params.version] | <code>number</code> |  | Version number of the Broker |
 
 <a name="module_parties.Party+upsertAddress"></a>
 
@@ -2984,22 +2984,22 @@ Class representing an Address
 Construct a new Address instance
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Address creation options |
-| params.addressPrimary | <code>bool</code> | Flag for whether Address is primary for its owner |
-| params.lineOne | <code>string</code> | First line of the Address |
-| params.lineTwo | <code>string</code> | Second line of the Address |
-| params.city | <code>string</code> | City of the Address |
-| params.region | <code>string</code> | Region of the Address |
-| params.postalCode | <code>string</code> | Postal code of the Address |
-| params.countryId | <code>string</code> | Country of the Address |
-| params.active | <code>bool</code> | Whether this Address is active for its owner |
-| params.createdBy | <code>string</code> | ID of the user that created the Address |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Address |
-| params.createdTime | <code>date</code> | Time that the Address was created |
-| params.updatedTime | <code>date</code> | Time that the Address was updated |
-| params.version | <code>number</code> | Version number of the Address |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Address creation options |
+| [params.addressPrimary] | <code>boolean</code> | <code>false</code> | Flag for whether Address is primary for its owner. If a Party has Addresses, at least one must be primary |
+| params.lineOne | <code>string</code> |  | First line of the Address |
+| params.lineTwo | <code>string</code> |  | Second line of the Address |
+| params.city | <code>string</code> |  | City of the Address |
+| params.region | <code>string</code> |  | Region of the Address |
+| params.postalCode | <code>string</code> |  | Postal code of the Address |
+| params.countryId | <code>string</code> |  | Country of the Address |
+| params.active | <code>boolean</code> |  | Whether this Address is active for its owner |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Address |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Address |
+| [params.createdTime] | <code>date</code> |  | Time that the Address was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Address was updated |
+| [params.version] | <code>number</code> |  | Version number of the Address |
 
 <a name="module_parties.Email"></a>
 
@@ -3016,15 +3016,15 @@ Construct a new Email object
 
 | Param | Type | Description |
 | --- | --- | --- |
-| params | <code>object</code> | Email creation options |
+| params | <code>object</code> | Email creation options: |
+| params.emailPrimary | <code>boolean</code> | Whether the Email is primary for its owner. If a Party has Emails, at least one must be primary |
 | params.email | <code>string</code> | Email address |
-| params.emailPrimary | <code>bool</code> | Whether the Email is primary for its owner |
-| params.active | <code>bool</code> | Whether the Email is active for its owner |
-| params.createdBy | <code>string</code> | ID of the user that created the Email (required if creating a new Email) |
-| params.updatedBy | <code>string</code> | ID of the user that updated the Email (use if amending existing Email) |
-| params.createdTime | <code>date</code> | Time that the Email was created (required if creating new Email) |
-| params.updatedTime | <code>date</code> | Time that the Email was updated (required if amending existing Email) |
-| params.version | <code>number</code> | Version number of the Email |
+| params.active | <code>boolean</code> | Whether the Email is active for its owner |
+| [params.createdBy] | <code>string</code> | ID of the user that created the Email |
+| [params.updatedBy] | <code>string</code> | ID of the user that updated the Email |
+| [params.createdTime] | <code>date</code> | Time that the Email was created |
+| [params.updatedTime] | <code>date</code> | Time that the Email was updated |
+| [params.version] | <code>number</code> | Version number of the Email |
 
 <a name="module_parties.Company"></a>
 
@@ -3035,35 +3035,35 @@ Class representing a Company
 **Extends:** <code>[Organisation](#module_parties.Organisation)</code>  
 
 * [.Company](#module_parties.Company) ⇐ <code>[Organisation](#module_parties.Organisation)</code>
-    * [new Company(params, (object))](#new_module_parties.Company_new)
+    * [new Company(params)](#new_module_parties.Company_new)
     * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
     * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
 
 <a name="new_module_parties.Company_new"></a>
 
-#### new Company(params, (object))
+#### new Company(params)
 Construct a new Company instance
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| params | <code>object</code> |  | Company creation options |
-| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Company |
-| params.partyId | <code>string</code> |  | Party ID of the Company |
-| params.partyStatus | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Company (e.g. 'Active') |
-| params.partyClass | <code>string</code> | <code>&quot;Company&quot;</code> | Class of the Company |
-| params.baseCurrency | <code>string</code> |  | Base Currency of the Company (e.g. SGD, USD) |
-| params.description | <code>string</code> |  | Description of the Company |
-| params.addresses | <code>object</code> |  | Object of Addresses associated with this Company |
-| (object) |  |  | params.emails - Object of Emails associated with this Company |
-| params.references | <code>object</code> |  | Object of References associated with this Company |
-| params.comments | <code>object</code> |  | Object of Comments associated with the Company |
-| params.links | <code>object</code> |  | Object of Links associated with the Company |
-| params.createdBy | <code>string</code> |  | ID of the user that created the Company |
-| params.updatedBy | <code>string</code> |  | ID of the user that updated the Company |
-| params.createdTime | <code>date</code> |  | Time that the Company was created |
-| params.updatedTime | <code>date</code> |  | Time that the Company was updated |
-| params.version | <code>number</code> |  | Version number of the Company |
+| params | <code>object</code> |  | Company creation options: |
+| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Company __(required)__ |
+| params.partyId | <code>string</code> |  | Party ID of the Company __(required)__ |
+| [params.partyStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Company |
+| [params.partyClass] | <code>string</code> | <code>&quot;Company&quot;</code> | Class of the Company (a subclass of Company may define its own partyClass) |
+| [params.baseCurrency] | <code>string</code> |  | Base Currency of the Company (e.g. SGD, USD) |
+| [params.description] | <code>string</code> |  | Description of the Company |
+| [params.addresses] | <code>object</code> |  | Object of Addresses associated with the Company |
+| [params.emails] | <code>object</code> |  | Object of Emails associated with the Company |
+| [params.references] | <code>object</code> |  | Object of References associated with the Company |
+| [params.comments] | <code>object</code> |  | Object of Comments associated with the Company |
+| [params.links] | <code>object</code> |  | Object of Links associated with the Company |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Company |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Company |
+| [params.createdTime] | <code>date</code> |  | Time that the Company was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Company was updated |
+| [params.version] | <code>number</code> |  | Version number of the Company |
 
 <a name="module_parties.Party+upsertAddress"></a>
 
@@ -3098,34 +3098,34 @@ Class representing an Exchange
 **Extends:** <code>[Company](#module_parties.Company)</code>  
 
 * [.Exchange](#module_parties.Exchange) ⇐ <code>[Company](#module_parties.Company)</code>
-    * [new Exchange(params, (object))](#new_module_parties.Exchange_new)
+    * [new Exchange(params)](#new_module_parties.Exchange_new)
     * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
     * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
 
 <a name="new_module_parties.Exchange_new"></a>
 
-#### new Exchange(params, (object))
+#### new Exchange(params)
 Construct a new Exchange instance
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| params | <code>object</code> |  | Exchange creation options |
-| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Exchange |
-| params.partyId | <code>string</code> |  | Party ID of the Exchange |
-| params.partyStatus | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Exchange (e.g. 'Active') |
-| params.baseCurrency | <code>string</code> |  | Base Currency of the Exchange (e.g. SGD, USD) |
-| params.description | <code>string</code> |  | Description of the Exchange |
-| params.addresses | <code>object</code> |  | Object of Addresses associated with this Exchange |
-| (object) |  |  | params.emails - Object of Emails associated with this Exchange |
-| params.references | <code>object</code> |  | Object of References associated with this Exchange |
-| params.comments | <code>object</code> |  | Object of Comments associated with the Exchange |
-| params.links | <code>object</code> |  | Object of Links associated with the Exchange |
-| params.createdBy | <code>string</code> |  | ID of the user that created the Exchange |
-| params.updatedBy | <code>string</code> |  | ID of the user that updated the Exchange |
-| params.createdTime | <code>date</code> |  | Time that the Exchange was created |
-| params.updatedTime | <code>date</code> |  | Time that the Exchange was updated |
-| params.version | <code>number</code> |  | Version number of the Exchange |
+| params | <code>object</code> |  | Exchange creation options: |
+| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Exchange __(required)__ |
+| params.partyId | <code>string</code> |  | Party ID of the Exchange __(required)__ |
+| [params.partyStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Exchange |
+| [params.baseCurrency] | <code>string</code> |  | Base Currency of the Exchange (e.g. SGD, USD) |
+| [params.description] | <code>string</code> |  | Description of the Exchange |
+| [params.addresses] | <code>object</code> |  | Object of Addresses associated with the Exchange |
+| [params.emails] | <code>object</code> |  | Object of Emails associated with the Exchange |
+| [params.references] | <code>object</code> |  | Object of References associated with the Exchange |
+| [params.comments] | <code>object</code> |  | Object of Comments associated with the Exchange |
+| [params.links] | <code>object</code> |  | Object of Links associated with the Exchange |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Exchange |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Exchange |
+| [params.createdTime] | <code>date</code> |  | Time that the Exchange was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Exchange was updated |
+| [params.version] | <code>number</code> |  | Version number of the Exchange |
 
 <a name="module_parties.Party+upsertAddress"></a>
 
@@ -3160,34 +3160,34 @@ Class representing a Fund
 **Extends:** <code>[Company](#module_parties.Company)</code>  
 
 * [.Fund](#module_parties.Fund) ⇐ <code>[Company](#module_parties.Company)</code>
-    * [new Fund(params, (object))](#new_module_parties.Fund_new)
+    * [new Fund(params)](#new_module_parties.Fund_new)
     * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
     * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
 
 <a name="new_module_parties.Fund_new"></a>
 
-#### new Fund(params, (object))
+#### new Fund(params)
 Construct a new Fund instance
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| params | <code>object</code> |  | Fund creation options |
-| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Fund |
-| params.partyId | <code>string</code> |  | Party ID of the Fund |
-| params.partyStatus | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Fund (e.g. 'Active') |
-| params.baseCurrency | <code>string</code> |  | Base Currency of the Fund (e.g. SGD, USD) |
-| params.description | <code>string</code> |  | Description of the Fund |
-| params.addresses | <code>object</code> |  | Object of Addresses associated with this Fund |
-| (object) |  |  | params.emails - Object of Emails associated with this Fund |
-| params.references | <code>object</code> |  | Object of References associated with this Fund |
-| params.comments | <code>object</code> |  | Object of Comments associated with the Fund |
-| params.links | <code>object</code> |  | Object of Links associated with the Fund |
-| params.createdBy | <code>string</code> |  | ID of the user that created the Fund |
-| params.updatedBy | <code>string</code> |  | ID of the user that updated the Fund |
-| params.createdTime | <code>date</code> |  | Time that the Fund was created |
-| params.updatedTime | <code>date</code> |  | Time that the Fund was updated |
-| params.version | <code>number</code> |  | Version number of the Fund |
+| params | <code>object</code> |  | Fund creation options: |
+| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Fund __(required)__ |
+| params.partyId | <code>string</code> |  | Party ID of the Fund __(required)__ |
+| [params.partyStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Fund |
+| [params.baseCurrency] | <code>string</code> |  | Base Currency of the Fund (e.g. SGD, USD) |
+| [params.description] | <code>string</code> |  | Description of the Fund |
+| [params.addresses] | <code>object</code> |  | Object of Addresses associated with the Fund |
+| [params.emails] | <code>object</code> |  | Object of Emails associated with the Fund |
+| [params.references] | <code>object</code> |  | Object of References associated with the Fund |
+| [params.comments] | <code>object</code> |  | Object of Comments associated with the Fund |
+| [params.links] | <code>object</code> |  | Object of Links associated with the Fund |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Fund |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Fund |
+| [params.createdTime] | <code>date</code> |  | Time that the Fund was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Fund was updated |
+| [params.version] | <code>number</code> |  | Version number of the Fund |
 
 <a name="module_parties.Party+upsertAddress"></a>
 
@@ -3222,35 +3222,35 @@ Class representing a Government Agency
 **Extends:** <code>[Organisation](#module_parties.Organisation)</code>  
 
 * [.GovernmentAgency](#module_parties.GovernmentAgency) ⇐ <code>[Organisation](#module_parties.Organisation)</code>
-    * [new GovernmentAgency(params, (object))](#new_module_parties.GovernmentAgency_new)
+    * [new GovernmentAgency(params)](#new_module_parties.GovernmentAgency_new)
     * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
     * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
 
 <a name="new_module_parties.GovernmentAgency_new"></a>
 
-#### new GovernmentAgency(params, (object))
+#### new GovernmentAgency(params)
 Construct a new Government Agency instance
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| params | <code>object</code> |  | Government Agency creation options |
-| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Government Agency |
-| params.partyId | <code>string</code> |  | Party ID of the Government Agency |
-| params.partyStatus | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Government Agency (e.g. 'Active') |
-| params.partyClass | <code>string</code> | <code>&quot;Organisation&quot;</code> | Class of the Government Agency |
-| params.baseCurrency | <code>string</code> |  | Base Currency of the Government Agency (e.g. SGD, USD) |
-| params.description | <code>string</code> |  | Description of the Government Agency |
-| params.addresses | <code>object</code> |  | Object of Addresses associated with this Government Agency |
-| (object) |  |  | params.emails - Object of Emails associated with this Government Agency |
-| params.references | <code>object</code> |  | Object of References associated with this Government Agency |
-| params.comments | <code>object</code> |  | Object of Comments associated with the Government Agency |
-| params.links | <code>object</code> |  | Object of Links associated with the Government Agency |
-| params.createdBy | <code>string</code> |  | ID of the user that created the Government Agency |
-| params.updatedBy | <code>string</code> |  | ID of the user that updated the Government Agency |
-| params.createdTime | <code>date</code> |  | Time that the Government Agency was created |
-| params.updatedTime | <code>date</code> |  | Time that the Government Agency was updated |
-| params.version | <code>number</code> |  | Version number of the Government Agency |
+| params | <code>object</code> |  | Government Agency creation options: |
+| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Government Agency __(required)__ |
+| params.partyId | <code>string</code> |  | Party ID of the Government Agency __(required)__ |
+| [params.partyStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Government Agency |
+| [params.partyClass] | <code>string</code> | <code>&quot;Organisation&quot;</code> | Class of the Government Agency (a subclass of Organisation may define its own partyClass) |
+| [params.baseCurrency] | <code>string</code> |  | Base Currency of the Government Agency |
+| [params.description] | <code>string</code> |  | Description of the Government Agency |
+| [params.addresses] | <code>object</code> |  | Object of Addresses associated with the Government Agency |
+| [params.emails] | <code>object</code> |  | Object of Emails associated with the Government Agency |
+| [params.references] | <code>object</code> |  | Object of References associated with the Government Agency |
+| [params.comments] | <code>object</code> |  | Object of Comments associated with the Government Agency |
+| [params.links] | <code>object</code> |  | Object of Links associated with the Government Agency |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Government Agency |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Government Agency |
+| [params.createdTime] | <code>date</code> |  | Time that the Government Agency was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Government Agency was updated |
+| [params.version] | <code>number</code> |  | Version number of the Government Agency |
 
 <a name="module_parties.Party+upsertAddress"></a>
 
@@ -3285,38 +3285,38 @@ Class representing an Individual
 **Extends:** <code>[Party](#module_parties.Party)</code>  
 
 * [.Individual](#module_parties.Individual) ⇐ <code>[Party](#module_parties.Party)</code>
-    * [new Individual(params, (object))](#new_module_parties.Individual_new)
+    * [new Individual(params)](#new_module_parties.Individual_new)
     * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
     * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
 
 <a name="new_module_parties.Individual_new"></a>
 
-#### new Individual(params, (object))
+#### new Individual(params)
 Construct a new Individual instance
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| params | <code>object</code> |  | Individual creation options |
-| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Individual |
-| params.partyId | <code>string</code> |  | Party ID of the Individual |
-| params.partyStatus | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Individual (e.g. 'Active') |
-| params.partyClass | <code>string</code> | <code>&quot;Individual&quot;</code> | Class of the Individual |
-| params.baseCurrency | <code>string</code> |  | Base Currency of the Individual (e.g. SGD, USD) |
-| params.description | <code>string</code> |  | Description of the Individual |
+| params | <code>object</code> |  | Individual creation options: |
+| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Individual __(required)__ |
+| params.partyId | <code>string</code> |  | Party ID of the Individual __(required)__ |
+| [params.partyStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Individual |
+| [params.partyClass] | <code>string</code> | <code>&quot;Individual&quot;</code> | Class of the Individual (a subclass of Individual may define its own partyClass) |
+| [params.baseCurrency] | <code>string</code> |  | Base Currency of the Individual (e.g. SGD, USD) |
+| [params.description] | <code>string</code> |  | Description of the Individual |
 | params.givenNames | <code>string</code> |  | Individual's given names |
 | params.surname | <code>string</code> |  | Individual's surname |
 | params.dateOfBirth | <code>string</code> |  | Individual's date of birth (YYYY-MM-DD) |
-| params.addresses | <code>object</code> |  | Object of Addresses associated with this Individual |
-| (object) |  |  | params.emails - Object of Emails associated with this Individual |
-| params.references | <code>object</code> |  | Object of References associated with this Individual |
-| params.comments | <code>object</code> |  | Object of Comments associated with this Individual |
-| params.links | <code>object</code> |  | Object of Links associated with this Individual |
-| params.createdBy | <code>string</code> |  | ID of the user that created the Individual |
-| params.updatedBy | <code>string</code> |  | ID of the user that updated the Individual |
-| params.createdTime | <code>date</code> |  | Time that the Individual was created |
-| params.updatedTime | <code>date</code> |  | Time that the Individual was updated |
-| params.version | <code>number</code> |  | Version number of the Individual |
+| [params.addresses] | <code>object</code> |  | Object of Addresses associated with the Individual |
+| [params.emails] | <code>object</code> |  | Object of Emails associated with the Individual |
+| [params.references] | <code>object</code> |  | Object of References associated with the Individual |
+| [params.comments] | <code>object</code> |  | Object of Comments associated with the Individual |
+| [params.links] | <code>object</code> |  | Object of Links associated with the Individual |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Individual |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Individual |
+| [params.createdTime] | <code>date</code> |  | Time that the Individual was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Individual was updated |
+| [params.version] | <code>number</code> |  | Version number of the Individual |
 
 <a name="module_parties.Party+upsertAddress"></a>
 
@@ -3351,35 +3351,35 @@ Class representing an Organisation
 **Extends:** <code>[Party](#module_parties.Party)</code>  
 
 * [.Organisation](#module_parties.Organisation) ⇐ <code>[Party](#module_parties.Party)</code>
-    * [new Organisation(params, (object))](#new_module_parties.Organisation_new)
+    * [new Organisation(params)](#new_module_parties.Organisation_new)
     * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
     * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
 
 <a name="new_module_parties.Organisation_new"></a>
 
-#### new Organisation(params, (object))
+#### new Organisation(params)
 Construct a new Organisation instance
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| params | <code>object</code> |  | Organisation creation options |
-| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Organisation |
-| params.partyId | <code>string</code> |  | Party ID of the Organisation |
-| params.partyStatus | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Organisation (e.g. 'Active') |
-| params.partyClass | <code>string</code> | <code>&quot;Organisation&quot;</code> | Class of the Organisation |
-| params.baseCurrency | <code>string</code> |  | Base Currency of the Organisation (e.g. SGD, USD) |
-| params.description | <code>string</code> |  | Description of the Organisation |
-| params.addresses | <code>object</code> |  | Object of Addresses associated with this Organisation |
-| (object) |  |  | params.emails - Object of Emails associated with this Organisation |
-| params.references | <code>object</code> |  | Object of References associated with this Organisation |
-| params.comments | <code>object</code> |  | Object of Comments associated with the Organisation |
-| params.links | <code>object</code> |  | Object of Links associated with the Organisation |
-| params.createdBy | <code>string</code> |  | ID of the user that created the Organisation |
-| params.updatedBy | <code>string</code> |  | ID of the user that updated the Organisation |
-| params.createdTime | <code>date</code> |  | Time that the Organisation was created |
-| params.updatedTime | <code>date</code> |  | Time that the Organisation was updated |
-| params.version | <code>number</code> |  | Version number of the Organisation |
+| params | <code>object</code> |  | Organisation creation options: |
+| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Organisation __(required)__ |
+| params.partyId | <code>string</code> |  | Party ID of the Organisation __(required)__ |
+| [params.partyStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Organisation |
+| [params.partyClass] | <code>string</code> | <code>&quot;Organisation&quot;</code> | Class of the Organisation (a subclass of Organisation may define its own partyClass) |
+| [params.baseCurrency] | <code>string</code> |  | Base Currency of the Organisation (e.g. SGD, USD) |
+| [params.description] | <code>string</code> |  | Description of the Organisation |
+| [params.addresses] | <code>object</code> |  | Object of Addresses associated with the Organisation |
+| [params.emails] | <code>object</code> |  | Object of Emails associated with the Organisation |
+| [params.references] | <code>object</code> |  | Object of References associated with the Organisation |
+| [params.comments] | <code>object</code> |  | Object of Comments associated with the Organisation |
+| [params.links] | <code>object</code> |  | Object of Links associated with the Organisation |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Organisation |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Organisation |
+| [params.createdTime] | <code>date</code> |  | Time that the Organisation was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Organisation was updated |
+| [params.version] | <code>number</code> |  | Version number of the Organisation |
 
 <a name="module_parties.Party+upsertAddress"></a>
 
@@ -3414,35 +3414,35 @@ Class representing a Party
 **Extends:** <code>[AMaaSModel](#module_core.AMaaSModel)</code>  
 
 * [.Party](#module_parties.Party) ⇐ <code>[AMaaSModel](#module_core.AMaaSModel)</code>
-    * [new Party(params, (object))](#new_module_parties.Party_new)
+    * [new Party(params)](#new_module_parties.Party_new)
     * [.upsertAddress(type, address)](#module_parties.Party+upsertAddress)
     * [.upsertEmail(type, email)](#module_parties.Party+upsertEmail)
 
 <a name="new_module_parties.Party_new"></a>
 
-#### new Party(params, (object))
+#### new Party(params)
 Construct a new Party instance
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| params | <code>object</code> |  | Party creation options |
-| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Party |
-| params.partyId | <code>string</code> |  | Party ID of the Party |
-| params.partyStatus | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Party (e.g. 'Active') |
-| params.partyClass | <code>string</code> | <code>&quot;Party&quot;</code> | Class of the Party |
-| params.baseCurrency | <code>string</code> |  | Base Currency for the Party (e.g. SGD, USD) |
-| params.description | <code>string</code> |  | Description of the Party |
-| params.addresses | <code>object</code> |  | Object of Addresses associated with this Party |
-| (object) |  |  | params.emails - Object of Emails associated with this Party |
-| params.references | <code>object</code> |  | Object of References associated with this Party |
-| params.comments | <code>object</code> |  | Object of Comments associated with this Party |
-| params.links | <code>object</code> |  | Object of Links associated with this Party |
-| params.createdBy | <code>string</code> |  | ID of the user that created the Party |
-| params.updatedBy | <code>string</code> |  | ID of the user that updated the Party |
-| params.createdTime | <code>date</code> |  | Time that the Party was created |
-| params.updatedTime | <code>date</code> |  | Time that the Party was updated |
-| params.version | <code>number</code> |  | Version number of the Party |
+| params | <code>object</code> |  | Party creation options: |
+| params.assetManagerId | <code>number</code> |  | Asset Manager ID of the Party __(required)__ |
+| params.partyId | <code>string</code> |  | Party ID of the Party __(required)__ |
+| [params.partyStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the Party |
+| [params.partyClass] | <code>string</code> | <code>&quot;Party&quot;</code> | Class of the Party |
+| [params.baseCurrency] | <code>string</code> |  | Base Currency for the Party (e.g. SGD, USD) |
+| [params.description] | <code>string</code> |  | Description of the Party |
+| [params.addresses] | <code>object</code> |  | Object of Addresses associated with the Party |
+| [params.emails] | <code>object</code> |  | Object of Emails associated with the Party |
+| [params.references] | <code>object</code> |  | Object of References associated with the Party |
+| [params.comments] | <code>object</code> |  | Object of Comments associated with the Party |
+| [params.links] | <code>object</code> |  | Object of Links associated with this Party |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the Party |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Party |
+| [params.createdTime] | <code>date</code> |  | Time that the Party was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the Party was updated |
+| [params.version] | <code>number</code> |  | Version number of the Party |
 
 <a name="module_parties.Party+upsertAddress"></a>
 
