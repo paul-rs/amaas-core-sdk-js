@@ -30,6 +30,8 @@ var Wine = function (_RealAsset) {
    * @param {number} params.assetManagerId - ID of Wine's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Wine __(required)__
    * @param {string} [params.assetClass=RealAsset] - Auto-set to `RealAsset` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Wine. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=false] - Auto-set to `false` __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Wine's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Wine
@@ -37,6 +39,7 @@ var Wine = function (_RealAsset) {
    * @param {string} [params.venueId] - ID of Wine's venue if applicable
    * @param {string} [params.currency] - Wine currency (e.g. USD, SGD)
    * @param {string} [params.description] - Description of the Wine
+   * @param {string} [params.displayName] - Display name of the Wine
    * @param {string} [params.clientId] - ID of the associated client
     * @param {string} [params.year] - Year of production
    * @param {string} [params.producer] - Name of the producer
@@ -73,6 +76,7 @@ var Wine = function (_RealAsset) {
         currency = _ref.currency,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
         clientId = _ref.clientId,
         year = _ref.year,
         producer = _ref.producer,
@@ -109,6 +113,7 @@ var Wine = function (_RealAsset) {
       venueId: venueId,
       currency: currency,
       description: description,
+      displayName: displayName,
       clientId: clientId,
       comments: comments,
       links: links,

@@ -30,6 +30,8 @@ var Index = function (_Asset) {
    * @param {number} params.assetManagerId - ID of Index's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Asset __(required)__
    * @param {string} [params.assetClass=Index] - Auto-set to `Index` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Index. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` for Index __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Index's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Index
@@ -37,6 +39,8 @@ var Index = function (_Asset) {
    * @param {string} [params.currency] - Index currency (e.g. USD, SGD)
    * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Index
+   * @param {string} [params.displayName] - Display name of the Index
+   * @param {boolean} [params.rollPrice=false] - Auto-set to `false` __(read-only)__
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the Index
    * @param {object} [params.links] - Object of array of Links attached to the Index
@@ -58,6 +62,7 @@ var Index = function (_Asset) {
         issueDate = _ref.issueDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
         clientId = _ref.clientId,
         comments = _ref.comments,
         links = _ref.links,
@@ -81,6 +86,8 @@ var Index = function (_Asset) {
       currency: currency,
       issueDate: issueDate,
       description: description,
+      displayName: displayName,
+      rollPrice: false,
       clientId: clientId,
       comments: comments,
       links: links,

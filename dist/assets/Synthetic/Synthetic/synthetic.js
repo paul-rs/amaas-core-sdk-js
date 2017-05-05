@@ -30,6 +30,8 @@ var Synthetic = function (_Asset) {
    * @param {number} params.assetManagerId - ID of Synthetic's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Asset __(required)__
    * @param {string} [params.assetClass=Synthetic] - Class of the Synthetic (a subclass of Synthetic may define its own assetClass)
+   * @param {string} [params.assetType] - Type of the Synthetic. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Whether the Synthetic is fungible __(required)__
    * @param {string} [params.assetIssuerId] - ID of the Synthetic's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Synthetic
@@ -39,6 +41,8 @@ var Synthetic = function (_Asset) {
    * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.maturityDate=9999-12-31] - Maturity date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Synthetic
+   * @param {string} [params.displayName] - Display name of the Synthetic
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Synthetic
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the Synthetic
    * @param {object} [params.links] - Object of array of Links attached to the Synthetic
@@ -66,6 +70,8 @@ var Synthetic = function (_Asset) {
         maturityDate = _ref.maturityDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
+        rollPrice = _ref.rollPrice,
         clientId = _ref.clientId,
         comments = _ref.comments,
         links = _ref.links,
@@ -91,6 +97,8 @@ var Synthetic = function (_Asset) {
       issueDate: issueDate,
       maturityDate: maturityDate,
       description: description,
+      displayName: displayName,
+      rollPrice: rollPrice,
       clientId: clientId,
       comments: comments,
       links: links,

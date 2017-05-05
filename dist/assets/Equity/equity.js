@@ -30,6 +30,8 @@ var Equity = function (_Asset) {
    * @param {number} params.assetManagerId - ID of Equity's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Equity __(required)__
    * @param {string} [params.assetClass=Equity] - Class of the Equity (a subclass of Equity may define its own assetClass)
+   * @param {string} [params.assetType] - Type of the Equity. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` for Equity __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Equity's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Equity
@@ -38,6 +40,8 @@ var Equity = function (_Asset) {
    * @param {string} [params.currency] - Equity currency (e.g. USD, SGD)
    * @param {string} [params.issueDate] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Equity
+   * @param {string} [params.displayName] - Display name of the Equity
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Equity
    * @param {string} [params.clientId] - ID of the associated client
    * @param {string} [params.shareClass=Common] - Share Class
    * @param {object} [params.comments] - Object of Comments attached to the Equity
@@ -64,6 +68,8 @@ var Equity = function (_Asset) {
         issueDate = _ref.issueDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
+        rollPrice = _ref.rollPrice,
         clientId = _ref.clientId,
         _ref$shareClass = _ref.shareClass,
         shareClass = _ref$shareClass === undefined ? 'Common' : _ref$shareClass,
@@ -90,6 +96,8 @@ var Equity = function (_Asset) {
       currency: currency,
       issueDate: issueDate,
       description: description,
+      displayName: displayName,
+      rollPrice: rollPrice,
       clientId: clientId,
       comments: comments,
       links: links,

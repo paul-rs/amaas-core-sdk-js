@@ -49,7 +49,7 @@ class Derivative extends Asset {
     maturityDate,
     description='',
     displayName,
-    rollPrice
+    rollPrice,
     clientId,
     comments,
     links,

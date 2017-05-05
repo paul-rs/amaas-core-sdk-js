@@ -36,6 +36,8 @@ var ForeignExchangeOption = function (_Asset) {
    * @param {number} params.assetManagerId - ID of FX Option's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Asset __(required)__
    * @param {string} [params.assetClass=ForeignExchange] - Auto-set to `ForeignExchange` __(read-only)__
+   * @param {string} [params.assetType] - Type of the FX Option. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=false] - Auto-set to `false` __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the FX Option's issuer
    * @param {string} [params.assetStatus=Active] - Status of the FX Option
@@ -45,6 +47,7 @@ var ForeignExchangeOption = function (_Asset) {
    * @param {string} [params.issueDate] - Issue date (YYYY-MM-DD)
    * @param {string} [params.expiryDate] - Expiry date (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the FX Option
+   * @param {string} [params.displayName] - Display name of the FX Option
    * @param {string} [params.clientId] - ID of the client to which the FX Option belongs
    * @param {string} params.optionStyle - FX Option style __(required)__<br />
    * Available options:
@@ -79,6 +82,7 @@ var ForeignExchangeOption = function (_Asset) {
         expiryDate = _ref.expiryDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
         clientId = _ref.clientId,
         optionType = _ref.optionType,
         strike = _ref.strike,
@@ -108,6 +112,7 @@ var ForeignExchangeOption = function (_Asset) {
       currency: currency,
       issueDate: issueDate,
       description: description,
+      displayName: displayName,
       clientId: clientId,
       comments: comments,
       links: links,

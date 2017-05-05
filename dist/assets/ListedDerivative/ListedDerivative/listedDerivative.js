@@ -30,6 +30,8 @@ var ListedDerivative = function (_Asset) {
    * @param {number} params.assetManagerId - ID of Listed Derivative's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Listed Derivative __(required)__
    * @param {string} [params.assetClass=ListedDerivative] - Class of the Listed Derivative (a subclass may define its own assetClass)
+   * @param {string} [params.assetType] - Type of the Listed Derivative. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Listed Derivative's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Listed Derivative
@@ -39,6 +41,8 @@ var ListedDerivative = function (_Asset) {
    * @param {string} [params.issueDate] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.maturityDate] - Maturity date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Listed Derivative
+   * @param {string} [params.displayName] - Display name of the Listed Derivative
+   * @param {boolean} [params.rollPrice=false] - Auto-set to `false` __(read-only)__
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the Listed Derivative
    * @param {object} [params.links] - Object of array of Links attached to the Listed Derivative
@@ -64,6 +68,7 @@ var ListedDerivative = function (_Asset) {
         maturityDate = _ref.maturityDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
         clientId = _ref.clientId,
         comments = _ref.comments,
         links = _ref.links,
@@ -89,6 +94,8 @@ var ListedDerivative = function (_Asset) {
       issueDate: issueDate,
       maturityDate: maturityDate,
       description: description,
+      displayName: displayName,
+      rollPrice: false,
       clientId: clientId,
       comments: comments,
       links: links,

@@ -33,10 +33,14 @@ var ForeignExchangeBase = function (_Asset) {
    * @param {number} [params.assetManagerId=0] - Auto-set to `0`. All FX classes and subclasses are treated as public Assets
    * @param {number} params.assetId - ID of the ForeignExchangeBase __(required)__
    * @param {string} [params.assetClass=ForeignExchange] - Auto-set to `ForeignExchange` __(read-only)__
+   * @param {string} [params.assetType] - Type of the ForeignExchangeBase. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` for ForeignExchangeBase __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the ForeignExchangeBase's issuer
    * @param {string} [params.assetStatus=Active] - Status of the ForeignExchangeBase
    * @param {string} [params.description] - Description of the ForeignExchangeBase
+   * @param {string} [params.displayName] - Display name of the ForeignExchangeBase
+   * @param {boolean} [params.rollPrice=false] - Auto-set to `false` __(read-only)__
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the ForeignExchangeBase
    * @param {object} [params.links] - Object of array of Links attached to the ForeignExchangeBase
@@ -54,6 +58,7 @@ var ForeignExchangeBase = function (_Asset) {
         assetStatus = _ref$assetStatus === undefined ? 'Active' : _ref$assetStatus,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
         clientId = _ref.clientId,
         comments = _ref.comments,
         links = _ref.links,
@@ -74,6 +79,8 @@ var ForeignExchangeBase = function (_Asset) {
       assetIssuerId: assetIssuerId,
       assetStatus: assetStatus,
       description: description,
+      displayName: displayName,
+      rollPrice: false,
       clientId: clientId,
       comments: comments,
       links: links,

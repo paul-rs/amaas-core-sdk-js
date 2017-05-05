@@ -36,6 +36,8 @@ var FutureOption = function (_Future) {
    * @param {number} params.assetManagerId - ID of Future Option's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Future Option __(required)__
    * @param {string} [params.assetClass=Future] - Auto-set to `Future` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Future Option. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` for Future subclasses __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Future Option's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Future Option
@@ -45,6 +47,7 @@ var FutureOption = function (_Future) {
    * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
    * @param {string} [params.expiryDate=9999-12-31] - Expiry date (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Future Option
+   * @param {string} [params.displayName] - Display name of the Furure Option
    * @param {string} [params.clientId] - ID of the associated client
    * @param {string} params.settlementType - Settlement Type __(required)__<br />
    * Available options:
@@ -86,6 +89,7 @@ var FutureOption = function (_Future) {
         issueDate = _ref.issueDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
         clientId = _ref.clientId,
         settlementType = _ref.settlementType,
         contractSize = _ref.contractSize,
@@ -118,6 +122,7 @@ var FutureOption = function (_Future) {
       currency: currency,
       issueDate: issueDate,
       description: description,
+      displayName: displayName,
       clientId: clientId,
       settlementType: settlementType,
       contractSize: contractSize,

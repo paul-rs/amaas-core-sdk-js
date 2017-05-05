@@ -36,6 +36,8 @@ var Fund = function (_Asset) {
    * @param {number} params.assetManagerId - ID of Fund's Asset Manager. Asset Manager refers to AMaaS user, NOT an asset manager in the Fund. __(required)__
    * @param {number} params.assetId - ID of the Fund __(required)__
    * @param {string} [params.assetClass=Fund] - Class of the Fund (a subclass of Fund may define its own assetClass)
+   * @param {string} [params.assetType] - Type of the Fund. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=true] - Auto-set to `true` for Fund __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Fund's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Fund
@@ -43,6 +45,8 @@ var Fund = function (_Asset) {
    * @param {string} [params.venueId] - ID of Fund's venue if applicable
    * @param {string} [params.currency] - Fund currency (e.g. USD, SGD)
    * @param {string} [params.description] - Description of the Fund
+   * @param {string} [params.displayName] - Display name of the Fund
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Fund
    * @param {string} [params.clientId] - ID of the associated client
    * @param {string} params.fundType - Type of Fund __(required)__<br />
    * Available options:
@@ -76,6 +80,8 @@ var Fund = function (_Asset) {
         currency = _ref.currency,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
+        rollPrice = _ref.rollPrice,
         clientId = _ref.clientId,
         fundType = _ref.fundType,
         creationDate = _ref.creationDate,
@@ -104,6 +110,8 @@ var Fund = function (_Asset) {
       venueId: venueId,
       currency: currency,
       description: description,
+      displayName: displayName,
+      rollPrice: rollPrice,
       clientId: clientId,
       comments: comments,
       links: links,

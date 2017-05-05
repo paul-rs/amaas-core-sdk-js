@@ -30,6 +30,8 @@ var RealAsset = function (_Asset) {
    * @param {number} params.assetManagerId - ID of Asset's Asset Manager __(required)__
    * @param {number} params.assetId - ID of the Asset __(required)__
    * @param {string} [params.assetClass=RealAsset] - Class of the Asset (a subclass of RealAsset may define its own assetClass)
+   * @param {string} [params.assetType] - Type of the Asset. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
    * @param {boolean} [params.fungible=false] - Auto-set to `false` __(read-only)__
    * @param {string} [params.assetIssuerId] - ID of the Real Asset's issuer
    * @param {string} [params.assetStatus=Active] - Status of the Real Asset
@@ -37,6 +39,8 @@ var RealAsset = function (_Asset) {
    * @param {string} [params.venueId] - ID of Real Asset's venue if applicable
    * @param {string} [params.currency] - Real Asset currency (e.g. USD, SGD)
    * @param {string} [params.description] - Description of the Real Asset
+   * @param {string} [params.displayName] - Display name of the Asset
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Asset
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the Real Asset
    * @param {object} [params.links] - Object of array of Links attached to the Real Asset
@@ -60,6 +64,8 @@ var RealAsset = function (_Asset) {
         currency = _ref.currency,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
+        rollPrice = _ref.rollPrice,
         clientId = _ref.clientId,
         comments = _ref.comments,
         links = _ref.links,
@@ -83,6 +89,8 @@ var RealAsset = function (_Asset) {
       venueId: venueId,
       currency: currency,
       description: description,
+      displayName: displayName,
+      rollPrice: rollPrice,
       clientId: clientId,
       comments: comments,
       links: links,
