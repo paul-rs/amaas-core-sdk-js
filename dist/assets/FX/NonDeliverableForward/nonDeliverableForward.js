@@ -72,7 +72,7 @@ var NonDeliverableForward = function (_FXBase) {
       links: links,
       references: references,
       createdBy: createdBy,
-      updatedBys: updatedBys,
+      updatedBy: updatedBy,
       createdTime: createdTime,
       updatedTime: updatedTime,
       version: version

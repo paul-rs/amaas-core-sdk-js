@@ -26,36 +26,36 @@ var Synthetic = function (_Asset) {
 
   /**
    * Construct a new Synthetic instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {object} params.clientAdditional - Object of custom properties for creating a Custom Asset (set in the Custom Asset class)
-   * @param {string} params.createdBy - ID of the user that created the Asset
-   * @param {string} params.updatedBy - ID of the user that updated the Asset
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {object} params - Synthetic creation options:
+   * @param {number} params.assetManagerId - ID of Synthetic's Asset Manager __(required)__
+   * @param {number} params.assetId - ID of the Asset __(required)__
+   * @param {string} [params.assetClass=Synthetic] - Class of the Synthetic (a subclass of Synthetic may define its own assetClass)
+   * @param {boolean} [params.fungible=true] - Whether the Synthetic is fungible __(required)__
+   * @param {string} [params.assetIssuerId] - ID of the Synthetic's issuer
+   * @param {string} [params.assetStatus=Active] - Status of the Synthetic
+   * @param {string} [params.countryId] - ID of Synthetic's country
+   * @param {string} [params.venueId] - ID of Synthetic's venue if applicable
+   * @param {string} [params.currency] - Synthetic currency (e.g. USD, SGD)
+   * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
+   * @param {string} [params.maturityDate=9999-12-31] - Maturity date if applicable (YYYY-MM-DD)
+   * @param {string} [params.description] - Description of the Synthetic
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {object} [params.comments] - Object of Comments attached to the Synthetic
+   * @param {object} [params.links] - Object of array of Links attached to the Synthetic
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the Synthetic
+   * @param {string} [params.createdBy] - ID of the user that created the Synthetic
+   * @param {string} [params.updatedBy] - ID of the user that updated the Synthetic
+   * @param {date} [params.createdTime] - Time that the Synthetic was created
+   * @param {date} [params.updatedTime] - Time that the Synthetic was updated
+   * @param {number} [params.version] - Version number
   */
   function Synthetic(_ref) {
     var assetManagerId = _ref.assetManagerId,
         assetId = _ref.assetId,
         _ref$assetClass = _ref.assetClass,
         assetClass = _ref$assetClass === undefined ? 'Synthetic' : _ref$assetClass,
-        fungible = _ref.fungible,
+        _ref$fungible = _ref.fungible,
+        fungible = _ref$fungible === undefined ? true : _ref$fungible,
         assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
         assetStatus = _ref$assetStatus === undefined ? 'Active' : _ref$assetStatus,

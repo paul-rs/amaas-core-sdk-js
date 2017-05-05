@@ -94,7 +94,7 @@ class Fund extends Asset {
         get: () => this._creationDate,
         set: (newCreationDate) => {
           if (newCreationDate) {
-            this._creationDate = date
+            this._creationDate = newCreationDate
           } else {
             this._creationDate = '0001-01-01'
           }

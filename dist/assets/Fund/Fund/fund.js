@@ -123,7 +123,7 @@ var Fund = function (_Asset) {
         },
         set: function set(newCreationDate) {
           if (newCreationDate) {
-            _this._creationDate = date;
+            _this._creationDate = newCreationDate;
           } else {
             _this._creationDate = '0001-01-01';
           }

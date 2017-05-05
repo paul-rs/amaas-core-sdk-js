@@ -50,7 +50,7 @@ class NonDeliverableForward extends FXBase {
       links,
       references,
       createdBy,
-      updatedBys,
+      updatedBy,
       createdTime,
       updatedTime,
       version

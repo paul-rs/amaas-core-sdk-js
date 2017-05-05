@@ -6,22 +6,16 @@ import { Reference } from '../../children'
 describe('Asset', () => {
   describe('constructor', () => {
 
-    it('should set issueDate correctly', () => {
-      const testAsset = new Asset({ issueDate: '2017-04-17' })
+    it('should default issueDate correctly', () => {
+      const testAsset = new Asset({})
       const issueDate = testAsset.issueDate
-      expect(issueDate).toBeInstanceOf(Date)
-      expect(issueDate.getDate()).toEqual(17)
-      expect(issueDate.getMonth()).toEqual(3)
-      expect(issueDate.getFullYear()).toEqual(2017)
+      expect(issueDate).toEqual('0001-01-01')
     })
 
     it('should set maturityDate correctly', () => {
-      const testAsset = new Asset({ maturityDate: '2020-04-20' })
+      const testAsset = new Asset({})
       const maturityDate = testAsset.maturityDate
-      expect(maturityDate).toBeInstanceOf(Date)
-      expect(maturityDate.getDate()).toEqual(20)
-      expect(maturityDate.getMonth()).toEqual(3)
-      expect(maturityDate.getFullYear()).toEqual(2020)
+      expect(maturityDate).toEqual('9999-12-31')
     })
 
     it('should set comments to empty object if no Comments', () => {

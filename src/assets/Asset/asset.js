@@ -73,7 +73,7 @@ class Asset extends AMaaSModel {
         set: (newIssueDate) => {
           // Accepts string 'YYYY-MM-DD'
           if (newIssueDate) {
-            this._issueDate = date
+            this._issueDate = newIssueDate
           } else {
             this._issueDate = '0001-01-01'
           }
@@ -86,7 +86,7 @@ class Asset extends AMaaSModel {
         set: (newMaturityDate) => {
           // Accepts string 'YYYY-MM-DD'
           if (newMaturityDate) {
-            this._maturityDate = date
+            this._maturityDate = newMaturityDate
           } else {
             this._maturityDate = '9999-12-31'
           }

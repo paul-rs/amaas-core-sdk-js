@@ -97,7 +97,7 @@ var Asset = function (_AMaaSModel) {
         set: function set(newIssueDate) {
           // Accepts string 'YYYY-MM-DD'
           if (newIssueDate) {
-            _this._issueDate = date;
+            _this._issueDate = newIssueDate;
           } else {
             _this._issueDate = '0001-01-01';
           }
@@ -112,7 +112,7 @@ var Asset = function (_AMaaSModel) {
         set: function set(newMaturityDate) {
           // Accepts string 'YYYY-MM-DD'
           if (newMaturityDate) {
-            _this._maturityDate = date;
+            _this._maturityDate = newMaturityDate;
           } else {
             _this._maturityDate = '9999-12-31';
           }
