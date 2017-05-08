@@ -21,41 +21,40 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @memberof module:assets
  * @extends module:assets.Derivative
  */
-var CFD = function (_Derivative) {
-  _inherits(CFD, _Derivative);
+var ContractForDifference = function (_Derivative) {
+  _inherits(ContractForDifference, _Derivative);
 
   /**
    * Construct a new CFD instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {number} params.premium - Premium of the Asset
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created the CFD
-   * @param {string} params.updatedBy - ID of the user that updated the CFD
-   * @param {date} params.createdTime - Time that the CFD was created
-   * @param {date} params.updatedTime - Time that the CFD was updated
-   * @param {number} params.version - Version number of the CFD
+   * @param {object} params - CFD creation options:
+   * @param {number} params.assetManagerId - ID of Asset's Asset Manager __(required)__
+   * @param {number} params.assetId - ID of the Asset __(required)__
+   * @param {string} [params.assetClass=Derivative] - Auto-set to `Derivative` __(read-only)__
+   * @param {string} [params.assetType] - Type of the CFD. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
+   * @param {boolean} [params.fungible=false] - Auto-set to `false` for Derivative and its subclasses __(read-only)__
+   * @param {string} [params.assetIssuerId] - ID of the CFD issuer
+   * @param {string} [params.assetStatus=Active] - Status of the CFD
+   * @param {string} [params.countryId] - ID of CFD's country
+   * @param {string} [params.venueId] - ID of CFD's venue
+   * @param {string} [params.currency] - CFD currency (e.g. USD, SGD)
+   * @param {string} [params.issueDate] - Issue date if applicable (YYYY-MM-DD)
+   * @param {string} [params.maturityDate] - Maturity date if applicable (YYYY-MM-DD)
+   * @param {string} [params.description] - Description of the CFD
+   * @param {string} [params.displayName] - Display name of the CFD
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {object} [params.comments] - Object of Comments attached to the CFD
+   * @param {object} [params.links] - Object of array of Links attached to the CFD
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the CFD. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the CFD
+   * @param {string} [params.updatedBy] - ID of the user that updated the CFD
+   * @param {date} [params.createdTime] - Time that the CFD was created
+   * @param {date} [params.updatedTime] - Time that the CFD was updated
+   * @param {number} [params.version] - Version number of the CFD
   */
-  function CFD(_ref) {
+  function ContractForDifference(_ref) {
     var assetManagerId = _ref.assetManagerId,
         assetId = _ref.assetId,
-        _ref$assetClass = _ref.assetClass,
-        assetClass = _ref$assetClass === undefined ? 'CFD' : _ref$assetClass,
-        fungible = _ref.fungible,
         assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
         assetStatus = _ref$assetStatus === undefined ? 'Active' : _ref$assetStatus,
@@ -66,8 +65,8 @@ var CFD = function (_Derivative) {
         maturityDate = _ref.maturityDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
         clientId = _ref.clientId,
-        premium = _ref.premium,
         comments = _ref.comments,
         links = _ref.links,
         references = _ref.references,
@@ -77,13 +76,13 @@ var CFD = function (_Derivative) {
         updatedTime = _ref.updatedTime,
         version = _ref.version;
 
-    _classCallCheck(this, CFD);
+    _classCallCheck(this, ContractForDifference);
 
-    return _possibleConstructorReturn(this, (CFD.__proto__ || Object.getPrototypeOf(CFD)).call(this, {
+    return _possibleConstructorReturn(this, (ContractForDifference.__proto__ || Object.getPrototypeOf(ContractForDifference)).call(this, {
       assetManagerId: assetManagerId,
       assetId: assetId,
-      assetClass: assetClass,
-      fungible: fungible,
+      assetClass: 'Derivative',
+      fungible: false,
       assetIssuerId: assetIssuerId,
       assetStatus: assetStatus,
       countryId: countryId,
@@ -92,8 +91,8 @@ var CFD = function (_Derivative) {
       issueDate: issueDate,
       maturityDate: maturityDate,
       description: description,
+      displayName: displayName,
       clientId: clientId,
-      premium: premium,
       comments: comments,
       links: links,
       references: references,
@@ -105,7 +104,7 @@ var CFD = function (_Derivative) {
     }));
   }
 
-  return CFD;
+  return ContractForDifference;
 }(_derivative2.default);
 
-exports.default = CFD;
+exports.default = ContractForDifference;

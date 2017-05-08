@@ -1,6 +1,6 @@
 /**
  * Core classes for the AMaaS Core SDK for JavaScript.
- * These classes cannot be instantiated from the SDK, they are included for reference
+ * These classes cannot be instantiated from the SDK, they are included for reference.
  * @module core
  */
 

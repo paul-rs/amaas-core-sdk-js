@@ -15,7 +15,7 @@ class AssetManager extends Company {
    * @param {string} params.baseCurrency - Base Currency of the Asset Manager (e.g. SGD, USD)
    * @param {string} params.description - Description of the Asset Manager
    * @param {object} params.addresses - Object of Addresses associated with this Asset Manager
-   * @param (object) params.emails - Object of Emails associated with this Asset Manager
+   * @param {object} params.emails - Object of Emails associated with this Asset Manager
    * @param {object} params.references - Object of References associated with this Asset Manager
    * @param {object} params.comments - Object of Comments associated with the Asset Manager
    * @param {object} params.links - Object of Links associated with the Asset Manager

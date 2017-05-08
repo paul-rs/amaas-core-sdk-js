@@ -26,46 +26,44 @@ var RealEstate = function (_RealAsset) {
 
   /**
    * Construct a new Real Estate instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {object} params.clientAdditional - Object of custom properties for creating a Custom Asset (set in the Custom Asset class)
-   * @param {string} params.createdBy - ID of the user that created the Asset
-   * @param {string} params.updatedBy - ID of the user that updated the Asset
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {object} params - RealEstate creation options:
+   * @param {number} params.assetManagerId - ID of Real Estate's Asset Manager __(required)__
+   * @param {number} params.assetId - ID of the Real Estate __(required)__
+   * @param {string} [params.assetClass=RealAsset] - Auto-set to `RealEstate` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Real Estate. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
+   * @param {boolean} [params.fungible=false] - Auto-set to `false` __(read-only)__
+   * @param {string} [params.assetIssuerId] - ID of the Real Estate's issuer
+   * @param {string} [params.assetStatus=Active] - Status of the Real Estate
+   * @param {string} [params.countryId] - ID of Real Estate's country
+   * @param {string} [params.venueId] - ID of Real Estate's venue if applicable
+   * @param {string} [params.currency] - Real Estate currency (e.g. USD, SGD)
+   * @param {string} [params.description] - Description of the Real Estate
+   * @param {string} [params.displayName] - Display name of the Real Estate
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Real Estate
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {object} [params.comments] - Object of Comments attached to the Real Estate
+   * @param {object} [params.links] - Object of array of Links attached to the Real Estate
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the Real Estate. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the Real Estate
+   * @param {string} [params.updatedBy] - ID of the user that updated the Real Estate
+   * @param {date} [params.createdTime] - Time that the Real Estate was created
+   * @param {date} [params.updatedTime] - Time that the Real Estate was updated
+   * @param {number} [params.version] - Version number
   */
   function RealEstate(_ref) {
     var assetManagerId = _ref.assetManagerId,
         assetId = _ref.assetId,
-        _ref$assetClass = _ref.assetClass,
-        assetClass = _ref$assetClass === undefined ? 'RealEstate' : _ref$assetClass,
-        fungible = _ref.fungible,
         assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
         assetStatus = _ref$assetStatus === undefined ? 'Active' : _ref$assetStatus,
         countryId = _ref.countryId,
         venueId = _ref.venueId,
         currency = _ref.currency,
-        issueDate = _ref.issueDate,
-        maturityDate = _ref.maturityDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
+        rollPrice = _ref.rollPrice,
         clientId = _ref.clientId,
         comments = _ref.comments,
         links = _ref.links,
@@ -81,8 +79,7 @@ var RealEstate = function (_RealAsset) {
     return _possibleConstructorReturn(this, (RealEstate.__proto__ || Object.getPrototypeOf(RealEstate)).call(this, {
       assetManagerId: assetManagerId,
       assetId: assetId,
-      assetClass: assetClass,
-      fungible: fungible,
+      assetClass: 'RealEstate',
       assetIssuerId: assetIssuerId,
       assetStatus: assetStatus,
       countryId: countryId,
@@ -91,6 +88,8 @@ var RealEstate = function (_RealAsset) {
       issueDate: issueDate,
       maturityDate: maturityDate,
       description: description,
+      displayName: displayName,
+      rollPrice: rollPrice,
       clientId: clientId,
       comments: comments,
       links: links,

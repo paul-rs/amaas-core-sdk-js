@@ -1,18 +1,12 @@
 /**
- * Classes for the Transactions service. (Not ready yet)
+ * Classes for the Transactions service.
  * @module transactions
  */
 
 // Classes
-import {
-  Transaction,
-  Position
-} from '../transactions'
+import * as transactions from '../transactions'
 
 // CRUD methods
 
 // Exports
-export {
-  Transaction,
-  Position
-}
+export { transactions }

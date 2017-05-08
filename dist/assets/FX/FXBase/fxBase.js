@@ -19,54 +19,46 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
- * Class representing FX (this should never be instantiated directly, use the appropriate subclass instead)
+ * Class representing FX (this should never be instantiated directly, use the appropriate subclass instead).
+ * Note that creating and editing FXBase subclasses and other public subclasses is a restricted action.
  * @memberof module:assets
  * @extends module:assets.Asset
  */
-var FXBase = function (_Asset) {
-  _inherits(FXBase, _Asset);
+var ForeignExchangeBase = function (_Asset) {
+  _inherits(ForeignExchangeBase, _Asset);
 
   /**
-   * Construct a new FXBase instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created the Asset
-   * @param {string} params.updatedBy - ID of the user that updated the Asset
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
+   * Construct a new ForeignExchangeBase instance
+   * @param {object} params - ForeignExchangeBase creation options:
+   * @param {number} [params.assetManagerId=0] - Auto-set to `0`. All FX classes and subclasses are treated as public Assets
+   * @param {number} params.assetId - ID of the ForeignExchangeBase __(required)__
+   * @param {string} [params.assetClass=ForeignExchange] - Auto-set to `ForeignExchange` __(read-only)__
+   * @param {string} [params.assetType] - Type of the ForeignExchangeBase. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
+   * @param {boolean} [params.fungible=true] - Auto-set to `true` for ForeignExchangeBase __(read-only)__
+   * @param {string} [params.assetIssuerId] - ID of the ForeignExchangeBase's issuer
+   * @param {string} [params.assetStatus=Active] - Status of the ForeignExchangeBase
+   * @param {string} [params.description] - Description of the ForeignExchangeBase
+   * @param {string} [params.displayName] - Display name of the ForeignExchangeBase
+   * @param {boolean} [params.rollPrice=false] - Auto-set to `false` __(read-only)__
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {object} [params.comments] - Object of Comments attached to the ForeignExchangeBase
+   * @param {object} [params.links] - Object of array of Links attached to the ForeignExchangeBase
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the ForeignExchangeBase. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the ForeignExchangeBase
+   * @param {string} [params.updatedBy] - ID of the user that updated the ForeignExchangeBase
+   * @param {date} [params.createdTime] - Time that the ForeignExchangeBase was created
+   * @param {date} [params.updatedTime] - Time that the ForeignExchangeBase was updated
    * @param {number} params.version - Version number
   */
-  function FXBase(_ref) {
-    var assetManagerId = _ref.assetManagerId,
-        assetId = _ref.assetId,
-        _ref$assetClass = _ref.assetClass,
-        assetClass = _ref$assetClass === undefined ? 'ForeignExchange' : _ref$assetClass,
-        fungible = _ref.fungible,
+  function ForeignExchangeBase(_ref) {
+    var assetId = _ref.assetId,
         assetIssuerId = _ref.assetIssuerId,
         _ref$assetStatus = _ref.assetStatus,
         assetStatus = _ref$assetStatus === undefined ? 'Active' : _ref$assetStatus,
-        countryId = _ref.countryId,
-        venueId = _ref.venueId,
-        currency = _ref.currency,
-        issueDate = _ref.issueDate,
-        maturityDate = _ref.maturityDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        displayName = _ref.displayName,
         clientId = _ref.clientId,
         comments = _ref.comments,
         links = _ref.links,
@@ -77,21 +69,18 @@ var FXBase = function (_Asset) {
         updatedTime = _ref.updatedTime,
         version = _ref.version;
 
-    _classCallCheck(this, FXBase);
+    _classCallCheck(this, ForeignExchangeBase);
 
-    return _possibleConstructorReturn(this, (FXBase.__proto__ || Object.getPrototypeOf(FXBase)).call(this, {
-      assetManagerId: assetManagerId,
+    return _possibleConstructorReturn(this, (ForeignExchangeBase.__proto__ || Object.getPrototypeOf(ForeignExchangeBase)).call(this, {
+      assetManagerId: 0,
       assetId: assetId,
-      assetClass: assetClass,
-      fungible: fungible,
+      assetClass: 'ForeignExchange',
+      fungible: true,
       assetIssuerId: assetIssuerId,
       assetStatus: assetStatus,
-      countryId: countryId,
-      venueId: venueId,
-      currency: currency,
-      issueDate: issueDate,
-      maturityDate: maturityDate,
       description: description,
+      displayName: displayName,
+      rollPrice: false,
       clientId: clientId,
       comments: comments,
       links: links,
@@ -104,7 +93,7 @@ var FXBase = function (_Asset) {
     }));
   }
 
-  _createClass(FXBase, [{
+  _createClass(ForeignExchangeBase, [{
     key: 'getBaseCurrency',
     value: function getBaseCurrency() {
       return this.assetId.slice(0, 3);
@@ -112,11 +101,11 @@ var FXBase = function (_Asset) {
   }, {
     key: 'getCounterCurrency',
     value: function getCounterCurrency() {
-      return this.assetId.slice(3, 7);
+      return this.assetId.slice(3, 6);
     }
   }]);
 
-  return FXBase;
+  return ForeignExchangeBase;
 }(_asset2.default);
 
-exports.default = FXBase;
+exports.default = ForeignExchangeBase;

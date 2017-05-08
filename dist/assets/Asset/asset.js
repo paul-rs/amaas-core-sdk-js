@@ -26,29 +26,33 @@ var Asset = function (_AMaaSModel) {
 
   /**
    * Construct a new Asset instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {object} params.clientAdditional - Object of custom properties for creating a Custom Asset (set in the Custom Asset class)
-   * @param {string} params.createdBy - ID of the user that created the Asset
-   * @param {string} params.updatedBy - ID of the user that updated the Asset
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {object} params - Asset creation options:
+   * @param {number} params.assetManagerId - ID of Asset's Asset Manager __(required)__
+   * @param {number} params.assetId - ID of the Asset __(required)__
+   * @param {string} [params.assetClass=Asset] - Class of the Asset
+   * @param {string} [params.assetType] - Type of the Asset. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
+   * @param {boolean} params.fungible - Whether this Asset is fungible __(required)__
+   * @param {string} [params.assetIssuerId] - ID of the Asset issuer
+   * @param {string} [params.assetStatus=Active] - Status of the Asset
+   * @param {string} [params.countryId] - ID of Asset's country
+   * @param {string} [params.venueId] - ID of Asset's venue if applicable
+   * @param {string} [params.currency] - Asset currency (e.g. USD, SGD)
+   * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
+   * @param {string} [params.maturityDate=9999-12-31] - Maturity date if applicable (YYYY-MM-DD)
+   * @param {string} [params.description] - Description of the Asset
+   * @param {string} [params.displayName] - Display name of the Asset
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Asset
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {object} [params.comments] - Object of Comments attached to the Asset
+   * @param {object} [params.links] - Object of array of Links attached to the Asset
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with this Asset. * The AMaaS Reference is auto-created and populated
+   * @param {object} [params.clientAdditional] - Object of custom properties for creating a Custom Asset (set in the Custom Asset class)
+   * @param {string} [params.createdBy] - ID of the user that created the Asset
+   * @param {string} [params.updatedBy] - ID of the user that updated the Asset
+   * @param {date} [params.createdTime] - Time that the Asset was created
+   * @param {date} [params.updatedTime] - Time that the Asset was updated
+   * @param {number} [params.version] - Version number
   */
   function Asset(_ref) {
     var assetManagerId = _ref.assetManagerId,
@@ -66,6 +70,10 @@ var Asset = function (_AMaaSModel) {
         maturityDate = _ref.maturityDate,
         _ref$description = _ref.description,
         description = _ref$description === undefined ? '' : _ref$description,
+        _ref$displayName = _ref.displayName,
+        displayName = _ref$displayName === undefined ? '' : _ref$displayName,
+        _ref$rollPrice = _ref.rollPrice,
+        rollPrice = _ref$rollPrice === undefined ? true : _ref$rollPrice,
         clientId = _ref.clientId,
         comments = _ref.comments,
         links = _ref.links,
@@ -75,7 +83,7 @@ var Asset = function (_AMaaSModel) {
         createdTime = _ref.createdTime,
         updatedTime = _ref.updatedTime,
         version = _ref.version,
-        clientAdditional = _objectWithoutProperties(_ref, ['assetManagerId', 'assetId', 'assetClass', 'fungible', 'assetIssuerId', 'assetStatus', 'countryId', 'venueId', 'currency', 'issueDate', 'maturityDate', 'description', 'clientId', 'comments', 'links', 'references', 'createdBy', 'updatedBy', 'createdTime', 'updatedTime', 'version']);
+        clientAdditional = _objectWithoutProperties(_ref, ['assetManagerId', 'assetId', 'assetClass', 'fungible', 'assetIssuerId', 'assetStatus', 'countryId', 'venueId', 'currency', 'issueDate', 'maturityDate', 'description', 'displayName', 'rollPrice', 'clientId', 'comments', 'links', 'references', 'createdBy', 'updatedBy', 'createdTime', 'updatedTime', 'version']);
 
     _classCallCheck(this, Asset);
 
@@ -94,11 +102,11 @@ var Asset = function (_AMaaSModel) {
           return _this._issueDate;
         },
         set: function set(newIssueDate) {
-          // Accepts string 'yyyy-mm-dd'
+          // Accepts string 'YYYY-MM-DD'
           if (newIssueDate) {
-            var dArray = newIssueDate.split('-');
-            var date = new Date(dArray[0], dArray[1] - 1, dArray[2]);
-            _this._issueDate = date;
+            _this._issueDate = newIssueDate;
+          } else {
+            _this._issueDate = '0001-01-01';
           }
         },
         enumerable: true
@@ -109,11 +117,11 @@ var Asset = function (_AMaaSModel) {
           return _this._maturityDate;
         },
         set: function set(newMaturityDate) {
-          // Accepts string 'yyyy-mm-dd'
+          // Accepts string 'YYYY-MM-DD'
           if (newMaturityDate) {
-            var dArray = newMaturityDate.split('-');
-            var date = new Date(dArray[0], dArray[1] - 1, dArray[2]);
-            _this._maturityDate = date;
+            _this._maturityDate = newMaturityDate;
+          } else {
+            _this._maturityDate = '9999-12-31';
           }
         },
         enumerable: true
@@ -193,6 +201,7 @@ var Asset = function (_AMaaSModel) {
     _this.assetId = assetId;
     _this.assetClass = assetClass;
     _this.assetType = _this.constructor.name;
+    _this.assetTypeDisplay = _this.constructor.name.replace(/([A-Z])/g, ' $1').trim();
     _this.fungible = fungible;
     _this.assetIssuerId = assetIssuerId;
     _this.assetStatus = assetStatus;
@@ -202,6 +211,8 @@ var Asset = function (_AMaaSModel) {
     _this.issueDate = issueDate;
     _this.maturityDate = maturityDate;
     _this.description = description;
+    _this.displayName = displayName;
+    _this.rollPrice = rollPrice;
     _this.clientId = clientId;
     _this.comments = comments;
     _this.links = links;

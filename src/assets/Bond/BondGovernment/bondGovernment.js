@@ -8,38 +8,40 @@ import BondBase from '../BondBase/bond.js'
 class BondGovernment extends BondBase {
   /**
    * Construct new Government Bond instance
-   * @param {object} params - Bond creation options
-   * @param {string} params.assetManagerId - ID of Bond's Asset Manager
-   * @param {string} params.assetId - ID of asset
-   * @param {string} params.assetClass - Class of Asset. This should always be 'Bond'
-   * @param {boolean} params.fungible - Whether this Bond is fungible
-   * @param {string} params.assetIssuerId - ID of the Bond Issuer
-   * @param {string} params.assetStatus - Status of the Bond
-   * @param {string} params.countryId - ID of the Bond's origin country
-   * @param {string} params.venueId - ID of the Bond's venue
-   * @param {string} params.currency - Currency denomination of the Bond
-   * @param {string} params.issueDate - The date that the Bond was issued
-   * @param {string} params.maturityDate - Date of Bond's maturity
-   * @param {string} params.description - Description of the Bond
-   * @param {string} params.clientId - ID of the client
-   * @param {decimal} params.coupon - The Bond's coupon (represented as a fraction of 1 i.e. 0.05 = 5%)
-   * @param {decimal} params.par - The Bond's par
-   * @param {string} params.payFrequency - ???
-   * @param {boolean} params.defaulted - Whether the issuer has defaulted
-   * @param {object} params.comments - Object of comments for the Bond. { name: string: comment: Comment }
-   * @param {object} params.links - Object of links for the Bond. { name: string: link: Link[] }
-   * @param {object} params.references - Object of references for the Bond
-   * @param {string} params.createdBy - ID of the user that created the Bond
-   * @param {string} params.updatedBy - ID of the user that updated the Bond
-   * @param {date} params.createdTime - Time that the Bond was created
-   * @param {date} params.updatedTime - Time that the Bond was updated
-   * @param {number} params.version - Version number of the Bond
+   * @param {object} params - BondGovernment creation options:
+   * @param {string} params.assetManagerId - ID of Bond's Asset Manager __(required)__
+   * @param {string} params.assetId - ID of the Bond __(required)__
+   * @param {string} [params.assetClass=Bond] - Auto-set to `Bond` __(read-only)__
+   * @param {string} [params.assetType] - Type of the Bond. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
+   * @param {boolean} [params.fungible=true] - Auto-set `true` for Bonds __(read-only)__
+   * @param {string} [params.assetIssuerId] - ID of the Bond Issuer
+   * @param {string} [params.assetStatus=Active] - Status of the Bond
+   * @param {string} [params.countryId] - ID of the Bond's country
+   * @param {string} [params.venueId] - ID of the Bond's venue
+   * @param {string} [params.currency] - Bond currency (e.g. USD, SGD)
+   * @param {string} [params.issueDate=0001-01-01] - Bond issue date (YYYY-MM-DD)
+   * @param {string} [params.maturityDate=9999-12-31] - Bond maturity date (YYYY-MM-DD)
+   * @param {string} [params.description] - Description of the Bond
+   * @param {string} [params.displayName] - Display name of the Bond
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Bond
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {number} params.coupon - The Bond's coupon represented as a fraction of 1 i.e. 0.05 = 5%. Stored as a Decimal instance __(required)__
+   * @param {number} params.par - The Bond's par value. Stored as a Decimal instance __(required)__
+   * @param {string} params.payFrequency - Frequency of coupon payment __(required)__
+   * @param {boolean} [params.defaulted=false] - Whether the issuer has defaulted
+   * @param {object} [params.comments] - Object of Comments attached to the Bond
+   * @param {object} [params.links] - Object of array of Links attached to the Bond
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References attached to the Bond. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the Bond
+   * @param {string} [params.updatedBy] - ID of the user that updated the Bond
+   * @param {date} [params.createdTime] - Time that the Bond was created
+   * @param {date} [params.updatedTime] - Time that the Bond was updated
+   * @param {number} [params.version] - Version number of the Bond
   */
   constructor({
     assetManagerId,
     assetId,
-    assetClass='Bond',
-    fungible,
     assetIssuerId,
     assetStatus='Active',
     countryId,
@@ -48,6 +50,8 @@ class BondGovernment extends BondBase {
     issueDate,
     maturityDate,
     description='',
+    displayName,
+    rollPrice,
     clientId,
     coupon,
     par,
@@ -65,8 +69,8 @@ class BondGovernment extends BondBase {
     super({
       assetManagerId,
       assetId,
-      assetClass,
-      fungible,
+      assetClass: 'Bond',
+      fungible: true,
       assetIssuerId,
       assetStatus,
       countryId,
@@ -75,6 +79,8 @@ class BondGovernment extends BondBase {
       issueDate,
       maturityDate,
       description,
+      displayName,
+      rollPrice,
       clientId,
       coupon,
       par,

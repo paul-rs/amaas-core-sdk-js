@@ -69,14 +69,14 @@ function retrieve(_ref, callback) {
  * @static
  * @param {object} params - object of parameters:
  * @param {number} [params.AMId] - Asset Manager ID of the user calling the API. If omitted, you must pass assetManagerIds in the query
- * @param {array} params.query - Array of query parameters of the form: [{ key: `string`, values: `array` }]<br />
+ * @param {object} params.query - Search parameters of the form: { `key`: `[values]` }<br />
  * Available keys are:
  * <li>assetManagerIds (Required if AMId param is omitted)</li>
  * <li>clientIds</li>
  * <li>bookStatuses</li>
  * <li>bookIds</li>
  * <li>ownerIds</li>
- * e.g. `[ { key: 'assetManagerIds', values: [1] }, { key: 'bookIds', values: [1, 2, 3]} ]`
+ * e.g. `{ assetManagerIds: [1], bookIds: [1, 2, 3] }`
  * @param {function} [callback] - Called with two arguments (error, result) on completion. `result` is an array of Books or a single Book instance. Omit to return Promise
  * @returns {Promise|null} If no callback supplied, returns a Promise that resolves with an array of Books or a single Book instance
  */

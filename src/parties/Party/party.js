@@ -11,23 +11,23 @@ import { PARTY_STATUSES, PARTY_TYPES } from '../enums'
 class Party extends AMaaSModel {
   /**
    * Construct a new Party instance
-   * @param {object} params - Party creation options
-   * @param {number} params.assetManagerId - Asset Manager ID of the Party
-   * @param {string} params.partyId - Party ID of the Party
-   * @param {string} params.partyStatus=Active - Status of the Party (e.g. 'Active')
-   * @param {string} params.partyClass=Party - Class of the Party
-   * @param {string} params.baseCurrency - Base Currency for the Party (e.g. SGD, USD)
-   * @param {string} params.description - Description of the Party
-   * @param {object} params.addresses - Object of Addresses associated with this Party
-   * @param (object) params.emails - Object of Emails associated with this Party
-   * @param {object} params.references - Object of References associated with this Party
-   * @param {object} params.comments - Object of Comments associated with this Party
-   * @param {object} params.links - Object of Links associated with this Party
-   * @param {string} params.createdBy - ID of the user that created the Party
-   * @param {string} params.updatedBy - ID of the user that updated the Party
-   * @param {date} params.createdTime - Time that the Party was created
-   * @param {date} params.updatedTime - Time that the Party was updated
-   * @param {number} params.version - Version number of the Party
+   * @param {object} params - Party creation options:
+   * @param {number} params.assetManagerId - Asset Manager ID of the Party __(required)__
+   * @param {string} params.partyId - Party ID of the Party __(required)__
+   * @param {string} [params.partyStatus=Active] - Status of the Party
+   * @param {string} [params.partyClass=Party] - Class of the Party
+   * @param {string} [params.baseCurrency] - Base Currency for the Party (e.g. SGD, USD)
+   * @param {string} [params.description] - Description of the Party
+   * @param {object} [params.addresses] - Object of Addresses associated with the Party
+   * @param {object} [params.emails] - Object of Emails associated with the Party
+   * @param {object} [params.references] - Object of References associated with the Party
+   * @param {object} [params.comments] - Object of Comments associated with the Party
+   * @param {object} [params.links] - Object of Links associated with this Party
+   * @param {string} [params.createdBy] - ID of the user that created the Party
+   * @param {string} [params.updatedBy] - ID of the user that updated the Party
+   * @param {date} [params.createdTime] - Time that the Party was created
+   * @param {date} [params.updatedTime] - Time that the Party was updated
+   * @param {number} [params.version] - Version number of the Party
    */
   constructor({
     assetManagerId,

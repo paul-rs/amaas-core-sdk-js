@@ -24,20 +24,32 @@ var AssetManager = function (_AMaaSModel) {
 
   /**
    * Construct a new Asset Manager Model
-   * @param {object} params - Asset Manager creation options
-   * @param {number} params.assetManagerId - Asset Manager's ID
-   * @param {string} params.assetManagerType - Type of Asset Manager (e.g. Hedge Fund)
-   * @param {string} params.assetManagerStatus - Status of Asset Manager (e.g. Active)
-   * @param {string} params.clientId - ID of the associated client
-   * @param {string} params.partyId - ID of the associated party (associated party may be self)
-   * @param {string} params.defaultBookOwnerId - ID of the default owner for any books owned by this Asset Manager
-   * @param {date} params.defaultTimezone - Default timezone for any books owned by this Asset Manager
-   * @param {date} params.defaultBookCloseTime - Default book close time for any books owned by this Asset Manager
-   * @param {string} params.createdBy - ID of the user that created the Asset Manager
-   * @param {string} params.updatedBy - ID of the user that updated the Asset Manager
-   * @param {date} params.createdTime - Time that the Asset Manager was created
-   * @param {date} params.updatedTime - Time that the Asset Manager was updated
-   * @param {number} params.version - Version number of the Asset Manager
+   * @param {object} params - Asset Manager creation options:
+   * @param {number} [params.assetManagerId=generated server side] - Asset Manager's ID. Include to specifically set, if it does not already exist
+   * @param {string} params.assetManagerType - Type of Asset Manager (e.g. Hedge Fund). __(required)__<br />
+   * Available types are:
+   * <li>Accredited Investor</li>
+   * <li>Bank</li>
+   * <li>Broker</li>
+   * <li>Corporate Treasury</li>
+   * <li>Family Office</li>
+   * <li>Fund Administrator</li>
+   * <li>Fund Manager</li>
+   * <li>Hedge Fund</li>
+   * <li>Private Equity</li>
+   * <li>Retail</li>
+   * <li>Venture Capital</li>
+   * @param {string} [params.assetManagerStatus=Active] - Status of Asset Manager
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {string} [params.partyId='AMID'+assetManagerId] - ID of the Party that represents this Asset Manager. Defaults to e.g. AMID10 for assetManagerId 10
+   * @param {string} [params.defaultBookOwnerId=assetManagerId] - Asset Manager ID of the default owner for any Books owned by this Asset Manager. Will be used if no `ownerId` is set on the Book. Defaults to e.g. 10 for assetManagerId 10
+   * @param {string} [params.defaultTimezone=UTC] - Default timezone for any Books owned by this Asset Manager
+   * @param {string} [params.defaultBookCloseTime=18:00:00] - Default Book close time for any books owned by this Asset Manager ('HH:MM:SS')
+   * @param {string} [params.createdBy] - ID of the user that created the Asset Manager
+   * @param {string} [params.updatedBy] - ID of the user that updated the Asset Manager
+   * @param {date} [params.createdTime] - Time that the Asset Manager was created
+   * @param {date} [params.updatedTime] - Time that the Asset Manager was updated
+   * @param {number} [params.version] - Version number of the Asset Manager
    */
   function AssetManager(_ref) {
     var assetManagerId = _ref.assetManagerId,

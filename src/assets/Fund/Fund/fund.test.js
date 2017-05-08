@@ -4,10 +4,9 @@ import Fund from './fund'
 
 describe('Fund class', () => {
   describe('constructor', () => {
-    it('should set creationDate', () => {
-      const date = new Date(2017, 2, 14)
-      const fund = new Fund({ creationDate: '2017-3-14' })
-      expect(fund.creationDate).toEqual(date)
+    it('should default creationDate', () => {
+      const fund = new Fund({ creationDate: undefined })
+      expect(fund.creationDate).toEqual('0001-01-01')
     })
 
     it('should catch attempt to set invalid fundType', () => {

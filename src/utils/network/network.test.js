@@ -63,7 +63,7 @@ describe('retrieveData', () => {
       callback()
     })
   })
-  it.only('should receive the correct HTTP status code', callback => {
+  it('should receive the correct HTTP status code', callback => {
     const scope = nock(getEndpoint())
       .get('/book/books/1234?camelcase=true')
       .reply(501)
@@ -107,13 +107,11 @@ describe('insertData', () => {
 })
 
 describe('searchData', () => {
-  const queries = [
-    { key: 'assetIds', values: [1, 2, 44, 'asf'] },
-    { key: 'assetClasses', values: ['Currency', 'Bond', 'Equity']},
-    { key: 'assetTypes', values: ['GovernmentBond, ForeignExchange']}
-  ]
+  const query = {
+    assetManagerIds: [1, 2]
+  }
   it('should return a promise if callback is not provided', () => {
-    let promise = searchData(queries).catch(error => {})
+    let promise = searchData({}).then(res => {}).catch(error => {})
     expect(promise).toBeInstanceOf(Promise)
   })
 })

@@ -1,49 +1,42 @@
 import Asset from '../../Asset/asset.js'
 
 /**
- * Class representing FX (this should never be instantiated directly, use the appropriate subclass instead)
+ * Class representing FX (this should never be instantiated directly, use the appropriate subclass instead).
+ * Note that creating and editing FXBase subclasses and other public subclasses is a restricted action.
  * @memberof module:assets
  * @extends module:assets.Asset
  */
-class FXBase extends Asset {
+class ForeignExchangeBase extends Asset {
   /**
-   * Construct a new FXBase instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created the Asset
-   * @param {string} params.updatedBy - ID of the user that updated the Asset
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
+   * Construct a new ForeignExchangeBase instance
+   * @param {object} params - ForeignExchangeBase creation options:
+   * @param {number} [params.assetManagerId=0] - Auto-set to `0`. All FX classes and subclasses are treated as public Assets
+   * @param {number} params.assetId - ID of the ForeignExchangeBase __(required)__
+   * @param {string} [params.assetClass=ForeignExchange] - Auto-set to `ForeignExchange` __(read-only)__
+   * @param {string} [params.assetType] - Type of the ForeignExchangeBase. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
+   * @param {boolean} [params.fungible=true] - Auto-set to `true` for ForeignExchangeBase __(read-only)__
+   * @param {string} [params.assetIssuerId] - ID of the ForeignExchangeBase's issuer
+   * @param {string} [params.assetStatus=Active] - Status of the ForeignExchangeBase
+   * @param {string} [params.description] - Description of the ForeignExchangeBase
+   * @param {string} [params.displayName] - Display name of the ForeignExchangeBase
+   * @param {boolean} [params.rollPrice=false] - Auto-set to `false` __(read-only)__
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {object} [params.comments] - Object of Comments attached to the ForeignExchangeBase
+   * @param {object} [params.links] - Object of array of Links attached to the ForeignExchangeBase
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the ForeignExchangeBase. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the ForeignExchangeBase
+   * @param {string} [params.updatedBy] - ID of the user that updated the ForeignExchangeBase
+   * @param {date} [params.createdTime] - Time that the ForeignExchangeBase was created
+   * @param {date} [params.updatedTime] - Time that the ForeignExchangeBase was updated
    * @param {number} params.version - Version number
   */
   constructor({
-    assetManagerId,
     assetId,
-    assetClass='ForeignExchange',
-    fungible,
     assetIssuerId,
     assetStatus='Active',
-    countryId,
-    venueId,
-    currency,
-    issueDate,
-    maturityDate,
     description='',
+    displayName,
     clientId,
     comments,
     links,
@@ -55,18 +48,15 @@ class FXBase extends Asset {
     version
   }) {
     super({
-      assetManagerId,
+      assetManagerId: 0,
       assetId,
-      assetClass,
-      fungible,
+      assetClass: 'ForeignExchange',
+      fungible: true,
       assetIssuerId,
       assetStatus,
-      countryId,
-      venueId,
-      currency,
-      issueDate,
-      maturityDate,
       description,
+      displayName,
+      rollPrice: false,
       clientId,
       comments,
       links,
@@ -84,8 +74,8 @@ class FXBase extends Asset {
   }
 
   getCounterCurrency() {
-    return this.assetId.slice(3,7)
+    return this.assetId.slice(3,6)
   }
 }
 
-export default FXBase
+export default ForeignExchangeBase

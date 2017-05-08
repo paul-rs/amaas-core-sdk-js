@@ -22,10 +22,9 @@ describe('Future class', () => {
       expect(future.contractSize).toEqual(new Decimal(0))
     })
 
-    it('should set expiryDate to a Date', () => {
-      const expectedDate = new Date(2017, 2, 14)
-      const future = new Future({ expiryDate: '2017-3-14' })
-      expect(future.expiryDate).toEqual(expectedDate)
+    it('should default expiryDate', () => {
+      const future = new Future({})
+      expect(future.expiryDate).toEqual('9999-12-31')
     })
   })
 

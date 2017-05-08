@@ -11,46 +11,55 @@ import { OPTION_STYLES, OPTION_TYPES } from '../enums.js'
 class ForeignExchangeOption extends Asset {
   /**
    * Construct a new FX Option instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {string} params.optionStyle - Option style (American, Bermudan, European)
-   * @param {string} params.optionType - Option type (Put, Call)
-   * @param {number} params.strike - Strike price of the Option
-   * @param {string} params.underlyingAssetId - ID of the underlying Asset
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created the FX Option
-   * @param {string} params.updatedBy - ID of the user that updated the FX Option
-   * @param {date} params.createdTime - Time that the FX Option was created
-   * @param {date} params.updatedTime - Time that the FX Option was updated
-   * @param {number} params.version - Version number
+   * @param {object} params - ForeignExchangeOption creation options:
+   * @param {number} params.assetManagerId - ID of FX Option's Asset Manager __(required)__
+   * @param {number} params.assetId - ID of the Asset __(required)__
+   * @param {string} [params.assetClass=ForeignExchange] - Auto-set to `ForeignExchange` __(read-only)__
+   * @param {string} [params.assetType] - Type of the FX Option. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
+   * @param {boolean} [params.fungible=false] - Auto-set to `false` __(read-only)__
+   * @param {string} [params.assetIssuerId] - ID of the FX Option's issuer
+   * @param {string} [params.assetStatus=Active] - Status of the FX Option
+   * @param {string} [params.countryId] - ID of FX Option's country
+   * @param {string} [params.venueId] - ID of FX Option's venue if applicable
+   * @param {string} [params.currency] - FX Option currency (e.g. USD, SGD)
+   * @param {string} [params.issueDate] - Issue date (YYYY-MM-DD)
+   * @param {string} [params.expiryDate] - Expiry date (YYYY-MM-DD)
+   * @param {string} [params.description] - Description of the FX Option
+   * @param {string} [params.displayName] - Display name of the FX Option
+   * @param {string} [params.clientId] - ID of the client to which the FX Option belongs
+   * @param {string} params.optionStyle - FX Option style __(required)__<br />
+   * Available options:
+   * <li>American</li>
+   * <li>Bermudan</li>
+   * <li>European</li>
+   * @param {string} params.optionType - FX Option type __(required)__<br />
+   * Available options:
+   * <li>Put</li>
+   * <li>Call</li>
+   * @param {number} params.strike - Strike price of the FX Option __(required)__
+   * @param {string} params.underlyingAssetId - ID of the underlying Asset __(required)__
+   * @param {object} [params.comments] - Object of Comments attached to the FX Option
+   * @param {object} [params.links] - Object of array of Links attached to the FX Option
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the FX Option. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the FX Option
+   * @param {string} [params.updatedBy] - ID of the user that updated the FX Option
+   * @param {date} [params.createdTime] - Time that the FX Option was created
+   * @param {date} [params.updatedTime] - Time that the FX Option was updated
+   * @param {number} [params.version] - Version number
   */
   constructor({
     assetManagerId,
     assetId,
-    assetClass='ForeignExchange',
-    fungible,
     assetIssuerId,
     assetStatus='Active',
     countryId,
     venueId,
     currency,
     issueDate,
-    maturityDate,
+    expiryDate,
     description='',
+    displayName,
     clientId,
     optionType,
     strike,
@@ -69,16 +78,16 @@ class ForeignExchangeOption extends Asset {
     super({
       assetManagerId,
       assetId,
-      assetClass,
-      fungible,
+      assetClass: 'ForeignExchange',
+      fungible: false,
       assetIssuerId,
       assetStatus,
       countryId,
       venueId,
       currency,
       issueDate,
-      maturityDate,
       description,
+      displayName,
       clientId,
       comments,
       links,
@@ -128,14 +137,14 @@ class ForeignExchangeOption extends Asset {
         },
         enumerable: true
       },
-      _premium: { writable: true, enumerable: false },
-      premium: {
-        get: () => this._premium,
-        set: (newPremium) => {
-          if (!newPremium) {
-            this._premium = new Decimal(0)
+      _expiryDate: { writable: true, enumerable: false },
+      expiryDate: {
+        get: () => this._expiryDate,
+        set: (newExpiryDate) => {
+          if (newExpiryDate) {
+            this._expiryDate = newExpiryDate
           } else {
-            this._premium = new Decimal(newPremium)
+            this._expiryDate = '9999-12-31'
           }
         },
         enumerable: true
@@ -143,7 +152,7 @@ class ForeignExchangeOption extends Asset {
     })
     this.optionType = optionType
     this.strike = strike
-    this.premium = premium
+    this.expiryDate = expiryDate
     this.underlyingAssetId = underlyingAssetId
     this.optionStyle = optionStyle
   }

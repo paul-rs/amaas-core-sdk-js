@@ -43,7 +43,7 @@ var userPool = new _amazonCognitoIdentityJs.CognitoUserPool({
   UserPoolId: _config.userPoolId,
   ClientId: _config.clientAppId
 });
-var stage = 'prod';
+var stage = 'staging';
 var token = void 0;
 var credPath = void 0;
 
@@ -283,13 +283,6 @@ function retrieveData(_ref3, callback) {
       AMId = _ref3.AMId,
       resourceId = _ref3.resourceId;
 
-  // if (stage === 'dev' || stage === 'staging' && !token) {
-  //   if (typeof callback !== 'function') {
-  //     return Promise.reject('Missing Authorization')
-  //   }
-  //   callback('Missing Authorization')
-  //   return
-  // }
   var url = void 0;
   // If resourceId is supplied, append to url. Otherwise, return all data for AMId
   try {
@@ -309,7 +302,6 @@ function retrieveData(_ref3, callback) {
       return response.body;
     });
   }
-  // promise.end((error, response) => {
   promise.then(function (response, error) {
     if (!error && response.status == 200) {
       callback(null, response.body);
@@ -344,13 +336,6 @@ function insertData(_ref4, callback) {
       data = _ref4.data,
       queryParams = _ref4.queryParams;
 
-  // if (stage === 'dev' || stage === 'staging' && !token) {
-  //   if (typeof callback !== 'function') {
-  //     return Promise.reject('Missing Authorization')
-  //   }
-  //   callback('Missing Authorization')
-  //   return
-  // }
   var url = void 0;
   try {
     url = buildURL({
@@ -366,8 +351,6 @@ function insertData(_ref4, callback) {
     return;
   }
   // Data is object with required key value pairs for that class
-  // const am = 'asset_manager_id'
-  // data[am] = AMId
   var params = {
     url: url,
     json: data
@@ -387,7 +370,6 @@ function insertData(_ref4, callback) {
       return response.body;
     });
   }
-  // promise.end((error, response) => {
   promise.then(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
@@ -405,13 +387,6 @@ function putData(_ref5, callback) {
       resourceId = _ref5.resourceId,
       data = _ref5.data;
 
-  // if (stage === 'dev' || stage === 'staging' && !token) {
-  //   if (typeof callback !== 'function') {
-  //     return Promise.reject('Missing Authorization')
-  //   }
-  //   callback('Missing Authorization')
-  //   return
-  // }
   var url = void 0;
   try {
     url = buildURL({
@@ -438,7 +413,6 @@ function putData(_ref5, callback) {
       return response.body;
     });
   }
-  // promise.end((error, response) => {
   promise.then(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
@@ -456,13 +430,6 @@ function patchData(_ref6, callback) {
       resourceId = _ref6.resourceId,
       data = _ref6.data;
 
-  // if (stage === 'dev' || stage === 'staging' && !token) {
-  //   if (typeof callback !== 'function') {
-  //     return Promise.reject('Missing Authorization')
-  //   }
-  //   callback('Missing Authorization')
-  //   return
-  // }
   var url = void 0;
   try {
     url = buildURL({
@@ -489,7 +456,6 @@ function patchData(_ref6, callback) {
       return response.body;
     });
   }
-  // promise.end((error, response) => {
   promise.end(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
@@ -506,13 +472,6 @@ function deleteData(_ref7, callback) {
       AMId = _ref7.AMId,
       resourceId = _ref7.resourceId;
 
-  // if (stage === 'dev' || stage === 'staging' && !token) {
-  //   if (typeof callback !== 'function') {
-  //     return Promise.reject('Missing Authorization')
-  //   }
-  //   callback('Missing Authorization')
-  //   return
-  // }
   var url = void 0;
   try {
     url = buildURL({
@@ -535,7 +494,6 @@ function deleteData(_ref7, callback) {
       return response.body;
     });
   }
-  // promise.end((error, response) => {
   promise.then(function (response, error) {
     var body = void 0;
     if (response) body = response.body;
@@ -551,24 +509,13 @@ function deleteData(_ref7, callback) {
  * query is an array of objects: { key: <string>, values: <array> }
  * key is the key to search over (depends on the specific service)
  * and values are all the values to search over. E.g.
- *   const queries = [
- *     { key: 'assetIds', values: [1, 2, 44, 'asf'] },
- *     { key: 'assetClasses', values: ['Currency', 'Bond', 'Equity']},
- *     { key: 'assetTypes', values: ['GovernmentBond, ForeignExchange']}
- *   ]
+ * `const queries = { assetIds: ['abc', 'def'], assetClasses: ['Currency', 'Bond'] }`
  */
 function searchData(_ref8, callback) {
   var AMaaSClass = _ref8.AMaaSClass,
       AMId = _ref8.AMId,
       query = _ref8.query;
 
-  // if (stage === 'dev' || stage === 'staging' && !token) {
-  //   if (typeof callback !== 'function') {
-  //     return Promise.reject('Missing Authorization')
-  //   }
-  //   callback('Missing Authorization')
-  //   return
-  // }
   var url = void 0;
   try {
     url = buildURL({
@@ -583,18 +530,18 @@ function searchData(_ref8, callback) {
     return;
   }
   var data = { camelcase: true };
-  for (var i = 0; i < query.length; i++) {
-    data[query[i].key] = query[i].values.join();
+  for (var q in query) {
+    if (query.hasOwnProperty(q)) {
+      data[q] = query[q].join();
+    }
   }
   var promise = makeRequest({ method: 'SEARCH', url: url, data: data });
-  // let promise = request.get(url).set('x-api-key', token).query(queryString)
   if (typeof callback !== 'function') {
     // return promise if callback is not provided
     return promise.then(function (response) {
       return response.body;
     });
   }
-  // promise.end((error, response) => {
   promise.then(function (response, error) {
     var body = void 0;
     if (response) body = response.body;

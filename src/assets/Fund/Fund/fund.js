@@ -11,33 +11,39 @@ import { FUND_TYPES } from '../../enums.js'
 class Fund extends Asset {
   /**
    * Construct a new Fund instance
-   * @param {object} params - Asset creation options
-   * @param {integer} params.assetManagerId - ID of Asset's Asset Manager (required)
-   * @param {integer} params.assetId - ID of the Asset (required)
-   * @param {string} params.assetClass - Class of the Asset
-   * @param {bool} params.fungible - Whether this Asset is fungible (required)
-   * @param {string} params.assetIssuerId - ID of the Asset's issuer
-   * @param {string} params.assetStatus - Status of the Asset (e.g. 'Active')
-   * @param {string} params.countryId - ID of Asset's country
-   * @param {string} params.venueId - ID of Asset's venue if applicable
-   * @param {string} params.currency - Asset currency (e.g. USD, SGD)
-   * @param {string} params.issueDate - Issue date if applicable (YYYY-MM-DD)
-   * @param {string} params.maturityDate - Maturity date if applicable (YYYY-MM-DD)
-   * @param {string} params.description - Description of the Asset
-   * @param {string} params.clientId - ID of the client to which the Asset belongs
-   * @param {string} params.fundType - Type of Fund (Open, Closed, ETF)
-   * @param {string} params.creationDate - Fund's creation date (YYYY-MM-DD)
-   * @param {number} params.nav - Fund's Net Asset Value
-   * @param {number} params.expenseRatio - Fund's expense ratio
-   * @param {number} params.netAssets - ???
-   * @param {object} params.comments - Object of Comments attached to the Asset
-   * @param {object} params.links - Object of array of Links attached to the Asset
-   * @param {object} params.references - Object of References associated with this Asset
-   * @param {string} params.createdBy - ID of the user that created the Asset
-   * @param {string} params.updatedBy - ID of the user that updated the Asset
-   * @param {date} params.createdTime - Time that the Asset was created
-   * @param {date} params.updatedTime - Time that the Asset was updated
-   * @param {number} params.version - Version number
+   * @param {object} params - Fund creation options:
+   * @param {number} params.assetManagerId - ID of Fund's Asset Manager. Asset Manager refers to AMaaS user, NOT an asset manager in the Fund. __(required)__
+   * @param {number} params.assetId - ID of the Fund __(required)__
+   * @param {string} [params.assetClass=Fund] - Class of the Fund (a subclass of Fund may define its own assetClass)
+   * @param {string} [params.assetType] - Type of the Fund. Auto-set based on the class or subclass constructor
+   * @param {string} [params.assetTypeDisplay] - Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`)
+   * @param {boolean} [params.fungible=true] - Auto-set to `true` for Fund __(read-only)__
+   * @param {string} [params.assetIssuerId] - ID of the Fund's issuer
+   * @param {string} [params.assetStatus=Active] - Status of the Fund
+   * @param {string} [params.countryId] - ID of Fund's country
+   * @param {string} [params.venueId] - ID of Fund's venue if applicable
+   * @param {string} [params.currency] - Fund currency (e.g. USD, SGD)
+   * @param {string} [params.description] - Description of the Fund
+   * @param {string} [params.displayName] - Display name of the Fund
+   * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Fund
+   * @param {string} [params.clientId] - ID of the associated client
+   * @param {string} params.fundType - Type of Fund __(required)__<br />
+   * Available options:
+   * <li>Open</li>
+   * <li>Closed</li>
+   * <li>ETF</li>
+   * @param {string} [params.creationDate=0001-01-01] - Fund's creation date (YYYY-MM-DD)
+   * @param {number} [params.nav] - Fund's Net Asset Value. Stored as a Decimal instance
+   * @param {number} [params.expenseRatio] - Fund's expense ratio. Stored as a Decimal instance
+   * @param {number} [params.netAssets] - Fund's net assets. Stored as a Decimal instance
+   * @param {object} [params.comments] - Object of Comments attached to the Fund
+   * @param {object} [params.links] - Object of array of Links attached to the Fund
+   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the Fund. * The AMaaS Reference is auto-created and populated
+   * @param {string} [params.createdBy] - ID of the user that created the Fund
+   * @param {string} [params.updatedBy] - ID of the user that updated the Fund
+   * @param {date} [params.createdTime] - Time that the Fund was created
+   * @param {date} [params.updatedTime] - Time that the Fund was updated
+   * @param {number} [params.version] - Version number
   */
   constructor({
     assetManagerId,
@@ -49,9 +55,9 @@ class Fund extends Asset {
     countryId,
     venueId,
     currency,
-    issueDate,
-    maturityDate,
     description='',
+    displayName,
+    rollPrice,
     clientId,
     fundType,
     creationDate,
@@ -71,15 +77,15 @@ class Fund extends Asset {
       assetManagerId,
       assetId,
       assetClass,
-      fungible,
+      fungible: true,
       assetIssuerId,
       assetStatus,
       countryId,
       venueId,
       currency,
-      issueDate,
-      maturityDate,
       description,
+      displayName,
+      rollPrice,
       clientId,
       comments,
       links,
@@ -96,9 +102,9 @@ class Fund extends Asset {
         get: () => this._creationDate,
         set: (newCreationDate) => {
           if (newCreationDate) {
-            const dArray = newCreationDate.split('-')
-            const date = new Date(dArray[0], dArray[1]-1, dArray[2])
-            this._creationDate = date
+            this._creationDate = newCreationDate
+          } else {
+            this._creationDate = '0001-01-01'
           }
         },
         enumerable: true

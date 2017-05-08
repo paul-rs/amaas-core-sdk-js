@@ -32,24 +32,29 @@ var Book = function (_AMaaSModel) {
 
   /**
    * Construct a new Book object
-   * @param {object} params - Book creation options
-   * @param {integer} params.assetManagerId - ID of Book's Asset Manager
-   * @param {string} params.bookId - ID of this Book
-   * @param {string} params.bookType - Book Type
-   * @param {string} params.bookStatus - status of Book (e.g. Active, Retired, Superseded)
-   * @param {integer} params.ownerId - ID of the owner of the Book (e.g. the Trader who is responsible for the Book)
-   * @param {integer} params.partyId - ID of the party of which the activity being tracked belongs (e.g. Registered fund or HNWI)
-   * @param {string} params.closeTime - Book close time. This is stored as local time, to be referenced against timezone
-   * @param {string} params.timezone - Book's timezone (use this to determine absolute close time)
-   * @param {string} params.baseCurrency - Base currency for the Book
-   * @param {string} params.businessUnit - A business unit to associate with the Book (e.g. Emerging Markets, Equities)
-   * @param {string} params.description - Description of the book
-   * @param {Array} params.positions - Array of objects [{asset_id: string, quantity: number}]
-   * @param {string} params.createdBy - ID of the user that created this object (required if creating a new Book)
-   * @param {string} params.updatedBy - ID of the user that updated this object (use if amending existing Book)
-   * @param {date} params.createdTime - Time that the Book was created (required if creating new Book)
-   * @param {date} params.updatedTime - Time that the Book was updated (required if amending existing Book)
-   * @param {number} params.version - Version number of the Book
+   * @param {object} params - Book creation options:
+   * @param {number} params.assetManagerId - ID of Book's Asset Manager __(required)__
+   * @param {string} params.bookId - ID of this Book __(required)__
+   * @param {string} params.bookType - Book Type<br />
+   * Available options:
+   * <li>Counterparty</li>
+   * <li>Management</li>
+   * <li>Trading</li>
+   * <li>Wash</li>
+   * @param {string} [params.bookStatus=Active] - status of Book
+   * @param {number} [params.ownerId] - ID of the owner of the Book (e.g. the Trader who is responsible for the Book)
+   * @param {number} [params.partyId] - ID of the party of which the activity being tracked belongs (e.g. Registered fund or HNWI)
+   * @param {string} [params.closeTime=17:30:00] - Book close time. This is stored as local time, to be referenced against timezone
+   * @param {string} [params.timezone=UTC] - Book's timezone (use this to determine absolute close time)
+   * @param {string} [params.baseCurrency=USD] - Base currency for the Book
+   * @param {string} [params.businessUnit] - A business unit to associate with the Book (e.g. Emerging Markets, Equities)
+   * @param {string} [params.description] - Description of the book
+   * @param {Array} [params.positions] - Array of objects [{asset_id: string, quantity: number}]
+   * @param {string} [params.createdBy] - ID of the user that created this object (required if creating a new Book)
+   * @param {string} [params.updatedBy] - ID of the user that updated this object (use if amending existing Book)
+   * @param {date} [params.createdTime] - Time that the Book was created (required if creating new Book)
+   * @param {date} [params.updatedTime] - Time that the Book was updated (required if amending existing Book)
+   * @param {number} [params.version] - Version number of the Book
    */
   function Book(_ref) {
     var assetManagerId = _ref.assetManagerId,
@@ -61,7 +66,8 @@ var Book = function (_AMaaSModel) {
         bookStatus = _ref$bookStatus === undefined ? 'Active' : _ref$bookStatus,
         ownerId = _ref.ownerId,
         partyId = _ref.partyId,
-        closeTime = _ref.closeTime,
+        _ref$closeTime = _ref.closeTime,
+        closeTime = _ref$closeTime === undefined ? '17:30:00' : _ref$closeTime,
         _ref$timezone = _ref.timezone,
         timezone = _ref$timezone === undefined ? 'UTC' : _ref$timezone,
         _ref$baseCurrency = _ref.baseCurrency,
