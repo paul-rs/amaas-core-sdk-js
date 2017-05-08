@@ -9,7 +9,7 @@ const userPool = new CognitoUserPool({
   UserPoolId: userPoolId,
   ClientId: clientAppId
 })
-let stage = 'prod'
+let stage = 'staging'
 let token
 let credPath
 

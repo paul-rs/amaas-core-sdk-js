@@ -43,7 +43,7 @@ var userPool = new _amazonCognitoIdentityJs.CognitoUserPool({
   UserPoolId: _config.userPoolId,
   ClientId: _config.clientAppId
 });
-var stage = 'prod';
+var stage = 'staging';
 var token = void 0;
 var credPath = void 0;
 
