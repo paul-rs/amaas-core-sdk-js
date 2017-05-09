@@ -63,7 +63,6 @@ class ForeignExchangeOption extends Derivative {
     clientId,
     optionType,
     strike,
-    premium,
     underlyingAssetId,
     optionStyle,
     comments,
