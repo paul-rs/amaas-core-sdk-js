@@ -12,12 +12,6 @@ describe('Asset', () => {
       expect(issueDate).toEqual('0001-01-01')
     })
 
-    it('should set maturityDate correctly', () => {
-      const testAsset = new Asset({})
-      const maturityDate = testAsset.maturityDate
-      expect(maturityDate).toEqual('9999-12-31')
-    })
-
     it('should set comments to empty object if no Comments', () => {
       const testAsset = new Asset({})
       expect(testAsset.comments).toEqual({})
