@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - Removed `maturityDate` from the Asset base class and set either maturityDate or expiryDate on the relevant subclasses.
+- Removed `premium` from Asset classes.
 
 ## 0.0.2 - 2017-05-09
 ### Changed
