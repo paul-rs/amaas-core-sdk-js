@@ -3,6 +3,8 @@ import { Address, Email } from '../Children'
 import { Comment, Link, Reference } from '../../children'
 import { PARTY_STATUSES, PARTY_TYPES } from '../enums'
 
+// Some changes to the file
+
 /**
  * Class representing a Party
  * @memberof module:parties
