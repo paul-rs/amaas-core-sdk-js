@@ -7,4 +7,4 @@ node_js:
   - "4"
 install: "npm install"
 script:
-  - "API_TOKEN=xxxxx npm test"
+  - "npm test"
