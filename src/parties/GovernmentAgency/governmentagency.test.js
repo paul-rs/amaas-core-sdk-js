@@ -1,4 +1,4 @@
-import GovernmentAgency from './governmentagency.js'
+import GovernmentAgency from './governmentAgency.js'
 
 describe('GovernmentAgency', () => {
   describe('constructor', () => {

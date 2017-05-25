@@ -1,4 +1,4 @@
-import Transaction from './Transaction.js'
+import Transaction from './transaction.js'
 import { Charge, Code, Comment, Link, Reference, Party } from '../../children'
 
 const Decimal = require('decimal.js')
