@@ -22,6 +22,7 @@ class Asset extends AMaaSModel {
    * @param {string} [params.venueId] - ID of Asset's venue if applicable
    * @param {string} [params.currency] - Asset currency (e.g. USD, SGD)
    * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
+   * @param {string} [params.maturityDate=9999-12-31] - Maturity date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Asset
    * @param {string} [params.displayName] - Display name of the Asset
    * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Asset
@@ -47,6 +48,7 @@ class Asset extends AMaaSModel {
     venueId,
     currency,
     issueDate,
+    maturityDate,
     description='',
     displayName='',
     rollPrice=true,
@@ -79,6 +81,19 @@ class Asset extends AMaaSModel {
             this._issueDate = newIssueDate
           } else {
             this._issueDate = '0001-01-01'
+          }
+        },
+        enumerable: true
+      },
+      _maturityDate: { writable: true, enumerable: false },
+      maturityDate: {
+        get: () => this._maturityDate,
+        set: (newMaturityDate) => {
+          // Accepts string 'YYYY-MM-DD'
+          if (newMaturityDate) {
+            this._maturityDate = newMaturityDate
+          } else {
+            this._maturityDate = '9999-12-31'
           }
         },
         enumerable: true
@@ -160,6 +175,7 @@ class Asset extends AMaaSModel {
     this.venueId = venueId
     this.currency = currency
     this.issueDate = issueDate
+    this.maturityDate = maturityDate
     this.description = description
     this.displayName = displayName
     this.rollPrice = rollPrice
