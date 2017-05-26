@@ -13,7 +13,7 @@ describe('GovernmentAgency', () => {
     })
 
     it('should set legalName', () => {
-      const testGov = new GovernmentAgency({displayName: 'testLegalName'})
+      const testGov = new GovernmentAgency({legalName: 'testLegalName'})
       expect(testGov.legalName).toEqual('testLegalName')
     })
 
