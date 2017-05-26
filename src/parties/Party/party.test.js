@@ -12,21 +12,6 @@ describe('Party', () => {
   })
   describe('constructor', () => {
 
-    it('should set url', () => {
-      const party = new Party({url: 'testURL'})
-      expect(party.url).toEqual('testURL')
-    })
-
-    it('should set displayName', () => {
-      const party = new Party({displayName: 'testDisplayName'})
-      expect(party.displayName).toEqual('testDisplayName')
-    })
-
-    it('should set legalName', () => {
-      const party = new Party({legalName: 'testLegalName'})
-      expect(party.legalName).toEqual('testLegalName')
-    })
-
     it('should throw if attempting to set invalid partyStatus', () => {
       let party
       function construct() {

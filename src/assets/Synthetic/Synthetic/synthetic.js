@@ -46,7 +46,7 @@ class Synthetic extends Asset {
     venueId,
     currency,
     issueDate,
-    maturityDate='9999-12-31',
+    maturityDate,
     description='',
     displayName,
     rollPrice,
@@ -85,7 +85,6 @@ class Synthetic extends Asset {
       updatedTime,
       version
     })
-    this.maturityDate = maturityDate
   }
 }
 

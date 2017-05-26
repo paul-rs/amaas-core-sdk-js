@@ -19,9 +19,6 @@ class Broker extends Company {
    * @param {object} [params.references] - Object of References associated with the Broker
    * @param {object} [params.comments] - Object of Comments associated with the Broker
    * @param {object} [params.links] - Object of Links associated with the Broker
-   * @param {string} [params.legalName]- Legal name of the Asset Manager associated with this party
-   * @param {string} [params.displayName] - Display name of the Asset Manager associated with this party 
-   * @param {string} [params.url] - Url of this Party
    * @param {string} [params.createdBy] - ID of the user that created the Broker
    * @param {string} [params.updatedBy] - ID of the user that updated the Broker
    * @param {date} [params.createdTime] - Time that the Broker was created
@@ -39,9 +36,6 @@ class Broker extends Company {
     references={},
     comments={},
     links={},
-    legalName,
-    displayName,
-    url,
     createdBy,
     updatedBy,
     createdTime,
@@ -59,9 +53,6 @@ class Broker extends Company {
       references,
       comments,
       links,
-      legalName,
-      displayName,
-      url,
       createdBy,
       updatedBy,
       createdTime,

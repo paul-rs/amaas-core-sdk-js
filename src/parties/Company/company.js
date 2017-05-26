@@ -20,9 +20,6 @@ class Company extends Organisation {
    * @param {object} [params.references] - Object of References associated with the Company
    * @param {object} [params.comments] - Object of Comments associated with the Company
    * @param {object} [params.links] - Object of Links associated with the Company
-   * @param {string} [params.legalName]- Legal name of the Asset Manager associated with this party
-   * @param {string} [params.displayName] - Display name of the Asset Manager associated with this party 
-   * @param {string} [params.url] - Url of this Party
    * @param {string} [params.createdBy] - ID of the user that created the Company
    * @param {string} [params.updatedBy] - ID of the user that updated the Company
    * @param {date} [params.createdTime] - Time that the Company was created
@@ -41,9 +38,6 @@ class Company extends Organisation {
     references={},
     comments={},
     links={},
-    legalName,
-    displayName,
-    url,
     createdBy,
     updatedBy,
     createdTime,
@@ -62,9 +56,6 @@ class Company extends Organisation {
       references,
       comments,
       links,
-      legalName,
-      displayName,
-      url,
       createdBy,
       updatedBy,
       createdTime,

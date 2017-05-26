@@ -11,4 +11,3 @@ export const ASSET_MANAGER_TYPES = [
   'Retail',
   'Venture Capital'
 ]
-export const ACCOUNT_TYPES = [ 'Test', 'Basic', 'Professional' ]

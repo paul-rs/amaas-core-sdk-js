@@ -21,6 +21,7 @@ class ContractForDifference extends Derivative {
    * @param {string} [params.venueId] - ID of CFD's venue
    * @param {string} [params.currency] - CFD currency (e.g. USD, SGD)
    * @param {string} [params.issueDate] - Issue date if applicable (YYYY-MM-DD)
+   * @param {string} [params.maturityDate] - Maturity date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the CFD
    * @param {string} [params.displayName] - Display name of the CFD
    * @param {string} [params.clientId] - ID of the associated client
@@ -42,6 +43,7 @@ class ContractForDifference extends Derivative {
     venueId,
     currency,
     issueDate,
+    maturityDate,
     description='',
     displayName,
     clientId,
@@ -65,6 +67,7 @@ class ContractForDifference extends Derivative {
       venueId,
       currency,
       issueDate,
+      maturityDate,
       description,
       displayName,
       clientId,

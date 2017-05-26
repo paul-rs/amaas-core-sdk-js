@@ -22,6 +22,7 @@ class Derivative extends Asset {
    * @param {string} [params.venueId] - ID of Derivative's venue if applicable
    * @param {string} params.currency - Derivative currency (e.g. USD, SGD)
    * @param {string} [params.issueDate=0001-01-01] - Issue date if applicable (YYYY-MM-DD)
+   * @param {string} [params.maturityDate=9999-12-31] - Maturity date if applicable (YYYY-MM-DD)
    * @param {string} [params.description] - Description of the Derivative
    * @param {string} [params.displayName] - Display name of the Derivative
    * @param {boolean} [params.rollPrice=false] - Auto-set to `false` __(read-only)__
@@ -45,6 +46,7 @@ class Derivative extends Asset {
     venueId,
     currency,
     issueDate,
+    maturityDate,
     description='',
     displayName,
     rollPrice,
@@ -69,6 +71,7 @@ class Derivative extends Asset {
       venueId,
       currency,
       issueDate,
+      maturityDate,
       description,
       displayName,
       rollPrice: false,
