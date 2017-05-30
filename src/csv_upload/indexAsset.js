@@ -45,7 +45,7 @@ export function csvUpload({AMaaSClass, AMId, csv}, callback){
     {
       //let promise=insert({AMId, book: obj}.then(result => {      
        let promise = insert({AMId, obj}).then(result => {
-         result = _parseBook(result)
+         result = _parseAsset(result)
          if (typeof callback === 'function') 
          {
             callback(null, result)

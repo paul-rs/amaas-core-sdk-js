@@ -44,7 +44,7 @@ export function csvUpload({AMaaSClass, AMId, csv}, callback){
     if(AMaaSClass == 'transaction')
     {
        let promise = insert({AMId, obj}).then(result => {
-         result = _parseBook(result)
+         result = _parseTransaction(result)
          if (typeof callback === 'function') 
          {
             callback(null, result)
