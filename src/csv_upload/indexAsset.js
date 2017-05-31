@@ -28,6 +28,7 @@ let credPath
 //var csv is the string
 export function csvUpload({AMaaSClass, AMId, csv}, callback){
   //convert csv string to json format
+  var insertedCsv=[];
   var lines=csv.split("\n"); 
   var headers=lines[0].split(", "); //find headers
 
@@ -38,9 +39,20 @@ export function csvUpload({AMaaSClass, AMId, csv}, callback){
 
     for(var j=0;j<headers.length;j++)
     {
+      if(isNaN(currentline[j]))
       obj[headers[j]] = currentline[j];//obj is a key-value pair obj
+      else 
+      obj[headers[j]] = parseInt(currentline[j]);
     }
     
+    //testing
+    for(var j=0;j<headers.length;j++)
+    {
+       console.log(Object.keys(obj)[j]+" : "+Object.values(obj)[j]);
+    }
+    insertedCsv.push(obj);
+
+    /*
     if(AMaaSClass == 'asset')
     {
       //let promise=insert({AMId, book: obj}.then(result => {      
@@ -50,7 +62,8 @@ export function csvUpload({AMaaSClass, AMId, csv}, callback){
          {
             callback(null, result)
          }
-         return result
+             //return result
+             inserttedCsv.push(result);
          })
          if (typeof callback !== 'function') 
           {
@@ -61,7 +74,8 @@ export function csvUpload({AMaaSClass, AMId, csv}, callback){
     else{
       console.log("Upload assets")
     }
-   
+   */
   }
+  return insertedCsv;
 
 }

@@ -14,21 +14,24 @@ describe('csvUpload', () => {
   const testParams = {
       AMaaSClass: 'relationship',
       AMId: '1234',
-      csv: 'assetManagerId, relationshipId, relatedId, relationshipStatus, relationshipType, clientId '
-      +'\n'+'testAMId, testRelationshipId, testRelatedId, testRelStatus, Employee, testClientId'
+      csv: 'assetManagerId, relationshipId, relatedId, relationshipType'
+      +'\n'+'1, 1234, 10, External'
   }
+  
+  const rel =[ {
+        assetManagerId: 1,
+        relationshipType: "External",
+        relatedId: 10,
+        relationshipId: 1234
+      }]
 
-  csvUpload(testParams).then(res =>{
-    expect(res).toEqual(expect.objectContaining(testParams))
-    expect(testRel.assetManagerId).toEqual('testAMId')
-      expect(testRel.relationshipId).toEqual('testRelationshipId')
-      expect(testRel.relatedId).toEqual('testRelatedId')
-      expect(testRel.relationshipStatus).toEqual('testRelStatus')
-      expect(testRel.relationshipType).toEqual('Employee')
-      expect(testRel.clientId).toEqual('testClientId')
+   expect(csvUpload(testParams)).toEqual(rel);   
+
+  /*csvUpload(testParams).then(res =>{
+    expect(res).toEqual(expect.objectContaining(csv))
   }).catch(err => {
     console.error(err)
-  })
+  })*/
 })
   
 })

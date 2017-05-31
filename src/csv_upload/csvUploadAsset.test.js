@@ -14,13 +14,23 @@ describe('csvUpload', () => {
   const testParams = {
       AMaaSClass: 'asset',
       AMId: '1',
-      csv: 'description, assetType, assetManagerId, assetId, '+'\n'+'testAsset, Equity, 1, 1234'
+      csv: 'description, assetType, assetManagerId, assetId'+'\n'+'testAsset, Equity, 1, 1234'
   }
-  csvUpload(testParams).then(res =>{
-    expect(res).toEqual(expect.objectContaining(testParams))
+
+  const asset = [
+      {
+        description: 'testAsset',
+        assetType: 'Equity',
+        assetManagerId: 1,
+        assetId: 1234
+      }
+  ]
+  expect(csvUpload(testParams)).toEqual(asset)
+  /*csvUpload(testParams).then(res =>{
+    expect(res).toBe(asset);
   }).catch(err => {
     console.error(err)
-  })
+  })*/
 })
   
 })
