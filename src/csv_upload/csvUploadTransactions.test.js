@@ -3,12 +3,6 @@ import {csvUpload } from './indexTransaction'
 import * as funcs from './indexTransaction'
 import * as api from '../exports/api'
 
-
-api.config({
-  stage: 'staging',
-  token: process.env.API_TOKEN
-})
-
 describe('csvUpload', () => {
   it('should insert to database', () =>{
   const testParams = {

@@ -7,14 +7,6 @@ import expandTilde from 'expand-tilde'
 import {insert} from '../utils/relationships'
 import Relationship from '../relationships/Relationship/index'
 
-const userPool = new CognitoUserPool({
-  UserPoolId: userPoolId,
-  ClientId: clientAppId
-})
-let stage = 'staging'
-let token
-let credPath
-
 /**
  * !This is an internal function that should not be called by the end user!
  * 

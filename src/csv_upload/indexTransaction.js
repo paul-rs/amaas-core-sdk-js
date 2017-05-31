@@ -7,14 +7,6 @@ import expandTilde from 'expand-tilde'
 import {insert} from '../utils/transactions'
 import Transaction from '../transactions/Transaction/transaction'
 
-const userPool = new CognitoUserPool({
-  UserPoolId: userPoolId,
-  ClientId: clientAppId
-})
-let stage = 'staging'
-let token
-let credPath
-
 /**
  * !This is an internal function that should not be called by the end user!
  * 
