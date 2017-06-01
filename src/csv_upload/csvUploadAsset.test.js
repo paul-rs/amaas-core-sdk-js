@@ -8,7 +8,10 @@ describe('csvUpload', () => {
   const testParams = {
       AMaaSClass: 'asset',
       AMId: '1',
-      csv: 'description, assetType, assetManagerId, assetId'+'\n'+'testAsset, Equity, 1, 1234'
+      csv: 'description, assetType, assetManagerId, assetId'
+            +'\n'+'testAsset, Equity, 1, 1234'
+            +'\n'+'testAsset, Equity, 1, 12345'
+            +'\n'+'testAsset, Equity, 1, 123456'
   }
 
   const asset = [
@@ -17,6 +20,18 @@ describe('csvUpload', () => {
         assetType: 'Equity',
         assetManagerId: 1,
         assetId: 1234
+      }, 
+      {
+        description: 'testAsset',
+        assetType: 'Equity',
+        assetManagerId: 1,
+        assetId: 12345
+      }, 
+      {
+        description: 'testAsset',
+        assetType: 'Equity',
+        assetManagerId: 1,
+        assetId: 123456
       }
   ]
   expect(csvUpload(testParams)).toEqual(asset)

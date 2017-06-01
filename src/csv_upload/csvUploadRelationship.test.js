@@ -9,15 +9,31 @@ describe('csvUpload', () => {
       AMaaSClass: 'relationship',
       AMId: '1234',
       csv: 'assetManagerId, relationshipId, relatedId, relationshipType'
-      +'\n'+'1, 1234, 10, External'
+      +'\n'+'1234, 1, 10, External'
+      +'\n'+'1234, 2, 10, External'
+      +'\n'+'1234, 3, 10, External'
   }
   
-  const rel =[ {
-        assetManagerId: 1,
+  const rel =[ 
+       {
+        assetManagerId: 1234,
         relationshipType: "External",
         relatedId: 10,
-        relationshipId: 1234
-      }]
+        relationshipId: 1
+      },
+      {
+        assetManagerId: 1234,
+        relationshipType: "External",
+        relatedId: 10,
+        relationshipId: 2
+      },
+      {
+        assetManagerId: 1234,
+        relationshipType: "External",
+        relatedId: 10,
+        relationshipId: 3
+      }
+      ]
 
    expect(csvUpload(testParams)).toEqual(rel);   
 

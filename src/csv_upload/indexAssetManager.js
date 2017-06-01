@@ -20,13 +20,12 @@ import AssetManager from '../assetManagers/AssetManager/assetManager'
 //var csv is the string
 export function csvUpload({AMaaSClass, AMId, csv}, callback){
   //convert csv string to json format
-  var insertedCsv;
+  var insertedCsv=[];
   var lines=csv.split("\n"); 
   var headers=lines[0].split(", "); //find headers
 
   for(var i=1;i<lines.length;i++)
   {
-    var insertedCsv=[];
     var obj = {}; //declare object for each header
     var currentline=lines[i].split(", ");
 
@@ -68,6 +67,7 @@ export function csvUpload({AMaaSClass, AMId, csv}, callback){
     }*/
    
   }
+
   return insertedCsv;
 
 }
