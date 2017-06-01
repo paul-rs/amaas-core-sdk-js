@@ -1,16 +1,3 @@
-import fs from 'fs'
-import { AuthenticationDetails, CognitoUser, CognitoUserPool } from 'amazon-cognito-identity-js'
-import expandTilde from 'expand-tilde'
-//import {insert} from '../utils/parties'
-import Party from '../parties/Party/party'
-import Book from '../books/Book/book'
-import Asset from '../assets/Asset/asset'
-import Relationship from '../relationships/Relationship/index'
-import Transaction from '../transactions/Transaction/transaction'
-import AssetManager from '../assetManagers/AssetManager/assetManager'
-import {retrieve} from '../utils/transactions'
-import {insertData} from '../utils/network'
-
 /**
  * !This is an internal function that should not be called by the end user!
  * 
@@ -42,6 +29,7 @@ export function csvUpload({csv}){
 
     }
     insertedCsv.push(obj);
+
     //testing
     for(var j=0;j<headers.length;j++)
     {
