@@ -8,6 +8,7 @@ import Asset from '../assets/Asset/asset'
 import Relationship from '../relationships/Relationship/index'
 import Transaction from '../transactions/Transaction/transaction'
 import AssetManager from '../assetManagers/AssetManager/assetManager'
+import {retrieve} from '../utils/transactions'
 import {insertData} from '../utils/network'
 
 /**
@@ -21,12 +22,12 @@ import {insertData} from '../utils/network'
  */
 
 //var csv is the string
-export function csvUpload({AMaaSClass, AMId, csv}, callback){
+export function csvUpload({csv}){
   //convert csv string to json format
   var insertedCsv=[];
   var lines=csv.split("\n"); 
   var headers=lines[0].split(", "); //find headers
-
+  
   for(var i=1;i<lines.length;i++)
   {
     var obj = {}; //declare object for each header
@@ -40,93 +41,15 @@ export function csvUpload({AMaaSClass, AMId, csv}, callback){
       obj[headers[j]] = parseInt(currentline[j]);
 
     }
-
-    const params ={AMaaSClass, AMId, obj}; 
+    insertedCsv.push(obj);
     //testing
     for(var j=0;j<headers.length;j++)
     {
        console.log(Object.keys(obj)[j]+" : "+Object.values(obj)[j]);
     }
 
-    switch (AMaaSClass){ //case should match buildURL
-        case "parties": 
-
-                     let promiseParty = insertData(params).then(result => {
-                     result = _parseParty(result)
-                     if (typeof callback === 'function') {
-                        callback(null, result)
-                     }
-                        return result
-                     })
-                     if (typeof callback !== 'function') {
-                        return promiseParty
-                     }
-                     promiseParty.catch(error => callback(error))
-                     break;
-
-         case "assets": 
-
-                     let promiseAsset = insertData(params).then(result => {
-                     result = _parseAsset(result)
-                     if (typeof callback === 'function') {
-                     callback(null, result)
-                     }
-                        return result
-                     })
-                     if (typeof callback !== 'function') {
-                        return promiseAsset
-                     }
-                     promiseAsset.catch(error => callback(error))
-                     break;
-
-          case "book":
-                    
-                     let promiseBook = insertData(params).then(result => {
-                     result = _parseBook(result)
-                     if (typeof callback === 'function') {
-                     callback(null, result)
-                     }
-                       return result
-                     })
-                     if (typeof callback !== 'function') {
-                       return promiseBook
-                     }
-                     promiseBook.catch(error => callback(error))
-                     break;
-
-            case "relationships":
-                    
-                     let promiseRelationship = insertData(params).then(result => {
-                     result = _parseRelationship(result)
-                     if (typeof callback === 'function') {
-                     callback(null, result)
-                     }
-                        return result
-                     })
-                     if (typeof callback !== 'function') {
-                        return promiseRelationship
-                     }
-                     promiseRelationship.catch(error => callback(error))
-                     break;
-                    
-             case "transactions":
-                     
-                     let promiseTransaction = insertData(params).then(result => {
-                     result = _parseTransaction(result)
-                     if (typeof callback === 'function') {
-                     callback(null, result)
-                     }
-                        return result
-                     })
-                     if (typeof callback !== 'function') {
-                        return promiseTransaction
-                     }
-                     promiseTransaction.catch(error => callback(error))
-                     break;
-
-            default: console.log("no such class");    
-
-    }  
   }
+
+  return insertedCsv;
 
 }
