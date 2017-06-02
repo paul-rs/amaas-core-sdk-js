@@ -4,8 +4,9 @@
   "description": "Asset Management as a Service (AMaaS) Software Development Kit (SDK) for JavaScript",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest -- 'src\/(?!utils)' --verbose --runInBand",
-    "test:watch": "jest -- 'src\/(?!utils)' --verbose --watch",
+    "test": "jest --runInBand",
+    "test:verbose": "jest --verbose --runInBand",
+    "test:watch": "jest --verbose --watch",
     "build": "babel src --presets babel-preset-es2015 --out-dir dist --ignore '**.test.js'",
     "prepublish": "npm run build",
     "docs": "jsdoc2md --template ./docs/template.hbs --files './src/**/*.js' > ./docs/index.md"
