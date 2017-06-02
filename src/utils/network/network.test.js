@@ -13,8 +13,7 @@ import * as funcs from './'
 import * as api from '../../exports/api'
 
 api.config({
-  stage: 'staging',
-  token: process.env.API_TOKEN
+  stage: 'staging'
 })
 
 describe('buildURL function', () => {
