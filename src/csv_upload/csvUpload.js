@@ -3,7 +3,7 @@ import {Charge, Code, Comment, Link, Reference} from '../children/index'
 /**
  * !This is an internal function that should not be called by the end user!
  * 
- * Insert csv data into database
+ * Convert csv string to json 
  * @function parseCsv
  * @param {string} csvString 
  */
@@ -13,7 +13,7 @@ export function parseCsv({csvString})
   var insertedCsv=[];
   var lines=csvString.split("\n"); 
   var headers=lines[0].split(","); //find headers
-  var objectParam=["links", "emails", "addresses", "comments", "references", "charges"]
+  var objectParam=["links", "emails", "addresses", "comments", "references", "charges", "codes"]
    
   for(var i=1;i<lines.length;i++) //for each line in csv data string
   {
@@ -38,7 +38,7 @@ export function parseCsv({csvString})
          else if(firstPart=="false")
          obj[headers[j]] = false;
          else 
-         obj[headers[j]] = firstPart;//obj[headers[j]] = currentline[j];
+         obj[headers[j]] = firstPart;
       }
       else
       {
@@ -66,9 +66,9 @@ export function parseCsv({csvString})
         }
         else
         {
-            var addressString=objString;
+            var classString=objString;
             var thisHeader=headers[j];
-            var convertedObjectString=parseAddressString({addressString, thisHeader});//{addressString, header}
+            var convertedObjectString=parseClassString({classString, thisHeader});
             obj[headers[j]]=convertedObjectString; 
         }
 
@@ -77,29 +77,17 @@ export function parseCsv({csvString})
     }
      insertedCsv.push(obj);//result is an array of objects
   }    
-
     return insertedCsv;
-
 }
 
 
 /**
  * !This is an internal function that should not be called by the end user!
  * 
- * Insert csv data into database
+ * Convert csv link string into Link object
  * @function parseLink
  * @param {string} linkString 
  */
-
-/*
-"links": {"link_1": 
-                [{"active": true, "linkedId": 1}, {"active": false, "linkedId": 2}], 
-           "link_2": 
-                [{"active": false, "linkedId": 1}]
-         }
-*/
-
-
 export function parseLink({linkString})
 {
    
@@ -150,33 +138,29 @@ export function parseLink({linkString})
      }  
      //add link instance
      const testLink=new Link(subLinks);
-     linksForEachType.push(testLink);
-     
-   }//for each link array/link type
-  
+     linksForEachType.push(testLink);     
+   }//for each link array/link type 
   link[linkType]=linksForEachType;
-
   } //for each link object
-  
     return link;
 }
 
 /**
  * !This is an internal function that should not be called by the end user!
  * 
- * Insert csv data into database
+ * Convert csv object string into object
  * @function parseAdress
- * @param {string} addressString 
+ * @param {string} classString
  * This function ca be used for all object parameters except links. 
  * example: csvAddress: '{personal:{line_one:abc,active:true},business:{line_one:def,active:false}}'
- * will be converted to address object 
+ * will be converted to object of Address objects
  */
 
-export function parseAddressString({addressString, thisHeader})
+export function parseClassString({classString, thisHeader})
 {
-   var addressFinal={};
-   var currentLine=addressString;
-   //console.log("received: "+addressString)
+   var objectFinal={};
+   var currentLine=classString;
+  
    while(currentLine!=null || currentLine!="}")
    {
      var firstPart=currentLine.split(/}(.+)/)[0];
@@ -187,7 +171,7 @@ export function parseAddressString({addressString, thisHeader})
      if(firstPartSplit[1]==null) break;//no more address to split
      var key=firstPartSplit[1].slice(0, firstPartSplit[1].length-1).trim();
      var value=firstPartSplit[2];
-     var subaddress={};
+     var subClassObject={};
 
      if(value==undefined) break;
      var elements=value.split(",");
@@ -197,40 +181,42 @@ export function parseAddressString({addressString, thisHeader})
        var eachElement=elements[i];
        var splitEachElement=eachElement.split(":");
        if(splitEachElement[1]=="true")
-       subaddress[splitEachElement[0]]=true;
+       subClassObject[splitEachElement[0]]=true;
        else if(splitEachElement[1]=="false")
-       subaddress[splitEachElement[0]]=false;
+       subClassObject[splitEachElement[0]]=false;
        else if(!isNaN(splitEachElement[1]))
-       subaddress[splitEachElement[0]]= parseInt(splitEachElement[1]);
+       subClassObject[splitEachElement[0]]= parseInt(splitEachElement[1]);
        else
-       subaddress[splitEachElement[0]]=splitEachElement[1];
+       subClassObject[splitEachElement[0]]=splitEachElement[1];
      }
       
       //"links", "emails", "addresses", "comments", "references", "charges"
       if(thisHeader=="addresses"){
-      const testAddress=new Address(subaddress);//create an address instance
-      addressFinal[key]=testAddress;
+      const testAddress=new Address(subClassObject);//create an address instance
+      objectFinal[key]=testAddress;
       }
       else if(thisHeader=="emails"){
-      const testAddress=new Email(subaddress);//create an address instance
-      addressFinal[key]=testAddress;
+      const testEmail=new Email(subClassObject);//create an address instance
+      objectFinal[key]=testEmail;
       }
       else if(thisHeader=="references"){
-      const testAddress=new Reference(subaddress);//create an address instance
-      addressFinal[key]=testAddress;
+      const testReference=new Reference(subClassObject);//create an address instance
+      objectFinal[key]=testReference;
       }
       else if(thisHeader=="comments"){
-      const testAddress=new Comment(subaddress);//create an address instance
-      addressFinal[key]=testAddress;
+      const testComment=new Comment(subClassObject);//create an address instance
+      objectFinal[key]=testComment;
       }
       else if(thisHeader=="charges"){
-      const testAddress=new Charge(subaddress);//create an address instance
-      addressFinal[key]=testAddress;
+      const testCharge=new Charge(subClassObject);//create an address instance
+      objectFinal[key]=testCharge;
       }
-
+      else if(thisHeader=="codes"){
+      const testCode=new Code(subClassObject);//create an address instance
+      objectFinal[key]=testCode;
+      }
    }
-   
-    return addressFinal;
+    return objectFinal;
 }
 
 
