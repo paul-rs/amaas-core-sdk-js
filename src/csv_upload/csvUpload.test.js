@@ -91,7 +91,164 @@ describe('csvUpload', () => {
                }
               ]
     }
+
+    const p3={
+     csv: 'description,emails.com1.active,emails.com1.version,emails.com2.active,closeTime'
+      +'\n'+'RRN4WVXI1F3YA1IGMKZF,true,2,false,18:00:00'
+      +'\n'+'RRN4WVXI1F3YA1IGMKZF,true,1,false,18:00:00'
+  }
+
+  const data3=[{
+      description: "RRN4WVXI1F3YA1IGMKZF",
+      comments:{
+          com1:{
+              createdBy: "TEMP",
+              updatedBy: "TEMP",
+              createdTime: undefined,
+              updatedTime: undefined,
+              version: 2,
+              commentValue: undefined,
+              active: true     
+          },
+          com2:{
+              createdBy: "TEMP",
+              updatedBy: "TEMP",
+              createdTime: undefined,
+              updatedTime: undefined,
+              version: 1,
+              commentValue: undefined,
+              active: false
+          }
+      },
+      closeTime: "18:00:00"
+  },
+  {
+      description: "RRN4WVXI1F3YA1IGMKZF",
+      comments:{
+          com1:{
+              createdBy: "TEMP",
+              updatedBy: "TEMP",
+              createdTime: undefined,
+              updatedTime: undefined,
+              version: 1,
+              commentValue: undefined,
+              active: true     
+          },
+          com2:{
+              createdBy: "TEMP",
+              updatedBy: "TEMP",
+              createdTime: undefined,
+              updatedTime: undefined,
+              version: 1,
+              commentValue: undefined,
+              active: false
+          }
+      },
+      closeTime: "18:00:00"
+  }
+  ]
     
-     expect(csv.parseCsv(testParams)).toEqual(datatest);
+  const p4={
+     csv: 'description,links.link1[0].linked_id,links.link1[0].active,links.link1[1].linkedId,links.link1[1].active,links.link2[0].linkedId,links.link2[0].active,closeTime'
+      +'\n'+'RRN4WVXI1F3YA1IGMKZF,1,true,2,false,1,false,18:00:00'
+      +'\n'+'RRN4WVXI1F3YA1IGMKZF,1,true,2,false,1,false,18:00:00'
+      +'\n'+',1,true,,,1,false,'
+  }
+
+ const data4=[
+   {
+      description: "RRN4WVXI1F3YA1IGMKZF",
+      links:{
+          link1:[{
+              active: true,
+              createdBy: "TEMP",
+              createdTime: undefined,
+              linkedId:  1,
+              updatedBy: "TEMP",
+              updatedTime: undefined,
+              version: 1
+          },
+          {
+              active: false,
+              createdBy: "TEMP",
+              createdTime: undefined,
+              linkedId:  2,
+              updatedBy: "TEMP",
+              updatedTime: undefined,
+              version: 1
+          }],
+          link2:[{
+              active: false,
+              createdBy: "TEMP",
+              createdTime: undefined,
+              linkedId:  1,
+              updatedBy: "TEMP",
+              updatedTime: undefined,
+              version: 1
+          }]
+      },
+      closeTime: "18:00:00"
+  },
+  {
+      description: "RRN4WVXI1F3YA1IGMKZF",
+      links:{
+          link1:[{
+              active: true,
+              createdBy: "TEMP",
+              createdTime: undefined,
+              linkedId:  1,
+              updatedBy: "TEMP",
+              updatedTime: undefined,
+              version: 1
+          },
+          {
+              active: false,
+              createdBy: "TEMP",
+              createdTime: undefined,
+              linkedId:  2,
+              updatedBy: "TEMP",
+              updatedTime: undefined,
+              version: 1
+          }],
+          link2:[{
+              active: false,
+              createdBy: "TEMP",
+              createdTime: undefined,
+              linkedId:  1,
+              updatedBy: "TEMP",
+              updatedTime: undefined,
+              version: 1
+          }]
+      },
+      closeTime: "18:00:00"
+  },
+  {
+    description: undefined,
+      links:{
+          link1:[{
+              active: true,
+              createdBy: "TEMP",
+              createdTime: undefined,
+              linkedId:  1,
+              updatedBy: "TEMP",
+              updatedTime: undefined,
+              version: 1
+          }],
+          link2:[{
+              active: false,
+              createdBy: "TEMP",
+              createdTime: undefined,
+              linkedId:  1,
+              updatedBy: "TEMP",
+              updatedTime: undefined,
+              version: 1
+          }]
+      },
+      closeTime: undefined
+  }
+
+ ]
+     //expect(csv.parseCsv(testParams)).toEqual(datatest);
+     expect(csv.parseString(p3)).toEqual(data3);
   })
 })
