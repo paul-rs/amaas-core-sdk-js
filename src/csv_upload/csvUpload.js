@@ -176,21 +176,27 @@ export function parseString({csv})
         }
       else
       {
+        var convertedHeader=camelCase(headers[i]); //convert headers to camelcase      
         if(currentLine==null) //the last value is not specified
         {
-          finalObject[headers[i]]=undefined;
+          finalObject[convertedHeader]=undefined;
           continue;
         }
 
         var firstPart=currentLine.split(/,(.+)/)[0];//get the string before the first ','
         currentLine=currentLine.split(/,(.+)/)[1];
-        finalObject[headers[i]]=firstPart;
 
         if(firstPart=="") 
         {
-           finalObject[headers[i]]=undefined;
+           finalObject[convertedHeader]=undefined;
            continue;
         }
+        
+        if(firstPart=="true") firstPart=true;
+        else if(firstPart=="false") firstPart=false;    
+        else if(!isNaN(firstPart))
+        firstPart= parseInt(firstPart);
+        finalObject[convertedHeader]=firstPart;
       }
     }
     jsonArray.push(finalObject)
