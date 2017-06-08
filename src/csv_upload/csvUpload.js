@@ -28,10 +28,18 @@ export function parseString({csv})
     {
       if(headers[i].indexOf('.') > -1)//if the string contains '.' which means the header belongs to an object
       {
-         var headerElements=headers[i].split(".");//className, type, keys
-         headerElements[2]=camelCase(headerElements[2]);
-
          //pre-processing
+         var headerElements=headers[i].split(".");//className, type, keys
+         if(headerElements[0]=="links")
+         {
+           var index=headerElements[2];
+           var keys=camelCase(headerElements[3]);
+           headerElements[2]=keys;
+           headerElements[3]=index;
+         }
+         else headerElements[2]=camelCase(headerElements[2]);
+         
+        
          if(currentLine==null) //the last value is not specified
           {
              if(!references.includes(headerElements[0]))
@@ -51,6 +59,16 @@ export function parseString({csv})
           if(currentValue.charAt(currentValue.length-1)==",") currentValue=currentValue.substr(0, currentValue.length-1);
           if(currentValue=="") 
           {
+             if(!references.includes(headerElements[0]))
+             finalObject[headerElements[0]]=undefined;
+             else if (references.includes(headerElements[0])&& !references.includes(headerElements[1]))
+             {
+               finalObject[headerElements[0]][headerElements[1]]=undefined;
+             }
+             else if (references.includes(headerElements[0])&& references.includes(headerElements[1]) && !references.includes(headerElements[2]))
+             {
+               //do nothing
+             }
              currentLine=currentLine.split(/,(.+)/)[1];
              continue;
           }
@@ -63,17 +81,7 @@ export function parseString({csv})
           //for links only
           if(headerElements[0]=="links") 
           {
-            var headerElementsForLinks=headers[i].split(".");//className, type, keys
-            var keyNameArray=headerElementsForLinks[1].split("[");
-          
-            var keyName=keyNameArray[0];
-            var objectNumber=keyNameArray[1].split("]")
-            var newHeaderElements=[];
-            newHeaderElements.push(headerElementsForLinks[0]);  
-            newHeaderElements.push(keyName); 
-            headerElementsForLinks[2]=camelCase(headerElementsForLinks[2]);
-            newHeaderElements.push(headerElementsForLinks[2]);
-            newHeaderElements.push(objectNumber[0]);
+           var newHeaderElements=headerElements;
           
            if(newHeaderElements[0]=="links" && !references.includes("links"))
            {
@@ -184,6 +192,7 @@ export function parseString({csv})
         }
 
         var firstPart=currentLine.split(/,(.+)/)[0];//get the string before the first ','
+        if(firstPart.charAt(firstPart.length-1)==",") firstPart=firstPart.substr(0, firstPart.length-1);
         currentLine=currentLine.split(/,(.+)/)[1];
 
         if(firstPart=="") 
