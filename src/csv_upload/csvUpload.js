@@ -1,6 +1,10 @@
 import {Address, Email} from '../parties/Children/index'
 import {Charge, Code, Comment, Link, Reference} from '../children/index'
 import {camelCase} from 'lodash'
+import {Transaction} from '../transactions'
+import {Book} from '../books'
+import {Asset} from '../assets'
+import {Party} from '../parties'
 
 /**
  * !This is an internal function that should not be called by the end user!
@@ -11,7 +15,7 @@ import {camelCase} from 'lodash'
  * This function ca be used for all object parameters.
  */
 
-export function parseString({csv})
+export function parseString({csv, type})
 {
    var jsonArray=[]; 
    var lines=csv.split("\n"); 
@@ -24,6 +28,11 @@ export function parseString({csv})
     var currentLine=lines[j];
     var references=[];
     var finalObject={};
+    /*let finalObject;
+    if(type=="transactions")
+    finalObject = new Transaction();*/
+
+
     for(var i=0; i<headers.length; i++)
     {
       if(headers[i].indexOf('.') > -1)//if the string contains '.' which means the header belongs to an object
@@ -36,7 +45,7 @@ export function parseString({csv})
            var keys=camelCase(headerElements[3]);
            headerElements[2]=keys;
            headerElements[3]=index;
-         }
+         }//className, type, keys, index
          else headerElements[2]=camelCase(headerElements[2]);
          
         
@@ -111,7 +120,7 @@ export function parseString({csv})
            }
            else if(references.includes(newHeaderElements[0]) && references.includes(newHeaderElements[1]) && !references.includes(newHeaderElements[3]))
            {
-              var anotherLinkObject={};
+             var anotherLinkObject={};
              anotherLinkObject[headerElements[2]]=currentValue;
              const testLink=new Link(anotherLinkObject);
              finalObject[newHeaderElements[0]][newHeaderElements[1]].push(testLink);
@@ -208,10 +217,20 @@ export function parseString({csv})
         finalObject[convertedHeader]=firstPart;
       }
     }
-    jsonArray.push(finalObject)
+    let classInstance
+    if(type=="transactions") classInstance=new Transaction(finalObject);
+    else if(type="books") classInstance=new Book(finalObject);
+    else if(type="assets") classInstance=new Asset(finalObject);
+    else if(type="parties") classInstance=new Party(finalObject);
+    
+    jsonArray.push(classInstance)
    }
    return jsonArray;
 }
 
+export function compareString({str1, str2})
+{
+  return str1.localeCompare(str2);
+}
 
 
