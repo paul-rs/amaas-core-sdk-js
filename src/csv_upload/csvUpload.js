@@ -12,6 +12,7 @@ import {Party} from '../parties'
  * Convert csv object string into object
  * @function parseString
  * @param {string} csv
+ * @param {string} type
  * This function ca be used for all object parameters.
  */
 
@@ -28,10 +29,6 @@ export function parseString({csv, type})
     var currentLine=lines[j];
     var references=[];
     var finalObject={};
-    /*let finalObject;
-    if(type=="transactions")
-    finalObject = new Transaction();*/
-
 
     for(var i=0; i<headers.length; i++)
     {
@@ -65,7 +62,7 @@ export function parseString({csv, type})
           }
           //get the value for the header
           var currentValue=currentLine.split(/,(.+)/)[0];
-          if(currentValue.charAt(currentValue.length-1)==",") currentValue=currentValue.substr(0, currentValue.length-1);
+          if(currentValue.charAt(currentValue.length-1)==",") currentValue=currentValue.substr(0, currentValue.length-1);//if there is only one "," left
           if(currentValue=="") 
           {
              if(!references.includes(headerElements[0]))
@@ -201,7 +198,7 @@ export function parseString({csv, type})
         }
 
         var firstPart=currentLine.split(/,(.+)/)[0];//get the string before the first ','
-        if(firstPart.charAt(firstPart.length-1)==",") firstPart=firstPart.substr(0, firstPart.length-1);
+        if(firstPart.charAt(firstPart.length-1)==",") firstPart=firstPart.substr(0, firstPart.length-1);//if there is only one "," left
         currentLine=currentLine.split(/,(.+)/)[1];
 
         if(firstPart=="") 
@@ -227,10 +224,4 @@ export function parseString({csv, type})
    }
    return jsonArray;
 }
-
-export function compareString({str1, str2})
-{
-  return str1.localeCompare(str2);
-}
-
 

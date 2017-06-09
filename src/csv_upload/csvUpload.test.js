@@ -21,7 +21,6 @@ describe('csvUpload', () => {
   const comment2=new Comment({commentValue: "REFUND"})
   var commentObject2={}
   commentObject2["MyComments"]=comment2;
-  //const comment3=new Comment()
 
   const link1=new Link({linkedId: 1})
   var linkedObject1={}
