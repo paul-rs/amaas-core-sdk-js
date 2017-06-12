@@ -35,10 +35,10 @@ export function getEndpoint() {
     case 'staging':
       return `${endpoint.staging}/staging`
     case 'prod':
-      return `${endpoint.prod}/prod`
+      return `${endpoint.prod}`
     default:
       console.warn(`Unknown stage variable: ${stage}. Defaulting to /prod`)
-      return `${endpoint.prod}/prod`
+      return `${endpoint.prod}`
   }
 }
 
