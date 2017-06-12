@@ -216,9 +216,9 @@ export function parseString({csv, type})
     }
     let classInstance
     if(type=="transactions") classInstance=new Transaction(finalObject);
-    else if(type="books") classInstance=new Book(finalObject);
-    else if(type="assets") classInstance=new Asset(finalObject);
-    else if(type="parties") classInstance=new Party(finalObject);
+    else if(type=="books") classInstance=new Book(finalObject);
+    else if(type=="assets") classInstance=new Asset(finalObject);
+    else if(type=="parties") classInstance=new Party(finalObject);
     
     jsonArray.push(classInstance)
    }
