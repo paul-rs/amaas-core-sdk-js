@@ -13,6 +13,7 @@ import * as Parties from '../utils/parties'
 import * as Positions from '../utils/positions'
 import * as Relationships from '../utils/relationships'
 import * as Transactions from '../utils/transactions'
+import * as csv from '../csv_upload/csvUpload.js'
 
 import { configureStage, configureAuth } from '../utils/network'
 
@@ -25,6 +26,7 @@ export {
   Parties,
   Positions,
   Transactions,
+  csv,
   config
 }
 

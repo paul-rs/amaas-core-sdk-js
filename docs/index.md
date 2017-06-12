@@ -101,6 +101,8 @@ API Methods. These methods enable communication with the AMaaS Database. All met
 
 
 * [api](#module_api)
+    * [.csv](#module_api.csv) : <code>object</code>
+        * [.parseString(params)](#module_api.csv.parseString) ⇒ <code>Array</code>
     * [.Allocations](#module_api.Allocations) : <code>object</code>
         * [.retrieve(params, [callback])](#module_api.Allocations.retrieve) ⇒ <code>Promise</code> &#124; <code>null</code>
         * [.send(params, [callback])](#module_api.Allocations.send) ⇒ <code>Promise</code> &#124; <code>null</code>
@@ -157,6 +159,24 @@ API Methods. These methods enable communication with the AMaaS Database. All met
         * [.partialAmend(params, [callback])](#module_api.Transactions.partialAmend) ⇒ <code>Promise</code> &#124; <code>null</code>
         * [.search(params, [callback])](#module_api.Transactions.search) ⇒ <code>Promise</code> &#124; <code>null</code>
         * [.cancel(params, [callback])](#module_api.Transactions.cancel) ⇒ <code>Promise</code> &#124; <code>null</code>
+
+<a name="module_api.csv"></a>
+
+### api.csv : <code>object</code>
+**Kind**: static namespace of <code>[api](#module_api)</code>  
+<a name="module_api.csv.parseString"></a>
+
+#### csv.parseString(params) ⇒ <code>Array</code>
+Convert csv object string into class instance
+
+**Kind**: static method of <code>[csv](#module_api.csv)</code>  
+**Returns**: <code>Array</code> - An array of Transaction instances  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | object of parameters: |
+| params.csv | <code>string</code> | csv string to parse |
+| params.type | <code>string</code> | type of data being passed in<br /> Available types are: <li>transactions</li> |
 
 <a name="module_api.Allocations"></a>
 
@@ -1000,6 +1020,7 @@ Construct a new Asset Manager Model
 | [params.assetManagerId] | <code>number</code> | <code>generated server side</code> | Asset Manager's ID. Include to specifically set, if it does not already exist |
 | params.assetManagerType | <code>string</code> |  | Type of Asset Manager (e.g. Hedge Fund). __(required)__<br /> Available types are: <li>Accredited Investor</li> <li>Bank</li> <li>Broker</li> <li>Corporate Treasury</li> <li>Family Office</li> <li>Fund Administrator</li> <li>Fund Manager</li> <li>Hedge Fund</li> <li>Private Equity</li> <li>Retail</li> <li>Venture Capital</li> |
 | [params.assetManagerStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of Asset Manager |
+| [params.accountType] | <code>string</code> | <code>&quot;Basic&quot;</code> | Account Type reflecting the support level for the Asset Manager |
 | [params.clientId] | <code>string</code> |  | ID of the associated client |
 | [params.partyId] | <code>string</code> | <code>&quot;&#x27;AMID&#x27;+assetManagerId&quot;</code> | ID of the Party that represents this Asset Manager. Defaults to e.g. AMID10 for assetManagerId 10 |
 | [params.defaultBookOwnerId] | <code>string</code> | <code>&quot;assetManagerId&quot;</code> | Asset Manager ID of the default owner for any Books owned by this Asset Manager. Will be used if no `ownerId` is set on the Book. Defaults to e.g. 10 for assetManagerId 10 |
@@ -1038,10 +1059,10 @@ Classes for the Assets service
         * [new ContractForDifference(params)](#new_module_assets.ContractForDifference_new)
     * [.Derivative](#module_assets.Derivative) ⇐ <code>[Asset](#module_assets.Asset)</code>
         * [new Derivative(params)](#new_module_assets.Derivative_new)
+    * [.ForeignExchangeOption](#module_assets.ForeignExchangeOption) ⇐ <code>[Derivative](#module_assets.Derivative)</code>
+        * [new ForeignExchangeOption(params)](#new_module_assets.ForeignExchangeOption_new)
     * [.Equity](#module_assets.Equity) ⇐ <code>[Asset](#module_assets.Asset)</code>
         * [new Equity(params)](#new_module_assets.Equity_new)
-    * [.ForeignExchangeOption](#module_assets.ForeignExchangeOption) ⇐ <code>[Asset](#module_assets.Asset)</code>
-        * [new ForeignExchangeOption(params)](#new_module_assets.ForeignExchangeOption_new)
     * [.ExchangeTradedFund](#module_assets.ExchangeTradedFund) ⇐ <code>[Fund](#module_assets.Fund)</code>
         * [new ExchangeTradedFund(params)](#new_module_assets.ExchangeTradedFund_new)
     * [.Fund](#module_assets.Fund) ⇐ <code>[Asset](#module_assets.Asset)</code>
@@ -1117,7 +1138,6 @@ Construct a new Asset instance
 | [params.venueId] | <code>string</code> |  | ID of Asset's venue if applicable |
 | [params.currency] | <code>string</code> |  | Asset currency (e.g. USD, SGD) |
 | [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
-| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Maturity date if applicable (YYYY-MM-DD) |
 | [params.description] | <code>string</code> |  | Description of the Asset |
 | [params.displayName] | <code>string</code> |  | Display name of the Asset |
 | [params.rollPrice] | <code>boolean</code> | <code>true</code> | Whether to roll the price for the Asset |
@@ -1473,7 +1493,6 @@ Construct a new CFD instance
 | [params.venueId] | <code>string</code> |  | ID of CFD's venue |
 | [params.currency] | <code>string</code> |  | CFD currency (e.g. USD, SGD) |
 | [params.issueDate] | <code>string</code> |  | Issue date if applicable (YYYY-MM-DD) |
-| [params.maturityDate] | <code>string</code> |  | Maturity date if applicable (YYYY-MM-DD) |
 | [params.description] | <code>string</code> |  | Description of the CFD |
 | [params.displayName] | <code>string</code> |  | Display name of the CFD |
 | [params.clientId] | <code>string</code> |  | ID of the associated client |
@@ -1514,7 +1533,6 @@ Construct a new Derivative instance
 | [params.venueId] | <code>string</code> |  | ID of Derivative's venue if applicable |
 | params.currency | <code>string</code> |  | Derivative currency (e.g. USD, SGD) |
 | [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
-| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Maturity date if applicable (YYYY-MM-DD) |
 | [params.description] | <code>string</code> |  | Description of the Derivative |
 | [params.displayName] | <code>string</code> |  | Display name of the Derivative |
 | [params.rollPrice] | <code>boolean</code> | <code>false</code> | Auto-set to `false` __(read-only)__ |
@@ -1527,6 +1545,51 @@ Construct a new Derivative instance
 | [params.createdTime] | <code>date</code> |  | Time that the Derivative was created |
 | [params.updatedTime] | <code>date</code> |  | Time that the Derivative was updated |
 | [params.version] | <code>number</code> |  | Version number of the Derivative |
+
+<a name="module_assets.ForeignExchangeOption"></a>
+
+### assets.ForeignExchangeOption ⇐ <code>[Derivative](#module_assets.Derivative)</code>
+Class representing an FX Option
+
+**Kind**: static class of <code>[assets](#module_assets)</code>  
+**Extends:** <code>[Derivative](#module_assets.Derivative)</code>  
+<a name="new_module_assets.ForeignExchangeOption_new"></a>
+
+#### new ForeignExchangeOption(params)
+Construct a new FX Option instance
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | ForeignExchangeOption creation options: |
+| params.assetManagerId | <code>number</code> |  | ID of FX Option's Asset Manager __(required)__ |
+| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
+| [params.assetClass] | <code>string</code> | <code>&quot;ForeignExchange&quot;</code> | Auto-set to `ForeignExchange` __(read-only)__ |
+| [params.assetType] | <code>string</code> |  | Type of the FX Option. Auto-set based on the class or subclass constructor |
+| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
+| [params.fungible] | <code>boolean</code> | <code>false</code> | Auto-set to `false` __(read-only)__ |
+| [params.assetIssuerId] | <code>string</code> |  | ID of the FX Option's issuer |
+| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the FX Option |
+| [params.countryId] | <code>string</code> |  | ID of FX Option's country |
+| [params.venueId] | <code>string</code> |  | ID of FX Option's venue if applicable |
+| [params.currency] | <code>string</code> |  | FX Option currency (e.g. USD, SGD) |
+| [params.issueDate] | <code>string</code> |  | Issue date (YYYY-MM-DD) |
+| [params.expiryDate] | <code>string</code> |  | Expiry date (YYYY-MM-DD) |
+| [params.description] | <code>string</code> |  | Description of the FX Option |
+| [params.displayName] | <code>string</code> |  | Display name of the FX Option |
+| [params.clientId] | <code>string</code> |  | ID of the client to which the FX Option belongs |
+| params.optionStyle | <code>string</code> |  | FX Option style __(required)__<br /> Available options: <li>American</li> <li>Bermudan</li> <li>European</li> |
+| params.optionType | <code>string</code> |  | FX Option type __(required)__<br /> Available options: <li>Put</li> <li>Call</li> |
+| params.strike | <code>number</code> |  | Strike price of the FX Option __(required)__ |
+| params.underlyingAssetId | <code>string</code> |  | ID of the underlying Asset __(required)__ |
+| [params.comments] | <code>object</code> |  | Object of Comments attached to the FX Option |
+| [params.links] | <code>object</code> |  | Object of array of Links attached to the FX Option |
+| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the FX Option. * The AMaaS Reference is auto-created and populated |
+| [params.createdBy] | <code>string</code> |  | ID of the user that created the FX Option |
+| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the FX Option |
+| [params.createdTime] | <code>date</code> |  | Time that the FX Option was created |
+| [params.updatedTime] | <code>date</code> |  | Time that the FX Option was updated |
+| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.Equity"></a>
 
@@ -1569,51 +1632,6 @@ Construct a new Equity instance
 | [params.createdTime] | <code>date</code> |  | Time that the Equity was created |
 | [params.updatedTime] | <code>date</code> |  | Time that the Equity was updated |
 | [params.version] | <code>number</code> |  | Version number of the Equity |
-
-<a name="module_assets.ForeignExchangeOption"></a>
-
-### assets.ForeignExchangeOption ⇐ <code>[Asset](#module_assets.Asset)</code>
-Class representing an FX Option
-
-**Kind**: static class of <code>[assets](#module_assets)</code>  
-**Extends:** <code>[Asset](#module_assets.Asset)</code>  
-<a name="new_module_assets.ForeignExchangeOption_new"></a>
-
-#### new ForeignExchangeOption(params)
-Construct a new FX Option instance
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>object</code> |  | ForeignExchangeOption creation options: |
-| params.assetManagerId | <code>number</code> |  | ID of FX Option's Asset Manager __(required)__ |
-| params.assetId | <code>number</code> |  | ID of the Asset __(required)__ |
-| [params.assetClass] | <code>string</code> | <code>&quot;ForeignExchange&quot;</code> | Auto-set to `ForeignExchange` __(read-only)__ |
-| [params.assetType] | <code>string</code> |  | Type of the FX Option. Auto-set based on the class or subclass constructor |
-| [params.assetTypeDisplay] | <code>string</code> |  | Auto-set to the spaced class name (e.g. `Listed Derivative` for `ListedDerivative()`) |
-| [params.fungible] | <code>boolean</code> | <code>false</code> | Auto-set to `false` __(read-only)__ |
-| [params.assetIssuerId] | <code>string</code> |  | ID of the FX Option's issuer |
-| [params.assetStatus] | <code>string</code> | <code>&quot;Active&quot;</code> | Status of the FX Option |
-| [params.countryId] | <code>string</code> |  | ID of FX Option's country |
-| [params.venueId] | <code>string</code> |  | ID of FX Option's venue if applicable |
-| [params.currency] | <code>string</code> |  | FX Option currency (e.g. USD, SGD) |
-| [params.issueDate] | <code>string</code> |  | Issue date (YYYY-MM-DD) |
-| [params.expiryDate] | <code>string</code> |  | Expiry date (YYYY-MM-DD) |
-| [params.description] | <code>string</code> |  | Description of the FX Option |
-| [params.displayName] | <code>string</code> |  | Display name of the FX Option |
-| [params.clientId] | <code>string</code> |  | ID of the client to which the FX Option belongs |
-| params.optionStyle | <code>string</code> |  | FX Option style __(required)__<br /> Available options: <li>American</li> <li>Bermudan</li> <li>European</li> |
-| params.optionType | <code>string</code> |  | FX Option type __(required)__<br /> Available options: <li>Put</li> <li>Call</li> |
-| params.strike | <code>number</code> |  | Strike price of the FX Option __(required)__ |
-| params.underlyingAssetId | <code>string</code> |  | ID of the underlying Asset __(required)__ |
-| [params.comments] | <code>object</code> |  | Object of Comments attached to the FX Option |
-| [params.links] | <code>object</code> |  | Object of array of Links attached to the FX Option |
-| [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the FX Option. * The AMaaS Reference is auto-created and populated |
-| [params.createdBy] | <code>string</code> |  | ID of the user that created the FX Option |
-| [params.updatedBy] | <code>string</code> |  | ID of the user that updated the FX Option |
-| [params.createdTime] | <code>date</code> |  | Time that the FX Option was created |
-| [params.updatedTime] | <code>date</code> |  | Time that the FX Option was updated |
-| [params.version] | <code>number</code> |  | Version number |
 
 <a name="module_assets.ExchangeTradedFund"></a>
 
@@ -2084,7 +2102,7 @@ Construct a new Future instance
 | params.tickSize | <code>number</code> |  | Future tick size. Stored as a Decimal instance __(required)__ |
 | [params.quoteUnit] | <code>string</code> |  | Future quote unit |
 | params.underlyingAssetId | <code>string</code> |  | ID of the underlying Asset __(required)__ |
-| [params.expiryDate] | <code>string</code> |  | Date of the Future's expiry (YYYY-MM-DD) |
+| [params.expiryDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Date of the Future's expiry (YYYY-MM-DD) |
 | [params.comments] | <code>object</code> |  | Object of Comments attached to the Future |
 | [params.links] | <code>object</code> |  | Object of array of Links attached to the Future |
 | [params.references] | <code>object</code> | <code>{ AMaaS: Reference() }</code> | Object of References associated with the Future. * The AMaaS Reference is auto-created and populated |
@@ -2266,7 +2284,6 @@ Construct a new Listed CFD instance
 | [params.venueId] | <code>string</code> |  | ID of Listed CFD's venue if applicable |
 | [params.currency] | <code>string</code> |  | Listed CFD currency (e.g. USD, SGD) |
 | [params.issueDate] | <code>string</code> | <code>&quot;0001-01-01&quot;</code> | Issue date if applicable (YYYY-MM-DD) |
-| [params.maturityDate] | <code>string</code> | <code>&quot;9999-12-31&quot;</code> | Maturity date if applicable (YYYY-MM-DD) |
 | [params.description] | <code>string</code> |  | Description of the Listed CFD |
 | [params.displayName] | <code>string</code> |  | Display name of the Listed CFD |
 | [params.clientId] | <code>string</code> |  | ID of the associated client |
@@ -2307,7 +2324,6 @@ Construct a new Listed Derivative instance
 | [params.venueId] | <code>string</code> |  | ID of Listed Derivative's venue if applicable |
 | [params.currency] | <code>string</code> |  | Listed Derivative currency (e.g. USD, SGD) |
 | [params.issueDate] | <code>string</code> |  | Issue date if applicable (YYYY-MM-DD) |
-| [params.maturityDate] | <code>string</code> |  | Maturity date if applicable (YYYY-MM-DD) |
 | [params.description] | <code>string</code> |  | Description of the Listed Derivative |
 | [params.displayName] | <code>string</code> |  | Display name of the Listed Derivative |
 | [params.rollPrice] | <code>boolean</code> | <code>false</code> | Auto-set to `false` __(read-only)__ |
@@ -2827,6 +2843,9 @@ Construct a new Asset Manager instance
 | params.references | <code>object</code> |  | Object of References associated with this Asset Manager |
 | params.comments | <code>object</code> |  | Object of Comments associated with the Asset Manager |
 | params.links | <code>object</code> |  | Object of Links associated with the Asset Manager |
+| params.legalName- | <code>string</code> |  | Legal name of the Asset Manager associated with this party |
+| params.displayName | <code>string</code> |  | Display name of the Asset Manager associated with this party |
+| params.url | <code>string</code> |  | Url of this Party |
 | params.createdBy | <code>string</code> |  | ID of the user that created the Asset Manager |
 | params.updatedBy | <code>string</code> |  | ID of the user that updated the Asset Manager |
 | params.createdTime | <code>date</code> |  | Time that the Asset Manager was created |
@@ -2889,6 +2908,9 @@ Construct a new Broker instance
 | [params.references] | <code>object</code> |  | Object of References associated with the Broker |
 | [params.comments] | <code>object</code> |  | Object of Comments associated with the Broker |
 | [params.links] | <code>object</code> |  | Object of Links associated with the Broker |
+| [params.legalName] | <code>string</code> |  | Legal name of the Asset Manager associated with this party |
+| [params.displayName] | <code>string</code> |  | Display name of the Asset Manager associated with this party |
+| [params.url] | <code>string</code> |  | Url of this Party |
 | [params.createdBy] | <code>string</code> |  | ID of the user that created the Broker |
 | [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Broker |
 | [params.createdTime] | <code>date</code> |  | Time that the Broker was created |
@@ -3007,6 +3029,9 @@ Construct a new Company instance
 | [params.references] | <code>object</code> |  | Object of References associated with the Company |
 | [params.comments] | <code>object</code> |  | Object of Comments associated with the Company |
 | [params.links] | <code>object</code> |  | Object of Links associated with the Company |
+| [params.legalName] | <code>string</code> |  | Legal name of the Asset Manager associated with this party |
+| [params.displayName] | <code>string</code> |  | Display name of the Asset Manager associated with this party |
+| [params.url] | <code>string</code> |  | Url of this Party |
 | [params.createdBy] | <code>string</code> |  | ID of the user that created the Company |
 | [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Company |
 | [params.createdTime] | <code>date</code> |  | Time that the Company was created |
@@ -3069,6 +3094,9 @@ Construct a new Exchange instance
 | [params.references] | <code>object</code> |  | Object of References associated with the Exchange |
 | [params.comments] | <code>object</code> |  | Object of Comments associated with the Exchange |
 | [params.links] | <code>object</code> |  | Object of Links associated with the Exchange |
+| [params.legalName] | <code>string</code> |  | Legal name of the Asset Manager associated with this party |
+| [params.displayName] | <code>string</code> |  | Display name of the Asset Manager associated with this party |
+| [params.url] | <code>string</code> |  | Url of this Party |
 | [params.createdBy] | <code>string</code> |  | ID of the user that created the Exchange |
 | [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Exchange |
 | [params.createdTime] | <code>date</code> |  | Time that the Exchange was created |
@@ -3131,6 +3159,9 @@ Construct a new Fund instance
 | [params.references] | <code>object</code> |  | Object of References associated with the Fund |
 | [params.comments] | <code>object</code> |  | Object of Comments associated with the Fund |
 | [params.links] | <code>object</code> |  | Object of Links associated with the Fund |
+| [params.legalName] | <code>string</code> |  | Legal name of the Asset Manager associated with this party |
+| [params.displayName] | <code>string</code> |  | Display name of the Asset Manager associated with this party |
+| [params.url] | <code>string</code> |  | Url of this Party |
 | [params.createdBy] | <code>string</code> |  | ID of the user that created the Fund |
 | [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Fund |
 | [params.createdTime] | <code>date</code> |  | Time that the Fund was created |
@@ -3194,6 +3225,9 @@ Construct a new Government Agency instance
 | [params.references] | <code>object</code> |  | Object of References associated with the Government Agency |
 | [params.comments] | <code>object</code> |  | Object of Comments associated with the Government Agency |
 | [params.links] | <code>object</code> |  | Object of Links associated with the Government Agency |
+| [params.legalName] | <code>string</code> |  | Legal name of the Asset Manager associated with this party |
+| [params.displayName] | <code>string</code> |  | Display name of the Asset Manager associated with this party |
+| [params.url] | <code>string</code> |  | Url of this Party |
 | [params.createdBy] | <code>string</code> |  | ID of the user that created the Government Agency |
 | [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Government Agency |
 | [params.createdTime] | <code>date</code> |  | Time that the Government Agency was created |
@@ -3260,6 +3294,9 @@ Construct a new Individual instance
 | [params.references] | <code>object</code> |  | Object of References associated with the Individual |
 | [params.comments] | <code>object</code> |  | Object of Comments associated with the Individual |
 | [params.links] | <code>object</code> |  | Object of Links associated with the Individual |
+| [params.legalName] | <code>string</code> |  | Legal name of the Asset Manager associated with this party |
+| [params.displayName] | <code>string</code> |  | Display name of the Asset Manager associated with this party |
+| [params.url] | <code>string</code> |  | Url of this Party |
 | [params.createdBy] | <code>string</code> |  | ID of the user that created the Individual |
 | [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Individual |
 | [params.createdTime] | <code>date</code> |  | Time that the Individual was created |
@@ -3323,6 +3360,9 @@ Construct a new Organisation instance
 | [params.references] | <code>object</code> |  | Object of References associated with the Organisation |
 | [params.comments] | <code>object</code> |  | Object of Comments associated with the Organisation |
 | [params.links] | <code>object</code> |  | Object of Links associated with the Organisation |
+| [params.legalName] | <code>string</code> |  | Legal name of the Asset Manager associated with this party |
+| [params.displayName] | <code>string</code> |  | Display name of the Asset Manager associated with this party |
+| [params.url] | <code>string</code> |  | Url of this Party |
 | [params.createdBy] | <code>string</code> |  | ID of the user that created the Organisation |
 | [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Organisation |
 | [params.createdTime] | <code>date</code> |  | Time that the Organisation was created |
@@ -3386,6 +3426,9 @@ Construct a new Party instance
 | [params.references] | <code>object</code> |  | Object of References associated with the Party |
 | [params.comments] | <code>object</code> |  | Object of Comments associated with the Party |
 | [params.links] | <code>object</code> |  | Object of Links associated with this Party |
+| [params.legalName] | <code>string</code> |  | Legal name of the Asset Manager associated with this party |
+| [params.displayName] | <code>string</code> |  | Display name of the Asset Manager associated with this party |
+| [params.url] | <code>string</code> |  | Url of this Party |
 | [params.createdBy] | <code>string</code> |  | ID of the user that created the Party |
 | [params.updatedBy] | <code>string</code> |  | ID of the user that updated the Party |
 | [params.createdTime] | <code>date</code> |  | Time that the Party was created |
@@ -3448,6 +3491,9 @@ Construct a new SubFund instance
 | [params.references] | <code>object</code> |  | Object of References associated with the SubFund |
 | [params.comments] | <code>object</code> |  | Object of Comments associated with the SubFund |
 | [params.links] | <code>object</code> |  | Object of Links associated with the SubFund |
+| [params.legalName] | <code>string</code> |  | Legal name of the Asset Manager associated with this party |
+| [params.displayName] | <code>string</code> |  | Display name of the Asset Manager associated with this party |
+| [params.url] | <code>string</code> |  | Url of this Party |
 | [params.createdBy] | <code>string</code> |  | ID of the user that created the SubFund |
 | [params.updatedBy] | <code>string</code> |  | ID of the user that updated the SubFund |
 | [params.createdTime] | <code>date</code> |  | Time that the SubFund was created |
