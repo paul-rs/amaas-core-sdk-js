@@ -230,5 +230,6 @@ describe('Transaction class', () => {
       const filteredLinks = trans.links.Multiple1.filter(link => link.linkedId === 'multiLinkedTransactionId2')
       expect(filteredLinks.length).toEqual(0)
     })
+  })  
+
   })
-})
