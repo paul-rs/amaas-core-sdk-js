@@ -1,5 +1,5 @@
 import Transaction from './transaction.js'
-import { Charge, Code, Comment, Link, Reference, Party } from '../../children'
+import { Charge, Code, Comment, TransactionLink, Reference, Party } from '../../children'
 
 const Decimal = require('decimal.js')
 
@@ -77,19 +77,19 @@ describe('Transaction class', () => {
 
     it('should set Links correclty', () => {
       const links = {
-        SINGLE: [{ linkedId: 'single1' }],
+        SINGLE: [{ linkedTransactionId: 'single1' }],
         MULTIPLE: [
-          { linkedId: 'multi1' },
-          new Link({ linkedId: 'multi2' })
+          { linkedTransactionId: 'multi1' },
+          new TransactionLink({ linkedTransactionId: 'multi2' })
         ]
       }
       testTrans.links = links
       expect(testTrans.links.SINGLE[0]).toBeDefined()
-      expect(testTrans.links.SINGLE[0].linkedId).toEqual('single1')
+      expect(testTrans.links.SINGLE[0].linkedTransactionId).toEqual('single1')
       expect(testTrans.links.MULTIPLE[0]).toBeDefined()
-      expect(testTrans.links.MULTIPLE[0].linkedId).toEqual('multi1')
+      expect(testTrans.links.MULTIPLE[0].linkedTransactionId).toEqual('multi1')
       expect(testTrans.links.MULTIPLE[1]).toBeDefined()
-      expect(testTrans.links.MULTIPLE[1].linkedId).toEqual('multi2')
+      expect(testTrans.links.MULTIPLE[1].linkedTransactionId).toEqual('multi2')
     })
 
     it('should set Parties correctly', () => {
@@ -178,10 +178,10 @@ describe('Transaction class', () => {
         INT: new Code({ codeValue: 'InternalCode1' })
       },
       links: {
-        'Single1': [new Link({ linkedId: 'singleLinkedTransactionId1' })],
+        'Single1': [new TransactionLink({ linkedTransactionId: 'singleLinkedTransactionId1' })],
         'Multiple1': [
-          new Link({ linkedId: 'multiLinkedTransactionId1' }),
-          new Link({ linkedId: 'multiLinkedTransactionId2' })
+          new TransactionLink({ linkedTransactionId: 'multiLinkedTransactionId1' }),
+          new TransactionLink({ linkedTransactionId: 'multiLinkedTransactionId2' })
         ]
       }
     }
@@ -198,20 +198,20 @@ describe('Transaction class', () => {
       expect(trans.codes.EXT.codeValue).toEqual('ExternalCode1')
     })
     it('upsertLinkSet should upsert a Link set (array)', () => {
-      trans.upsertLinkSet('Single2', [{ linkedId: 'singleLinkedTransactionId2' }])
+      trans.upsertLinkSet('Single2', [{ linkedTransactionId: 'singleLinkedTransactionId2' }])
       expect(trans.links.Single2).toBeDefined()
-      expect(trans.links.Single2[0].linkedId).toEqual('singleLinkedTransactionId2')
-      trans.upsertLinkSet('Multiple2', [new Link({ linkedId: 'multiLinkedTransactionId3' }), new Link({ linkedId: 'multiLinkedTransactionId4' })])
+      expect(trans.links.Single2[0].linkedTransactionId).toEqual('singleLinkedTransactionId2')
+      trans.upsertLinkSet('Multiple2', [new TransactionLink({ linkedTransactionId: 'multiLinkedTransactionId3' }), new TransactionLink({ linkedTransactionId: 'multiLinkedTransactionId4' })])
       expect(trans.links.Multiple2).toBeDefined()
-      expect(trans.links.Multiple2[0].linkedId).toEqual('multiLinkedTransactionId3')
+      expect(trans.links.Multiple2[0].linkedTransactionId).toEqual('multiLinkedTransactionId3')
     })
     it('addLinks should add a Link', () => {
-      trans.addLink('Multiple1', { linkedId: 'multiLinkedTransactionId3' })
+      trans.addLink('Multiple1', { linkedTransactionId: 'multiLinkedTransactionId3' })
       expect(trans.links.Multiple1[2]).toBeDefined()
-      expect(trans.links.Multiple1[2].linkedId).toEqual('multiLinkedTransactionId3')
-      trans.addLink('Multiple1', new Link({ linkedId: 'multiLinkedTransactionId4' }))
+      expect(trans.links.Multiple1[2].linkedTransactionId).toEqual('multiLinkedTransactionId3')
+      trans.addLink('Multiple1', new TransactionLink({ linkedTransactionId: 'multiLinkedTransactionId4' }))
       expect(trans.links.Multiple1[3]).toBeDefined()
-      expect(trans.links.Multiple1[3].linkedId).toEqual('multiLinkedTransactionId4')
+      expect(trans.links.Multiple1[3].linkedTransactionId).toEqual('multiLinkedTransactionId4')
     })
     it('removeLink should throw if attempting to remove non-existent Link', () => {
       function removeKey() {
@@ -227,9 +227,9 @@ describe('Transaction class', () => {
       const linkCount = trans.links.Multiple1.length
       trans.removeLink('Multiple1', 'multiLinkedTransactionId2')
       expect(trans.links.Multiple1.length).toEqual(linkCount - 1)
-      const filteredLinks = trans.links.Multiple1.filter(link => link.linkedId === 'multiLinkedTransactionId2')
+      const filteredLinks = trans.links.Multiple1.filter(link => link.linkedTransactionId === 'multiLinkedTransactionId2')
       expect(filteredLinks.length).toEqual(0)
     })
-  })  
+  })
 
   })

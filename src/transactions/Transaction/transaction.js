@@ -321,7 +321,7 @@ class Transaction extends AMaaSModel {
     const existingLinkCount = this.links[type].length
     if (linkedId) {
       const filtered = this.links[type].filter(link => {
-        return link.linkedId !== linkedId
+        return link.linkedTransactionId !== linkedId
       })
       if (filtered.length === existingLinkCount) {
         throw new Error(`Linked Transaction ID Not Found: ${linkedId}`)
