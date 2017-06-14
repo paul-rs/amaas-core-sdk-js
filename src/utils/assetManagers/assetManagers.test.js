@@ -7,7 +7,7 @@ api.config({
   stage: 'staging',
   token: process.env.API_TOKEN
 })
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
+// jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
 
 describe('utils/assetManagers', () => {
   describe('_parseAM function', () => {
@@ -70,21 +70,18 @@ describe('utils/assetManagers', () => {
         .catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
-    test('amends', done => {
+    test('amends', async done => {
       let dboi
-      retrieve({ AMId: 4 })
-        .then(res => {
-          dboi = res.defaultBookOwnerId
-          res.defaultBookOwnerId++
-          return amend({ assetManager: res, AMId: res.assetManagerId })
-        })
-        .then(res => {
-          expect(res.defaultBookOwnerId).toEqual(dboi+1)
-          done()
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      let res = await retrieve({ AMId: 4 })
+      if (res.length === 0) {
+        console.error('amend: Results is empty, force fail after timeout.')
+        return
+      }
+      dboi = res.defaultBookOwnerId
+      res.defaultBookOwnerId++
+      res = await amend({ assetManager: res, AMId: res.assetManagerId })
+      expect(res.defaultBookOwnerId).toEqual(dboi+1)
+      done()
     })
   })
 
@@ -97,25 +94,20 @@ describe('utils/assetManagers', () => {
 
   describe('reactivate and deactivate', () => {
     // Get an Asset Manager. If it is inactive, reactivate, check then deactivate and check
-    it('reactivates an inactive AM and deactivates an active AM', done => {
-      retrieve({ AMId: 2 })
-        .then(res => {
-          if (res.assetManagerStatus === 'Inactive') {
-            return reactivate({ AMId: 2 })
-          }
-          return res
-        })
-        .then(res => {
-          expect(res.assetManagerStatus).toEqual('Active')
-          return deactivate({ AMId: 2 })
-        })
-        .then(res => {
-          expect(res.assetManagerStatus).toEqual('Inactive')
-          done()
-        })
-        .catch(err => {
-          expect(err).toBeUndefined()
-        })
+    it('reactivates an inactive AM and deactivates an active AM', async done => {
+      let res = await retrieve({ AMId: 2 })
+      if (res.length === 0) {
+        console.error('reactivate/deactivate: Results is empty, force fail after timeout.')
+        return
+      }
+      if (res.assetManagerStatus === 'Inactive') {
+        res = await reactivate({ AMId: res.assetManagerId })
+      }
+      expect(res.assetManagerStatus).toEqual('Active')
+      res = await deactivate({ AMId: res.assetManagerId })
+      expect(res.assetManagerStatus).toEqual('Inactive')
+      await reactivate({ AMId: res.assetManagerId })
+      done()
     })
   })
 })
