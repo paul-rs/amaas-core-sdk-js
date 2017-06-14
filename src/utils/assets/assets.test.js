@@ -8,7 +8,7 @@ api.config({
   token: process.env.API_TOKEN
 })
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
+// jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 
 describe('utils/assets', () => {
   describe('retrieve', () => {
@@ -53,7 +53,7 @@ describe('utils/assets', () => {
       let promise = amend({}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
-    it.only('amends', async done => {
+    it('amends', async done => {
       let f
       let res = await retrieve({ AMId: 1 })
       if (res.length === 0) {
@@ -96,7 +96,7 @@ describe('utils/assets', () => {
       const query = { assetClasses: ['Asset', 'ForeignExchange'] }
       let res = await search({ AMId: 1, query })
       if (Array.isArray(res) && res.length === 0) {
-        console.warn('search: Results is empty, force fail after timeout.')
+        console.error('search: Results is empty, force fail after timeout.')
       } else if (Array.isArray(res) && res.length > 0) {
         res = res[0]
         expect(res.assetClass).toEqual(expect.stringMatching(/(Asset|ForeignExchange)/))
