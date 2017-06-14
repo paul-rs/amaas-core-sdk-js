@@ -14,7 +14,7 @@ class OwnershipObject {
 */
 constructor({
       partyId,
-      split= 0.5,
+      split
     }){
      this.partyId=partyId
      this.split=split
