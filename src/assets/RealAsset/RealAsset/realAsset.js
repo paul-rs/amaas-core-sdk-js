@@ -32,6 +32,7 @@ class RealAsset extends Asset {
    * @param {date} [params.createdTime] - Time that the Real Asset was created
    * @param {date} [params.updatedTime] - Time that the Real Asset was updated
    * @param {number} [params.version] - Version number
+   * @param {object} [params.ownerships] 
   */
   constructor({
     assetManagerId,
@@ -53,7 +54,8 @@ class RealAsset extends Asset {
     updatedBy,
     createdTime,
     updatedTime,
-    version
+    version,
+    ownerships
   }) {
     super({
       assetManagerId,
