@@ -97,7 +97,7 @@ describe('utils/assetManagers', () => {
 
   describe('reactivate and deactivate', () => {
     // Get an Asset Manager. If it is inactive, reactivate, check then deactivate and check
-    it('reactivates an inactive AM and deactivates an active AM', () => {
+    it('reactivates an inactive AM and deactivates an active AM', done => {
       retrieve({ AMId: 2 })
         .then(res => {
           if (res.assetManagerStatus === 'Inactive') {
@@ -111,6 +111,7 @@ describe('utils/assetManagers', () => {
         })
         .then(res => {
           expect(res.assetManagerStatus).toEqual('Inactive')
+          done()
         })
         .catch(err => {
           expect(err).toBeUndefined()
