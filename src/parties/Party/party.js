@@ -1,6 +1,6 @@
 import { AMaaSModel } from '../../core'
 import { Address, Email } from '../Children'
-import { Comment, Link, Reference } from '../../children'
+import { Comment, PartyLink, Reference } from '../../children'
 import { PARTY_STATUSES, PARTY_TYPES } from '../enums'
 
 // Some changes to the file
@@ -26,7 +26,7 @@ class Party extends AMaaSModel {
    * @param {object} [params.comments] - Object of Comments associated with the Party
    * @param {object} [params.links] - Object of Links associated with this Party
    * @param {string} [params.legalName]- Legal name of the Asset Manager associated with this party
-   * @param {string} [params.displayName] - Display name of the Asset Manager associated with this party 
+   * @param {string} [params.displayName] - Display name of the Asset Manager associated with this party
    * @param {string} [params.url] - Url of this Party
    * @param {string} [params.createdBy] - ID of the user that created the Party
    * @param {string} [params.updatedBy] - ID of the user that updated the Party
@@ -156,7 +156,7 @@ class Party extends AMaaSModel {
                 // TODO: Remove this when the API returns Arrays for all Links
                 if (newLinks[name] instanceof Array) {
                   links[name] = newLinks[name].map(link => {
-                    return new Link(link)
+                    return new PartyLink(link)
                   })
                 } else {
                   console.warn('All Links should be Arrays: if you are seeing this message then a non-Array link has been encountered and it will be skipped for now')

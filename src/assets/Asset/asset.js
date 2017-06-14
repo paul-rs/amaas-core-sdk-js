@@ -1,5 +1,5 @@
 import { AMaaSModel } from '../../core'
-import { Comment, Link, Reference } from '../../children'
+import { Comment, AssetLink, Reference } from '../../children'
 
 /**
  * Class representing an Asset
@@ -112,7 +112,7 @@ class Asset extends AMaaSModel {
                 // TODO: Remove this when the API returns Arrays for all Links
                 if (newLinks[name] instanceof Array) {
                   linksClass[name] = newLinks[name].map(link => {
-                    return new Link(link)
+                    return new AssetLink(link)
                   })
                 } else {
                   console.warn('All Links should be Arrays: if you are seeing this message then a non-Array link has been encountered and it will be skipped for now')

@@ -5,7 +5,7 @@ import {
   Charge,
   Code,
   Comment,
-  Link,
+  TransactionLink,
   Reference,
   Party
 } from '../../children'
@@ -229,7 +229,7 @@ class Transaction extends AMaaSModel {
               // TODO: Remove this when the API returns Arrays for all Links
               if (newLinks[name] instanceof Array) {
                 links[name] = newLinks[name].map(link => {
-                  return new Link(link)
+                  return new TransactionLink(link)
                 })
               } else {
                 console.warn('All Links should be Arrays: if you are seeing this message then a non-Array link has been encountered and it will be skipped for now')
@@ -302,7 +302,7 @@ class Transaction extends AMaaSModel {
   upsertLinkSet(type, links) {
     if (links) {
       const classLinks = links.map(link => {
-        return new Link(Object.assign({}, link))
+        return new TransactionLink(Object.assign({}, link))
       })
       this.links[type] = classLinks
     }
@@ -310,7 +310,7 @@ class Transaction extends AMaaSModel {
 
   addLink(type, link) {
     if (link) {
-      this.links[type].push(new Link(Object.assign({}, link)))
+      this.links[type].push(new TransactionLink(Object.assign({}, link)))
     }
   }
 
