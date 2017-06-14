@@ -4,7 +4,7 @@ import Book from '../../books/Book/book'
 import * as api from '../../exports/api'
 import { getToken } from '../network'
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
+// jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
 api.config({
   stage: 'staging',
   token: process.env.API_TOKEN
@@ -15,7 +15,6 @@ describe('utils/books', () => {
     test('with callback', callback => {
       retrieve({AMId: 1}, (error, books) => {
         expect(Array.isArray(books)).toBeTruthy()
-        expect(books[0]).toBeInstanceOf(Book)
         callback(error)
       })
     })
@@ -72,54 +71,41 @@ describe('utils/books', () => {
   })
 
   describe('retire/reactivate', () => {
-    test('should retire and reactivate', done => {
-      retrieve({ AMId: 1, resourceId: 'L9O3IWHCHP' })
-        .then(res => {
-          if (res.bookStatus === 'Active') {
-            return retire({ AMId: res.assetManagerId, resourceId: res.bookId })
-          }
-          return Promise.resolve(res)
-        })
-        .then(res => {
-          expect(res.bookStatus).toEqual('Retired')
-          return reactivate({ AMId: res.assetManagerId, resourceId: res.bookId })
-        })
-        .then(res => {
-          expect(res.bookStatus).toEqual('Active')
-          return retire(({ AMId: res.assetManagerId, resourceId: res.bookId }))
-        })
-        .then(res => {
-          expect(res.bookStatus).toEqual('Retired')
-          done()
-        })
-        .catch(err => {
-          console.error(err)
-        })
+    test('should retire and reactivate', async done => {
+      let res = await retrieve({ AMId: 1 })
+      if (res.length === 0) {
+        console.error('retire/reactivate: Results is empty, force fail after timeout.')
+        return
+      }
+      res = res.filter(book => book.assetManagerId !== 0)
+      res = res[0]
+      if (res.bookStatus === 'Active') {
+        res = await retire({ AMId: res.assetManagerId, resourceId: res.bookId })
+        expect(res.bookStatus).toEqual('Retired')
+      }
+      res = await reactivate({ AMId: res.assetManagerId, resourceId: res.bookId })
+      expect(res.bookStatus).toEqual('Active')
+      done()
     })
   })
 
   describe('amend', () => {
-    test('amends', done => {
+    test('amends', async done => {
       const bU = uuid().substring(0, 10)
-      retrieve({ AMId: 1, resourceId: 'L9O3IWHCHP' })
-        .then(res => {
-          if (res.bookStatus === 'Retired') {
-            return reactivate({ AMId: res.assetManagerId, resourceId: res.bookId })
-          } else {
-            return Promise.resolve(res)
-          }
-        })
-        .then(res => {
-          res.businessUnit = bU
-          return amend({ book: res, AMId: res.assetManagerId, resourceId: res.bookId })
-        })
-        .then(res => {
-          expect(res.businessUnit).toEqual(bU)
-          done()
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      let res = await retrieve({ AMId: 1 })
+      if (res.length === 0) {
+        console.error('amend: Results is empty, force fail after timeout')
+        return
+      }
+      res = res.filter(book => book.assetManagerId !== 0)
+      res = res[0]
+      if (res.bookStatus === 'Retired') {
+        res = await reactivate({ AMId: res.assetManagerId, resourceId: res.bookId })
+      }
+      res.businessUnit = bU
+      res = await amend({ book: res, AMId: res.assetManagerId, resourceId: res.bookId })
+      expect(res.businessUnit).toEqual(bU)
+      done()
     })
   })
 
@@ -127,9 +113,7 @@ describe('utils/books', () => {
     test('with callback', callback => {
       search({
         AMId: 269,
-        query: [
-          { key: 'book_ids', values: ['35QIZ0'] }
-        ]
+        query: { bookIds: ['35QIZ0'] }
       }, (error, books) => {
         expect(Array.isArray(books)).toBeTruthy()
         callback(error)
@@ -139,7 +123,7 @@ describe('utils/books', () => {
     test('with promise', callback => {
       let promise = search({
         AMId: 269,
-        query: [{ key: 'book_ids', values: ['35QIZ0'] }]
+        query: { bookIds: ['35QIZ0'] }
       })
       expect(promise).toBeInstanceOf(Promise)
       promise.then(books => {
@@ -147,20 +131,21 @@ describe('utils/books', () => {
         callback()
       })
     })
-    it('searches', done => {
-      search({
-        query: [
-          { key: 'assetManagerIds', values: [269] },
-          { key: 'bookIds', values: ['35QIZ0'] }
-        ]
+    it('searches', async done => {
+      let res = await search({
+        query: { assetManagerIds: [269],
+          bookIds: ['35QIZ0']
+        }
       })
-      .then(res => {
-        expect(res[0]).toBeDefined()
-        expect(res[0].bookId).toEqual('35QIZ0')
-        expect(res[0].assetManagerId).toEqual(269)
-        done()
-      })
-      .catch(err => console.error(err))
+      if (res.length === 0) {
+        console.error('searches: Results is empty, force fail after timeout.')
+        return
+      }
+      res = res.filter(book => book.assetManagerId !== 0)
+      res = res[0]
+      expect(res.assetManagerId).toEqual(269)
+      expect(res.bookId).toEqual('35QIZ0')
+      done()
     })
   })
 })

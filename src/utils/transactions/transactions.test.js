@@ -5,7 +5,7 @@ api.config({
   stage: 'staging',
   token: process.env.API_TOKEN
 })
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 
 describe('utils/transactions', () => {
   describe('retrieve', () => {
@@ -38,10 +38,15 @@ describe('utils/transactions', () => {
       .catch(err => console.error(err))
     })
     it('retrieves', done => {
-      retrieve({ AMId: 1, resourceId: '4f82cc16adf14af9bfc01da8e7c6e580' })
+      retrieve({ AMId: 1 })
         .then(res => {
+          if (res.length === 0) {
+            console.error('amend: Result is empty, force fail on timeout')
+            return
+          }
+          res = res[0]
           expect(res).toBeDefined()
-          expect(res.transactionId).toEqual('4f82cc16adf14af9bfc01da8e7c6e580')
+          expect(res.assetManagerId).toEqual(1)
           done()
         })
         .catch(err => {
@@ -84,63 +89,68 @@ describe('utils/transactions', () => {
   })
 
   describe('amend', () => {
-    it('amends', done => {
+    it('amends', async done => {
       let q
-      retrieve({ AMId: 1, resourceId: 'testTransactionID' })
-        .then(res => {
-          q = res.quantity
-          res.quantity = res.quantity.plus(1)
-          return amend({ transaction: res, AMId: 1, resourceId: res.transactionId })
-        })
-        .then(res => {
-          expect(res.quantity).toEqual(q.plus(1))
-          done()
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      let res = await retrieve({ AMId: 1 })
+      if (res.length === 0) {
+        console.error('amend: Result is empty, force fail on timeout')
+        return
+      }
+      res = res.filter(tr => tr.transactionStatus === 'New')
+      if (res.length === 0) {
+        console.error('amend: Result is empty, force fail on timeout')
+        return
+      }
+      res = res[0]
+      q = res.quantity
+      res.quantity = res.quantity.plus(1)
+      res = await amend({ transaction: res, AMId: 1, resourceId: res.transactionId })
+      expect(res.quantity).toEqual(q.plus(1))
+      done()
     })
   })
 
   describe('partialAmend', () => {
-    it('partial amends', done => {
+    it('partial amends', async done => {
       let tC
       let changes = {}
-      retrieve({ AMId: 1, resourceId: 'testTransactionID' })
-        .then(res => {
-          if (res.transactionCurrency === 'USD') {
-            tC = 'USD'
-            changes.transactionCurrency = 'SGD'
-          } else {
-            tC = 'SGD'
-            changes.transactionCurrency = 'USD'
-          }
-          return partialAmend({ changes, AMId: 1, resourceId: res.transactionId })
-        })
-        .then(res => {
-          expect(res.transactionCurrency).toEqual(tC === 'SGD' ? 'USD' : 'SGD')
-          done()
-        })
-        .catch(err => console.error(err))
+      let res = await retrieve({ AMId: 1 })
+      if (res.length === 0) {
+        console.error('amend: Result is empty, force fail on timeout')
+        return
+      }
+      res = res.filter(tr => tr.transactionStatus === 'New')
+      if (res.length === 0) {
+        console.error('amend: Result is empty, force fail on timeout')
+        return
+      }
+      res = res[0]
+      if (res.transactionCurrency === 'USD') {
+        tC = 'USD'
+        changes.transactionCurrency = 'SGD'
+      } else {
+        tC = '!USD'
+        changes.transactionCurrency = 'USD'
+      }
+      res = await partialAmend({ changes, AMId: res.assetManagerId, resourceId: res.transactionId })
+      expect(res.transactionCurrency).toEqual(tC === 'USD' ? 'SGD' : 'USD')
+      done()
     })
   })
 
   describe('search', () => {
-    it('searches', done => {
-      const query = [
-        { key: 'asset_book_ids', values: ['Z5FHJFCO6M', 'Y0JTY73A9T'] }
-      ]
-      search({ AMId: 1, query })
-        .then(res => {
-          if (Array.isArray(res)) {
-            res = res[0]
-            expect(res.assetBookId).toEqual(res.assetBookId !== 'Z5FHJFCO6M' ? 'Y0JTY73A9T' : 'Z5FHJFCO6M')
-          } else {
-            expect(res.assetBookId).toEqual(res.assetBookId !== 'Z5FHJFCO6M' ? 'Y0JTY73A9T' : 'Z5FHJFCO6M')
-          }
-          done()
-        })
-        .catch(err => console.error(err))
+    it('searches', async done => {
+      const query = {
+        assetManagerIds: [1]
+      }
+      let res = await search({ query })
+      if (res.length === 0) {
+        console.error('amend: Result is empty, force fail on timeout')
+        return
+      }
+      res = res[0]
+      expect(res.assetManagerId).toEqual(1)
+      done()
     })
   })
 

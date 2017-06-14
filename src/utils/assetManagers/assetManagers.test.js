@@ -7,7 +7,7 @@ api.config({
   stage: 'staging',
   token: process.env.API_TOKEN
 })
-// jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000
 
 describe('utils/assetManagers', () => {
   describe('_parseAM function', () => {
@@ -77,6 +77,9 @@ describe('utils/assetManagers', () => {
         console.error('amend: Results is empty, force fail after timeout.')
         return
       }
+      if (res.assetManagerStatus === 'Inactive') {
+        res = await reactivate({ AMId: res.assetManagerId })
+      }
       dboi = res.defaultBookOwnerId
       res.defaultBookOwnerId++
       res = await amend({ assetManager: res, AMId: res.assetManagerId })
@@ -95,7 +98,7 @@ describe('utils/assetManagers', () => {
   describe('reactivate and deactivate', () => {
     // Get an Asset Manager. If it is inactive, reactivate, check then deactivate and check
     it('reactivates an inactive AM and deactivates an active AM', async done => {
-      let res = await retrieve({ AMId: 2 })
+      let res = await retrieve({ AMId: 1 })
       if (res.length === 0) {
         console.error('reactivate/deactivate: Results is empty, force fail after timeout.')
         return
@@ -106,7 +109,8 @@ describe('utils/assetManagers', () => {
       expect(res.assetManagerStatus).toEqual('Active')
       res = await deactivate({ AMId: res.assetManagerId })
       expect(res.assetManagerStatus).toEqual('Inactive')
-      await reactivate({ AMId: res.assetManagerId })
+      res = await reactivate({ AMId: res.assetManagerId })
+      expect(res.assetManagerStatus).toEqual('Active')
       done()
     })
   })

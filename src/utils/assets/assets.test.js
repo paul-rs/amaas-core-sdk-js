@@ -60,6 +60,7 @@ describe('utils/assets', () => {
         console.error('amend: Results is empty, force fail after timeout.')
         return
       }
+      res = res.filter(asset => asset.assetManagerId !== 0)
       res = res[0]
       if (res.assetStatus === 'Inactive') {
         res = await reactivate({ AMId: res.assetManagerId, resourceId: res.assetId })
@@ -84,6 +85,7 @@ describe('utils/assets', () => {
         console.error('partialAmend: Results is empty, force fail after timeout.')
         return
       }
+      res = res.filter(asset => asset.assetManagerId !== 0)
       res = res[0]
       res = await partialAmend({ changes: { description: desc }, AMId: res.assetManagerId, resourceId: res.assetId })
       expect(res.description).toEqual(desc)
@@ -121,6 +123,7 @@ describe('utils/assets', () => {
         console.error('deactivate: Results is empty, force fail after timeout.')
         return
       }
+      res = res.filter(asset => asset.assetManagerId !== 0)
       res = res[0]
       if (res.assetStatus === 'Inactive') {
         res = await reactivate({ AMId: res.assetManagerId, resourceId: res.assetId })
