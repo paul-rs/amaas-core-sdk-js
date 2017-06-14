@@ -114,9 +114,9 @@ describe('parties util functions', () => {
 
   describe('search', () => {
     it('searches', done => {
-      const query = [
-        { key: 'party_types', values: ['Broker', 'Individual'] }
-      ]
+      const query = {
+        partyTypes: ['Broker', 'Individual']
+      }
       search({ AMId: 516, query })
         .then(res => {
           if (Array.isArray(res)) {
