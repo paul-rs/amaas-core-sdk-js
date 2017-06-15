@@ -23,15 +23,15 @@ constructor({
      var currentKey = arrayKey[i];
      var getObject=this.ownershipObjects[currentKey]
      var splitValue=this.ownershipObjects[currentKey].split
-     if(isNaN(splitValue)) return "error message: spliot has to be a number"
+     if(isNaN(splitValue)) return "error message: split has to be a number"
      
-     splitSum=splitSum +splitValue
+     splitSum=splitSum+splitValue
    }
 
-   
    if(splitSum>1) return "error message: Ownership must sum up to 100%";
-   else return "Passed"
+  
   }
+
 }
 
 export  {Ownership}
