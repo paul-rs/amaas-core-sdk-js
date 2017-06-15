@@ -7,9 +7,9 @@ api.config({
   stage: 'staging',
   token: process.env.API_TOKEN
 })
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
+// jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 
-const AMId = 5
+const AMId = 1
 
 describe('utils/relationships', () => {
   describe('retrieve', () => {
@@ -45,35 +45,27 @@ describe('utils/relationships', () => {
   })
 
   describe('amend', () => {
-    it('amends', done => {
+    it('amends', async done => {
       let type
-      retrieve({ AMId })
-        .then(res => {
-          const target = res.filter(rel => {
-            return rel.relatedId === 10
-          })
-          switch(target[0].relationshipType) {
-            case 'Employee':
-              type = 'Employee'
-              target[0].relationshipType = 'External'
-              break
-            case 'External':
-              type = 'External'
-              target[0].relationshipType = 'Employee'
-              break
-            default:
-              type = 'External'
-              target[0].relationshipType = 'Employee'
-          }
-          return amend({ relationship: target[0], AMId: target[0].assetManagerId })
-        })
-        .then(res => {
-          expect(res.relationshipType).toEqual(type === 'External' ? 'Employee' : 'External')
-          done()
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      let res = await retrieve({ AMId })
+      if (res.length === 0) {
+        console.error('amend: Result is empty, force fail on timeout.')
+        return
+      }
+      res = res.filter(rel => rel.assetManagerId !== 0 && rel.relationshipStatus !== 'Inactive')
+      if (res.length === 0) {
+        console.error('amend: Result is empty, force fail on timeout.')
+        return
+      }
+      res = res[0]
+      if (res.relationshipType === 'External') {
+        res.relationshipType = 'Employee'
+      } else {
+        res.relationshipType = 'External'
+      }
+      res = await amend({ AMId: res.assetManagerId, relationship: res })
+      expect(res.relationshipType).toEqual(expect.stringMatching(/(Employee|External)/))
+      done()
     })
   })
 })

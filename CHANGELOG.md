@@ -4,10 +4,12 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 ### Added
 - Added accountType field to the AssetManager class.
+- Added a csv parser to convert csv strings into Assets, Books, Parties, Transactions. @JYL123
 
 ### Changed
 - Removed `maturityDate` from the Asset base class and set either maturityDate or expiryDate on the relevant subclasses.
 - Removed `premium` from Asset classes.
+- Changed `Retail` type for AssetManager class to `Individual`.
 
 ## 0.0.2 - 2017-05-09
 ### Changed

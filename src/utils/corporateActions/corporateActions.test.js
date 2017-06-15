@@ -3,27 +3,17 @@ import uuid from 'uuid'
 import { retrieve, insert, amend, search, cancel, reopen } from './corporateActions'
 import * as api from '../../exports/api'
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
+// jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 api.config({
   stage: 'staging',
   token: process.env.API_TOKEN
 })
 
 describe('retrieve', () => {
-  it('retrieves', done => {
-    retrieve({AMId: 338})
-      .then(res => {
-        if (Array.isArray(res)) {
-          expect(res[0]).toBeDefined()
-          expect(res[0].assetManagerId).toEqual(338)
-          done()
-        } else {
-          expect(res).toBeDefined()
-          expect(res.assetManagerId).toEqual(338)
-          done()
-        }
-      })
-      .catch(err => console.error(err))
+  it('retrieves', async done => {
+    let res = await retrieve({AMId: 338})
+    expect(Array.isArray(res)).toBeTruthy()
+    done()
   })
 })
 
@@ -51,85 +41,59 @@ describe('insert', () => {
 })
 
 describe('amend', () => {
-  it('amends', done => {
+  it('amends', async done => {
     const nowish = new Date()
-    retrieve({ AMId: 338 })
-      .then(res => {
-        const id = res[0].corporateActionId
-        if (res[0].corporateActionStatus === 'Cancelled') {
-          console.log('Cancelled')
-          return reopen({ AMId: res[0].assetManagerId, resourceId: id })
-        }
-        return Promise.resolve(res[0])
-      })
-      .then(res => {
-        res.description = `Amended on ${nowish}`
-        return amend({ AMId: res.assetManagerId, resourceId: res.corporateActionId, corporateAction: res })
-      })
-      .then(res => {
-        expect(res.description).toEqual(`Amended on ${nowish}`)
-        done()
-      })
-      .catch(err => console.error(err))
+    let res = await retrieve({ AMId: 338 })
+    if (res.length === 0) {
+      console.error('amend: Result is empty, force fail after timeout.')
+      return
+    }
+    res = res.filter(ca => ca.assetManagerId !== 0)
+    res = res[0]
+    if (res.corporateActionStatus === 'Cancelled') {
+      res = await reopen({ AMId: res.assetManagerId, resourceId: res.corporateActionId })
+    }
+    res.description = `Amended on ${nowish}`
+    res = await amend({ AMId: res.assetManagerId, resourceId: res.corporateActionId, corporateAction: res })
+    expect(res.description).toEqual(`Amended on ${nowish}`)
+    done()
   })
 })
 
 describe('search', () => {
-  it('searches', done => {
-    const query = [{
-      key: 'corporate_action_statuses',
-      values: ['Open']
-    }]
-    search({ AMId: 338, query })
-      .then(res => {
-        if (Array.isArray(res)) {
-          if (res.length === 0) {
-            console.error('No arrays returned for this test, cannot test')
-          } else {
-            expect(res[0].corporateActionStatus).toEqual('Open')
-            done()
-          }
-        } else {
-          expect(res.corporateActionStatus).toEqual('Open')
-          done()
-        }
-      })
-      .catch(err => console.error(err))
+  it('searches', async done => {
+    const query = {
+      CorporateActionStatuses: ['Open']
+    }
+    let res = await search({ AMId: 338, query })
+    if (res.length === 0) {
+      console.error('search: Result is empty, force fail after timeout.')
+      return
+    }
+    res = res.filter(ca => ca.assetManagerId !== 0)
+    res = res[0]
+    expect(res.corporateActionStatus).toEqual('Open')
+    done()
   })
 })
 
 describe('cancel/reopen', () => {
-  it('cancels and reopens', done => {
+  it('cancels and reopens', async done => {
     let status
-    retrieve({ AMId: 338 })
-      .then(res => {
-        if (Array.isArray(res)) {
-          status = res[0].corporateActionStatus
-          if (status === 'Open') {
-            return cancel({ AMId: res[0].assetManagerId, resourceId: res[0].corporateActionId })
-          } else {
-            return reopen({ AMId: res[0].assetManagerId, resourceId: res[0].corporateActionId })
-          }
-        } else {
-          status = res.corporateActionStatus
-          if (status === 'Open') {
-            return cancel({ AMId: res.assetManagerId, resourceId: res.corporateActionId })
-          } else {
-            return reopen({ AMId: res.assetManagerId, resourceId: res.corporateActionId })
-          }
-        }
-      })
-      .then(res => {
-        if (res.corporateActionStatus === 'Open') {
-          return cancel({ AMId: res.assetManagerId, resourceId: res.corporateActionId })
-        } else {
-          return reopen({ AMId: res.assetManagerId, resourceId: res.corporateActionId })
-        }
-      })
-      .then(res => {
-        expect(res.corporateActionStatus).toEqual(status)
-        done()
-      })
-      .catch(err => console.error(err))
+    let res = await retrieve({ AMId: 338 })
+    if (res.length === 0) {
+      console.error('cancel/reopen: Result is empty, force fail after timeout.')
+      return
+    }
+    res = res.filter(ca => ca.assetManagerId !== 0)
+    res = res[0]
+    if (res.corporateActionStatus === 'Open') {
+      res = await cancel({ AMId: res.assetManagerId, resourceId: res.corporateActionId })
+      expect(res.corporateActionStatus).toEqual('Cancelled')
+    } else {
+      res = await reopen({ AMId: res.assetManagerId, resourceId: res.corporateActionId })
+      expect(res.corporateActionStatus).toEqual('Open')
+    }
+    done()
   })
 })

@@ -8,7 +8,7 @@ api.config({
   token: process.env.API_TOKEN
 })
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
+// jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 
 describe('utils/assets', () => {
   describe('retrieve', () => {
@@ -17,7 +17,7 @@ describe('utils/assets', () => {
       expect(promise).toBeInstanceOf(Promise)
       promise.then(assets => {
         expect(Array.isArray(assets)).toBeTruthy()
-        expect(assets[0]).toBeInstanceOf(Asset)
+        if (assets.length > 0) expect(assets[0]).toBeInstanceOf(Asset)
         callback()
       })
       .catch(err => console.error(err))
@@ -53,28 +53,23 @@ describe('utils/assets', () => {
       let promise = amend({}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
-    test('amends', done => {
+    it('amends', async done => {
       let f
-      retrieve({ AMId: 1, resourceId: '121JBDQM5Z' })
-        .then(res => {
-          if (res.assetStatus === 'Inactive') {
-            return reactivate({ AMId: res.assetManagerId, resourceId: res.assetId })
-          } else {
-            return Promise.resolve(res)
-          }
-        })
-        .then(res => {
-          f = res.fungible
-          res.fungible = !f
-          return amend({ asset: res, AMId: res.assetManagerId, resourceId: res.assetId })
-        })
-        .then(res => {
-          expect(res.fungible).toEqual(!f)
-          done()
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      let res = await retrieve({ AMId: 1 })
+      if (res.length === 0) {
+        console.error('amend: Results is empty, force fail after timeout.')
+        return
+      }
+      res = res.filter(asset => asset.assetManagerId !== 0)
+      res = res[0]
+      if (res.assetStatus === 'Inactive') {
+        res = await reactivate({ AMId: res.assetManagerId, resourceId: res.assetId })
+      }
+      f = res.fungible
+      res.fungible = !f
+      res = await amend({ asset: res, AMId: res.assetManagerId, resourceId: res.assetId })
+      expect(res.fungible).toEqual(!f)
+      done()
     })
   })
 
@@ -83,93 +78,61 @@ describe('utils/assets', () => {
       let promise = partialAmend({}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
-    test('partial amends', done => {
+    test('partial amends', async done => {
       const desc = uuid().substring(0, 20)
-      partialAmend({ changes: { description: desc }, AMId: 1, resourceId: '121JBDQM5Z' })
-        .then(res => {
-          expect(res.description).toEqual(desc)
-          done()
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      let res = await retrieve({ AMId: 1 })
+      if (res.length === 0) {
+        console.error('partialAmend: Results is empty, force fail after timeout.')
+        return
+      }
+      res = res.filter(asset => asset.assetManagerId !== 0)
+      res = res[0]
+      res = await partialAmend({ changes: { description: desc }, AMId: res.assetManagerId, resourceId: res.assetId })
+      expect(res.description).toEqual(desc)
+      done()
     })
   })
 
   describe('search', () => {
-    it('searches', done => {
-      const query = [
-        // TODO: Update this to camelCase options is available
-        { key: 'asset_classes', values: ['Asset', 'ForeignExchange']}
-      ]
-      search({ AMId: 1, query })
-        .then(res => {
-          if (Array.isArray(res)) {
-            expect(res[0]).toBeDefined()
-            if (res[0].assetClass !== 'Asset') {
-              expect(res[0].assetClass).toEqual('ForeignExchange')
-              done()
-            } else {
-              expect(res[0].assetClass).toEqual('Asset')
-              done()
-            }
-          } else {
-            const aC = res.assetClass
-            if (aC !== 'Asset') {
-              expect(aC).toEqual('ForeignExchange')
-            } else {
-              expect(aC).toEqual('Asset')
-            }
-            done()
-          }
-        })
-        .catch(err => console.error(err))
+    it('searches', async done => {
+      const query = { assetClasses: ['Asset', 'ForeignExchange'] }
+      let res = await search({ AMId: 1, query })
+      if (Array.isArray(res) && res.length === 0) {
+        console.error('search: Results is empty, force fail after timeout.')
+      } else if (Array.isArray(res) && res.length > 0) {
+        res = res[0]
+        expect(res.assetClass).toEqual(expect.stringMatching(/(Asset|ForeignExchange)/))
+        done()
+      } else {
+        expect(res.assetClass).toEqual(expect.stringMatching(/(Asset|ForeignExchange)/))
+        done()
+      }
     })
   })
 
   describe('deactivate', () => {
-    const testAMId = 1
-    const testId = '4JZ8P7AU8E'
-
-    afterAll(() => {
-      reactivate({ AMId: testAMId, resourceId: testId })
-        .then()
-        .catch(err => {
-          console.error(`Error in cleanup: Reactivating Asset ${testId} for Asset Manager ${testAMId}`)
-        })
-    })
 
     test('with promise', () => {
       let promise = deactivate({}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
 
-    test('deactivates an active Asset', done => {
-      let status
-      retrieve({ AMId: testAMId, resourceId: testId })
-        .then(res => {
-          if (res.assetStatus === 'Inactive') {
-            status = 'Inactive'
-            return reactivate({ AMId: res.assetManagerId, resourceId: res.assetId })
-          } else {
-            status = 'Active'
-            return deactivate({ AMId: res.assetManagerId, resourceId: res.assetId })
-          }
-        })
-        .then(res => {
-          if (res.assetStatus === 'Inactive') {
-            return reactivate({ AMId: res.assetManagerId, resourceId: res.assetId })
-          } else {
-            return deactivate({ AMId: res.assetManagerId, resourceId: res.assetId })
-          }
-        })
-        .then(res => {
-          expect(res.assetStatus).toEqual(status)
-          done()
-        })
-        .catch((err) => {
-          console.error(err)
-        })
+    it('deactivates an active Asset', async done => {
+      let res = await retrieve({ AMId: 1 })
+      if (res.length === 0) {
+        console.error('deactivate: Results is empty, force fail after timeout.')
+        return
+      }
+      res = res.filter(asset => asset.assetManagerId !== 0)
+      res = res[0]
+      if (res.assetStatus === 'Inactive') {
+        res = await reactivate({ AMId: res.assetManagerId, resourceId: res.assetId })
+      }
+      expect(res.assetStatus).toEqual('Active')
+      res = await deactivate({ AMId: res.assetManagerId, resourceId: res.assetId })
+      expect(res.assetStatus).toEqual('Inactive')
+      await reactivate({ AMId: res.assetManagerId, resourceId: res.assetId })
+      done()
     })
   })
 })

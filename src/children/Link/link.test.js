@@ -1,4 +1,4 @@
-import Link from './'
+import Link from './Link.js'
 
 describe('Link class', () => {
   describe('constructor', () => {

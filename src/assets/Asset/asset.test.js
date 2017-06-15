@@ -1,7 +1,6 @@
 import Asset from './asset.js'
 import Comment from '../../children/Comment'
-import Link from '../../children/Link'
-import { Reference } from '../../children'
+import { AssetLink, Reference } from '../../children'
 
 describe('Asset', () => {
   describe('constructor', () => {
@@ -40,19 +39,19 @@ describe('Asset', () => {
     it('should set links as an object of <string, Link> type', () => {
       const links = {
         'Single': [{
-          linkedId: 'testId',
+          linkedAssetId: 'testId',
           active: true
         }],
         'Multiple': [{
-          linkedId: 'testId2',
+          linkedAssetId: 'testId2',
           active: true
         }, {
-          linkedId: 'testId3',
+          linkedAssetId: 'testId3',
           active: false
         }]
       }
       const testAsset = new Asset({ links })
-      expect(testAsset.links.Single[0]).toBeInstanceOf(Link)
+      expect(testAsset.links.Single[0]).toBeInstanceOf(AssetLink)
     })
 
     it('should set references to the AMaaS reference even if no References are supplied', () => {

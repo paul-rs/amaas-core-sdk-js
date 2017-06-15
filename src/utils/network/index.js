@@ -35,10 +35,10 @@ export function getEndpoint() {
     case 'staging':
       return `${endpoint.staging}/staging`
     case 'prod':
-      return `${endpoint.prod}/prod`
+      return `${endpoint.prod}`
     default:
       console.warn(`Unknown stage variable: ${stage}. Defaulting to /prod`)
-      return `${endpoint.prod}/prod`
+      return `${endpoint.prod}`
   }
 }
 
@@ -63,10 +63,10 @@ export function authenticate() {
       path = `${expandTilde('~')}/amaas.js`
     }
     console.log(`Reading credentials from ${path}`)
-    fs.readFile(path, (error, data) => {
+    fs.readFile(path, (error, data)=> {
       if (error) {
         return injectedReject(error)
-      }
+    }
       const Username = JSON.parse(data).username
       const Password = JSON.parse(data).password
       const authenticationDetails = new AuthenticationDetails({
@@ -290,7 +290,7 @@ export function insertData({ AMaaSClass, AMId, resourceId, data, queryParams }, 
   // Data is object with required key value pairs for that class
   const params = {
     url,
-    json: data
+    json: data 
   }
   let query = { camelcase: true }
   if (queryParams) {

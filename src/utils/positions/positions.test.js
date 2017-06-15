@@ -2,7 +2,7 @@ import { retrieve, search } from './positions.js'
 import Position from '../../transactions/Positions/position.js'
 import * as api from '../../exports/api'
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
+// jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 api.config({
   stage: 'staging',
   token: process.env.API_TOKEN
@@ -24,7 +24,7 @@ describe('utils/positions', () => {
     test('with callback', callback => {
       search({
         AMId: 1,
-        query: [{ key: 'book_ids', values: ['GRGWGA']}]
+        query: { bookIds: ['GRGWGA'] }
       }, (error, positions) => {
         expect(Array.isArray(positions)).toBeTruthy()
         if (positions.length > 0) {
@@ -37,7 +37,7 @@ describe('utils/positions', () => {
     test('with promise', callback => {
       let promise = search({
         AMId: 1,
-        query: [{ key: 'book_ids', values: ['GRGWGA']}]
+        query: { bookIds: ['GRGWGA'] }
       })
       expect(promise).toBeInstanceOf(Promise)
       promise.then(positions => {
@@ -49,23 +49,18 @@ describe('utils/positions', () => {
       })
     })
 
-    it('should search', done => {
-      const query = [
-        { key: 'book_ids', values: ['BY1BABL8ZX'] },
-        { key: 'asset_manager_ids', values: [1] }
-      ]
-      search({ query })
-        .then(res => {
-          if (Array.isArray(res)) {
-            for (let i = 0; i < res.length; i++) {
-              expect(res[i].bookId).toEqual('BY1BABL8ZX')
-            }
-          } else {
-            expect(res.bookId).toEqual('BY1BABL8ZX')
-          }
-          done()
-        })
-        .catch(err => console.error(err))
+    it('should search', async done => {
+      const query = {
+        assetManagerIds: [1]
+      }
+      let res = await search({ query })
+      if (res.length === 0) {
+        console.error('search: Result is empty, force fail on timeout.')
+        return
+      }
+      res = res[0]
+      expect(res.assetManagerId).toEqual(1)
+      done()
     })
   })
 })

@@ -1,26 +1,4 @@
-import { AMaaSModel } from '../../core'
-
-class Link extends AMaaSModel {
-  constructor({
-    linkedId,
-    active,
-    createdBy,
-    updatedBy,
-    createdTime,
-    updatedTime,
-    version
-  }) {
-    super({
-      createdBy,
-      updatedBy,
-      createdTime,
-      updatedTime,
-      version
-    })
-
-    this.linkedId = linkedId
-    this.active = active === false ? false : true
-  }
-}
-
-export default Link
+export { default as AssetLink } from './AssetLink.js'
+export { default as PartyLink } from './PartyLink.js'
+export { default as TransactionLink } from './TransactionLink.js'
+export { default as Link } from './Link.js'

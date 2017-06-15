@@ -7,7 +7,7 @@ import Address from '../../parties/Children/address.js'
 import * as api from '../../exports/api'
 import { getToken } from '../network'
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
+// jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 api.config({
   stage: 'staging',
   token: process.env.API_TOKEN
@@ -55,25 +55,23 @@ describe('parties util functions', () => {
       let promise = amend({}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
-    test('should amend', done => {
+    test('should amend', async done => {
       let d
-      retrieve({ AMId: 516, resourceId: '39da5cef-08af-40f8-9c9a-b13856' })
-        .then(res => {
-          if (res.description === 'description') {
-            d = 'description'
-            res.description = 'Amended Description'
-          } else {
-            res.description = 'description'
-          }
-          return amend({ party: res, AMId: res.assetManagerId, resourceId: res.partyId })
-        })
-        .then(res => {
-          expect(res.description).toEqual(d === 'description' ? 'Amended Description' : 'description')
-          done()
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      let res = await retrieve({ AMId: 516 })
+      if (res.length === 0) {
+        console.error('amend: Result is empty, force fail after timeout.')
+        return
+      }
+      res = res.filter(party => party.assetManagerId !== 0)
+      res = res[0]
+      if (res.partyStatus === 'Inactive') {
+        res = await reactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
+      }
+      let newDesc = uuid().substring(0, 10)
+      res.description = newDesc
+      res = await amend({ party: res, AMId: res.assetManagerId, resourceId: res.partyId })
+      expect(res.description).toEqual(newDesc)
+      done()
     })
   })
 
@@ -82,99 +80,70 @@ describe('parties util functions', () => {
       let promise = partialAmend({}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
-    test('should partial amend', done => {
+    test('should partial amend', async done => {
       let bC
-      retrieve({ AMId: 516, resourceId: 'fa337e08-1363-47a8-95ba-6ebb55' })
-        .then(res => {
-          if (res.partyStatus === 'Inactive') {
-            return reactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
-          } else {
-            return Promise.resolve(res)
-          }
-        })
-        .then(res => {
-          let changes = {}
-          if (res.baseCurrency === 'SGD') {
-            bC = 'SGD'
-            changes.baseCurrency = 'USD'
-          } else {
-            changes.baseCurrency = 'SGD'
-          }
-          return partialAmend({ changes, AMId: res.assetManagerId, resourceId: res.partyId })
-        })
-        .then(res => {
-          expect(res.baseCurrency).toEqual(bC === 'SGD' ? 'USD' : 'SGD')
-          done()
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      let res = await retrieve({ AMId: 516 })
+      if (res.length === 0) {
+        console.error('partialAmend: Result is empty, force fail on timeout.')
+        return
+      }
+      res = res.filter(party => party.assetManagerId !== 0)
+      res = res[0]
+      if (res.partyStatus === 'Inactive') {
+        res = await reactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
+      }
+      const newDesc = uuid().substring(0, 20)
+      const changes = {
+        description: newDesc
+      }
+      res = await partialAmend({ changes, AMId: res.assetManagerId, resourceId: res.partyId })
+      expect(res.description).toEqual(newDesc)
+      done()
       })
   })
 
   describe('search', () => {
-    it('searches', done => {
-      const query = [
-        { key: 'party_types', values: ['Broker', 'Individual'] }
-      ]
-      search({ AMId: 516, query })
-        .then(res => {
-          if (Array.isArray(res)) {
-            const pT = res[0].partyType
-            expect(pT).toEqual(pT !== 'Broker' ? 'Individual' : 'Broker')
-            done()
-          } else {
-            const pT = res.partyType
-            expect(pT).toEqual(pT !== 'Broker' ? 'Individual' : 'Broker')
-            done()
-          }
-        })
-        .catch(err => console.error(err))
+    it('searches', async done => {
+      const query = {
+        partyTypes: ['Broker', 'Individual']
+      }
+      let res = await search({AMId: 516, query})
+      if (res.length === 0) {
+        console.error('search: Result is empty, force fail on timeout.')
+        return
+      }
+      res = res.filter(party => party.assetManagerId !== 0)
+      res = res[0]
+      expect(res.partyType).toEqual(expect.stringMatching(/(Broker|Individual)/))
+      done()
     })
   })
 
   describe('deactivate', () => {
-    const testAMId = 516
-    const testId = 'fa337e08-1363-47a8-95ba-6ebb55'
-
-    afterAll(() => {
-      reactivate({ AMId: testAMId, resourceId: testId })
-        .then()
-        .catch(err => {
-          console.error(`Error in cleanup: Reactivating partyId ${testId} for Asset Manager ${testAMId}`)
-        })
-    })
 
     test('with promise', () => {
       let promise = deactivate({}).catch(error => {})
       expect(promise).toBeInstanceOf(Promise)
     })
-    test('deactivate/reactivate', done => {
+    test('deactivate/reactivate', async done => {
       let status
-      retrieve({ AMId: testAMId, resourceId: testId })
-        .then(res => {
-          if (res.partyStatus === 'Active') {
-            status = 'Active'
-            return deactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
-          } else {
-            status = 'Inactive'
-            return reactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
-          }
-        })
-        .then(res => {
-          if (res.partyStatus === 'Active') {
-            return deactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
-          } else {
-            return reactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
-          }
-        })
-        .then(res => {
-          expect(res.partyStatus).toEqual(status)
-          done()
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      let res = await retrieve({ AMId: 516 })
+      if (res.length === 0) {
+        console.error('deactivate/reactivate: Result is empty, force fail on timeout.')
+        return
+      }
+      res = res.filter(party => party.assetManagerId !== 0)
+      res = res[0]
+      if (res.partyStatus === 'Active') {
+        res = await deactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
+        expect(res.partyStatus).toEqual('Inactive')
+        await reactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
+        done()
+      } else if (res.partyStatus === 'Inactive') {
+        res = await reactivate({ AMId: res.assetManagerId, resourceId: res.partyId })
+        expect(res.partyStatus).toEqual('Active')
+        done()
+      }
     })
   })
 
