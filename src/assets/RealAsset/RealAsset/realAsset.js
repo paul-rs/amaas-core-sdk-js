@@ -24,6 +24,7 @@ class RealAsset extends Asset {
    * @param {string} [params.displayName] - Display name of the Asset
    * @param {boolean} [params.rollPrice=true] - Whether to roll the price for the Asset
    * @param {string} [params.clientId] - ID of the associated client
+   * @param {object} [params.ownership] - Array of objects specifying the split of ownership of the Real Asset (it must sum to 1) (e.g. `[ {partyId: 'ABC', split: 0.3}, {partyId: 'DEF', split: 0.7} ]`
    * @param {object} [params.comments] - Object of Comments attached to the Real Asset
    * @param {object} [params.links] - Object of array of Links attached to the Real Asset
    * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with the Real Asset. * The AMaaS Reference is auto-created and populated
@@ -32,7 +33,6 @@ class RealAsset extends Asset {
    * @param {date} [params.createdTime] - Time that the Real Asset was created
    * @param {date} [params.updatedTime] - Time that the Real Asset was updated
    * @param {number} [params.version] - Version number
-   * @param {object} [params.ownership] 
   */
   constructor({
     assetManagerId,
