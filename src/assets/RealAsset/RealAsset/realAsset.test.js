@@ -24,7 +24,7 @@ describe('RealAsset', () => {
                 splits: 0.6
             },
             ownerhsip2:{
-                partyId: 2, 
+                partyId: 2,
                 splits: 0.5
             }
         }
