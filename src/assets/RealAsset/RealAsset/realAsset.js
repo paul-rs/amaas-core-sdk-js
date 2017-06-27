@@ -88,19 +88,17 @@ class RealAsset extends Asset {
         set: (newOwnership) => {
           if (newOwnership instanceof Array) {
            var sum=0;
-           var flag=false;
            for (var i = 0; i < newOwnership.length; i++)
            {
                 var value=newOwnership[i].split
                 var id=newOwnership[i].partyId
                 if(id==undefined)
                 {
-                  flag=true;
                   throw new Error('PartyId is missing')
                 }
                 sum+=value         
            }     
-          if (sum==1 && flag == false) {
+          if (sum==1 ) {
             this._ownership = ownership
           } else {
             throw new Error('The sum of split should be 1')
