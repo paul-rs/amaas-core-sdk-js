@@ -32,18 +32,18 @@ class RealAsset extends Asset {
    * @param {date} [params.createdTime] - Time that the Real Asset was created
    * @param {date} [params.updatedTime] - Time that the Real Asset was updated
    * @param {number} [params.version] - Version number
-   * @param {object} [params.ownerships] 
+   * @param {object} [params.ownership] 
   */
   constructor({
     assetManagerId,
     assetId,
-    assetClass='RealAsset',
+    assetClass = 'RealAsset',
     assetIssuerId,
-    assetStatus='Active',
+    assetStatus = 'Active',
     countryId,
     venueId,
     currency,
-    description='',
+    description = '',
     displayName,
     rollPrice,
     clientId,
@@ -55,7 +55,7 @@ class RealAsset extends Asset {
     createdTime,
     updatedTime,
     version,
-    ownerships
+    ownership
   }) {
     super({
       assetManagerId,
@@ -80,6 +80,29 @@ class RealAsset extends Asset {
       updatedTime,
       version
     })
+    
+    Object.defineProperties(this, {
+      _ownership: { writable: true, enumerable: false },
+      ownership: {
+        get: () => this._ownership,
+        set: (newOwnership) => {
+           var sum=0;
+           var arrayKey=Object.keys(newOwnership)
+           for (var i = 0; i < arrayKey.length; i++)
+           {
+                var value=newOwnership[arrayKey[i]].split
+                sum+=value         
+           }     
+          if (sum==1) {
+            this._ownership = ownership
+          } else {
+            throw new Error('The sum of split should be 1')
+          }
+        },
+        enumerable: true
+      }
+    })
+    this.ownership = ownership
   }
 }
 
