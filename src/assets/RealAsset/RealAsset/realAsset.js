@@ -86,18 +86,29 @@ class RealAsset extends Asset {
       ownership: {
         get: () => this._ownership,
         set: (newOwnership) => {
+          if (newOwnership instanceof Array) {
            var sum=0;
-           var arrayKey=Object.keys(newOwnership)
-           for (var i = 0; i < arrayKey.length; i++)
+           var flag=false;
+           for (var i = 0; i < newOwnership.length; i++)
            {
-                var value=newOwnership[arrayKey[i]].split
+                var value=newOwnership[i].split
+                var id=newOwnership[i].partyId
+                if(id==undefined)
+                {
+                  flag=true;
+                  throw new Error('PartyId is missing')
+                }
                 sum+=value         
            }     
-          if (sum==1) {
+          if (sum==1 && flag == false) {
             this._ownership = ownership
           } else {
             throw new Error('The sum of split should be 1')
           }
+        }else
+        {
+          throw new Error('ownership should be an array')
+        }
         },
         enumerable: true
       }
