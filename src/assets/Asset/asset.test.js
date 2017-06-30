@@ -54,13 +54,6 @@ describe('Asset', () => {
       expect(testAsset.links.Single[0]).toBeInstanceOf(AssetLink)
     })
 
-    it('should set references to the AMaaS reference even if no References are supplied', () => {
-      const testAsset = new Asset({ assetId: 'testId' })
-      const expectedRef = new Reference({ referenceValue: 'testId' })
-      expect(testAsset.references.AMaaS).toBeDefined()
-      expect(testAsset.references.AMaaS.referenceValue).toEqual('testId')
-    })
-
     it('should set references correctly (inclduing the AMaaS reference)', () => {
       const references = {
         'Office': {
@@ -72,8 +65,6 @@ describe('Asset', () => {
       }
       const testAsset = new Asset({ assetId: 'assetId', references })
       const testRef = new Reference({ referenceValue: 't' })
-      expect(testAsset.references.AMaaS).toBeDefined()
-      expect(testAsset.references.AMaaS.referenceValue).toEqual('assetId')
       expect(testAsset.references.Office).toBeInstanceOf(Reference)
       expect(testAsset.references.Office.referenceValue).toEqual('testRef1')
     })

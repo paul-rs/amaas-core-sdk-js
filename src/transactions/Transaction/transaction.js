@@ -153,9 +153,8 @@ class Transaction extends AMaaSModel {
       references: {
         get: () => this._references,
         set: (newReferences) => {
-          const AMaaSRef = { AMaaS: new Reference({ referenceValue: this.transactionId }) }
           if (!newReferences) {
-            this._references = AMaaSRef
+            this._references = {}
           } else {
             let newRefs = {}
             for (let ref in newReferences) {
@@ -163,10 +162,7 @@ class Transaction extends AMaaSModel {
                 newRefs[ref] = new Reference(Object.assign({}, newReferences[ref]))
               }
             }
-            this._references = {
-              AMaaS: new Reference({ referenceValue: this.transactionId }),
-              ...newRefs
-            }
+            this._references = newRefs
           }
         },
         enumerable: true

@@ -28,14 +28,14 @@ class Asset extends AMaaSModel {
    * @param {string} [params.clientId] - ID of the associated client
    * @param {object} [params.comments] - Object of Comments attached to the Asset
    * @param {object} [params.links] - Object of array of Links attached to the Asset
-   * @param {object} [params.references={ AMaaS: Reference() }] - Object of References associated with this Asset. * The AMaaS Reference is auto-created and populated
+   * @param {object} [params.references={}] - Object of References associated with this Asset. * The AMaaS Reference is auto-created and populated
    * @param {object} [params.clientAdditional] - Object of custom properties for creating a Custom Asset (set in the Custom Asset class)
    * @param {string} [params.createdBy] - ID of the user that created the Asset
    * @param {string} [params.updatedBy] - ID of the user that updated the Asset
    * @param {date} [params.createdTime] - Time that the Asset was created
    * @param {date} [params.updatedTime] - Time that the Asset was updated
    * @param {number} [params.version] - Version number
-  */
+   */
   constructor({
     assetManagerId,
     assetId,
@@ -130,9 +130,7 @@ class Asset extends AMaaSModel {
         get: () => this._references,
         set: (newReferences) => {
           if (newReferences) {
-            let refClass = {
-              AMaaS: new Reference({ referenceValue: assetId })
-            }
+            let refClass = {}
             for (let name in newReferences) {
               if (newReferences.hasOwnProperty(name)) {
                 refClass[name] = new Reference(newReferences[name])
@@ -140,9 +138,7 @@ class Asset extends AMaaSModel {
             }
             this._references = refClass
           } else {
-            this._references = {
-              AMaaS: new Reference({ referenceValue: assetId })
-            }
+            this._references = {}
           }
         }, enumerable: true
       }

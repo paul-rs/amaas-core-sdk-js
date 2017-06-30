@@ -6,7 +6,7 @@ import { PRIVATE_INVESTMENT_CATEGORY, PRIVATE_INVESTMENT_SUBCATEGORY, PRIVATE_IN
 
 /**
  * Class representing a Private Investment
- * @memberof module: assets
+ * @memberof module:assets
  * @extends module:assets.Asset
  */
 class PrivateInvestment extends Asset {

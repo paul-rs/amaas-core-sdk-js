@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Removed `maturityDate` from the Asset base class and set either maturityDate or expiryDate on the relevant subclasses.
 - Removed `premium` from Asset classes.
 - Changed `Retail` type for AssetManager class to `Individual`.
+- Do not set the AMaaS Reference (ASset, Corporate Action, Transaction). This should be done server side where the default referenceValue can be generated.
 
 ## 0.0.2 - 2017-05-09
 ### Changed

@@ -25,6 +25,7 @@ export { default as IndexFuture } from './ListedDerivative/IndexFuture/indexFutu
 export { default as InterestRateFuture } from './ListedDerivative/InterestRateFuture/interestRateFuture'
 export { default as ListedContractForDifference } from './ListedDerivative/ListedCFD/listedCFD'
 export { default as ListedDerivative } from './ListedDerivative/ListedDerivative/listedDerivative'
+export { default as PrivateInvestment } from './PrivateInvestment/privateInvestment'
 export { default as RealAsset } from './RealAsset/RealAsset/realAsset'
 export { default as RealEstate } from './RealAsset/RealEstate/realEstate'
 export { default as Wine } from './RealAsset/Wine/wine'

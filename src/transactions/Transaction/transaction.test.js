@@ -22,19 +22,12 @@ describe('Transaction class', () => {
       testTrans = new Transaction(data)
     })
 
-    it('should set the AMaaS Reference', () => {
-      expect(testTrans.references.AMaaS).toBeDefined()
-      testTrans.references = { Office: { referenceValue: 'test' } }
-      expect(testTrans.references.AMaaS).toBeDefined()
-    })
-
     it('should set References correctly', () => {
       const references = {
         INT: { referenceValue: 'Internal1' },
         EXT: new Reference({ referenceValue: 'External1' })
       }
       testTrans.references = references
-      expect(testTrans.references.AMaaS).toBeDefined()
       expect(testTrans.references.INT).toBeDefined()
       expect(testTrans.references.INT.referenceValue).toEqual('Internal1')
       expect(testTrans.references.EXT).toBeDefined()
@@ -134,14 +127,6 @@ describe('Transaction class', () => {
 
     it('should set price to a Decimal', () => {
       expect(testTrans.price).toEqual(new Decimal(45.77))
-    })
-
-    it('should set the AMaaS Reference', () => {
-      expect(testTrans.references.AMaaS).toBeDefined()
-      expect(testTrans.references.AMaaS.referenceValue).toEqual('testId')
-      testTrans.references = undefined
-      expect(testTrans.references.AMaaS).toBeDefined()
-      expect(testTrans.references.AMaaS.referenceValue).toEqual('testId')
     })
 
     it('should throw if attempting to set invalid transactionAction', () => {
