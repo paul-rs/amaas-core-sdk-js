@@ -10,6 +10,7 @@ const userPool = new CognitoUserPool({
   ClientId: clientAppId
 })
 let stage = 'staging'
+let apiVersion = 'v1.0'
 let token
 let credPath
 
@@ -19,6 +20,9 @@ export function configureStage(config) {
   }
   if (config.credentialsPath) {
     credPath = config.credentialsPath
+  }
+  if (config.apiVersion) {
+    apiVersion = config.apiVersion
   }
   return
 }
@@ -35,10 +39,10 @@ export function getEndpoint() {
     case 'staging':
       return `${endpoint.staging}/staging`
     case 'prod':
-      return `${endpoint.prod}`
+      return `${endpoint.prod}/${apiVersion}`
     default:
       console.warn(`Unknown stage variable: ${stage}. Defaulting to /prod`)
-      return `${endpoint.prod}`
+      return `${endpoint.prod}/${apiVersion}`
   }
 }
 

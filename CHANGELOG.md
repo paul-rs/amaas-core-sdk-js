@@ -1,18 +1,20 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## Unreleased (v0.1.1)
 ### Added
 - Added accountType field to the AssetManager class.
 - Added a csv parser to convert csv strings into Assets, Books, Parties, Transactions. @JYL123
 - Added PrivateInvestment class (with ownership property).
 - Added ownership property to RealAsset and its subclasses.
+- Added `apiVersion` option to the api config. This will default to the latest stable version.
 
 ### Changed
 - Removed `maturityDate` from the Asset base class and set either maturityDate or expiryDate on the relevant subclasses.
 - Removed `premium` from Asset classes.
 - Changed `Retail` type for AssetManager class to `Individual`.
 - Do not set the AMaaS Reference (ASset, Corporate Action, Transaction). This should be done server side where the default referenceValue can be generated.
+- Allow api version to be set on the production api option.
 
 ## 0.0.2 - 2017-05-09
 ### Changed

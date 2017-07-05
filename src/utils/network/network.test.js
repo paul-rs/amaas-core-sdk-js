@@ -16,7 +16,7 @@ api.config({
   stage: 'staging'
 })
 
-describe('buildURL function', () => {
+describe.only('buildURL function', () => {
   it('should throw if no class supplied', () => {
     function tester() {
       buildURL({})
